@@ -11,6 +11,9 @@ body {
   background-size: cover;
   background-repeat: no-repeat; }
 
+.links:hover {
+	color:pink;
+}
 .button-container {
   padding-left: 35%;
   padding-right: 35%; }
@@ -185,6 +188,31 @@ body {
   display: block;
   padding: 0 11px;
   line-height: 23px; }
+.footer {
+  background-color: grey;
+  margin-top: 8%;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  height: 100px;
+  height: 50px;
+  border-top: 5px solid pink; }
+
+.footer-one {
+  margin-top: -3%;
+  margin-top: 1%;
+  margin-left: 80%;
+  font-size: 1em; }
+
+gh-pages
+.text-footer {
+  margin-top: 1%;
+  margin-left: 2%; }
+
+.footer-text {
+  padding: 7%;
+  font-size: 1em; }
 
 .profile-li {
   padding-top: 2px; }
