@@ -2,6 +2,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
+import centerRoutes from './routes/centers';
+
 
 // Set up the express app
 const app = express();
@@ -14,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
+centerRoutes(app);
 
 app.set('secret', process.env.SECRET);
 app.set('port', process.env.PORT || 3000);
