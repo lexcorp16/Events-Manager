@@ -1,8 +1,13 @@
 // require all dependencies
+import dotenv from 'dotenv';
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import centerRoutes from './routes/centers';
+import userRoutes from './routes/users';
+import eventRoutes from './routes/events';
+
+dotenv.config();
 
 
 // Set up the express app
@@ -17,8 +22,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 centerRoutes(app);
+userRoutes(app);
 
-app.set('secret', process.env.SECRET);
 app.set('port', process.env.PORT || 3000);
 app.get('*', (req, res) => res.status(200).send({
   message: 'Welcome to the beginning of nothingness.',
