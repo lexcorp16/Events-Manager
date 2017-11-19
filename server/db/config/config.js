@@ -1,10 +1,10 @@
-export default {
+module.exports = {
   development: {
-    username: 'root',
-    password: null,
-    database: 'database_development',
-    host: '27.0.0.1',
-    dialect: 'mysql',
+    username: 'knull',
+    password: 'fnull',
+    database: 'null',
+    host: 'elmer.db.elephantsql.com',
+    dialect: 'postgres',
   },
   test: {
     username: 'root',
