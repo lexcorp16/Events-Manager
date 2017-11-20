@@ -11,12 +11,25 @@ const {
 class Center {
   static addCenter(req, res) {
     const { isAdmin } = req.decoded;
+    const {
+      name,
+      location,
+      type,
+      address,
+      imageUrl,
+      mobileNumber,
+    } = req.body;
     if (!isAdmin) {
       return res.status(400).send({ error: 'You are not authorized to perform this action' });
     }
     return Centers
       .create({
-        ...req.body,
+        name,
+        location,
+        type,
+        address,
+        imageUrl,
+        mobileNumber,
         centerOwner: req.decoded.userId,
       })
       .then(res.status(200).send({ message: 'You have successfully added a center' }))
@@ -28,7 +41,7 @@ class Center {
       isAdmin,
       userId,
     } = req.decoded;
-    if (!isAdmin) {+
+    if (!isAdmin) {
       return res.status(400).send({ error: 'You are not authorized to perform this action' });
     }
     return Centers
