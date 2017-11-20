@@ -72,7 +72,18 @@ class User {
           return res.status(400).send({ error: 'Invalid Username or password' });
         });
       })
-      .catch(error => res.status(500).send({ error: 'an error occurred' }));
+      .catch(res.status(500).send({ error: 'an error occurred' }));
+  }
+
+  static becomeAdmin(req, res) {
+    Users.findById(req.decoded.userId)
+      .then((user) => {
+        user.updateAttributes({
+          isAdmin: true,
+        });
+        return res.status(200).send({ message: 'You are now an admin,Please log in again to begin using all admin features' });
+      })
+      .catch(res.status(500).send({ error: 'oops, an error occured' }));
   }
 }
 
