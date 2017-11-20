@@ -1,17 +1,17 @@
 module.exports = {
-  development: {
-    username: 'knull',
-    password: 'fnull',
-    database: 'null',
+  test: {
+    username: 'ktmuzkvo',
+    password: 'fPhApaEayBDx2lOt-huPnoQ7Y1LkxYRV',
+    database: 'ktmuzkvo',
     host: 'elmer.db.elephantsql.com',
     dialect: 'postgres',
   },
-  test: {
-    username: 'root',
-    password: null,
-    database: 'database_test',
-    host: '127.0.0.1',
-    dialect: 'mysql',
+  development: {
+    username: 'ieuaevuf',
+    password: 'YxfucFPbOLT3pqrRtADs1ClWEOO2DucE',
+    database: 'ieuaevuf',
+    host: 'baasu.db.elephantsql.com',
+    dialect: 'postgres',
   },
   production: {
     username: 'root',
