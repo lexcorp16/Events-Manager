@@ -52,16 +52,15 @@ const checkInvalidUserDetails = (req, res, next) => {
     return res.status(400).send({ error: 'password must be at least six characters long' });
   }
   if (!isValidEmail(email)) {
-    return res.status(400).send({ error: 'Please enter a valid email' });
+    return res.status(400).send({ error: 'Invalid email format' });
   }
   if (isDigit) {
     return res.status(400).send({ error: 'Your names cannot be digits only' });
   }
   if (password !== confirmpassword) {
     return res.status(400).send({ error: 'password and confirmpassword are not equal' });
-  } else {
-    next();
   }
+  next();
 };
 
 const checkInvalidUserSignIn = (req, res, next) => {

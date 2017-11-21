@@ -1,28 +1,26 @@
 export default (sequelize, DataTypes) => {
-  const Center = sequelize.define('Center', {
+  const Events = sequelize.define('Events', {
     id: {
-      allowNull: false,
-      primaryKey: true,
       type: DataTypes.UUID,
+      primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    type: {
-      type: DataTypes.STRING,
+    centerId: {
+      type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: 'Centers',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     },
-    location: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    centerOwner: {
+    userId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
@@ -32,13 +30,21 @@ export default (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     },
-    mobileNumber: {
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    day: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    imageUrl: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    month: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   }, {
     classMethods: {
@@ -47,9 +53,9 @@ export default (sequelize, DataTypes) => {
       },
     },
   });
-  Center.associate = (models) => {
-    Center.belongsTo(models.Users);
-    Center.hasMany(models.Event, { as: 'venueOfEvent', foreignKey: 'venue' });
+  Events.associate = (models) => {
+    Events.belongsTo(models.Users);
+    Events.belongsTo(models.Centers);
   };
-  return Center;
+  return Events;
 };

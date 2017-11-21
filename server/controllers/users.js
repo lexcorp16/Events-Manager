@@ -15,7 +15,7 @@ class User {
     } = req.body;
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
-        return res.status(500).send({ error: 'an error occurred' });
+        return res.status(500).send({ error: err.message });
       }
       const password = hash;
       return Users
@@ -56,7 +56,7 @@ class User {
         if (!user) {
           return res.status(400).send({ error: 'Invalid email or password' });
         }
-        bcrypt.compare(password, user.password, (err, response) => {
+        return bcrypt.compare(password, user.password, (err, response) => {
           if (response) {
             const payload = {
               userId: user.id,
@@ -72,7 +72,7 @@ class User {
           return res.status(400).send({ error: 'Invalid Username or password' });
         });
       })
-      .catch(res.status(500).send({ error: 'an error occurred' }));
+      .catch(() => res.status(500).send({ error: 'an error occurred' }));
   }
 
   static becomeAdmin(req, res) {
@@ -81,9 +81,9 @@ class User {
         user.updateAttributes({
           isAdmin: true,
         });
-        return res.status(200).send({ message: 'You are now an admin,Please log in again to begin using all admin features' });
+        return res.status(202).send({ message: 'You are now an admin,Please log in again to begin using all admin features' });
       })
-      .catch(res.status(500).send({ error: 'oops, an error occured' }));
+      .catch(error => res.status(500).send({ error: error.message }));
   }
 }
 

@@ -11,7 +11,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      venue: {
+      centerId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
@@ -21,7 +21,7 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
-      eventOwner: {
+      userId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {

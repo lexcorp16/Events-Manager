@@ -5,10 +5,16 @@ const {
 } = models;
 
 /**
-* @params{addcenter} returns a Json object
-* and stores center info to database.
+* @Center, class containing all methods that
+* handle center related api endpoint
 */
 class Center {
+/**
+ * Add a center
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {object} res.
+ */
   static addCenter(req, res) {
     const { isAdmin } = req.decoded;
     const {
@@ -30,12 +36,17 @@ class Center {
         address,
         imageUrl,
         mobileNumber,
-        centerOwner: req.decoded.userId,
+        userId: req.decoded.userId,
       })
-      .then(res.status(200).send({ message: 'You have successfully added a center' }))
-      .catch(res.status(500).send({ error: 'Oops, an error occurred' }));
+      .then(center => res.status(200).send({ message: 'You have successfully added a center', center }))
+      .catch(error => res.status(500).send({ error: error.message }));
   }
-
+  /**
+ * modify a center
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {object} res.
+ */
   static modifyCenter(req, res) {
     const {
       isAdmin,

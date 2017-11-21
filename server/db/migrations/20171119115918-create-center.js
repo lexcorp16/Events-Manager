@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      centerOwner: {
+      userId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
@@ -34,7 +34,7 @@ module.exports = {
         onUpdate: 'CASCADE',
       },
       mobileNumber: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       imageUrl: {

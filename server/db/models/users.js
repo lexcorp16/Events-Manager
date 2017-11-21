@@ -29,14 +29,14 @@ export default (sequelize, DataTypes) => {
     },
   }, {
     classMethods: {
-      associate: (models) => {
+      associate: () => {
         // associations can be defined here
       },
     },
   });
   Users.associate = (models) => {
-    Users.hasMany(models.Event, { as: 'events', foreignKey: 'eventOwner' });
-    Users.hasMany(models.Center, { as: 'owner', foreignKey: 'centerOwner' });
+    Users.hasMany(models.Events, { as: 'events', foreignKey: 'userId' });
+    Users.hasMany(models.Centers, { as: 'owner', foreignKey: 'userId' });
   };
   return Users;
 };
