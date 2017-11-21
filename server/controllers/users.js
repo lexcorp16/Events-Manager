@@ -6,7 +6,17 @@ const secret = process.env.SECRET;
 
 const { Users } = models;
 
+/**
+* @User, class containing all methods that
+* handle center related api endpoint
+*/
 class User {
+/**
+ * SignUp a User
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {object} res.
+ */
   static signup(req, res) {
     const {
       email,
@@ -40,7 +50,12 @@ class User {
         .catch(error => res.status(400).send({ error: error.message }));
     });
   }
-
+  /**
+ * SignIn a User
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {object} res.
+ */
   static signin(req, res) {
     const {
       email,
@@ -74,7 +89,12 @@ class User {
       })
       .catch(() => res.status(500).send({ error: 'an error occurred' }));
   }
-
+  /**
+ * Make A User an Admin
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {object} res.
+ */
   static becomeAdmin(req, res) {
     Users.findById(req.decoded.userId)
       .then((user) => {
