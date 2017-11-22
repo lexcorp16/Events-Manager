@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    centerId: {
+    CenterId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
@@ -20,7 +20,7 @@ export default (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     },
-    userId: {
+    UserId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {

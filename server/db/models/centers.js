@@ -22,7 +22,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userId: {
+    UserId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
@@ -49,7 +49,7 @@ export default (sequelize, DataTypes) => {
   });
   Centers.associate = (models) => {
     Centers.belongsTo(models.Users);
-    Centers.hasMany(models.Events, { as: 'venueOfEvent', foreignKey: 'centerId' });
+    Centers.hasMany(models.Events, { as: 'venueOfEvent', foreignKey: 'CenterId' });
   };
   return Centers;
 };
