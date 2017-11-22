@@ -187,11 +187,10 @@ describe('test-cases for api routes', () => {
         .expect(200, done)
         .expect((res) => {
           secondToken = res.body.token;
-          console.log(token);
         });
     });
   });
-
+  let centerId;
   describe('POST /api/v1/centers', () => {
     const centerDetails = {
       name: 'Rogaros',
@@ -208,7 +207,42 @@ describe('test-cases for api routes', () => {
         .expect('Content-Type', /json/)
         .expect(200, done)
         .expect((res) => {
+          centerId = res.body.center.id;
           expect(res.body.message).to.equal('You have successfully added a center');
+          expect(typeof centerId).to.be.a('string');
+        });
+    });
+  });
+
+  describe('GET /api/v1/centers', () => {
+    it('gets all centers', (done) => {
+      request(app)
+        .get('/api/v1/centers/')
+        .set('Accept', 'application/json')
+        .expect(200, done)
+        .expect((res) => {
+          expect(res.body.centers.length).to.equal(1);
+        });
+    });
+  });
+
+  describe('POST /api/v1/events', () => {
+    const eventCredentials = {
+      name: 'Graduation Party',
+      type: 'Party',
+      CenterId: '43c94b50-461e-45be-938d-8959ce135f95',
+      day: '25',
+      month: '12',
+      year: '2017',
+    };
+    it('adds a new event', (done) => {
+      request(app)
+        .post('/api/v1/events/')
+        .set('auth', token)
+        .send(eventCredentials)
+        .expect(200, done)
+        .expect((res) => {
+          expect(res.body.message).to.equal('Event successfully added');
         });
     });
   });
