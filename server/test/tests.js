@@ -33,6 +33,7 @@ describe('test-cases for api routes', () => {
   let token;
   let secondToken;
   let centerId;
+  let eventId;
   describe('GET /', () => {
     it('responds with a 200 and welcome message in json', (done) => {
       request(app)
@@ -235,7 +236,7 @@ describe('test-cases for api routes', () => {
         name: 'Graduation Party',
         type: 'Party',
         CenterId: centerId,
-        date: '23 december 2018',
+        date: '2018-12-05',
       };
       request(app)
         .post('/api/v1/events/')
@@ -243,6 +244,7 @@ describe('test-cases for api routes', () => {
         .send(eventCredentials)
         .expect(201, done)
         .expect((res) => {
+          eventId = res.body.newEvent.id;
           console.log(`HERE ${eventCredentials.CenterId}`);
           expect(res.body.message).to.equal('Event successfully added');
         });
@@ -253,7 +255,7 @@ describe('test-cases for api routes', () => {
         name: 'Graduation Party',
         type: 'Party',
         CenterId: centerId,
-        date: '23 december 2018',
+        date: '2018-12-05',
       };
       request(app)
         .post('/api/v1/events/')
@@ -263,6 +265,26 @@ describe('test-cases for api routes', () => {
         .expect((res) => {
           console.log(`HERE ${eventCredentials.CenterId}`);
           expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
+        });
+    });
+  });
+
+  describe('PUT /api/v1/events/<eventId>', () => {
+    it('modifies an event', (done) => {
+      const eventCredentials = {
+        name: 'For loop',
+        type: 'Seminar',
+        CenterId: centerId,
+        date: '2018-11-02',
+      };
+      request(app)
+        .put(`/api/v1/events/${eventId}`)
+        .set('auth', secondToken)
+        .send(eventCredentials)
+        .expect(200, done)
+        .expect((res) => {
+          console.log(`HERE ${eventCredentials.CenterId}`);
+          expect(res.body.message).to.equal('You have successfully edited the event');
         });
     });
   });
