@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      userId: {
+      UserId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {

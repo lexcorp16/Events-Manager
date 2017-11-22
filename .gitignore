@@ -2,3 +2,4 @@
 node_modules
 templates
 server/db/migrations
+.nyc_output

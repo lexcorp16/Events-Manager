@@ -54,8 +54,8 @@ export default (sequelize, DataTypes) => {
     },
   });
   Events.associate = (models) => {
-    Events.belongsTo(models.Users);
-    Events.belongsTo(models.Centers);
+    Events.belongsTo(models.Users, { foreignKey: 'UserId' });
+    Events.belongsTo(models.Centers, { foreignKey: 'CenterId' });
   };
   return Events;
 };

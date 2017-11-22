@@ -11,7 +11,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      centerId: {
+      CenterId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
@@ -21,7 +21,7 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
-      userId: {
+      UserId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
