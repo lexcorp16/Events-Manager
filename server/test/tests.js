@@ -199,6 +199,7 @@ describe('test-cases for api routes', () => {
       location: 'Lagos',
       address: 'Number 22,yeru street',
       mobileNumber: '081567677787',
+      capacity: '20000',
     };
     it('makes an admin add a center', (done) => {
       request(app)
@@ -234,9 +235,7 @@ describe('test-cases for api routes', () => {
         name: 'Graduation Party',
         type: 'Party',
         CenterId: centerId,
-        day: '25',
-        month: '12',
-        year: '2017',
+        date: '23 december 2018',
       };
       request(app)
         .post('/api/v1/events/')
@@ -246,6 +245,24 @@ describe('test-cases for api routes', () => {
         .expect((res) => {
           console.log(`HERE ${eventCredentials.CenterId}`);
           expect(res.body.message).to.equal('Event successfully added');
+        });
+    });
+
+    it('checks if an event is slated for the center being used before saving', (done) => {
+      const eventCredentials = {
+        name: 'Graduation Party',
+        type: 'Party',
+        CenterId: centerId,
+        date: '23 december 2018',
+      };
+      request(app)
+        .post('/api/v1/events/')
+        .set('auth', secondToken)
+        .send(eventCredentials)
+        .expect(400, done)
+        .expect((res) => {
+          console.log(`HERE ${eventCredentials.CenterId}`);
+          expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
         });
     });
   });
