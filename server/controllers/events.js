@@ -30,7 +30,7 @@ class Event {
       })
       .then((event) => {
         if (event) {
-          return res.status(400).send({ error: 'Date already taken,please choose another date' });
+          return res.status(400).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
         }
         return Events
           .create({
