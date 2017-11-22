@@ -212,4 +212,16 @@ describe('test-cases for api routes', () => {
         });
     });
   });
+
+  describe('GET /api/v1/centers', () => {
+    it('gets all centers', (done) => {
+      request(app)
+        .get('/api/v1/centers/')
+        .set('Accept', 'application/json')
+        .expect(200, done)
+        .expect((res) => {
+          expect(res.body.centers.length).to.equal(1);
+        });
+    });
+  });
 });
