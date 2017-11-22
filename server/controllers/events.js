@@ -16,7 +16,6 @@ class Event {
   static addEvent(req, res) {
     const {
       name,
-      venue,
       type,
       date,
       CenterId,
