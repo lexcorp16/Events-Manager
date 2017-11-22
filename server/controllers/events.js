@@ -1,12 +1,12 @@
 import models from '../db/models';
 
-const { Event } = models;
+const { Events } = models;
 
 /**
 * @Event, class containing all methods that
 * handle centerevent
 */
-class Events {
+class Event {
 /**
  * Addan event
  * @param {object} req The request body of the request.
@@ -21,21 +21,22 @@ class Events {
       day,
       month,
       year,
-      centerId
+      CenterId,
     } = req.body;
-    Event
+    Events
       .find({
         where: {
           day: parseFloat(day),
           month: parseFloat(month),
           year: parseFloat(year),
+          CenterId,
         }
       })
       .then((event) => {
         if (event) {
           return res.status(400).send({ error: 'Date already taken,please choose another date' });
         }
-        return Event
+        return Events
           .create({
             name,
             venue,
@@ -43,13 +44,14 @@ class Events {
             day,
             month,
             year,
-            centerId,
+            CenterId,
+            UserId: req.decoded.userId
           })
           .then(newEvent => res.status(201).send({ message: 'Event successfully added', newEvent }))
-          .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
+          .catch(error => res.status(500).send({ error: error.message}));
       })
       .catch(error => res.status(500).send({ error: error.message }));
   }
 }
 
-export default Events;
+export default Event;
