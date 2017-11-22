@@ -54,10 +54,10 @@ class Event {
     Events.findById(req.params.eventId)
       .then((event) => {
         if (!event) {
-          return res.status(400).send({ error: 'event not found' });
+          return res.status(404).send({ error: 'event not found' });
         }
         if (event && event.UserId !== req.decoded.userId) {
-          return res.status(400).send({ error: 'You cannot modify an event added by another user' });
+          return res.status(403).send({ error: 'You cannot modify an event added by another user' });
         }
         event.updateAttributes({
           name: req.body.name || event.name,
@@ -68,6 +68,27 @@ class Event {
         return res.status(200).send({ message: 'You have successfully edited the event', event });
       })
       .catch(error => res.status(400).send({ error: error.message }));
+  }
+  /**
+ * delete an event
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {object} res.
+ */
+  static deleteEvent(req, res) {
+    Events.findById(req.params.eventId)
+      .then((event) => {
+        if (!event) {
+          return res.status(404).send({ error: 'event not found' });
+        }
+        if (event && event.UserId !== req.decoded.userId) {
+          return res.status(403).send({ error: 'You cannot delete an event added by another user' });
+        }
+        event.destroy()
+          .then(() => res.status(200).send({ message: 'Event successfully deleted' }))
+          .catch(error => res.status(500).send({ error: error.message }));
+      })
+      .catch(error => res.status(500).send({ error: error.message }));
   }
 }
 
