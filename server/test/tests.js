@@ -32,6 +32,7 @@ Events.destroy({
 describe('test-cases for api routes', () => {
   let token;
   let secondToken;
+  let centerId;
   describe('GET /', () => {
     it('responds with a 200 and welcome message in json', (done) => {
       request(app)
@@ -190,7 +191,7 @@ describe('test-cases for api routes', () => {
         });
     });
   });
-  let centerId;
+
   describe('POST /api/v1/centers', () => {
     const centerDetails = {
       name: 'Rogaros',
@@ -210,6 +211,7 @@ describe('test-cases for api routes', () => {
           centerId = res.body.center.id;
           expect(res.body.message).to.equal('You have successfully added a center');
           expect(typeof centerId).to.be.a('string');
+          console.log(`HERE ${centerId}`);
         });
     });
   });
@@ -227,22 +229,22 @@ describe('test-cases for api routes', () => {
   });
 
   describe('POST /api/v1/events', () => {
-    console.log(centerId);
-    const eventCredentials = {
-      name: 'Graduation Party',
-      type: 'Party',
-      CenterId: '43c94b50-461e-45be-938d-8959ce135f95',
-      day: '25',
-      month: '12',
-      year: '2017',
-    };
     it('adds a new event', (done) => {
+      const eventCredentials = {
+        name: 'Graduation Party',
+        type: 'Party',
+        CenterId: centerId,
+        day: '25',
+        month: '12',
+        year: '2017',
+      };
       request(app)
         .post('/api/v1/events/')
-        .set('auth', token)
+        .set('auth', secondToken)
         .send(eventCredentials)
-        .expect(200, done)
+        .expect(201, done)
         .expect((res) => {
+          console.log(`HERE ${eventCredentials.CenterId}`);
           expect(res.body.message).to.equal('Event successfully added');
         });
     });

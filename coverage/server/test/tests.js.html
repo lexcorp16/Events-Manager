@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">98.78% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>81/82</span>
+        <span class='fraction'>83/83</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">97.44% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>38/39</span>
+        <span class='fraction'>39/39</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">98.78% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>81/82</span>
+        <span class='fraction'>83/83</span>
       </div>
     </div>
   </div>
@@ -293,7 +293,9 @@
 248
 249
 250
-251</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+251
+252
+253</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -330,6 +332,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -485,7 +488,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -505,6 +508,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -531,14 +535,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -577,6 +581,7 @@ Events.destroy({
 describe('test-cases for api routes', () =&gt; {
   let token;
   let secondToken;
+  let centerId;
   describe('GET /', () =&gt; {
     it('responds with a 200 and welcome message in json', (done) =&gt; {
       request(app)
@@ -735,7 +740,7 @@ describe('test-cases for api routes', () =&gt; {
         });
     });
   });
-  let centerId;
+&nbsp;
   describe('POST /api/v1/centers', () =&gt; {
     const centerDetails = {
       name: 'Rogaros',
@@ -755,6 +760,7 @@ describe('test-cases for api routes', () =&gt; {
           centerId = res.body.center.id;
           expect(res.body.message).to.equal('You have successfully added a center');
 <span class="branch-0 cbranch-no" title="branch not covered" >          expect(typeof </span>centerId).to.be.a('string');
+          console.log(`HERE ${centerId}`);
         });
     });
   });
@@ -772,23 +778,23 @@ describe('test-cases for api routes', () =&gt; {
   });
 &nbsp;
   describe('POST /api/v1/events', () =&gt; {
-    console.log(centerId);
-    const eventCredentials = {
-      name: 'Graduation Party',
-      type: 'Party',
-      CenterId: '43c94b50-461e-45be-938d-8959ce135f95',
-      day: '25',
-      month: '12',
-      year: '2017',
-    };
     it('adds a new event', (done) =&gt; {
+      const eventCredentials = {
+        name: 'Graduation Party',
+        type: 'Party',
+        CenterId: centerId,
+        day: '25',
+        month: '12',
+        year: '2017',
+      };
       request(app)
         .post('/api/v1/events/')
-        .set('auth', token)
+        .set('auth', secondToken)
         .send(eventCredentials)
-        .expect(200, done)
-        .expect(<span class="fstat-no" title="function not covered" >(</span>res) =&gt; {
-<span class="cstat-no" title="statement not covered" >          expect(res.body.message).to.equal('Event successfully added');</span>
+        .expect(201, done)
+        .expect((res) =&gt; {
+          console.log(`HERE ${eventCredentials.CenterId}`);
+          expect(res.body.message).to.equal('Event successfully added');
         });
     });
   });
@@ -799,7 +805,7 @@ describe('test-cases for api routes', () =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Nov 22 2017 04:35:50 GMT+0100 (W. Central Africa Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Nov 22 2017 09:57:48 GMT+0100 (W. Central Africa Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>
