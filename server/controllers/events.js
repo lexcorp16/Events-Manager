@@ -16,7 +16,6 @@ class Event {
   static addEvent(req, res) {
     const {
       name,
-      venue,
       type,
       date,
       CenterId,
@@ -35,7 +34,6 @@ class Event {
         return Events
           .create({
             name,
-            venue,
             type,
             CenterId,
             date: new Date(date).toISOString(),
@@ -45,6 +43,31 @@ class Event {
           .catch(error => res.status(500).send({ error: error.message }));
       })
       .catch(error => res.status(500).send({ error: error.message }));
+  }
+  /**
+ * modify an event
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {object} res.
+ */
+  static modifyEvent(req, res) {
+    Events.findById(req.params.eventId)
+      .then((event) => {
+        if (!event) {
+          return res.status(400).send({ error: 'event not found' });
+        }
+        if (event && event.UserId !== req.decoded.userId) {
+          return res.status(400).send({ error: 'You cannot modify an event added by another user' });
+        }
+        event.updateAttributes({
+          name: req.body.name || event.name,
+          type: req.body.type || event.type,
+          CenterId: req.body.CenterId || event.CenterId,
+          date: new Date(req.body.date) || event.date,
+        });
+        return res.status(200).send({ message: 'You have successfully edited the event', event });
+      })
+      .catch(error => res.status(400).send({ error: error.message }));
   }
 }
 
