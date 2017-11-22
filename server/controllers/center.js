@@ -36,7 +36,7 @@ class Center {
         address,
         imageUrl,
         mobileNumber,
-        userId: req.decoded.userId,
+        UserId: req.decoded.userId,
       })
       .then(center => res.status(200).send({ message: 'You have successfully added a center', center }))
       .catch(error => res.status(500).send({ error: error.message }));
@@ -75,6 +75,22 @@ class Center {
         return res.status(200).send({ message: 'You have successfully modified the center' });
       })
       .catch(res.status(500).send({ error: 'oops an error occurred' }));
+  }
+  /**
+ * Get all Centers
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {array} res.
+ */
+  static getAllCenters(req, res) {
+    return Centers.findAll()
+      .then((centers) => {
+        if (centers.length < 1) {
+          return res.status(400).send({ message: 'There are no centers' });
+        }
+        return res.status(200).send({ message: 'Success', centers });
+      })
+      .catch(error => res.status(500).send({ error: error.message }));
   }
 }
 
