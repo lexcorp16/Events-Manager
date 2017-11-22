@@ -22,6 +22,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    capacity: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
     UserId: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -40,6 +44,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    isAvailable: {
+      type: DataTypes.BOOLEAN,
+      deafaultValue: true,
+    }
   }, {
     classMethods: {
       associate: () => {
@@ -48,7 +56,7 @@ export default (sequelize, DataTypes) => {
     },
   });
   Centers.associate = (models) => {
-    Centers.belongsTo(models.Users);
+    Centers.belongsTo(models.Users, { foreignKey: 'UserId' });
     Centers.hasMany(models.Events, { as: 'venueOfEvent', foreignKey: 'CenterId' });
   };
   return Centers;
