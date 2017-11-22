@@ -288,4 +288,17 @@ describe('test-cases for api routes', () => {
         });
     });
   });
+
+  describe('DELETES /api/v1/events/<eventId>', () => {
+    it('deletes an event', (done) => {
+      request(app)
+        .delete(`/api/v1/events/${eventId}`)
+        .set('auth', secondToken)
+        .expect(200, done)
+        .expect((res) => {
+          console.log(`HERE${res.body}`);
+          expect(res.body.message).to.equal('Event successfully deleted');
+        });
+    });
+  });
 });
