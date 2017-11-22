@@ -32,6 +32,7 @@ Events.destroy({
 describe('test-cases for api routes', () => {
   let token;
   let secondToken;
+  let centerId;
   describe('GET /', () => {
     it('responds with a 200 and welcome message in json', (done) => {
       request(app)
@@ -209,6 +210,7 @@ describe('test-cases for api routes', () => {
         .expect(200, done)
         .expect((res) => {
           expect(res.body.message).to.equal('You have successfully added a center');
+          centerId = res.body.center.id;
         });
     });
   });
@@ -222,6 +224,15 @@ describe('test-cases for api routes', () => {
         .expect((res) => {
           expect(res.body.centers.length).to.equal(1);
         });
+    });
+  });
+
+  describe('GET /api/v1/centers/<centerId>', () => {
+    it('gets a single center and all the events slated for that center', (done) => {
+      request(app)
+        .get(`/api/v1/centers/${centerId}`)
+        .set('Accept', 'application/json')
+        .expect(200, done);
     });
   });
 });
