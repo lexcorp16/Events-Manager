@@ -21,6 +21,7 @@ class Center {
       name,
       location,
       type,
+      capacity,
       address,
       imageUrl,
       mobileNumber,
@@ -33,6 +34,7 @@ class Center {
         name,
         location,
         type,
+        capacity,
         address,
         imageUrl,
         mobileNumber,
@@ -50,10 +52,25 @@ class Center {
   static modifyCenter(req, res) {
     const {
       isAdmin,
-      userId,
     } = req.decoded;
     if (!isAdmin) {
       return res.status(400).send({ error: 'You are not authorized to perform this action' });
+    }
+    if (Object.keys(req.body).length < 1) {
+      return Centers.findById(req.params.centerId)
+        .then((center) => {
+          if (center.isAvailable) {
+            center.updateAttributes({
+              isAvailable: false
+            });
+            return res.status(200).send({ message: 'Successfully changed center status to false', center });
+          }
+          center.updateAttributes({
+            isAvailable: true
+          });
+          return res.status(200).send({ message: 'Successfully changed availability status to true' });
+        })
+        .catch(error => res.status(200).send({ error: error.message }));
     }
     return Centers
       .findById(req.params.centerId)
@@ -61,7 +78,7 @@ class Center {
         if (!center) {
           return res.status(400).send({ error: 'center not found!' });
         }
-        if (center && center.centerOwner !== userId) {
+        if (center && center.UserId !== req.decoded.userId) {
           return res.status(400).send({ error: 'You cannot modify a center added by another user' });
         }
         center.updateAttributes({
@@ -71,10 +88,11 @@ class Center {
           address: req.body.address || center.address,
           mobileNumber: req.body.mobileNumber || center.mobileNumber,
           imageUrl: req.body.imageUrl || center.imageUrl,
+          capacity: parseFloat(req.body.capacity) || center.capacity,
         });
-        return res.status(200).send({ message: 'You have successfully modified the center' });
+        return res.status(200).send({ message: 'You have successfully modified the center', center });
       })
-      .catch(res.status(500).send({ error: 'oops an error occurred' }));
+      .catch(error => res.status(500).send({ error: error.message }));
   }
   /**
  * Get all Centers
