@@ -238,7 +238,7 @@ describe('test-cases for api routes', () => {
     it('adds a new event', (done) => {
       request(app)
         .post('/api/v1/events/')
-        .set('auth', token)
+        .set('auth', secondToken)
         .send(eventCredentials)
         .expect(200, done)
         .expect((res) => {
