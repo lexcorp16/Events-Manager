@@ -18,17 +18,13 @@ class Event {
       name,
       venue,
       type,
-      day,
-      month,
-      year,
+      date,
       CenterId,
     } = req.body;
     Events
       .find({
         where: {
-          day: parseFloat(day),
-          month: parseFloat(month),
-          year: parseFloat(year),
+          date: new Date(date).toISOString(),
           CenterId,
         }
       })
@@ -41,14 +37,12 @@ class Event {
             name,
             venue,
             type,
-            day,
-            month,
-            year,
             CenterId,
-            UserId: req.decoded.userId
+            date: new Date(date).toISOString(),
+            UserId: req.decoded.userId,
           })
           .then(newEvent => res.status(201).send({ message: 'Event successfully added', newEvent }))
-          .catch(error => res.status(500).send({ error: error.message}));
+          .catch(error => res.status(500).send({ error: error.message }));
       })
       .catch(error => res.status(500).send({ error: error.message }));
   }
