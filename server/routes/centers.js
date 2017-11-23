@@ -8,4 +8,5 @@ export default (app) => {
   app.post('/api/v1/centers', auth, centerControllers.addCenter);
   app.put('/api/v1/centers/:centerId', auth, centerControllers.modifyCenter);
   app.get('/api/v1/centers', centerControllers.getAllCenters);
+  app.get('/api/v1/centers/:centerId', centerControllers.getACenter);
 };

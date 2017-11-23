@@ -214,6 +214,7 @@ describe('test-cases for api routes', () => {
           expect(res.body.message).to.equal('You have successfully added a center');
           expect(typeof centerId).to.be.a('string');
           console.log(`HERE ${centerId}`);
+          centerId = res.body.center.id;
         });
     });
   });
@@ -296,8 +297,39 @@ describe('test-cases for api routes', () => {
         .set('auth', secondToken)
         .expect(200, done)
         .expect((res) => {
-          console.log(`HERE${res.body}`);
           expect(res.body.message).to.equal('Event successfully deleted');
+        });
+    });
+  });
+
+  describe('GET /api/v1/centers/<centerId>', () => {
+  	it('adds a new event', (done) => {
+      const eventCredentials = {
+        name: 'Graduation Party',
+        type: 'Party',
+        CenterId: centerId,
+        date: '2018-12-05',
+      };
+      request(app)
+        .post('/api/v1/events/')
+        .set('auth', secondToken)
+        .send(eventCredentials)
+        .expect(201, done)
+        .expect((res) => {
+          eventId = res.body.newEvent.id;
+        });
+    });
+    it('gets a single center and all the events slated for that center', (done) => {
+      request(app)
+        .get(`/api/v1/centers/${centerId}`)
+        .set('Accept', 'application/json')
+        .expect(200, done)
+        .expect((res) => {
+          expect(res.body.message).to.equal('Successfully found Center and events slated for the center');
+          expect(res.body.center.id).to.equal(centerId);
+          expect(res.body.center.venueOfEvent[0].id).to.equal(eventId);
+          console.log(`HERE ${res.body.center.venueOfEvent[0].id}`);
+          console.log(`HERE ${centerId}`);
         });
     });
   });

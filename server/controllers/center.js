@@ -2,6 +2,7 @@ import models from '../db/models';
 
 const {
   Centers,
+  Events,
 } = models;
 
 /**
@@ -108,6 +109,25 @@ class Center {
         }
         return res.status(200).send({ message: 'Success', centers });
       })
+      .catch(error => res.status(500).send({ error: error.message }));
+  }
+  /**
+ * Get A Centers
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {array} res.
+ */
+  static getACenter(req, res) {
+    return Centers.findOne({
+      where: {
+        id: req.params.centerId,
+      },
+      include: [{
+        model: Events,
+        as: 'venueOfEvent',
+      }]
+    })
+      .then(center => res.status(200).send({ message: 'Successfully found Center and events slated for the center', center }))
       .catch(error => res.status(500).send({ error: error.message }));
   }
 }
