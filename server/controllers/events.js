@@ -21,7 +21,7 @@ class Event {
       CenterId,
     } = req.body;
     Events
-      .find({
+      .findOne({
         where: {
           date: new Date(date).toISOString(),
           CenterId,
@@ -51,23 +51,33 @@ class Event {
  * @returns {object} res.
  */
   static modifyEvent(req, res) {
-    Events.findById(req.params.eventId)
+    const { CenterId } = req.body;
+    Events.findOne({
+      where: {
+        date: new Date(req.body.date).toISOString(),
+        CenterId,
+      }
+    })
       .then((event) => {
-        if (!event) {
-          return res.status(404).send({ error: 'event not found' });
+        if (event) {
+          return res.status(400).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
         }
-        if (event && event.UserId !== req.decoded.userId) {
-          return res.status(403).send({ error: 'You cannot modify an event added by another user' });
-        }
-        event.updateAttributes({
-          name: req.body.name || event.name,
-          type: req.body.type || event.type,
-          CenterId: req.body.CenterId || event.CenterId,
-          date: new Date(req.body.date) || event.date,
-        });
-        return res.status(200).send({ message: 'You have successfully edited the event', event });
+        Events.findById(req.params.eventId)
+          .then((modifiedEvent) => {
+            if (!modifiedEvent) {
+              return res.status(400).send({ error: 'No event found' });
+            }
+            modifiedEvent.updateAttributes({
+              name: req.body.name || modifiedEvent.name,
+              type: req.body.type || modifiedEvent.type,
+              date: new Date(req.body.date).toISOString() || modifiedEvent.date,
+              CenterId: req.body.CenterId || modifiedEvent.CenterId,
+            });
+            return res.status(200).send({ message: 'successfully modified', modifiedEvent });
+          })
+          .catch(error => res.status(500).send({ error: error.message }));
       })
-      .catch(error => res.status(400).send({ error: error.message }));
+      .catch(error => res.status(500).send({ error: error.message }));
   }
   /**
  * delete an event

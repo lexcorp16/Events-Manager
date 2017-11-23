@@ -51,7 +51,7 @@ const checkInvalidUserDetails = (req, res, next) => {
   if (req.body.password.length < 6) {
     return res.status(400).send({ error: 'password must be at least six characters long' });
   }
-  if (!isValidEmail(email)) {
+  if (!isValidEmail(email.toLowerCase())) {
     return res.status(400).send({ error: 'Invalid email format' });
   }
   if (isDigit) {
@@ -74,7 +74,7 @@ const checkInvalidUserSignIn = (req, res, next) => {
     return res.status(400).send({ error: 'Please fill in all input fields' });
   }
   if (!isValidEmail(req.body.email)) {
-    return res.status(400).send({ error: 'Given email is not a valid email' });
+    return res.status(400).send({ error: 'Invalid email format' });
   }
   if (req.body.email.trim().length < 1) {
     return res.status(400).send({ error: 'Please fill in all input fields' });
