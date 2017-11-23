@@ -6,7 +6,9 @@
   "scripts": {
     "test": "nyc --reporter=html --reporter=text mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
     "start:dev": "nodemon ./server/app --exec babel-node ./server/app",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "build": "babel ./server/ -d ./dist",
+    "start": "node ./dist/app.js"
   },
   "repository": {
     "type": "git",
