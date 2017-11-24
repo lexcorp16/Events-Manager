@@ -35,16 +35,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      day: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      month: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      year: {
-        type: Sequelize.INTEGER,
+      date: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
       createdAt: {

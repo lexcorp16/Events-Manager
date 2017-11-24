@@ -1,5 +1,6 @@
 import centerControllers from '../controllers/center';
 import auth from '../middlewares/auth';
+import errorChecker from '../middlewares/errors';
 
 export default (app) => {
   app.get('/api', (req, res) => {
