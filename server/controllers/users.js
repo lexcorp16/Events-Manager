@@ -19,10 +19,10 @@ class User {
  */
   static signup(req, res) {
     const {
-      email,
       firstname,
       lastname,
     } = req.body;
+    const email = req.body.email.toLowerCase();
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
         return res.status(500).send({ error: err.message });
@@ -58,9 +58,9 @@ class User {
  */
   static signin(req, res) {
     const {
-      email,
       password,
     } = req.body;
+    const email = req.body.email.toLowerCase();
     return Users
       .findOne({
         where: {
@@ -84,7 +84,7 @@ class User {
             });
             return res.status(200).send({ message: 'You have successfully logged in', token });
           }
-          return res.status(400).send({ error: 'Invalid Username or password' });
+          return res.status(400).send({ error: 'Invalid email or password' });
         });
       })
       .catch(() => res.status(500).send({ error: 'an error occurred' }));

@@ -163,6 +163,85 @@ describe('test-cases for api routes', () => {
           expect(typeof res.body.token).to.be.a('string');
         });
     });
+
+    describe('It handles invalid user input', () => {
+      const userCredentials = {
+        email: 'lionelmessi@barca.com',
+        password: 'thesamallest',
+      };
+      it('responds with a 400 if a user password is incorrect', (done) => {
+        request(app)
+          .post('/api/v1/users/signin')
+          .send(userCredentials)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('Invalid email or password');
+          });
+      });
+      it('responds with a 400 if a user email is incorrect', (done) => {
+        userCredentials.email = 'efosaokpugie@gmail.com';
+        request(app)
+          .post('/api/v1/users/signin')
+          .send(userCredentials)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('Invalid email or password');
+          });
+      });
+      it('responds with a 400 if a user input is null', (done) => {
+        delete userCredentials.email;
+        request(app)
+          .post('/api/v1/users/signin')
+          .send(userCredentials)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('Please Input email');
+          });
+      });
+      it('responds with a 400 if a user input contains just whitespaces', (done) => {
+        userCredentials.email = '     ';
+        request(app)
+          .post('/api/v1/users/signin')
+          .send(userCredentials)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('Please fill in all input fields');
+          });
+      });
+      it('responds with a 400 if a user email is invalid', (done) => {
+        userCredentials.email = 'efosa@kkjl';
+        request(app)
+          .post('/api/v1/users/signin')
+          .send(userCredentials)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('Invalid email format');
+          });
+      });
+      it('allows capitalised emails', (done) => {
+        userCredentials.email = 'lionelmessi@BARca.com';
+        userCredentials.password = 'thegreatest';
+        request(app)
+          .post('/api/v1/users/signin')
+          .send(userCredentials)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200, done)
+          .expect((res) => {
+            expect(res.body.message).to.equal('You have successfully logged in');
+          });
+      });
+    });
   });
 
   describe('PUT /api/v1/users/admin', () => {
@@ -284,8 +363,25 @@ describe('test-cases for api routes', () => {
         .send(eventCredentials)
         .expect(200, done)
         .expect((res) => {
-          console.log(`HERE ${eventCredentials.CenterId}`);
-          expect(res.body.message).to.equal('You have successfully edited the event');
+          console.log(`HERE ${res.body.error}`);
+          expect(res.body.message).to.equal('successfully modified');
+        });
+    });
+    it('checks if an event is slated for the center before modifying', (done) => {
+      const eventCredentials = {
+        name: 'Andela Bootcamp',
+        type: 'coding Bootcamp',
+        CenterId: centerId,
+        date: '2018-11-02',
+      };
+      request(app)
+        .put(`/api/v1/events/${eventId}`)
+        .set('auth', secondToken)
+        .send(eventCredentials)
+        .expect(400, done)
+        .expect((res) => {
+          console.log(`HERE ${res.body.error}`);
+          expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
         });
     });
   });
@@ -303,7 +399,7 @@ describe('test-cases for api routes', () => {
   });
 
   describe('GET /api/v1/centers/<centerId>', () => {
-  	it('adds a new event', (done) => {
+    it('adds a new event', (done) => {
       const eventCredentials = {
         name: 'Graduation Party',
         type: 'Party',
