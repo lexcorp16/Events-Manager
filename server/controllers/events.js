@@ -1,6 +1,6 @@
 import models from '../db/models';
 
-const { Events , Users } = models;
+const { Events } = models;
 
 /**
 * @Event, class containing all methods that
@@ -65,7 +65,7 @@ class Event {
         Events.findById(req.params.eventId)
           .then((modifiedEvent) => {
             if (!modifiedEvent) {
-              return res.status(400).send({ error: 'No event found' });
+              return res.status(404).send({ error: 'No event found' });
             }
             modifiedEvent.updateAttributes({
               name: req.body.name || modifiedEvent.name,
@@ -107,20 +107,16 @@ class Event {
  * @returns {object} res.
  */
   static getUserEvents(req, res) {
-    Users.findOne({
+    Events.findAll({
       where: {
-        id: req.decoded.id,
-      },
-      include: [{
-        model: Events,
-        as: 'events',
-      }]
+        UserId: req.decoded.userId,
+      }
     })
       .then((userEvents) => {
         if (!userEvents) {
           return res.status(404).send({ error: 'No events found for this User' });
         }
-          return res.status(200).send({ message: 'Success', userEvents });
+        return res.status(200).send({ message: 'Success', userEvents });
       })
       .catch(error => res.status(500).send({ error: 'oops an error occured' }));
   }
