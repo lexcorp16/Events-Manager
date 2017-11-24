@@ -1,6 +1,6 @@
 import models from '../db/models';
 
-const { Events } = models;
+const { Events , Users } = models;
 
 /**
 * @Event, class containing all methods that
@@ -99,6 +99,30 @@ class Event {
           .catch(error => res.status(500).send({ error: error.message }));
       })
       .catch(error => res.status(500).send({ error: error.message }));
+  }
+  /**
+ * get User Events
+ * @param {object} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {object} res.
+ */
+  static getUserEvents(req, res) {
+    Users.findOne({
+      where: {
+        id: req.decoded.id,
+      },
+      include: [{
+        model: Events,
+        as: 'events',
+      }]
+    })
+      .then((userEvents) => {
+        if (!userEvents) {
+          return res.status(404).send({ error: 'No events found for this User' });
+        }
+          return res.status(200).send({ message: 'Success', userEvents });
+      })
+      .catch(error => res.status(500).send({ error: 'oops an error occured' }));
   }
 }
 

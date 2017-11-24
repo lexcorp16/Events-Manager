@@ -346,8 +346,21 @@ describe('test-cases for api routes', () => {
           console.log(`HERE ${eventCredentials.CenterId}`);
           expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
         });
-    });
+    });   
   });
+
+  describe('GET /api/events/users', () => {
+    it ('returns the events of a Uer', (done) => {
+      request(app)
+        .post('/api/v1/events/')
+        .set('auth', secondToken)
+        .send(eventCredentials)
+        .expect(200, done)
+        .expect((res) => {
+          expect(res.body.message).to.equal('Success');
+        })
+    })
+  })
 
   describe('PUT /api/v1/events/<eventId>', () => {
     it('modifies an event', (done) => {
