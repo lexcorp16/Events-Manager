@@ -19,6 +19,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      capacity: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       address: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -40,6 +44,10 @@ module.exports = {
       imageUrl: {
         type: Sequelize.STRING,
         allowNull: true,
+      },
+      isAvailable: {
+        type: Sequelize.STRING,
+        defaultValue: true,
       },
       createdAt: {
         allowNull: false,

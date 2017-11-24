@@ -4,7 +4,7 @@ module.exports = {
     password: 'fPhApaEayBDx2lOt-huPnoQ7Y1LkxYRV',
     database: 'ktmuzkvo',
     host: 'elmer.db.elephantsql.com',
-    dialect: 'postgres`',
+    dialect: 'postgres',
   },
   development: {
     username: 'ieuaevuf',
