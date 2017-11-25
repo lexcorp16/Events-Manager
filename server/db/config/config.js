@@ -1,23 +1,24 @@
+require('dotenv').config()
 module.exports = {
-  test: {
-    username: 'ktmuzkvo',
-    password: 'fPhApaEayBDx2lOt-huPnoQ7Y1LkxYRV',
-    database: 'ktmuzkvo',
-    host: 'elmer.db.elephantsql.com',
+  development: {
+    username: process.env.DATABASE_DEV,
+    password: process.env.DATABASE_PASSWORD_DEV,
+    database: process.env.DATABASE_DEV,
+    host: process.env.DATABASE_HOST_DEV,
     dialect: 'postgres',
   },
-  development: {
-    username: 'ieuaevuf',
-    password: 'YxfucFPbOLT3pqrRtADs1ClWEOO2DucE',
-    database: 'ieuaevuf',
-    host: 'baasu.db.elephantsql.com',
+  test: {
+    username: process.env.DATABASE_TEST,
+    password: process.env.DATABASE_PASSWORD_TEST,
+    database: process.env.DATABASE_TEST,
+    host: process.env.DATABASE_HOST_TEST,
     dialect: 'postgres',
   },
   production: {
-    username: 'root',
-    password: null,
-    database: 'database_production',
-    host: '127.0.0.1',
+    username: process.env.DATABASE_PROD,
+    password: process.env.DATABASE_PASSWORD_PROD,
+    database: process.env.DATABASE_PROD,
+    host: process.env.DATABASE_HOST_PROD,
     dialect: 'postgres',
   },
 };

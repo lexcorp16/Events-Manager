@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">87.23% </span>
+        <span class="strong">93.62% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>41/47</span>
+        <span class='fraction'>44/47</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">79.41% </span>
+        <span class="strong">88.24% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>27/34</span>
+        <span class='fraction'>30/34</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">86.96% </span>
+        <span class="strong">93.48% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>40/46</span>
+        <span class='fraction'>43/46</span>
       </div>
     </div>
   </div>
@@ -132,10 +132,10 @@
 87
 88
 89</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">35x</span>
@@ -197,22 +197,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -272,7 +272,7 @@ const checkInvalidUserDetails = (req, res, next) =&gt; {
   <span class="missing-if-branch" title="if path not taken" >I</span>if (req.body.password.length &lt; 6) {
 <span class="cstat-no" title="statement not covered" >    return res.status(400).send({ error: 'password must be at least six characters long' });</span>
   }
-  if (!isValidEmail(email)) {
+  if (!isValidEmail(email.toLowerCase())) {
     return res.status(400).send({ error: 'Invalid email format' });
   }
   if (isDigit) {
@@ -285,17 +285,17 @@ const checkInvalidUserDetails = (req, res, next) =&gt; {
 };
 &nbsp;
 const checkInvalidUserSignIn = (req, res, next) =&gt; {
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (req.body.email === undefined) {
-<span class="cstat-no" title="statement not covered" >    return res.status(400).send({ error: 'Please Input email' });</span>
+  if (req.body.email === undefined) {
+    return res.status(400).send({ error: 'Please Input email' });
   }
   <span class="missing-if-branch" title="if path not taken" >I</span>if (req.body.password === undefined) {
 <span class="cstat-no" title="statement not covered" >    return res.status(400).send({ error: 'Please Input password' });</span>
   }
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (req.body.email.trim().length &lt; 1) {
-<span class="cstat-no" title="statement not covered" >    return res.status(400).send({ error: 'Please fill in all input fields' });</span>
+  if (req.body.email.trim().length &lt; 1) {
+    return res.status(400).send({ error: 'Please fill in all input fields' });
   }
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!isValidEmail(req.body.email)) {
-<span class="cstat-no" title="statement not covered" >    return res.status(400).send({ error: 'Given email is not a valid email' });</span>
+  if (!isValidEmail(req.body.email)) {
+    return res.status(400).send({ error: 'Invalid email format' });
   }
   <span class="missing-if-branch" title="if path not taken" >I</span>if (req.body.email.trim().length &lt; 1) {
 <span class="cstat-no" title="statement not covered" >    return res.status(400).send({ error: 'Please fill in all input fields' });</span>
@@ -313,7 +313,7 @@ export default {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 24 2017 12:44:12 GMT+0100 (W. Central Africa Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 25 2017 22:36:30 GMT+0100 (W. Central Africa Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

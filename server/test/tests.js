@@ -357,9 +357,9 @@ describe('test-cases for api routes', () => {
         .expect(200, done)
         .expect((res) => {
           expect(res.body.message).to.equal('Success');
-        })
-    })
-  })
+        });
+    });
+  });
 
   describe('PUT /api/v1/events/<eventId>', () => {
     it('modifies an event', (done) => {
