@@ -9,24 +9,22 @@ export default (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     type: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    location: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     address: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     capacity: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    UserId: {
+    user: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
@@ -56,8 +54,8 @@ export default (sequelize, DataTypes) => {
     },
   });
   Centers.associate = (models) => {
-    Centers.belongsTo(models.Users, { foreignKey: 'UserId' });
-    Centers.hasMany(models.Events, { as: 'venueOfEvent', foreignKey: 'CenterId' });
+    Centers.belongsTo(models.Users, { foreignKey: 'user' });
+    Centers.hasMany(models.Events, { as: 'venueOfEvent', foreignKey: 'center' });
   };
   return Centers;
 };

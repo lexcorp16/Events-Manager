@@ -10,12 +10,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       type: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      location: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -26,8 +23,9 @@ module.exports = {
       address: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
-      UserId: {
+      user: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {

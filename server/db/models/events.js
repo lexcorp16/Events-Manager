@@ -10,17 +10,17 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    CenterId: {
-      type: DataTypes.UUID,
+    center: {
+      type: DataTypes.STRING,
       allowNull: false,
       references: {
         model: 'Centers',
-        key: 'id',
+        key: 'name',
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     },
-    UserId: {
+    user: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
@@ -46,8 +46,8 @@ export default (sequelize, DataTypes) => {
     },
   });
   Events.associate = (models) => {
-    Events.belongsTo(models.Users, { foreignKey: 'UserId' });
-    Events.belongsTo(models.Centers, { foreignKey: 'CenterId' });
+    Events.belongsTo(models.Users, { foreignKey: 'user' });
+    Events.belongsTo(models.Centers, { foreignKey: 'center' });
   };
   return Events;
 };

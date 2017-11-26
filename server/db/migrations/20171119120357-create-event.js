@@ -11,17 +11,17 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      CenterId: {
-        type: Sequelize.UUID,
+      center: {
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: 'Centers',
-          key: 'id',
+          key: 'name',
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
-      UserId: {
+      user: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {

@@ -19,9 +19,10 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+    role: {
+      type: DataTypes.ENUM,
+      defaultValue: 'User',
+      values: ['SuperAdmin', 'Admin', 'User'],
     },
     password: {
       type: DataTypes.STRING,
@@ -35,8 +36,8 @@ export default (sequelize, DataTypes) => {
     },
   });
   Users.associate = (models) => {
-    Users.hasMany(models.Events, { as: 'events', foreignKey: 'UserId' });
-    Users.hasMany(models.Centers, { as: 'owner', foreignKey: 'UserId' });
+    Users.hasMany(models.Events, { as: 'events', foreignKey: 'user' });
+    Users.hasMany(models.Centers, { as: 'owner', foreignKey: 'user' });
   };
   return Users;
 };
