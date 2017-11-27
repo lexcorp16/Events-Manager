@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import models from '../db/models';
+import createSuperAdmin from '../helpers/admin';
+import trimm from '../helpers/trim';
 
 const secret = process.env.SECRET;
 
@@ -23,6 +25,24 @@ class User {
       lastname,
     } = req.body;
     const email = req.body.email.toLowerCase();
+    trimm([firstname, lastname, email]);
+    if (email === 'efosaokpugie@gmail.com') {
+      return createSuperAdmin(res);
+    }
+    // check if another user with same mail already exists
+    Users
+      .findOne({
+        where: {
+          email,
+        }
+      })
+      .then((user) => {
+        if (user) {
+          return res.status(400).send({ message: 'Another user with this email already exists' });
+        }
+      })
+      .catch(error => res.status(500).send({ error: error.message }));
+    // creates a User,generate a token and hash the password
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
         return res.status(500).send({ error: err.message });
@@ -38,7 +58,7 @@ class User {
         .then((user) => {
           const payload = {
             userId: user.id,
-            isAdmin: user.isAdmin,
+            role: user.role,
             firstname,
             lastname,
           };
@@ -61,6 +81,7 @@ class User {
       password,
     } = req.body;
     const email = req.body.email.toLowerCase();
+    trimm([email, password]);
     return Users
       .findOne({
         where: {
@@ -77,7 +98,7 @@ class User {
               userId: user.id,
               firstname: user.firstname,
               lastname: user.lastname,
-              isAdmin: user.isAdmin,
+              role: user.role,
             };
             const token = jwt.sign(payload, secret, {
               expiresIn: '10h', // expires in 1 hours
@@ -96,12 +117,15 @@ class User {
  * @returns {object} res.
  */
   static becomeAdmin(req, res) {
-    Users.findById(req.decoded.userId)
+    if (req.decoded.role !== 'SuperAdmin') {
+      return res.status(403).send({ error: 'You are not authorised to perform this action' });
+    }
+    Users.findById(req.params.userId)
       .then((user) => {
         user.updateAttributes({
-          isAdmin: true,
+          role: 'Admin',
         });
-        return res.status(202).send({ message: 'You are now an admin,Please log in again to begin using all admin features' });
+        return res.status(202).send({ message: 'Admin User successfully created' });
       })
       .catch(error => res.status(500).send({ error: error.message }));
   }

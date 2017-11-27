@@ -17,29 +17,27 @@ class Center {
  * @returns {object} res.
  */
   static addCenter(req, res) {
-    const { isAdmin } = req.decoded;
+    const { role } = req.decoded;
     const {
       name,
-      location,
       type,
       capacity,
       address,
       imageUrl,
       mobileNumber,
     } = req.body;
-    if (!isAdmin) {
-      return res.status(400).send({ error: 'You are not authorized to perform this action' });
+    if (role !== 'SuperAdmin' || role !== 'Admin') {
+      return res.status(403).send({ error: 'You are not authorized to perform this action' });
     }
     return Centers
       .create({
         name,
-        location,
         type,
         capacity,
         address,
         imageUrl,
         mobileNumber,
-        UserId: req.decoded.userId,
+        user: req.decoded.userId,
       })
       .then(center => res.status(200).send({ message: 'You have successfully added a center', center }))
       .catch(error => res.status(500).send({ error: error.message }));
@@ -52,9 +50,9 @@ class Center {
  */
   static modifyCenter(req, res) {
     const {
-      isAdmin,
+      role,
     } = req.decoded;
-    if (!isAdmin) {
+    if (role !== 'SuperAdmin' || role !== 'Admin') {
       return res.status(400).send({ error: 'You are not authorized to perform this action' });
     }
     if (Object.keys(req.body).length < 1) {
