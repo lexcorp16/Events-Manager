@@ -1,11 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const parentDir = path.join(__dirname, './client');
-
 module.exports = {
   entry: [
-    path.join(parentDir, 'index.js')
+    path.join(__dirname, './client/index.js')
   ],
   module: {
     loaders: [{
@@ -13,16 +11,44 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel-loader'
     }, {
-      test: /\.(sass|scss)$/,
-      loader: ['style-loader', 'css-loader', 'sass-loader']
+      test: /\.(scss|css)$/,
+      loaders: ['style-loader', 'css-loader', 'sass-loader']
+    }, {
+      test: /\.(jpe?g|png|gif|svg|ico)$/i,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          },
+        },
+        {
+          loader: 'image-webpack-loader',
+          query: {
+            optipng: {
+              optimizationLevel: 7,
+            },
+            mozjpeg: {
+              progressive: true,
+            },
+            gifsicle: {
+              interlaced: false,
+            },
+            pngquant: {
+              quality: '75-90',
+              speed: 3,
+            },
+          },
+        },
+      ],
     }]
   },
   output: {
-    path: path.join(parentDir, '/dist'),
-    filename: './client/bundle.js'
+    path: __dirname + '/dist',
+    filename: 'client/bundle.js'
   },
   devServer: {
-    contentBase: parentDir,
+    contentBase: __dirname + '/client',
     historyApiFallback: true
   }
 };
