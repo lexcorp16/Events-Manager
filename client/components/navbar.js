@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import '../public/signin.css';
+import '../public/signin.scss';
 const custom = {
   color: 'skyblue'
 }
