@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Footer from '../components/footer';
-import SignupBody from '../components/signupbody';
+// import SignupBody from '../components/signupbody';
 import Navbar from '../components/navbar';
-import SigninBody from '../components/signinbody';
+// import SigninBody from '../components/signinbody';
+import LandingpageBody from '../components/landing';
 /**
 * @Center, class containing all methods that
 * handle center related api endpoint
@@ -12,8 +13,8 @@ export default class App extends Component {
     return (
       <div>
         <div className='container-fluid'>
-        <Navbar />
-        <SigninBody />
+          <Navbar />
+          <LandingpageBody />
         </div>
 
         <Footer />

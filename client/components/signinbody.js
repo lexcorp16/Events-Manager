@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 
-import '../public/signin.css';
+import '../public/signin.scss';
 
+/**
+* @Center, class containing all methods that
+* handle center related api endpoint
+*/
 export default class SigninBody extends Component {
-  render () {
+/**
+ * Add a center
+ * @param {signin} req The request body of the request.
+ * @param {object} res The response body.
+ * @returns {object} res.
+ */
+  render() {
     return (
       <div>
-      <div className="container signup-padder"> 
-      <div className="sign-in-container">
-      <div className="form-header">
-          <p className="text-center header-form" style={{marginTop: 3 + '%',fontSize: 1.5 + 'em'}}>Sign In</p>
-      </div>
-      <form className="form form-group">
+        <div className="container signup-padder"> 
+          <div className="sign-in-container">
+            <div className="form-header">
+              <p className="text-center header-form" style={{marginTop: `${3}%`,fontSize: `${1.5}em`}}>Sign In</p>
+          </div>
+            <form className="form form-group">
           <div className="usericon">
            <div><i className="fa fa-user" style={{fontSize: 15 + 'em'}}></i></div>
          </div>

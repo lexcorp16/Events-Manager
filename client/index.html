@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lobster Two">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="./scss/signin.css">
         
         <script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -16,16 +15,20 @@
         <div id="app"></div>
         <script type="text/javascript" src="./client/bundle.js"></script>
     </body>
-    <script type="text/javascript">
-        const openNav = () => {
-        document.getElementById("mySidenav").style.width = "70%";
-        // document.getElementById("flipkart-navbar").style.width = "50%";
-        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-        }
-    
-        const closeNav = () => {
-        document.getElementById("mySidenav").style.width = "0";
-        document.body.style.backgroundColor = "rgba(0,0,0,0)";
-        }
-    </script>
+<script type="text/javascript">
+var slideIndex = 0;
+showSlides();
+function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    for (i = 0; i < slides.length; i++) {
+       slides[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}
+    slides[slideIndex-1].style.display = "block";  
+    setTimeout(showSlides, 4000); // Change image every 2 seconds
+}
+</script>
 </html>
