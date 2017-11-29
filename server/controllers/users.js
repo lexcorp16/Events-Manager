@@ -65,6 +65,7 @@ class User {
           const token = jwt.sign(payload, secret, {
             expiresIn: '10h', // expires in 1 hours
           });
+          console.log(user);
           res.status(201).send({ message: 'You have successfully signed up', token });
         })
         .catch(error => res.status(400).send({ error: error.message }));
