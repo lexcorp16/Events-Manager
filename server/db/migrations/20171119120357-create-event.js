@@ -13,7 +13,7 @@ module.exports = {
       },
       center: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'Centers',
           key: 'name',

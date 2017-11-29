@@ -12,10 +12,10 @@ export default (sequelize, DataTypes) => {
     },
     center: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'Centers',
-        key: 'name',
+        key: 'id',
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
@@ -37,7 +37,7 @@ export default (sequelize, DataTypes) => {
     date: {
       type: DataTypes.DATE,
       allowNull: false,
-    }
+    },
   }, {
     classMethods: {
       associate: () => {

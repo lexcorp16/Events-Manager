@@ -25,15 +25,11 @@ class User {
       lastname,
     } = req.body;
     const email = req.body.email.toLowerCase();
-    trimm([firstname, lastname, email]);
-    if (email === 'efosaokpugie@gmail.com') {
-      return createSuperAdmin(res);
-    }
     // check if another user with same mail already exists
     Users
       .findOne({
         where: {
-          email,
+          email: email.trim(),
         }
       })
       .then((user) => {
@@ -43,6 +39,9 @@ class User {
       })
       .catch(error => res.status(500).send({ error: error.message }));
     // creates a User,generate a token and hash the password
+    if (email === 'efosaokpugie@gmail.com') {
+      return createSuperAdmin(res);
+    }
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
         return res.status(500).send({ error: err.message });
@@ -65,10 +64,9 @@ class User {
           const token = jwt.sign(payload, secret, {
             expiresIn: '10h', // expires in 1 hours
           });
-          console.log(user);
-          res.status(201).send({ message: 'You have successfully signed up', token });
+          return res.status(201).send({ message: 'You have successfully signed up', token, user });
         })
-        .catch(error => res.status(400).send({ error: error.message }));
+        .catch(error => res.status(500).send({ error: error.message }));
     });
   }
   /**
@@ -86,7 +84,7 @@ class User {
     return Users
       .findOne({
         where: {
-          email,
+          email: email.trim(),
         },
       })
       .then((user) => {

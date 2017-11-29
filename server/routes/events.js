@@ -6,4 +6,5 @@ export default (app) => {
   app.put('/api/v1/events/:eventId', auth, eventController.modifyEvent);
   app.delete('/api/v1/events/:eventId', auth, eventController.deleteEvent);
   app.get('/api/v1/events/user', auth, eventController.getUserEvents);
+  app.post('/api/v1/events/:eventId', auth, eventController.cancelUserEvent);
 };

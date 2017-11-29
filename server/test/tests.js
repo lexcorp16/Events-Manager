@@ -34,6 +34,7 @@ describe('test-cases for api routes', () => {
   let secondToken;
   let centerId;
   let eventId;
+  let secUserId;
   describe('GET /', () => {
     it('responds with a 200 and welcome message in json', (done) => {
       request(app)
@@ -58,11 +59,11 @@ describe('test-cases for api routes', () => {
     const userCredentials = {
       firstname: 'ororo',
       lastname: 'ronaldo',
-      email: 'lionelmessi@barca.com',
+      email: 'efosaokpugie@gmail.com',
       password: 'thegreatest',
       confirmpassword: 'thegreatest',
     };
-    it('creates a new User and responds with 201', (done) => {
+    it('creates a SuperAdmin and responds with 201', (done) => {
       request(app)
         .post('/api/v1/users')
         .send(userCredentials)
@@ -71,6 +72,25 @@ describe('test-cases for api routes', () => {
         .expect(201, done)
         .expect((res) => {
           token = res.body.token;
+        });
+    });
+    it('creates a user and responds with 201', (done) => {
+      const ordinaryUserCredential = {
+        firstname: 'ororo',
+        lastname: 'ronaldo',
+        email: 'efosaokpugie@yahoo.com',
+        password: 'thegreatest',
+        confirmpassword: 'thegreatest',
+      };
+      request(app)
+        .post('/api/v1/users')
+        .send(ordinaryUserCredential)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201, done)
+        .expect((res) => {
+          secUserId = res.body.user.id;
+          expect(res.body.message).to.equal('You have successfully signed up');
         });
     });
     describe('it validates user input when signing up', () => {
@@ -150,8 +170,8 @@ describe('test-cases for api routes', () => {
   describe('POST /api/v1/users/signin', () => {
     it('responds with a 200 and signs in a user', (done) => {
       const userCredentials = {
-        email: 'lionelmessi@barca.com',
-        password: 'thegreatest',
+        email: 'efosaokpugie@gmail.com',
+        password: 'swampious',
       };
       request(app)
         .post('/api/v1/users/signin')
@@ -179,9 +199,9 @@ describe('test-cases for api routes', () => {
           .expect((res) => {
             expect(res.body.error).to.equal('Invalid email or password');
           });
-      });
+       });
       it('responds with a 400 if a user email is incorrect', (done) => {
-        userCredentials.email = 'efosaokpugie@gmail.com';
+        userCredentials.email = 'efosaokpugie@gma.com';
         request(app)
           .post('/api/v1/users/signin')
           .send(userCredentials)
@@ -229,8 +249,8 @@ describe('test-cases for api routes', () => {
           });
       });
       it('allows capitalised emails', (done) => {
-        userCredentials.email = 'lionelmessi@BARca.com';
-        userCredentials.password = 'thegreatest';
+        userCredentials.email = 'efosaokpugie@GmaIl.com';
+        userCredentials.password = 'swampious';
         request(app)
           .post('/api/v1/users/signin')
           .send(userCredentials)
@@ -241,204 +261,192 @@ describe('test-cases for api routes', () => {
             expect(res.body.message).to.equal('You have successfully logged in');
           });
       });
-    });
   });
-
-  describe('PUT /api/v1/users/admin', () => {
-    it('makes a user become an admin', (done) => {
-      request(app)
-        .put('/api/v1/users/admin/')
-        .set('auth', token)
-        .expect(202, done)
-        .expect((res) => {
-          expect(res.body.message).to.equal('You are now an admin,Please log in again to begin using all admin features');
-        });
+    describe('PUT /api/v1/users/userId', () => {
+      it('makes a user become an admin', (done) => {
+        request(app)
+          .put(`/api/v1/users/${secUserId}/`)
+          .set('auth', token)
+          .expect(202, done)
+          .expect((res) => {
+            expect(res.body.message).to.equal('Admin User successfully created');
+          });
+      });
     });
-  });
 
-  describe('POST /api/v1/users/signin', () => {
-    const fakeCredentials = {
-      email: 'lionelmessi@barca.com',
-      password: 'thegreatest',
-    };
-    it('sign in admin', (done) => {
-      request(app)
-        .post('/api/v1/users/signin')
-        .send(fakeCredentials)
-        .expect(200, done)
-        .expect((res) => {
-          secondToken = res.body.token;
-        });
-    });
-  });
-
-  describe('POST /api/v1/centers', () => {
-    const centerDetails = {
-      name: 'Rogaros',
-      type: 'Wedding Reception',
-      location: 'Lagos',
-      address: 'Number 22,yeru street',
-      mobileNumber: '081567677787',
-      capacity: '20000',
-    };
-    it('makes an admin add a center', (done) => {
-      request(app)
-        .post('/api/v1/centers/')
-        .set('auth', secondToken)
-        .send(centerDetails)
-        .expect('Content-Type', /json/)
-        .expect(200, done)
-        .expect((res) => {
-          centerId = res.body.center.id;
-          expect(res.body.message).to.equal('You have successfully added a center');
-          expect(typeof centerId).to.be.a('string');
-          console.log(`HERE ${centerId}`);
-          centerId = res.body.center.id;
-        });
-    });
-  });
-
-  describe('GET /api/v1/centers', () => {
-    it('gets all centers', (done) => {
-      request(app)
-        .get('/api/v1/centers/')
-        .set('Accept', 'application/json')
-        .expect(200, done)
-        .expect((res) => {
-          expect(res.body.centers.length).to.equal(1);
-        });
-    });
-  });
-
-  describe('POST /api/v1/events', () => {
-    it('adds a new event', (done) => {
-      const eventCredentials = {
-        name: 'Graduation Party',
-        type: 'Party',
-        CenterId: centerId,
-        date: '2018-12-05',
+    describe('POST /api/v1/users/signin', () => {
+      const fakeCredentials = {
+        email: 'efosaokpugie@yahoo.com',
+        password: 'thegreatest',
       };
-      request(app)
-        .post('/api/v1/events/')
-        .set('auth', secondToken)
-        .send(eventCredentials)
-        .expect(201, done)
-        .expect((res) => {
-          eventId = res.body.newEvent.id;
-          console.log(`HERE ${eventCredentials.CenterId}`);
-          expect(res.body.message).to.equal('Event successfully added');
-        });
+      it('sign in admin', (done) => {
+        request(app)
+          .post('/api/v1/users/signin')
+          .send(fakeCredentials)
+          .expect(200, done)
+          .expect((res) => {
+            secondToken = res.body.token;
+          });
+      });
     });
-
-    it('checks if an event is slated for the center being used before saving', (done) => {
-      const eventCredentials = {
-        name: 'Graduation Party',
-        type: 'Party',
-        CenterId: centerId,
-        date: '2018-12-05',
+    
+    describe('POST /api/v1/centers', () => {
+      const centerDetails = {
+        name: 'Rogaros',
+        type: 'Wedding Reception',
+        address: 'Number 22,yeru street',
+        mobileNumber: '081567677787',
+        capacity: '20000',
       };
-      request(app)
-        .post('/api/v1/events/')
-        .set('auth', secondToken)
-        .send(eventCredentials)
-        .expect(400, done)
-        .expect((res) => {
-          console.log(`HERE ${eventCredentials.CenterId}`);
-          expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
-        });
+      it('makes an admin add a center', (done) => {
+        request(app)
+          .post('/api/v1/centers/')
+          .set('auth', secondToken)
+          .send(centerDetails)
+          .expect('Content-Type', /json/)
+          .expect(200, done)
+          .expect((res) => {
+            console.log(`HERE ${secondToken}`);
+            centerId = res.body.center.id;
+            expect(res.body.message).to.equal('You have successfully added a center');
+            expect(typeof centerId).to.be.a('string');
+            console.log(`HERE ${centerId}`);
+            centerId = res.body.center.id;
+          });
+      });
     });
-  });
 
-  describe('GET /api/events/users', () => {
-    it('returns the events of a Uer', (done) => {
-      request(app)
-        .get('/api/v1/events/user')
-        .set('auth', secondToken)
-        .expect(200, done)
-        .expect((res) => {
-          expect(res.body.message).to.equal('Success');
-        });
+    describe('GET /api/v1/centers', () => {
+      it('gets all centers', (done) => {
+        request(app)
+          .get('/api/v1/centers/')
+          .set('Accept', 'application/json')
+          .expect(200, done)
+          .expect((res) => {
+            expect(res.body.centers.length).to.equal(1);
+          });
+      });
     });
-  });
 
-  describe('PUT /api/v1/events/<eventId>', () => {
-    it('modifies an event', (done) => {
-      const eventCredentials = {
-        name: 'For loop',
-        type: 'Seminar',
-        CenterId: centerId,
-        date: '2018-11-02',
-      };
-      request(app)
-        .put(`/api/v1/events/${eventId}`)
-        .set('auth', secondToken)
-        .send(eventCredentials)
-        .expect(200, done)
-        .expect((res) => {
-          console.log(`HERE ${res.body.error}`);
-          expect(res.body.message).to.equal('successfully modified');
-        });
-    });
-    it('checks if an event is slated for the center before modifying', (done) => {
-      const eventCredentials = {
-        name: 'Andela Bootcamp',
-        type: 'coding Bootcamp',
-        CenterId: centerId,
-        date: '2018-11-02',
-      };
-      request(app)
-        .put(`/api/v1/events/${eventId}`)
-        .set('auth', secondToken)
-        .send(eventCredentials)
-        .expect(400, done)
-        .expect((res) => {
-          console.log(`HERE ${res.body.error}`);
-          expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
-        });
-    });
-  });
+    describe('POST /api/v1/events', () => {
+      it('adds a new event', (done) => {
+        const eventCredentials = {
+          name: 'Graduation Party',
+          type: 'Party',
+          center: 'Rogaros',
+          date: '2018-12-05',
+        };
+        request(app)
+          .post('/api/v1/events/')
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(201, done)
+          .expect((res) => {
+            eventId = res.body.newEvent.id;
+            console.log(`HERE ${eventCredentials.CenterId}`);
+            expect(res.body.message).to.equal('Event successfully added');
+          });
+      });
 
-  describe('DELETES /api/v1/events/<eventId>', () => {
-    it('deletes an event', (done) => {
-      request(app)
-        .delete(`/api/v1/events/${eventId}`)
-        .set('auth', secondToken)
-        .expect(200, done)
-        .expect((res) => {
-          expect(res.body.message).to.equal('Event successfully deleted');
-        });
+      it('checks if an event is slated for the center being used before saving', (done) => {
+        const eventCredentials = {
+          name: 'Graduation Party',
+          type: 'Party',
+          center: 'Rogaros',
+          date: '2018-12-05',
+        };
+        request(app)
+          .post('/api/v1/events/')
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(400, done)
+          .expect((res) => {
+            console.log(`HERE ${eventCredentials.CenterId}`);
+            expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
+          });
+      });
     });
-  });
 
-  describe('GET /api/v1/centers/<centerId>', () => {
-    it('adds a new event', (done) => {
-      const eventCredentials = {
-        name: 'Graduation Party',
-        type: 'Party',
-        CenterId: centerId,
-        date: '2018-12-05',
-      };
-      request(app)
-        .post('/api/v1/events/')
-        .set('auth', secondToken)
-        .send(eventCredentials)
-        .expect(201, done)
-        .expect((res) => {
-          eventId = res.body.newEvent.id;
-        });
+    describe('GET /api/events/users', () => {
+      it('returns the events of a User', (done) => {
+        request(app)
+          .get('/api/v1/events/user')
+          .set('auth', secondToken)
+          .expect(200, done)
+          .expect((res) => {
+            expect(res.body.message).to.equal('Success');
+          });
+      });
     });
-    it('gets a single center and all the events slated for that center', (done) => {
-      request(app)
-        .get(`/api/v1/centers/${centerId}`)
-        .set('Accept', 'application/json')
-        .expect(200, done)
-        .expect((res) => {
-          expect(res.body.message).to.equal('Successfully found Center and events slated for the center');
-          expect(res.body.center.id).to.equal(centerId);
-          expect(res.body.center.venueOfEvent[0].id).to.equal(eventId);
-          console.log(`HERE ${res.body.center.venueOfEvent[0].id}`);
-          console.log(`HERE ${centerId}`);
-        });
+
+    describe('PUT /api/v1/events/<eventId>', () => {
+      it('modifies an event', (done) => {
+        const eventCredentials = {
+          name: 'For loop',
+          type: 'Seminar',
+          center: 'Rogaros',
+          date: '2018-11-02',
+        };
+        request(app)
+          .put(`/api/v1/events/${eventId}`)
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(200, done)
+          .expect((res) => {
+            console.log(`HERE ${res.body.error}`);
+            expect(res.body.message).to.equal('successfully modified');
+          });
+      });
+      it('checks if an event is slated for the center before modifying', (done) => {
+        const eventCredentials = {
+          name: 'Andela Bootcamp',
+          type: 'coding Bootcamp',
+          center: 'Rogaros',
+          date: '2018-11-02',
+        };
+        request(app)
+          .put(`/api/v1/events/${eventId}`)
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(400, done)
+          .expect((res) => {
+            console.log(`HERE ${res.body.error}`);
+            expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
+          });
+      });
+    });
+
+    describe('DELETES /api/v1/events/<eventId>', () => {
+      it('deletes an event', (done) => {
+        request(app)
+          .delete(`/api/v1/events/${eventId}`)
+          .set('auth', token)
+          .expect(200, done)
+          .expect((res) => {
+            expect(res.body.message).to.equal('Event successfully deleted');
+          });
+      });
+    });
+
+    describe('POST /api/v1/events', () => {
+      it('adds a new event', (done) => {
+        const eventCredentials = {
+          name: 'Graduation Party',
+          type: 'Party',
+          center: 'Rogaros',
+          date: '2018-12-05',
+        };
+        request(app)
+          .post('/api/v1/events/')
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(201, done)
+          .expect((res) => {
+            eventId = res.body.newEvent.id;
+            console.log(`HERE ${eventCredentials.CenterId}`);
+            expect(res.body.message).to.equal('Event successfully added');
+          });
+      });
     });
   });
 });

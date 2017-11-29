@@ -1,5 +1,3 @@
-import trimm from '../helpers/trim';
-
 const isValidEmail = (mail) => {
   if (/^\w+([\.-]?\w+)*@\w+([ \.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
     return true;
@@ -27,7 +25,7 @@ const checkInvalidUserDetails = (req, res, next) => {
   let isNull = false;
   let isDigit = false;
   for (let i = 0; i < reqBody.length; i += 1) {
-    if (reqBody[i].trim() === undefined) {
+    if (reqBody[i] === undefined) {
       undefinedBody = matchingDetails[i];
       break;
     }
@@ -39,7 +37,7 @@ const checkInvalidUserDetails = (req, res, next) => {
   }
 
   [firstname, lastname].forEach((field) => {
-    if (!undefinedBody && Number.isInteger(parseFloat(field.trim()))) {
+    if (!undefinedBody && Number.isInteger(parseFloat(field))) {
       isDigit = true;
     }
   });
@@ -50,32 +48,32 @@ const checkInvalidUserDetails = (req, res, next) => {
   if (isNull) {
     return res.status(400).send({ error: 'Please fill in all input field' });
   }
-  if (req.body.password.trim().length < 6) {
+  if (req.body.password.length < 6) {
     return res.status(400).send({ error: 'password must be at least six characters long' });
   }
-  if (!isValidEmail(email.toLowerCase())) {
+  if (!isValidEmail(email)) {
     return res.status(400).send({ error: 'Invalid email format' });
   }
   if (isDigit) {
     return res.status(400).send({ error: 'Your names cannot be digits only' });
   }
-  if (password.trim() !== confirmpassword.trim()) {
+  if (password !== confirmpassword) {
     return res.status(400).send({ error: 'password and confirmpassword are not equal' });
   }
   next();
 };
 
 const checkInvalidUserSignIn = (req, res, next) => {
-  if (req.body.email.trim() === undefined) {
+  if (req.body.email === undefined) {
     return res.status(400).send({ error: 'Please Input email' });
   }
-  if (req.body.password.trim() === undefined) {
+  if (req.body.password === undefined) {
     return res.status(400).send({ error: 'Please Input password' });
   }
   if (req.body.email.trim().length < 1) {
     return res.status(400).send({ error: 'Please fill in all input fields' });
   }
-  if (!isValidEmail(req.body.email.trim())) {
+  if (!isValidEmail(req.body.email)) {
     return res.status(400).send({ error: 'Invalid email format' });
   }
   if (req.body.email.trim().length < 1) {
@@ -87,4 +85,4 @@ const checkInvalidUserSignIn = (req, res, next) => {
 export default {
   checkInvalidUserDetails,
   checkInvalidUserSignIn,
-};
+}

@@ -26,7 +26,7 @@ class Center {
       imageUrl,
       mobileNumber,
     } = req.body;
-    if (role !== 'SuperAdmin' || role !== 'Admin') {
+    if (role === 'User') {
       return res.status(403).send({ error: 'You are not authorized to perform this action' });
     }
     return Centers
@@ -52,7 +52,7 @@ class Center {
     const {
       role,
     } = req.decoded;
-    if (role !== 'SuperAdmin' || role !== 'Admin') {
+    if (role === 'User') {
       return res.status(400).send({ error: 'You are not authorized to perform this action' });
     }
     if (Object.keys(req.body).length < 1) {
@@ -83,7 +83,6 @@ class Center {
         center.updateAttributes({
           name: req.body.name || center.name,
           type: req.body.type || center.type,
-          location: req.body.location || center.location,
           address: req.body.address || center.address,
           mobileNumber: req.body.mobileNumber || center.mobileNumber,
           imageUrl: req.body.imageUrl || center.imageUrl,
@@ -116,16 +115,23 @@ class Center {
  * @returns {array} res.
  */
   static getACenter(req, res) {
-    return Centers.findOne({
-      where: {
-        id: req.params.centerId,
-      },
-      include: [{
-        model: Events,
-        as: 'venueOfEvent',
-      }]
-    })
-      .then(center => res.status(200).send({ message: 'Successfully found Center and events slated for the center', center }))
+    return Centers.findById(req.params.centerId)
+      .then((center) => {
+        if (!center) {
+          return res.status(404).send({ error: 'No events found' });
+        }
+        Centers.findOne({
+          where: {
+            name: center.name,
+          },
+          include: [{
+            model: Events,
+            as: 'venueOfEvent',
+          }]
+        })
+          .then(aCenter => res.status(200).send({ message: 'Success', aCenter }))
+          .catch(error => res.status(500).send({ error: error.message }));
+      })
       .catch(error => res.status(500).send({ error: error.message }));
   }
 }
