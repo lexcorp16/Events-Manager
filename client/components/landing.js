@@ -85,8 +85,8 @@ export default class LandingpageBody extends Component {
             </div>
           </div>
 
-        <h3 style={{ color: 'white' }}>Conference Centers</h3>
-        <div className="row">
+          <h3 style={{ color: 'white' }}>Conference Centers</h3>
+          <div className="row">
           <div className="col-xs-4 col-sm-4 col-lg-4">
             <div className="card img-fluid" style={{ width: `${500}px`, color: 'white' }}>
               <img className="card-img-top card-image imagec-one" src="../public/images/coference1.jpg" alt="Card image" style={{ width: `${100}%` }} />
@@ -115,9 +115,8 @@ export default class LandingpageBody extends Component {
             </div>
           </div>
         </div>
-       </div>
+        </div>
       </div>
-
     );
   }
 }
