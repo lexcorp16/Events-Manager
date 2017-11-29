@@ -4,7 +4,7 @@ import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
 import SignupPage from './components/signuppage';
 import LandingPage from './components/landing';
-import SigninPage from './components/signinbody';
+import SigninPage from './components/signinpage';
 
 export default (
   <Route path="/" component= {App}>
@@ -13,3 +13,4 @@ export default (
     <Route path="signin" component={SigninPage} />
   </Route>
 );
+

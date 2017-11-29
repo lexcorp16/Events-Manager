@@ -28,10 +28,6 @@ class SignupBody extends Component {
     e.preventDefault();
     this.props.userSignupRequest(this.state).then(
       () => {
-        this.props.addFlashMessage({
-          type: 'success',
-          text: 'You have signed up successfully. Welcome!'
-        });
         this.context.router.push('/');
       }
     );
@@ -71,8 +67,7 @@ class SignupBody extends Component {
 }
 
 SignupBody.propTypes = {
-  userSignupRequest: PropTypes.func.isRequired,
-  addFlashMessage: PropTypes.func.isRequired
+  userSignupRequest: PropTypes.func.isRequired
 };
 
 SignupBody.contextTypes = {
