@@ -27,7 +27,7 @@ export default class Footer extends Component {
             <div className="row row1">
               <ul className="largenav pull-right" style={{ marginLeft: `${150}px`, }}>
                 <li className="upper-links"><Link className="links" to="/" style={{ color: 'white' }}>Home</Link></li>
-                <li className="upper-links"><Link className="links" to="/" style={{ color: 'white' }}>About Us</Link></li>
+                <li className="upper-links"><Link className="links" to="/centers" style={{ color: 'white' }}>See Centers</Link></li>
                 <li className="upper-links"><Link className="links" to="/signup" style={{ color: 'white' }}>Sign up</Link></li>
                 <li className="upper-links"><Link className="links" to="/signin" style={{ color: 'white' }}>Sign In</Link></li>
               </ul>

@@ -10,6 +10,12 @@ import { userSignupRequest } from '../actions/signupActions';
  * @extends {Component}
  */
 class SignupPage extends Component {
+/**
+ *
+ *
+ * @class SignupPage
+ * @extends {Component}
+ */
   render() {
     const { userSignupRequest } = this.props;
     return (
