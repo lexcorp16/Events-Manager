@@ -20,8 +20,8 @@ const userLogin = (loginDetails) => {
     dispatch({ type: 'LOGIN_USER' });
     axios.post('http://localhost:1234/api/v1/users/signin', loginDetails)
       .then((res) => {
-      	browserHistory.push('/centers');
         dispatch({ type: 'LOGIN_RESOLVED', payload: res.data });
+      	browserHistory.push('/centers');
       })
       .catch((err) => {
         dispatch({ type: 'LOGIN_REJECTED', payload: err.response.data });

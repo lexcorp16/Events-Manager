@@ -4,12 +4,6 @@ import Link from 'react-router';
 import { userLogin } from '.././actions/userActions';
 
 import '../public/signin.scss';
-
-@connect((store) => {
-  return  {
-    user: store.user
-  }
-})
 /**
 * @Center, class containing all methods that
 * handle center related api endpoint
@@ -25,8 +19,8 @@ class SigninBody extends Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: ''
+      email: undefined,
+      password: undefined,
     };
   }
   /**
@@ -53,7 +47,7 @@ class SigninBody extends Component {
   }
 
   render() {
-  	console.log(this.state)
+  	console.log(this.props.user)
     return (
       <div>
         <div className="container signup-padder">
@@ -65,6 +59,13 @@ class SigninBody extends Component {
               <div className="usericon">
                 <div><i className="fa fa-user" style={{ fontSize: `${15}em` }} /></div>
               </div>
+              { (this.props.user.error) &&
+              <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${40}px`}}>
+                <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <div className="text-center"><strong className="text-center">{this.props.user.error}</strong></div>
+              </div>}
               <input onChange={this.getSignInDetails} type="text" name="email" placeholder="email" className="form-control" />
               <br />
               <input onChange={this.getSignInDetails} type="password" name="password" placeholder="password" className="form-control" />
@@ -83,4 +84,12 @@ class SigninBody extends Component {
   }
 }
 
-export default SigninBody;
+const mapDispatchToProps = (dispatch) => ({
+  dispatch: (actionObject) => dispatch(actionObject)
+});
+
+const mapStateToProps = (state) => ({
+  user: state.userReducer.status
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SigninBody);

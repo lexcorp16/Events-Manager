@@ -53,7 +53,7 @@ class SignupBody extends Component {
               <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <strong>{this.props.user.error}</strong>
+              <div className="text-center"><strong>{this.props.user.error}</strong></div>
             </div>}
             <form className="form form-group">
               <input onChange={this.getSignUpDetails} type="text" name="firstname" placeholder="firstname" className="form-control first-name" />

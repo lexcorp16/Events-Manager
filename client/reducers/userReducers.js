@@ -79,7 +79,7 @@ export default function reducer(state = {
         status: {
           ...state.status,
           fetching: false,
-          error: action.payload
+          error: action.payload.error
         }
       };
     }
