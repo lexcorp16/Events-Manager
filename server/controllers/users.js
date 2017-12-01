@@ -34,7 +34,7 @@ class User {
       })
       .then((user) => {
         if (user) {
-          return res.status(400).send({ message: 'Another user with this email already exists' });
+          return res.status(400).send({ error: 'Another user with this email already exists' });
         }
       })
       .catch(error => res.status(500).send({ error: error.message }));

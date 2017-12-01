@@ -38,6 +38,7 @@ module.exports = {
               quality: '75-90',
               speed: 3,
             },
+            
           },
         },
       ],

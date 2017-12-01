@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'react-router';
+import { connect } from 'react-redux';
 import '../public/signin.scss';
+import { userSignup } from '../actions/userActions';
+
 /**
 * @Center, class containing all methods that
 * handle center related api endpoint
@@ -9,28 +13,32 @@ class SignupBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      firstname: '',
-      lastname: '',
-      password: '',
-      confirmpassword: '',
+      email: undefined,
+      firstname: undefined,
+      lastname: undefined,
+      password: undefined,
+      confirmpassword: undefined,
     };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+  getSignUpDetails = (e) => {
+        this.setState({[e.target.name]: e.target.value});
+    }
 
-  onSubmit(e) {
+  Signup = (e) => {
     e.preventDefault();
-    this.props.userSignupRequest(this.state).then(
-      () => {
-        this.context.router.push('/');
-      }
-    );
+    const {
+      email, password, firstname, lastname, confirmpassword,
+    } = this.state;
+    this.props.dispatch(userSignup({
+      firstname,
+      lastname,
+      email,
+      password,
+      confirmpassword,
+    }));
   }
+
 
   render() {
     return (
@@ -40,22 +48,29 @@ class SignupBody extends Component {
             <div className="form-header">
               <p className="text-center header-form" style={{ fontSize: `${1.4}em` }}>Sign Up</p>
             </div>
-            <form className="form form-group" onSubmit={this.onSubmit}>
-              <input value={this.state.firstname} onChange={this.onChange} type="text" name="firstname" placeholder="firstname" className="form-control first-name" />
+            { (this.props.user.error) &&
+            <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${40}px`}}>
+              <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong>{this.props.user.error}</strong>
+            </div>}
+            <form className="form form-group">
+              <input onChange={this.getSignUpDetails} type="text" name="firstname" placeholder="firstname" className="form-control first-name" />
               <br />
-              <input value={this.state.lastname} onChange={this.onChange} type="text" name="lastname" placeholder="lastname" className="form-control" />
+              <input onChange={this.getSignUpDetails} type="text" name="lastname" placeholder="lastname" className="form-control" />
               <br />
-              <input value={this.state.email} onChange={this.onChange} type="text" name="email" placeholder="email" className="form-control" />
+              <input onChange={this.getSignUpDetails} type="text" name="email" placeholder="email" className="form-control" />
               <br />
-              <input value={this.state.password} onChange={this.onChange} type="password" name="password" placeholder="password" className="form-control" />
+              <input onChange={this.getSignUpDetails} type="password" name="password" placeholder="password" className="form-control" />
               <br />
-              <input value={this.state.confirmpassword} onChange={this.onChange} type="password" name="confirmpassword" placeholder="retype password" className="form-control" />
+              <input onChange={this.getSignUpDetails} type="password" name="confirmpassword" placeholder="retype password" className="form-control" />
               <br />
               <div className="button-container">
-                <button className="btn btn-submit btn-default" type="submit">Sign Up</button>
+                <button className="btn btn-submit btn-default" type="submit" onClick={this.Signup}>Sign Up</button>
               </div>
               <div>
-                <p className="text-center">Have an account already? sign in <span className="switchform" style={{ color: 'skyblue' }}><a href="./signin.html"> here</a></span></p>
+                <p className="text-center">Have an account already? sign in <span className="switchform" style={{ color: 'skyblue' }}><a to="/signin"> here</a></span></p>
               </div>
             </form>
           </div>
@@ -65,12 +80,12 @@ class SignupBody extends Component {
   }
 }
 
-SignupBody.propTypes = {
-  userSignupRequest: PropTypes.func.isRequired
-};
+const mapDispatchToProps = (dispatch) => ({
+  dispatch: (actionObject) => dispatch(actionObject)
+});
 
-SignupBody.contextTypes = {
-  router: PropTypes.object.isRequired
-};
+const mapStateToProps = (state) => ({
+  user: state.userReducer.status
+});
 
-export default SignupBody;
+export default connect(mapStateToProps, mapDispatchToProps)(SignupBody);

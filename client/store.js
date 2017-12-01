@@ -1,13 +1,14 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
+import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers/rootReducer';
+import userReducer from './reducers/userReducers';
+import centerReducer from './reducers/centerReducers';
 
-const store = createStore(
-  rootReducer,
-  compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-);
+const reducer = combineReducers({
+  userReducer,
+  centerReducer,
+});
 
-export default store;
+const middleware = applyMiddleware(thunk, logger);
+
+export default createStore(reducer, middleware);

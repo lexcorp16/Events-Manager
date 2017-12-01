@@ -1,11 +1,11 @@
 export default function reducer(state = {
   user: {
-    name: null,
-    email: null,
-    password: null,
-    role: null,
-    id: null,
-    token: null,
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    id: '',
+    token: '',
   },
   status: {
     fetching: false,
@@ -26,9 +26,8 @@ export default function reducer(state = {
       };
     }
     case 'FETCH_USER_RESOLVED': {
-      const { name, email, role, id } = action.payload.user;
-      const token = action.payload.token;
-      const newUser = { name, email, role, id, token };
+      const { token } = action.payload;
+      const newUser = { firstname, lastname };
       return {
         ...state,
         user: newUser,
@@ -40,6 +39,41 @@ export default function reducer(state = {
       };
     }
     case 'FETCH_USER_REJECTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          fetching: false,
+          error: action.payload.error
+        }
+      };
+    }
+    case 'LOGIN_USER': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          fetching: true,
+          fetched: false,
+          error: false
+        }
+      };
+    }
+    case 'LOGIN_RESOLVED': {
+      const { message } = action.payload;
+      const { token } = action.payload;
+      const newLogin = { message, token };
+      return {
+        ...state,
+        user: newLogin,
+        status: {
+          ...state.status,
+          fetching: false,
+          fetched: true,
+        }
+      };
+    }
+    case 'LOGIN_REJECTED': {
       return {
         ...state,
         status: {
