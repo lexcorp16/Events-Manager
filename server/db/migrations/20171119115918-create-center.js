@@ -3,12 +3,12 @@ module.exports = {
     return queryInterface.createTable('Centers', {
       id: {
         allowNull: false,
-        primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
       name: {
         type: Sequelize.STRING,
+        primaryKey: true,
         allowNull: false,
         unique: true,
       },
