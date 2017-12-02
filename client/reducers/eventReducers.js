@@ -5,7 +5,7 @@ const initialState = {
     type: '',
     date: '',
     center: '',
-    events: []
+    userEvents: []
   },
    status: {
     adding: false,
@@ -29,10 +29,11 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'ADD_EVENT_RESOLVED': {
-      const { message } = action.payload
-      const { name, type, date, center } = action.payload.event
+      const { message,} = action.payload;
+      const { name, type, date, center } = action.payload.newEvent;
       return {
         ...state,
+        allEvents: action.payload,
         state: {
           ...state.status,
           adding: false,
@@ -50,6 +51,56 @@ export default function reducer(state = initialState, action) {
           adding: false,
           added: false,
           error: action.payload.error,
+        }
+      };
+    }
+
+    case 'FETCH_EVENTS': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          adding: true,
+          added: false,
+          error: false,
+        }
+      };
+    }
+
+    case 'FETCH_EVENTS_RESOLVED': {
+      const { message, userEvents } = action.payload;
+      return {
+        ...state,
+        allEvents: action.payload,
+        state: {
+          ...state.status,
+          adding: false,
+          added: true,
+          error: false,
+        }
+      };
+    }
+
+    case 'FETCH_EVENTS_REJECTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          adding: false,
+          added: false,
+          error: action.payload.error,
+        }
+      };
+    }
+
+    case 'CLEAR_ERROR': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          adding: false,
+          added: false,
+          error: false,
         }
       };
     }
