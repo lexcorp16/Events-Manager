@@ -67,7 +67,7 @@ class Center {
           center.updateAttributes({
             isAvailable: true
           });
-          return res.status(200).send({ message: 'Successfully changed availability status to true' });
+          return res.status(200).send({ message: 'Successfully changed availability status to true' , center });
         })
         .catch(error => res.status(200).send({ error: error.message }));
     }

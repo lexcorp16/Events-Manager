@@ -11,6 +11,7 @@ export default function reducer(state = {
     fetching: false,
     fetched: false,
     error: false,
+    authenticated: false,
   }
 }, action) {
   switch (action.type) {
@@ -21,20 +22,23 @@ export default function reducer(state = {
           ...state.status,
           fetching: true,
           fetched: false,
-          error: false
+          error: false,
+          authenticated: false,
         }
       };
     }
     case 'FETCH_USER_RESOLVED': {
+      const { message } = action.payload;
       const { token } = action.payload;
-      const newUser = { firstname, lastname };
+      const newSignup = { message, token };
       return {
         ...state,
-        user: newUser,
+        user: newSignup,
         status: {
           ...state.status,
           fetching: false,
           fetched: true,
+          authenticated: true,
         }
       };
     }
@@ -44,7 +48,8 @@ export default function reducer(state = {
         status: {
           ...state.status,
           fetching: false,
-          error: action.payload.error
+          error: action.payload.error,
+          authenticated: false,
         }
       };
     }
@@ -55,7 +60,8 @@ export default function reducer(state = {
           ...state.status,
           fetching: true,
           fetched: false,
-          error: false
+          error: false,
+          authenticated: false,
         }
       };
     }
@@ -70,6 +76,7 @@ export default function reducer(state = {
           ...state.status,
           fetching: false,
           fetched: true,
+          authenticated: false,
         }
       };
     }
@@ -79,7 +86,8 @@ export default function reducer(state = {
         status: {
           ...state.status,
           fetching: false,
-          error: action.payload.error
+          error: action.payload.error,
+          authenticated: false,
         }
       };
     }
