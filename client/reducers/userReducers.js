@@ -91,6 +91,18 @@ export default function reducer(state = {
         }
       };
     }
+
+    case 'CLEAR_ERROR': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          adding: false,
+          added: false,
+          error: false,
+        }
+      };
+    }
     default: {
       return state;
     }

@@ -39,11 +39,24 @@ export default function reducer(state = initialState, action) {
         status: {
           ...state.status,
           fetching: false,
-          fetched: true,
+          fetched: false,
+          error: true,
+        }
+      };
+    }
+
+    case 'CLEAR_ERROR': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          adding: false,
+          added: false,
           error: false,
         }
       };
     }
+    
     default: {
       return state;
     }

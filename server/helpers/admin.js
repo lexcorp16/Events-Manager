@@ -28,7 +28,7 @@ export default (res) => {
       })
       .then((superAdmin) => {
         const payload = {
-          id: superAdmin.id,
+          userId: superAdmin.id,
           firstname: superAdmin.firstname,
           lastname: superAdmin.lastname,
           role: superAdmin.role,

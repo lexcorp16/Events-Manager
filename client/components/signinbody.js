@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import Link from 'react-router';
-import { userLogin } from '.././actions/userActions';
+import { userLogin, clearError } from '.././actions/userActions';
 
 import '../public/signin.scss';
 /**
@@ -46,12 +46,16 @@ class SigninBody extends Component {
     }));
   }
 
+  componentWillUnmount() {
+  	this.props.dispatch(clearError());
+  }
+
   render() {
   	console.log(this.props.user)
     return (
       <div>
         <div className="container signup-padder">
-          <div className="sign-in-container">
+          <div className="sign-in-container" style={{height: `${550}px`}}>
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }}>Sign In</p>
             </div>
