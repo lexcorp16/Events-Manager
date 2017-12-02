@@ -14,4 +14,13 @@ const getAllCenters = (centers) => {
   };
 };
 
-export default getAllCenters;
+const clearError = () => {
+  return (dispatch) => {
+    dispatch({ type: 'CLEAR_ERROR' });
+  };
+};
+
+export {
+  getAllCenters,
+  clearError,
+}
