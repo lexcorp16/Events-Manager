@@ -17,7 +17,7 @@ class CenterPage extends Component {
   render() {
     return (
       <div>
-        <h3 className="text-center" style={{ color: 'white' }}>All Centers</h3>
+        <h3 className="text-center" style={{ color: 'white', marginTop: `${2}%`}}>All Centers</h3>
         <div className="catalogs" id="descriptions">
           <div className="row">
             {this.props.allCenters.centers.map((center) => {

@@ -6,6 +6,7 @@ import SignupPage from './components/signupbody';
 import LandingPage from './components/landing';
 import SigninPage from './components/signinbody';
 import AllcentersPage from './components/allcenters';
+import DashboardPage from './components/dashboard';
 
 export default (
   <Route path="/" component={App}>
@@ -13,5 +14,6 @@ export default (
     <Route path="signup" component={SignupPage} />
     <Route path="signin" component={SigninPage} />
     <Route path="centers" component={AllcentersPage} />
+    <Route path="dashboard" component={DashboardPage} />
   </Route>
 );
