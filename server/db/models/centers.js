@@ -2,12 +2,12 @@ export default (sequelize, DataTypes) => {
   const Centers = sequelize.define('Centers', {
     id: {
       allowNull: false,
-      primaryKey: true,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
     },
     name: {
       type: DataTypes.STRING,
+      primaryKey: true,
       allowNull: false,
       unique: true,
     },
