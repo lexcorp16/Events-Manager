@@ -360,24 +360,24 @@ describe('test-cases for api routes', () => {
     describe('PUT /api/v1/cenetrs/centerId', () => {
       it('modifies a center', (done) => {
         const modifyDetails = {
-          name: 'Andela Epic'
+          mobileNumber: '081743930'
         };
         request(app)
           .put(`/api/v1/centers/${centerId}`)
-          .set('auth', token)
+          .set('auth', secondToken)
           .send(modifyDetails)
           .expect('Content-Type', /json/)
           .expect(200, done)
           .expect((res) => {
               expect(res.body.message).to.equal('You have successfully modified the center');
-              expect(res.body.center.name).to.equal('Andela Epic');
+              expect(res.body.center.mobileNumber).to.equal('081743930');
             });
         });
 
       it('modifies the availability status of a center if no request body is sent', (done) => {
         request(app)
           .put(`/api/v1/centers/${centerId}`)
-          .set('auth', token)
+          .set('auth', secondToken)
           .expect('Content-Type', /json/)
           .expect(200, done)
           .expect((res) => {
@@ -388,7 +388,7 @@ describe('test-cases for api routes', () => {
       it('alternates status of a center if no request body is sent', (done) => {
         request(app)
           .put(`/api/v1/centers/${centerId}`)
-          .set('auth', token)
+          .set('auth', secondToken)
           .expect('Content-Type', /json/)
           .expect(200, done)
           .expect((res) => {
@@ -414,7 +414,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Andela Epic',
+          center: 'Rogaros',
           date: '2018-12-05',
         };
         request(app)
@@ -433,7 +433,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Andela Epic',
+          center: 'Rogaros',
           date: '2018-12-05',
         };
         request(app)
@@ -465,7 +465,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'For loop',
           type: 'Seminar',
-          center: 'Andela Epic',
+          center: 'Rogaros',
           date: '2018-11-02',
         };
         request(app)
@@ -482,7 +482,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Andela Bootcamp',
           type: 'coding Bootcamp',
-          center: 'Andela Epic',
+          center: 'Rogaros',
           date: '2018-11-02',
         };
         request(app)
@@ -501,7 +501,7 @@ describe('test-cases for api routes', () => {
       it('deletes an event', (done) => {
         request(app)
           .delete(`/api/v1/events/${eventId}`)
-          .set('auth', token)
+          .set('auth', secondToken)
           .expect(200, done)
           .expect((res) => {
             expect(res.body.message).to.equal('Event successfully deleted');
@@ -514,7 +514,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Andela Epic',
+          center: 'Rogaros',
           date: '2018-12-05',
         };
         request(app)

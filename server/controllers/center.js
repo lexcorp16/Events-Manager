@@ -57,7 +57,11 @@ class Center {
       return res.status(400).send({ error: 'You are not authorized to perform this action' });
     }
     if (Object.keys(req.body).length < 1) {
-      return Centers.findById(req.params.centerId)
+      return Centers.findOne({
+      	where: {
+      	  id: req.params.centerId
+      	}
+      })
         .then((center) => {
           if (center.isAvailable) {
             center.updateAttributes({
@@ -73,12 +77,16 @@ class Center {
         .catch(error => res.status(200).send({ error: error.message }));
     }
     return Centers
-      .findById(req.params.centerId)
+      .findOne({
+      	where: {
+      	  id: req.params.centerId,
+      	}
+      })
       .then((center) => {
         if (!center) {
           return res.status(400).send({ error: 'center not found!' });
         }
-        if (center && center.UserId !== req.decoded.userId) {
+        if (center && center.user !== req.decoded.userId) {
           return res.status(400).send({ error: 'You cannot modify a center added by another user' });
         }
         center.updateAttributes({
