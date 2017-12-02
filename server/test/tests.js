@@ -314,8 +314,89 @@ describe('test-cases for api routes', () => {
             centerId = res.body.center.id;
           });
       });
+
+      describe('it handles invalid input', () => {
+        it('responds with a 400 if an input is null', (done) => {
+          centerDetails.name = '';
+          request(app)
+            .post('/api/v1/centers/')
+            .set('auth', secondToken)
+            .send(centerDetails)
+            .expect('Content-Type', /json/)
+            .expect(400, done)
+            .expect((res) => {
+              expect(res.body.error).to.equal('please fill in all fields');
+            });
+        });
+        it('responds with a 400 if capacity or mobileNumber input is alphanumeric', (done) => {
+          centerDetails.name = 'Rogaros';
+          centerDetails.capacity = 'ughfgh23';
+          request(app)
+            .post('/api/v1/centers/')
+            .set('auth', secondToken)
+            .send(centerDetails)
+            .expect('Content-Type', /json/)
+            .expect(400, done)
+            .expect((res) => {
+              expect(res.body.error).to.equal('capacity and mobileNumber fields can only be digits');
+            });
+        });
+        it('responds with a 400 if capacity or mobileNumber input alphabetsonly', (done) => {
+          centerDetails.capacity = '2000';
+          centerDetails.mobileNumber = 'jhfgffgfnhfh';
+          request(app)
+            .post('/api/v1/centers/')
+            .set('auth', secondToken)
+            .send(centerDetails)
+            .expect('Content-Type', /json/)
+            .expect(400, done)
+            .expect((res) => {
+              expect(res.body.error).to.equal('capacity and mobileNumber fields can only be digits');
+            });
+        });
+      });
     });
 
+    describe('PUT /api/v1/cenetrs/centerId', () => {
+      it('modifies a center', (done) => {
+        const modifyDetails = {
+          name: 'Andela Epic'
+        };
+        request(app)
+          .put(`/api/v1/centers/${centerId}`)
+          .set('auth', token)
+          .send(modifyDetails)
+          .expect('Content-Type', /json/)
+          .expect(200, done)
+          .expect((res) => {
+              expect(res.body.message).to.equal('You have successfully modified the center');
+              expect(res.body.center.name).to.equal('Andela Epic');
+            });
+        });
+
+      it('modifies the availability status of a center if no request body is sent', (done) => {
+        request(app)
+          .put(`/api/v1/centers/${centerId}`)
+          .set('auth', token)
+          .expect('Content-Type', /json/)
+          .expect(200, done)
+          .expect((res) => {
+              expect(res.body.message).to.equal('Successfully changed center status to false');
+              expect(res.body.center.isAvailable).to.equal(false);
+            });
+        });
+      it('alternates status of a center if no request body is sent', (done) => {
+        request(app)
+          .put(`/api/v1/centers/${centerId}`)
+          .set('auth', token)
+          .expect('Content-Type', /json/)
+          .expect(200, done)
+          .expect((res) => {
+              expect(res.body.message).to.equal('Successfully changed availability status to true');
+              expect(res.body.center.isAvailable).to.equal(true);
+            });
+        });
+      });
     describe('GET /api/v1/centers', () => {
       it('gets all centers', (done) => {
         request(app)
@@ -333,7 +414,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Rogaros',
+          center: 'Andela Epic',
           date: '2018-12-05',
         };
         request(app)
@@ -352,7 +433,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Rogaros',
+          center: 'Andela Epic',
           date: '2018-12-05',
         };
         request(app)
@@ -384,7 +465,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'For loop',
           type: 'Seminar',
-          center: 'Rogaros',
+          center: 'Andela Epic',
           date: '2018-11-02',
         };
         request(app)
@@ -401,7 +482,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Andela Bootcamp',
           type: 'coding Bootcamp',
-          center: 'Rogaros',
+          center: 'Andela Epic',
           date: '2018-11-02',
         };
         request(app)
@@ -433,7 +514,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Rogaros',
+          center: 'Andela Epic',
           date: '2018-12-05',
         };
         request(app)
