@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CenterCard from './centerCard';
 import '../public/style.scss';
-import getAllCenters from '../actions/centerActions';
+import { getAllCenters, clearError } from '../actions/centerActions';
 
 class CenterPage extends Component {
   constructor(props) {
@@ -13,7 +13,10 @@ class CenterPage extends Component {
 
   	this.props.dispatch(getAllCenters());
   }
-
+  
+  componentWillUnmount() {
+  	this.props.dispatch(clearError());
+  }
   render() {
     return (
       <div>

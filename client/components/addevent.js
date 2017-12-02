@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import addEvent from '../actions/eventActions';
+import { addEvent, clearError } from '../actions/eventActions';
 import { connect } from 'react-redux';
 
 class AddEventPage extends Component {
@@ -12,6 +12,10 @@ class AddEventPage extends Component {
   	  center: '',
       date: '',
   	}
+  }
+
+  componentWillUnmount() {
+  	this.props.dispatch(clearError());
   }
 
   getEventDetails = (e) => {

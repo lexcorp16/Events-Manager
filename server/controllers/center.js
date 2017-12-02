@@ -17,6 +17,7 @@ class Center {
  * @returns {object} res.
  */
   static addCenter(req, res) {
+  	console.log(req.decoded);
     const { role } = req.decoded;
     const {
       name,
@@ -115,11 +116,16 @@ class Center {
  * @returns {array} res.
  */
   static getACenter(req, res) {
-    return Centers.findById(req.params.centerId)
+    return Centers
+      .findOne({
+      	where: {
+      	  id: req.params.centerId,
+      	}
+      })
       .then((center) => {
-        if (!center) {
-          return res.status(404).send({ error: 'No events found' });
-        }
+      	if(!center) {
+      	  return res.status(400).send({ error: 'No center found' })
+      	}
         Centers.findOne({
           where: {
             name: center.name,

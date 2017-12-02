@@ -42,13 +42,18 @@ class Event {
           })
           .then(newEvent => res.status(201).send({ message: 'Event successfully added', newEvent }))
           .catch((error) => {
-          	if (error.message === 'insert or update on table \"Events\" violates foreign key constraint \"Events_center_fkey\"') {
+          	if (error.message === 'insert or update on table \"Events\" violates foreign key constraint \"Events_user_fkey\"') {
           	  return res.status(400).send({ error: 'chosen center does not exist' });
           	}
-          	return res.status(500).send({ error: error.message });
+          	return res.status(500).send({ error: `HEREM${error.message}` });
           });
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(error => {
+      	if (error.message === 'insert or update on table \"Events\" violates foreign key constraint \"Events_user_fkey\"') {
+          return res.status(400).send({ error: 'chosen center does not exist' });
+        }
+        return res.status(500).send({ error: `HERE${error.message}` });
+      });
   }
   /**
  * modify an event
@@ -119,8 +124,8 @@ class Event {
       }
     })
       .then((userEvents) => {
-        if (!userEvents) {
-          return res.status(404).send({ error: 'No events found for this User' });
+        if (userEvents.length < 1) {
+          return res.status(404).send({ error: 'You Have No Events For Now' });
         }
         return res.status(200).send({ message: 'Success', userEvents });
       })

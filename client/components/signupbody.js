@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'react-router';
 import { connect } from 'react-redux';
 import '../public/signin.scss';
-import { userSignup } from '../actions/userActions';
+import { userSignup, clearError } from '../actions/userActions';
 
 /**
 * @Center, class containing all methods that
@@ -39,12 +39,15 @@ class SignupBody extends Component {
     }));
   }
 
+  componentWillUnmount() {
+  	this.props.dispatch(clearError());
+  }
 
   render() {
     return (
       <div>
         <div className="container signup-padder">
-          <div className="sign-in-container">
+          <div className="sign-in-container" style={{height: `${540}px` }}>
             <div className="form-header">
               <p className="text-center header-form" style={{ fontSize: `${1.4}em` }}>Sign Up</p>
             </div>
