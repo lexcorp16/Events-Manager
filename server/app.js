@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
+import cors from 'cors';
 import centerRoutes from './routes/centers';
 import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
@@ -17,6 +18,7 @@ const app = express();
 app.use(logger('dev'));
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
+app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
