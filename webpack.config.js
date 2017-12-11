@@ -3,7 +3,19 @@ const path = require('path');
 
 module.exports = {
   entry: [
+    'webpack-hot-middleware/client',
     path.join(__dirname, './client/index.js')
+  ],
+  output: {
+    path: __dirname + '/client',
+    filename: 'client/bundle.js',
+    publicPath: '/',
+    path: '/',
+  },
+  plugins: [
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     loaders: [{
@@ -15,6 +27,10 @@ module.exports = {
       loaders: ['style-loader', 'css-loader', 'sass-loader']
     }, {
       test: /\.(jpe?g|png|gif|svg|ico)$/i,
+      include: [
+        path.join(__dirname, 'client'),
+        path.join(__dirname, 'server/shared')
+      ],
       use: [
         {
           loader: 'file-loader',
@@ -43,10 +59,6 @@ module.exports = {
         },
       ],
     }]
-  },
-  output: {
-    path: __dirname + '/dist',
-    filename: 'client/bundle.js'
   },
   devServer: {
     contentBase: __dirname + '/client',

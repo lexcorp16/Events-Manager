@@ -4,15 +4,21 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import cors from 'cors';
+import webpack from 'webpack';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackConfig from '../webpack.config.js';
 import centerRoutes from './routes/centers';
 import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
+import path from 'path';
 
 dotenv.config();
 
 
 // Set up the express app
 const app = express();
+const compiler = webpack(webpackConfig);
 
 // Log requests to the console.
 app.use(logger('dev'));
@@ -35,9 +41,16 @@ eventRoutes(app);
 
 app.set('port', process.env.PORT || 3000);
 
-app.get('*', (req, res) => res.status(200).send({
-  message: 'Welcome to the beginning of nothingness.',
+app.use(webpackMiddleware(compiler, {
+  hot: true,
+  publicPath: webpackConfig.output.publicPath,
+  noInfo: true
 }));
+app.use(webpackHotMiddleware(compiler));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
+});
 
 // fire up server to listen on ap particular port
 app.listen(app.get('port'), () => {

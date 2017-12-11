@@ -6,7 +6,7 @@ const addEvent = (eventDetails) => {
     dispatch({ type: 'ADD_EVENT' });
     axios({
       method: 'POST',
-      url: 'http://localhost:1234/api/v1/events',
+      url: '/api/v1/events',
       headers: { 'x-access-token': localStorage.getItem('x-access-token')},
       data: eventDetails,
     })
@@ -26,7 +26,7 @@ const seeEvents = (allEvents) => {
     console.log(localStorage.getItem('x-access-token'));
     axios({
       method: 'GET',
-      url: 'http://localhost:1234/api/v1/events/user',
+      url: '/api/v1/events/user',
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
       data: allEvents,
     })

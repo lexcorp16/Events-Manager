@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 const userSignup = (userDetails) => {
   return (dispatch) => {
     dispatch({ type: 'FETCH_USER' });
-    axios.post('http://localhost:1234/api/v1/users', userDetails)
+    axios.post('/api/v1/users', userDetails)
       .then((res) => {
         dispatch({ type: 'FETCH_USER_RESOLVED', payload: res.data });
         localStorage.setItem('x-access-token', res.data.token);
@@ -20,7 +20,7 @@ const userSignup = (userDetails) => {
 const userLogin = (loginDetails) => {
   return (dispatch) => {
     dispatch({ type: 'LOGIN_USER' });
-    axios.post('http://localhost:1234/api/v1/users/signin', loginDetails)
+    axios.post('/api/v1/users/signin', loginDetails)
       .then((res) => {
         console.log(res);
         dispatch({ type: 'LOGIN_RESOLVED', payload: res.data });

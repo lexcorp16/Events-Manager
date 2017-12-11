@@ -3,7 +3,7 @@ import axios from 'axios';
 const getAllCenters = (centers) => {
   return (dispatch) => {
     dispatch({ type: 'FETCH_CENTERS' });
-    axios.get('http://localhost:1234/api/v1/centers', centers)
+    axios.get('/api/v1/centers', centers)
       .then((res) => {
       	console.log('REACHED HERE')
         dispatch({ type: 'FETCH_CENTERS_RESOLVED', payload: res.data });
