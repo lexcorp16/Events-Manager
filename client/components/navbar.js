@@ -32,7 +32,7 @@ export default class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-toggleable-md navbar-light fixed-top bg-faded" style={{ color: 'pink' }}>
+        <nav className="navbar navbar-toggleable-md fixed-top bg-faded" style={{ color: 'pink', backgroundColor: 'black' }}>
           <div className="navbar-toggler navbar-toggler-left" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" style={{ border: 'none' }}>
             <span style={{color: 'pink'}}>☰</span>
           </div>
