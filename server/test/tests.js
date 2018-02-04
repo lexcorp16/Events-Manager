@@ -414,9 +414,10 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-12-05',
         };
+        console.log(`HERE${eventCredentials.center}`);
         request(app)
           .post('/api/v1/events/')
           .set('auth', secondToken)
@@ -424,7 +425,6 @@ describe('test-cases for api routes', () => {
           .expect(201, done)
           .expect((res) => {
             eventId = res.body.newEvent.id;
-            console.log(`HERE ${eventCredentials.CenterId}`);
             expect(res.body.message).to.equal('Event successfully added');
           });
       });
@@ -433,9 +433,10 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-12-05',
         };
+        console.log(`HERE${eventCredentials.center}`);
         request(app)
           .post('/api/v1/events/')
           .set('auth', secondToken)
@@ -465,9 +466,10 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'For loop',
           type: 'Seminar',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-11-02',
         };
+        console.log(eventId);
         request(app)
           .put(`/api/v1/events/${eventId}`)
           .set('auth', secondToken)
@@ -482,7 +484,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Andela Bootcamp',
           type: 'coding Bootcamp',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-11-02',
         };
         request(app)
@@ -514,7 +516,7 @@ describe('test-cases for api routes', () => {
         const eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-12-05',
         };
         request(app)

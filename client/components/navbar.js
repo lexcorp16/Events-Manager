@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import '../public/signin.scss';
-
-const custom = {
-  color: 'skyblue'
-};
+import '../public/style.scss';
 
 const openNav = () => {
   document.getElementById('mySidenav').style.width = '70%';
+  document.getElementById('mySidenav').style.backgroundColor = 'rgba(0,0,0,0.4)';
+  document.getElementById('mySidenav').style.color = 'Pink';
   // document.getElementById("flipkart-navbar").style.width = "50%";
-  document.body.style.backgroundColor = 'rgba(0,0,0,0.4)';
+ };
+
+const closeNav = () => {
+  document.getElementById("mySidenav").style.width = "0";
+  document.body.style.backgroundColor = "white";
 };
-export default class Footer extends Component {
+
+const search = () => {
+  document.getElementById("mySidenav").style.width = "0";
+  document.body.style.backgroundColor = "rgba(0,0,0,0)";
+  document.getElementById('smallsearch').classList.remove('d-none');
+  document.getElementById('smallsearch').classList.remove('d-lg-block');
+};
+
+export default class Navbar extends Component {
   /**
    *
    *
@@ -22,42 +32,43 @@ export default class Footer extends Component {
   render() {
     return (
       <div>
-        <div id="flipkart-navbar">
-          <div className="container">
-            <div className="row row1">
-              <ul className="largenav pull-right" style={{ marginLeft: `${150}px`, }}>
-                <li className="upper-links"><Link className="links" to="/" style={{ color: 'white' }}>Home</Link></li>
-                <li className="upper-links"><Link className="links" to="/centers" style={{ color: 'white' }}>See Centers</Link></li>
-                <li className="upper-links"><Link className="links" to="/signup" style={{ color: 'white' }}>Sign up</Link></li>
-                <li className="upper-links"><Link className="links" to="/signin" style={{ color: 'white' }}>Sign In</Link></li>
-              </ul>
-            </div>
-            <div className="row row2">
-              <div className="col-sm-2">
-                <h2><span className="smallnav menu" onClick={openNav} style={{ color: 'pink' }}>☰ Events Manager</span></h2>
-                <h1><span className="largenav brand" style={{ color: 'pink' }}>Events~manager</span></h1>
-              </div>
-              <div className="flipkart-navbar-search smallsearch col-sm-8 col-xs-11">
-                <div className="row">
-                  <input className="flipkart-navbar-input col-xs-11" type="text" style={{ fontFamily: 'Lobster Two' }} placeholder="Discover Event Centers" name="" />
-                  <button className="btn flipkart-navbar-button col-xs-1 searchbtn">
-                    <i className="fa fa-search" />
-                  </button>
-                </div>
-              </div>
-            </div>
+        <nav className="navbar navbar-toggleable-md navbar-light fixed-top bg-faded" style={{ color: 'pink' }}>
+          <div className="navbar-toggler navbar-toggler-left" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" style={{ border: 'none' }}>
+            <span style={{color: 'pink'}}>☰</span>
           </div>
-        </div>
-        <div id="mySidenav" className="sidenav">
-          <div className="container">
-            <span className="sidenav-heading">Sign in</span>
-            <a href="javascript:void(0)" className="closebtn" onClick="closeNav()">×</a>
+          <Link className="navbar-brand d-none d-lg-block" href="/" style={{ fontSize: `${1.3}em`, color: 'pink' }}>Events-manager</Link>
+          <Link className="navbar-brand d-lg-none text-center" href="/" style={{ fontSize: `${1.3}em`, color: 'pink' }}>events-manager</Link>
+
+          <div className="navbar-collapse d-none d-lg-block">
+            <form className="form-inline my-4 my-lg-0">
+              <input className="form-control mr-sm-2" type="text" placeholder="Search" style={{ border: `${1}px solid pink` }} />
+              <button className="btn btn-outline-success my-2 my-sm-0" type="submit" style={{ border: `${1}px solid pink` }} ><span className="fa fa-search" style={{ color: 'black'}}></span></button>
+            </form>
+            <ul className="navbar-nav mr-auto mt-2 mt-md-0" style={{ marginLeft: `${50}%` }}>
+              <li className="nav-item">
+                <Link className="nav-link" href="/signup"><b>Sign Up</b></Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" href="/signin"><b>Sign In</b></Link>
+              </li>
+            </ul>
           </div>
-          <a href="../index.html" className="sidenav-links">Home</a>
-          <a href="../index.html" className="sidenav-links">About</a>
-          <a href="../index.html" className="sidenav-links">See Centers</a>
-          <a href=".//signup.html" className="sidenav-links">Sign Up</a>
-        </div>
+
+          <div className="collapse text-center d-lg-none text-center" id="navbarTogglerDemo02" style={{ background: 'white' }}>
+            <ul className="navbar-nav mr-auto mt-2 mt-md-0">
+              <li className="nav-item">
+                <Link className="nav-link" href="/signup"><b>Sign Up</b></Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" href="/signin"><b>Sign In</b></Link>
+              </li>
+            </ul>
+            <form className="form-inline my-2 my-lg-0 text-center smallnavsection">
+              <input className="form-control mr-sm-2 smallnavsearch" type="text" placeholder="Search" style={{ border: `${1}px solid pink` }} />
+              <button className="btn btn-outline-success my-2 my-sm-0" type="submit" style={{ border: `${1}px solid pink` }}><span className="fa fa-search" style={{ color: 'black' }}></span></button>
+            </form>
+          </div>
+        </nav>
       </div>
     );
   }

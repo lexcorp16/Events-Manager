@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import Link from 'react-router';
+import { Link } from 'react-router';
 import { userLogin, clearError } from '.././actions/userActions';
 
 import '../public/signin.scss';
@@ -55,16 +55,16 @@ class SigninBody extends Component {
     return (
       <div>
         <div className="container signup-padder">
-          <div className="sign-in-container" style={{height: `${550}px`}}>
+          <div className="sign-in-container signin" style={{height: `${550}px`}}>
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }}>Sign In</p>
+              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em`, color: 'grey', fontFamily: 'verdana' }}>SIGN IN</p>
             </div>
             <form className="form form-group">
               <div className="usericon">
-                <div><i className="fa fa-user" style={{ fontSize: `${15}em` }} /></div>
+                <div><i className="fa fa-user-circle" style={{ fontSize: `${8}em` }} /></div>
               </div>
               { (this.props.user.error) &&
-              <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${40}px`}}>
+              <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, marginBottom: `${0}%`}}>
                 <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -78,7 +78,7 @@ class SigninBody extends Component {
                 <button className="btn btn-submit btn-default" style={{ fontFamily: 'Lobster Two' }} onClick={this.Signin}>Sign In</button>
               </div>
               <div>
-                <p className="text-center" style={{ fontSize: `${1.1}em` }}>Do not have an account? sign in <span className="switchpage" style={{ color: 'skyblue' }}><a href="/signup."> here</a></span></p>
+                <p className="text-center" style={{ fontSize: `${1.1}em` }}>Do not have an account? sign up <span className="switchform" style={{ color: 'skyblue' }}><Link to="/signup"> here</Link></span></p>
               </div>
             </form>
           </div>

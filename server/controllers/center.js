@@ -17,7 +17,6 @@ class Center {
  * @returns {object} res.
  */
   static addCenter(req, res) {
-  	console.log(req.decoded);
     const { role } = req.decoded;
     const {
       name,
@@ -58,9 +57,9 @@ class Center {
     }
     if (Object.keys(req.body).length < 1) {
       return Centers.findOne({
-      	where: {
-      	  id: req.params.centerId
-      	}
+        where: {
+          id: req.params.centerId
+        }
       })
         .then((center) => {
           if (center.isAvailable) {
@@ -72,15 +71,15 @@ class Center {
           center.updateAttributes({
             isAvailable: true
           });
-          return res.status(200).send({ message: 'Successfully changed availability status to true' , center });
+          return res.status(200).send({ message: 'Successfully changed availability status to true', center });
         })
         .catch(error => res.status(200).send({ error: error.message }));
     }
     return Centers
       .findOne({
-      	where: {
-      	  id: req.params.centerId,
-      	}
+        where: {
+          id: req.params.centerId,
+        }
       })
       .then((center) => {
         if (!center) {
@@ -126,14 +125,14 @@ class Center {
   static getACenter(req, res) {
     return Centers
       .findOne({
-      	where: {
-      	  id: req.params.centerId,
-      	}
+        where: {
+          id: req.params.centerId,
+        }
       })
       .then((center) => {
-      	if(!center) {
-      	  return res.status(400).send({ error: 'No center found' })
-      	}
+        if (!center) {
+          return res.status(400).send({ error: 'No center found' });
+        }
         Centers.findOne({
           where: {
             name: center.name,

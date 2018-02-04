@@ -7,10 +7,9 @@ module.exports = {
     path.join(__dirname, './client/index.js')
   ],
   output: {
-    path: __dirname + '/client',
+    path: path.join(__dirname, 'client'),
     filename: 'client/bundle.js',
     publicPath: '/',
-    path: '/',
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
@@ -53,15 +52,14 @@ module.exports = {
             pngquant: {
               quality: '75-90',
               speed: 3,
-            },
-            
+            },  
           },
         },
       ],
     }]
   },
   devServer: {
-    contentBase: __dirname + '/client',
+    contentBase: path.join(__dirname, 'client'),
     historyApiFallback: true
   }
 };

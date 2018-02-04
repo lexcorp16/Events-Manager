@@ -12,12 +12,8 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <div className="container-fluid">
-          <Navbar />
-          {this.props.children}
-        </div>
-
-        <Footer />
+        <Navbar />
+        {this.props.children}
       </div>
     );
   }

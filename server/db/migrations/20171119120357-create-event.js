@@ -12,11 +12,11 @@ module.exports = {
         allowNull: false,
       },
       center: {
-        type: Sequelize.STRING,
+        type: Sequelize.UUID,
         allowNull: true,
         references: {
           model: 'Centers',
-          key: 'name',
+          key: 'id',
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',

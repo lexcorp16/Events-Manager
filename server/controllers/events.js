@@ -41,12 +41,7 @@ class Event {
             user: req.decoded.userId,
           })
           .then(newEvent => res.status(201).send({ message: 'Event successfully added', newEvent }))
-          .catch((error) => {
-          	if (error.message === 'insert or update on table \"Events\" violates foreign key constraint \"Events_center_fkey\"') {
-          	  return res.status(400).send({ error: 'chosen center does not exist' });
-          	}
-          	return res.status(500).send({ error: error.message });
-          });
+          .catch(error => res.status(500).send({ error: error.message }));
       })
       .catch(error => res.status(500).send({ error: error.message }));
   }
@@ -77,11 +72,12 @@ class Event {
               name: req.body.name || modifiedEvent.name,
               type: req.body.type || modifiedEvent.type,
               date: new Date(req.body.date).toISOString() || modifiedEvent.date,
-              center: req.body.center || modifiedEvent.center,
+              center: center || modifiedEvent.center,
             });
+            console.log(center)
             return res.status(200).send({ message: 'successfully modified', modifiedEvent });
           })
-          .catch(error => res.status(500).send({ error: error.message }));
+          .catch(error => res.status(500).send({ error: `HERE${error.message}` }));
       })
       .catch(error => res.status(500).send({ error: error.message }));
   }

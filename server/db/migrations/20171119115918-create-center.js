@@ -4,13 +4,12 @@ module.exports = {
       id: {
         allowNull: false,
         type: Sequelize.UUID,
+        primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
       },
       name: {
         type: Sequelize.STRING,
-        primaryKey: true,
         allowNull: false,
-        unique: true,
       },
       type: {
         type: Sequelize.STRING,

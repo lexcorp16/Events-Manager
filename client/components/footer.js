@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import '../public/signin.scss';
+import '../public/style.scss';
 /**
 * @Center, class containing all methods that
 * handle center related api endpoint
