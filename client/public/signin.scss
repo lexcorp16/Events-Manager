@@ -1,32 +1,30 @@
-body {
-  font-family: 'Lobster Two', serif;
-  background-repeat: no-repeat;}
-
 .links:hover {
 	color:pink;}
 
+.sign-in-container {
+  width: 320px;
+}
+
 .signup-padder {
   margin-top: 100px;
-  border: none;
-  width: 400px;
+  width: 350px;
 }
 
 .signup, .signin {
   margin-top: 0%;
   background-color: pink;
-  height: 485px;
+  height: 450px;
+}
+
+.signup {
+  height: 500px;
 }
 
 .form-header {
   height: 50px;
   background-color: pink;
   color: white;
-}
-
-signup-padder {
-  font-family: 'Lobster Two', serif;
-  padding-left: 50px;
-  padding-right: 50px;
+  margin-bottom : 10px;
 }
 
 .form-group {
@@ -34,32 +32,25 @@ signup-padder {
   padding-left: 25px;
 }
 
-.button-container {
-  padding-right: 100px;
-  padding-left: 100px;
-}
-
 .form-control {
   font-family: 'Lobster Two', serif;
   border: 1px solid grey;
+  margin-top: 0px;
+  margin-bottom: 5px;
 }
 
 .sign-in-container {
-  margin-top: 80px;
+  background-color: pink;
 }
 
 .usericon {
-  padding-left : 100px;
-  padding-right: 100px;
+  padding-left : 70px;
+  padding-right: 70px;
   padding-bottom: 50px;
 }
 
 .button-container {
-  padding-left : 120px;
-  padding-right: 120px;
+  padding-left : 100px;
+  padding-right: 100px;
   padding-bottom: 20px;
-}
-
-.form-container {
-  padding-top: 20px;
 }

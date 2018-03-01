@@ -55,19 +55,16 @@ class SigninBody extends Component {
     return (
       <div>
         <div className="container signup-padder">
-          <div className="sign-in-container signin" style={{height: `${550}px`}}>
+          <div className="sign-in-container" style={{height: `${550}px`}}>
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em`, color: 'grey', fontFamily: 'verdana' }}>SIGN IN</p>
+              <p className="text-center header-form" style={{ fontSize: `${1.4}em`, marginTop:`${10}%`, fontFamily: 'verdana', paddingTop:`${20}px`, paddingBottom: `${20}px`,}}>SIGN IN</p>
             </div>
-            <form className="form form-group">
+            <form className="form form-group signin">
               <div className="usericon">
-                <div><i className="fa fa-user-circle" style={{ fontSize: `${8}em` }} /></div>
+                <div><i className="fa fa-user-circle" style={{ fontSize: `${8}em`, paddingTop:`${10}px` }} /></div>
               </div>
               { (this.props.user.error) &&
-              <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, marginBottom: `${0}%`}}>
-                <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+              <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, paddingBottom: `${10}px`, background: 'none' , border: 'none' }}>
                 <div className="text-center"><strong className="text-center">{this.props.user.error}</strong></div>
               </div>}
               <input onChange={this.getSignInDetails} type="text" name="email" placeholder="email" className="form-control" />

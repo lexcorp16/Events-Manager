@@ -40,20 +40,18 @@ class AddEventPage extends Component {
     return (
       <div className="add-event-form" style={{marginTop: `${3}%`}}>
         <div className="container signup-padder">
-          <div className="sign-in-container" style={{marginTop: `${2}%`}}>
+          <div className="sign-in-container" style={{marginTop: `${2}%`, height: `${500}px`, border: 'none'}}>
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Event</p>
             </div>
             { (this.props.event.status.error) &&
-            <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${40}px`}}>
-              <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, background: 'none' }}>
               <div className="text-center"><strong>{this.props.event.status.error}</strong></div>
             </div>}
             <form className="form form-group">
+              <label>Name of event</label>
               <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
-              <br />
+              <label>Type of event</label>
               <select className="form-control" name="type" onClick={this.getEventDetails}>
                 <option>Type of event</option>
                 <option value="Seminar">Seminar</option>
@@ -62,13 +60,11 @@ class AddEventPage extends Component {
                 <option value="Coporate">Coporate</option>
                 <option value="Party">Party</option>
               </select>
-              <br />
-              <div className="row">
-                <div className="year col-xs-2 col-sm-2 col-lg-2">
-                  <input type="date" id='date' name="date" className="form-control" onChange={this.getEventDetails} />
-                </div>
+              <label>Date of event</label>
+              <div className="year">
+                <input type="date" id='date' name="date" className="form-control" onChange={this.getEventDetails} />
               </div>
-              <br />
+              <label>Preferred center</label>
               <select className="form-control" onClick={this.getEventDetails} name="center">
                 <option value="">Preferred center</option>
                 <option value="Andela Epic">Andela Epic</option>

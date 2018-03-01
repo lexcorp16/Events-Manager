@@ -15,7 +15,7 @@ export default function reducer(state = {
   }
 }, action) {
   switch (action.type) {
-    case 'FETCH_USER': {
+    case 'CREATE_USER': {
       return {
         ...state,
         status: {
@@ -27,7 +27,7 @@ export default function reducer(state = {
         }
       };
     }
-    case 'FETCH_USER_RESOLVED': {
+    case 'CREATE_USER_RESOLVED': {
       const { message } = action.payload;
       const { token } = action.payload;
       const newSignup = { message, token };
@@ -42,7 +42,7 @@ export default function reducer(state = {
         }
       };
     }
-    case 'FETCH_USER_REJECTED': {
+    case 'CREATE_USER_REJECTED': {
       return {
         ...state,
         status: {
@@ -76,7 +76,7 @@ export default function reducer(state = {
           ...state.status,
           fetching: false,
           fetched: true,
-          authenticated: false,
+          authenticated: true,
         }
       };
     }

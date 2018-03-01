@@ -1,9 +1,82 @@
+$widthact : 1300px;
+
+.large-view {
+  width: 1300px;
+}
+
+.side-action {
+  width: 600px;
+}
+
+.action-view {
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color: grey;
+  width: 800px;
+}
 
 .welcome:hover {
   color: black;
   display: none;
 }
 
+.sidebar {
+  background-color: rgb(2, 5, 20);
+  color: pink;
+  height: 680px;
+  width: 200px;
+}
+
+.sidelinks {
+  padding-top: 100px;
+  font-size: 1.2em;
+}
+
+.profile-links {
+  margin-top: 50px;
+}
+
+.profile-initials {
+  width: 50px;
+  height: 50px;
+  background-color: pink;
+  border-radius: 50%;
+  color: black;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 70px;
+  margin-right: 70px;
+}
+
+.fullname {
+  display: block;
+  color: white;
+  font-size: 0.8em;
+  margin-left: 50px;
+}
+
+.logout-btn {
+  margin-top: 100px;
+}
+
+.center-links {
+  border-top: 2px solid grey;
+  margin-top: 5px;
+}
+
+.initial-symbol {
+  font-size: 1.8em;
+  font-family: verdana;
+}
+
+.sidelink {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.sidelink:hover {
+  border-bottom : 1px solid grey;
+}
 * {
   box-sizing: border-box; }
 
@@ -62,5 +135,9 @@ gh-pages
 .smallnavsection {
   margin-left: 15%;
   margin-right: 15%
+}
+
+.nav-item:hover {
+  border-bottom : 4px solid grey;
 }
 /*# sourceMappingURL=style.css.map */

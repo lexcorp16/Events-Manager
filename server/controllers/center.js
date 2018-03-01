@@ -25,6 +25,7 @@ class Center {
       address,
       imageUrl,
       mobileNumber,
+      facilities,
     } = req.body;
     if (role === 'User') {
       return res.status(403).send({ error: 'You are not authorized to perform this action' });
@@ -37,6 +38,7 @@ class Center {
         address,
         imageUrl,
         mobileNumber,
+        facilities,
         user: req.decoded.userId,
       })
       .then(center => res.status(200).send({ message: 'You have successfully added a center', center }))
@@ -94,6 +96,7 @@ class Center {
           address: req.body.address || center.address,
           mobileNumber: req.body.mobileNumber || center.mobileNumber,
           imageUrl: req.body.imageUrl || center.imageUrl,
+          facilities: req.body.facilities || center.facilities,
           capacity: parseFloat(req.body.capacity) || center.capacity,
         });
         return res.status(200).send({ message: 'You have successfully modified the center', center });

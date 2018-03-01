@@ -34,6 +34,10 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      facilities: {
+        type: Sequelize.ARRAY(Sequelize.ENUM),
+        allowNull: true,
+      },
       mobileNumber: {
         type: Sequelize.STRING,
         allowNull: false,

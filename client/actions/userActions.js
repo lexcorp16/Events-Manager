@@ -3,16 +3,16 @@ import { browserHistory } from 'react-router';
 
 const userSignup = (userDetails) => {
   return (dispatch) => {
-    dispatch({ type: 'FETCH_USER' });
+    dispatch({ type: 'CREATE_USER' });
     axios.post('/api/v1/users', userDetails)
       .then((res) => {
-        dispatch({ type: 'FETCH_USER_RESOLVED', payload: res.data });
+        dispatch({ type: 'CREATE_USER_RESOLVED', payload: res.data });
         localStorage.setItem('x-access-token', res.data.token);
         console.log(res);
-        browserHistory.push('/dashboard');
+        browserHistory.push('/addevent');
       })
       .catch((err) => {
-        dispatch({ type: 'FETCH_USER_REJECTED', payload: err.response.data });
+        dispatch({ type: 'CREATE_USER_REJECTED', payload: err.response.data });
       });
   };
 };
@@ -25,7 +25,7 @@ const userLogin = (loginDetails) => {
         console.log(res);
         dispatch({ type: 'LOGIN_RESOLVED', payload: res.data });
         localStorage.setItem('x-access-token', res.data.token);
-        browserHistory.push('/dashboard');
+        browserHistory.push('/addevent');
       })
       .catch((err) => {
         dispatch({ type: 'LOGIN_REJECTED', payload: err.response.data });

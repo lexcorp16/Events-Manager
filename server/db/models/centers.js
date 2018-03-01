@@ -33,6 +33,10 @@ export default (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     },
+    facilities: {
+      type: DataTypes.ARRAY(DataTypes.ENUM),
+      allowNull: true,
+    },
     mobileNumber: {
       type: DataTypes.STRING,
       allowNull: false,

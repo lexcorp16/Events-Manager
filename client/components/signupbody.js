@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import '../public/signin.scss';
 import { userSignup, clearError } from '../actions/userActions';
+import FlashMessage from './flashmessage';
 
 /**
 * @Center, class containing all methods that
@@ -48,26 +49,24 @@ class SignupBody extends Component {
 			<div>
 				<div className="signup-padder container">
 					<div className="sign-in-container" style={{height: `${540}px` }}>
-						<div className="form-header">
-							<p className="text-center header-form" style={{ fontSize: `${1.4}em`, marginTop:`${10}%`, fontFamily: 'verdana', paddingTop:`${20}px`, paddingBottom: `${20}px` }}>SIGN UP</p>
+						<div className="form-header" style={{paddingBottom: `${20}px` }}>
+							<p className="text-center header-form" style={{ fontSize: `${1.4}em`, marginTop:`${10}%`, fontFamily: 'verdana', paddingTop:`${20}px`, }}>SIGN UP</p>
 						</div>
-							{ (this.props.user.error) &&
-							<div className="alert alert-warning alert-dismissible fade show" role="alert" style={{ height: `${50}px`, marginBottom: `${0}%`, paddingTop:`${10}px`}}>
-								<button type="button" className="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-								<div className="text-center"><strong>{this.props.user.error}</strong></div>
-							</div>}
+              { (this.props.user.error) &&
+              <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${4}%`, height: `${50}px`, paddingBottom: `${5}px`, background: 'none' , border: 'none' }}>
+                <div className="text-center"><strong className="text-center">{this.props.user.error}</strong></div>
+              </div>}
 						<form className="form form-group signup form-container">
 							<div>
+                <label>firstname</label>
 								<input onChange={this.getSignUpDetails} type="text" name="firstname" placeholder="firstname" className="form-control first-name" />
-								<br />
+                <label>lastname</label>
 								<input onChange={this.getSignUpDetails} type="text" name="lastname" placeholder="lastname" className="form-control" />
-								<br />
+                <label>email</label>
 								<input onChange={this.getSignUpDetails} type="text" name="email" placeholder="email" className="form-control" />
-								<br />
-								<input onChange={this.getSignUpDetails} type="password" name="password" placeholder="password" className="form-control" />
-								<br />
+                <label>password</label>
+                <input onChange={this.getSignUpDetails} type="password" name="password" placeholder="password" className="form-control" />
+                <label>retype password</label>
 								<input onChange={this.getSignUpDetails} type="password" name="confirmpassword" placeholder="retype password" className="form-control" />
 								<br />
 								<div className="button-container">
