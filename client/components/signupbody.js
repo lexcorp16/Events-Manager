@@ -28,15 +28,8 @@ class SignupBody extends Component {
 
 	Signup = (e) => {
 		e.preventDefault();
-		const {
-			email, password, firstname, lastname, confirmpassword,
-		} = this.state;
 		this.props.dispatch(userSignup({
-			firstname,
-			lastname,
-			email,
-			password,
-			confirmpassword,
+			...this.state,
 		}));
 	}
 

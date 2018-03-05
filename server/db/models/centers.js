@@ -23,6 +23,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    rentalCost: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     user: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -34,7 +38,7 @@ export default (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
     },
     facilities: {
-      type: DataTypes.ARRAY(DataTypes.ENUM),
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
     },
     mobileNumber: {

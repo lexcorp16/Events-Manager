@@ -34,8 +34,12 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      rentalCost: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       facilities: {
-        type: Sequelize.ARRAY(Sequelize.ENUM),
+        type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: true,
       },
       mobileNumber: {

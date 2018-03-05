@@ -7,7 +7,7 @@ const initialState = {
     center: '',
     userEvents: []
   },
-   status: {
+  status: {
     adding: false,
     added: false,
     error: false,
