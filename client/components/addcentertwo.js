@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { getRentalCostAndFacilities } from '../actions/centerActions';
+import { userIsUnauthenticated,clearError } from '../actions/userActions';
 
 class addCenterFormTwo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       facilities: [],
-      rentalCost: undefined,
+      rentalCost: '',
     };
   }
 
   getRentalCost = (e) => {
-    this.setState({[e.target.name]: e.target.value});
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   addFacilities = (e) => {
@@ -29,6 +31,20 @@ class addCenterFormTwo extends Component {
       ...this.state,
     }))
   }
+
+  componentWillMount () {
+    if (!localStorage.getItem('x-access-token')) {
+      this.props.dispatch(userIsUnauthenticated());
+    }
+    if(!this.props.center.status.addedPrimaryCenterDetails) {
+      browserHistory.push('/addcenterone');
+    }
+  }
+
+  componentWillUnmount () {
+    this.props.dispatch(clearError());
+  }
+
   render() {
     console.log(this.props.center);
     return (
@@ -38,13 +54,13 @@ class addCenterFormTwo extends Component {
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >CENTER PRICING AND FACILITIES</p>
             </div>
-            { (this.props.user.error) &&
+            { (this.props.user.status.error) &&
             <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, background: 'none' }}>
-              <div className="text-center"><strong>{this.props.event.status.error}</strong></div>
+              <div className="text-center"><strong>{this.props.event.errorMessage}</strong></div>
             </div>}
             <form className="form form-group" style={{marginTop: `${60}px`}}>
               <div className="row facilities-checklist " style={{marginBottom: `${30}px`}}>
-                <div className="col">
+                <div className="col" style={{ marginBottom: '20px' }}>
                   <input  type="checkbox" value="parking lot" name="parkinglot" style={{height: `${25}px`,width: `${25}px` }} onClick={this.addFacilities} /><label style={{display: 'block'}}>Parking-lot</label>
                 </div>
                 <div className="col">
@@ -86,7 +102,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  user: state.userReducer.status,
+  user: state.userReducer,
   center: state.centerReducer,
 });
 

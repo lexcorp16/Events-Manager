@@ -16,7 +16,7 @@ module.exports = {
         allowNull: false,
       },
       capacity: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: true,
       },
       address: {
@@ -35,7 +35,7 @@ module.exports = {
         onUpdate: 'CASCADE',
       },
       rentalCost: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       facilities: {

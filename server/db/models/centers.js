@@ -20,11 +20,11 @@ export default (sequelize, DataTypes) => {
       unique: true,
     },
     capacity: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     rentalCost: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     user: {

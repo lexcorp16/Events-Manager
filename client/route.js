@@ -11,6 +11,11 @@ import AllcentersPage from './components/allcenters';
 import AddEventPage from './components/addevent';
 import Sidebar from './components/sidebar';
 import addCenterPageThreeForm from './components/addcenterthree';
+import CenterInfoPage from './components/centerInfo';
+import EventCardPage from './components/eventCard';
+import ModifyCenterPage from './components/modifycenter';
+import ModifyEventPage from './components/modifyevent';
+import CentersPage from './components/centerCard';
 
 export default (
   <Route path="/" component={App}>
@@ -23,5 +28,10 @@ export default (
     <Route path="addcenterone" component={AddCenterPageOneForm} />
     <Route path="addcentertwo" component={AddCenterPageTwoForm} />
     <Route path="addcenterthree" component={addCenterPageThreeForm} />
+    <Route path="centerinfo" component={CenterInfoPage} />
+    <Route path="userevents" component={EventCardPage} />
+    <Route path="modifycenter" component={ModifyCenterPage} />
+    <Route path="modifyevent" component={ModifyEventPage} />
+    <Route path="centers" component={CentersPage} />
   </Route>
 );

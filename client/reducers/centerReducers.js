@@ -5,7 +5,7 @@ const initialState = {
   },
   rentalCostAndFacilities: {
     facilities: [],
-    rentalCost: ''
+    rentalCost: '',
   },
   primaryCenterDetails: {
     name: '',
@@ -14,11 +14,14 @@ const initialState = {
     address: '',
     mobileNumber: '',
   },
+  errorMessage: '',
   imageUpload: {
-    uploadProgress: 0,
     imageUrl: '',
+    uploadProgress: 0,
+    currentTask: undefined,
   },
   status: {
+    modificationPrompted: false,
     fetching: false,
     fetched: false,
     addedCosts: false,
@@ -27,30 +30,85 @@ const initialState = {
     uploadedImage: false,
     uploadingImage: false,
     addedPrimaryCenterDetails: false,
+    uploadImagePaused: false,
+    uploadImageCancelled: false,
+    addingCenter: false,
+    changeImagePrompted: false,
+    deleteCenterPrompted: false,
   }
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-
+    case 'ADDING_CENTERS': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          addingCenter: true,
+        }
+      }
+    }
     case 'UPLOADING_CENTER_IMAGE': {
       return {
-        ...state.imageUpload,
-        uploadProgress: action.payload,
+        ...state,
+        imageUpload: action.payload,
         status: {
           ...state.status,
           uploadingImage: true,
+          uploadImagePaused: false,
+          uploadImageCancelled: false,
+          uploadedImage: false,
+        },
+      };
+    }
+    case 'UPLOADING_CENTER_IMAGE_CANCELLED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          uploadingImage: false,
+          uploadImagePaused: false,
+          uploadedImage: false,
+          uploadImageCancelled: true,
+        },
+      };
+    }
+    case 'UPLOADING_CENTER_IMAGE_PAUSED': {
+      return {
+        ...state,
+        imageUpload: action.payload,
+        status: {
+          ...state.status,
+          uploadingImage: false,
+          uploadingImageCancelled: false,
+          uploadImagePaused: true,
+          uploadedImage: false,
         },
       };
     }
     case 'UPLOAD_CENTER_IMAGE_RESOLVED': {
       return {
-        ...state.imageUpload,
-        imageUrl: action.payload,
+        ...state,
+        imageUpload: action.payload,
         status: {
           ...state.status,
           uploadingImage: false,
           uploadedImage: true,
+          uploadImageCancelled: false,
+          uploadImagePaused: false,
+        },
+      };
+    }
+    case 'UPLOAD_CENTER_IMAGE_REJECTED': {
+      return {
+        ...state,
+        errorMessage: action.payload.error,
+        status: {
+          ...state.status,
+          uploadingImage: false,
+          uploadedImage: false,
+          error: true,
         },
       };
     }
@@ -72,17 +130,6 @@ export default function reducer(state = initialState, action) {
           ...state.status,
           addedCosts: true,
           addedFacilities: true,
-        }
-      };
-    }
-    case 'FETCH_CENTERS': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          fetching: true,
-          fetched: false,
-          error: false,
         }
       };
     }
@@ -123,6 +170,36 @@ export default function reducer(state = initialState, action) {
       };
     }
 
+    case 'MODIFICATION_PROMPT': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          modificationPrompted: true,
+        }
+      };
+    }
+
+    case 'IMAGE_CHANGE_PROMPT': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          changeImagePrompted: true,
+        }
+      };
+    }
+
+    case 'DELETE_CENTER_PROMPT': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          deletecenterPrompted: true,
+        }
+      };
+    }
+
     case 'CLEAR_ERROR': {
       return {
         ...state,
@@ -134,7 +211,6 @@ export default function reducer(state = initialState, action) {
         }
       };
     }
-    
     default: {
       return state;
     }

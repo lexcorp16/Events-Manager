@@ -47,13 +47,15 @@ class SigninBody extends Component {
   }
 
   componentWillUnmount() {
-  	this.props.dispatch(clearError());
+    if (this.props.user.status.error) {
+      this.props.dispatch(clearError());
+    }
   }
 
   render() {
   	console.log(this.props.user)
     return (
-      <div>
+      <div className="sign-in-form">
         <div className="container signup-padder">
           <div className="sign-in-container" style={{height: `${550}px`}}>
             <div className="form-header">
@@ -63,9 +65,13 @@ class SigninBody extends Component {
               <div className="usericon">
                 <div><i className="fa fa-user-circle" style={{ fontSize: `${8}em`, paddingTop:`${10}px` }} /></div>
               </div>
-              { (this.props.user.error) &&
-              <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, paddingBottom: `${10}px`, background: 'none' , border: 'none' }}>
-                <div className="text-center"><strong className="text-center">{this.props.user.error}</strong></div>
+              { (this.props.user.status.error) &&
+              <div className="alert alert-warning alert-dismissible fade show signin-alert" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, paddingBottom: `${10}px`, background: 'none' , border: 'none' }}>
+                <div className="text-center"><strong className="text-center">{this.props.user.errorMessage}</strong></div>
+              </div>}
+              { (this.props.user.status.unauthenticatedAttempt) &&
+              <div className="alert alert-warning alert-dismissible fade show signin-alert" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, paddingBottom: `${10}px`, background: 'none' , border: 'none' }}>
+                <div className="text-center"><strong className="text-center">{this.props.user.unauthenticatedErrorMessage}</strong></div>
               </div>}
               <input onChange={this.getSignInDetails} type="text" name="email" placeholder="email" className="form-control" />
               <br />
@@ -90,7 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  user: state.userReducer.status
+  user: state.userReducer
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SigninBody);

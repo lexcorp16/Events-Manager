@@ -7,11 +7,12 @@ import cors from 'cors';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from '../webpack.config.js';
+import path from 'path';
+
+import webpackConfig from '../webpack.config';
 import centerRoutes from './routes/centers';
 import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
-import path from 'path';
 
 dotenv.config();
 

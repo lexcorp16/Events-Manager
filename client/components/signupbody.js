@@ -23,7 +23,7 @@ class SignupBody extends Component {
 	}
 
 	getSignUpDetails = (e) => {
-				this.setState({[e.target.name]: e.target.value});
+		  this.setState({[e.target.name]: e.target.value});
 		}
 
 	Signup = (e) => {
@@ -45,9 +45,9 @@ class SignupBody extends Component {
 						<div className="form-header" style={{paddingBottom: `${20}px` }}>
 							<p className="text-center header-form" style={{ fontSize: `${1.4}em`, marginTop:`${10}%`, fontFamily: 'verdana', paddingTop:`${20}px`, }}>SIGN UP</p>
 						</div>
-              { (this.props.user.error) &&
-              <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${4}%`, height: `${50}px`, paddingBottom: `${5}px`, background: 'none' , border: 'none' }}>
-                <div className="text-center"><strong className="text-center">{this.props.user.error}</strong></div>
+              { (this.props.user.status.error) &&
+              <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${4}%`, height: `${50}px`, paddingBottom: `${1}px`, background: 'none' , border: 'none' }}>
+                <div className="text-center"><strong className="text-center">{this.props.user.errorMessage}</strong></div>
               </div>}
 						<form className="form form-group signup form-container">
 							<div>
@@ -66,7 +66,7 @@ class SignupBody extends Component {
 									<button className="btn btn-submit btn-default" type="submit" onClick={this.Signup}><span className="text-center">Sign Up</span></button>
 								</div>
 								<div>
-									<p className="text-center">Have an account already? sign in <span className="switchform" style={{ color: 'skyblue' }}><Link to="/signin"> here</Link></span></p>
+									<p className="text-center">Have an account already? sign in <span className="switchform" style={{ color: "skyblue" }}><Link to="/signin"> here</Link></span></p>
 								</div>
 							</div>
 						</form>
@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-	user: state.userReducer.status
+	user: state.userReducer
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupBody);

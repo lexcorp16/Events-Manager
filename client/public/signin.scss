@@ -10,6 +10,11 @@
   width: 350px;
 }
 
+.upload-percentage-indicator {
+  font-size: 1.5em;
+  color: green;
+}
+
 .signup, .signin {
   margin-top: 0%;
   background-color: pink;
@@ -17,7 +22,15 @@
 }
 
 .signup {
-  height: 500px;
+  height: 520px;
+}
+
+.signin-alert {
+  padding: 0px;
+}
+
+.upload-options-section {
+  margin-top: 5px;
 }
 
 .form-header {
@@ -30,6 +43,10 @@
 .form-group {
   padding-right: 25px;
   padding-left: 25px;
+}
+
+.alert {
+  margin-bottom: 0px;
 }
 
 .form-control {
@@ -49,8 +66,22 @@
   padding-bottom: 50px;
 }
 
-.button-container {
+.button-container, .loader-padder {
   padding-left : 100px;
   padding-right: 100px;
   padding-bottom: 20px;
+}
+
+.loader {
+    border: 2px solid #f3f3f3; /* Light grey */
+    border-top: 2px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

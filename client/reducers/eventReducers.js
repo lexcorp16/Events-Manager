@@ -5,8 +5,9 @@ const initialState = {
     type: '',
     date: '',
     center: '',
-    userEvents: []
   },
+  userEvents: [],
+  errorMessage: '',
   status: {
     adding: false,
     added: false,
@@ -46,6 +47,7 @@ export default function reducer(state = initialState, action) {
     case 'ADD_EVENT_REJECTED': {
       return {
         ...state,
+        errorMessage: action.payload.error,
         status: {
           ...state.status,
           adding: false,
@@ -71,7 +73,7 @@ export default function reducer(state = initialState, action) {
       const { message, userEvents } = action.payload;
       return {
         ...state,
-        allEvents: action.payload,
+        userEvents: action.payload,
         state: {
           ...state.status,
           adding: false,
@@ -84,11 +86,12 @@ export default function reducer(state = initialState, action) {
     case 'FETCH_EVENTS_REJECTED': {
       return {
         ...state,
+
         status: {
           ...state.status,
           adding: false,
           added: false,
-          error: action.payload.error,
+          error: true,
         }
       };
     }

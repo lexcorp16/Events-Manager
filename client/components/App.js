@@ -20,7 +20,7 @@ class App extends Component {
       <div>
         <Navbar />
         { (this.props.user.authenticated) &&
-        <div className="d-none d-lg-block large-view">
+        <div className="d-none d-lg-block large-view" style={{backgroundColor: 'white' }}>
           <div className="row">
             <div className="col-lg-2 col-xl-2 col-md-2 side-action">
               <Sidebar />

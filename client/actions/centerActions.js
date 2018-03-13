@@ -1,18 +1,24 @@
 import axios from 'axios';
 import firebase from 'firebase';
+import dotenv from 'dotenv';
+import 'babel-polyfill';
+import { browserHistory } from 'react-router';
+
+dotenv.config();
 
 const config = {
-  apiKey: 'AIzaSyA40Xu1bfgpac8Gc55VWca7FmxboQp0GjQ',
-  authDomain: 'myapp-3df42.firebaseapp.com',
-  databaseURL: 'https://myapp-3df42.firebaseio.com',
-  projectId: 'myapp-3df42',
-  storageBucket: 'myapp-3df42.appspot.com',
-  messagingSenderId: '198701202585',
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.DATABASE_URL,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
 };
+
 firebase.initializeApp(config);
 
-const getAllCenters = (centers) => {
-  return (dispatch) => {
+const getAllCenters = (centers =>
+  (dispatch) => {
     dispatch({ type: 'FETCH_CENTERS' });
     axios.get('/api/v1/centers', centers)
       .then((res) => {
@@ -21,48 +27,118 @@ const getAllCenters = (centers) => {
       .catch((err) => {
         dispatch({ type: 'FETCH_CENTERS_REJECTED', payload: err.response.data });
       });
-  };
-};
+  });
 
-const clearError = () => {
-  return (dispatch) => {
+const addCenter = (centerData =>
+  (dispatch) => {
+    dispatch({ type: 'ADDING_CENTER' });
+    axios({
+      method: 'POST',
+      url: '/api/v1/centers',
+      headers: { 'x-access-token': localStorage.getItem('x-access-token') },
+      data: centerData,
+    })
+      .then((res) => {
+        dispatch({ type: 'ADD_CENTER_RESOLVED', payload: res.data });
+        browserHistory.push('/addcenterone');
+      })
+      .catch((err) => {
+        dispatch({ type: 'ADD_CENTERS_REJECTED', payload: err.response.data });
+      });
+  });
+
+const clearError = () =>
+  (dispatch) => {
     dispatch({ type: 'CLEAR_ERROR' });
   };
-};
 
-const getRentalCostAndFacilities = (costAndFacilities) => {
-  return (dispatch) => {
+const getRentalCostAndFacilities = (costAndFacilities =>
+  (dispatch) => {
     dispatch({ type: 'ADD_RENTAL_COST_AND_FACILITIES', payload: costAndFacilities });
-  };
-};
+    browserHistory.push('/addcenterthree');
+  });
 
-const getPrimaryCenterDetails = (centerDetails) => {
-  return (dispatch) => {
+const getPrimaryCenterDetails = (centerDetails =>
+  (dispatch) => {
     dispatch({ type: 'ADD_PRIMARY_CENTER_DETAILS', payload: centerDetails });
-  };
-};
+    browserHistory.push('/addcentertwo');
+  });
 
-const uploadImageAndGetUrl = (imageFile) => {
-  return (dispatch) => {
+const uploadImageAndGetUrl = (imageFile =>
+  (dispatch) => {
     const storageRef = firebase.storage().ref();
     const file = imageFile.imageFile;
     const metadata = {
       contentType: file[0].type,
     };
     const uploadTask = storageRef.child(`images/${file[0].name}`).put(file[0], metadata);
-    uploadTask.then((snapshot) => {
-      const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      dispatch({ type: 'UPLOADING_CENTER_IMAGE', payload: uploadProgress });
-      if (uploadProgress === 100) {
-        const imageUrl = snapshot.downloadURL;
-        dispatch({ type: 'UPLOAD_CENTER_IMAGE_RESOLVED', payload: imageUrl });
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
+    // including the number of bytes uploaded and the total number of bytes to be uploaded
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      dispatch({ type: 'UPLOADING_CENTER_IMAGE', payload: { uploadProgress: progress, currentTask: uploadTask } });
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          dispatch({ type: 'UPLOADING_CENTER_IMAGE_PAUSED', payload: { uploadProgress: progress, currentTask: uploadTask } });
+          break;
+        case firebase.storage.TaskState.CANCEL: // or 'cancel'
+          dispatch({ type: 'UPLOADING_CENTER_IMAGE_CANCELLED' });
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'cancel'
+          dispatch({ type: 'UPLOADING_CENTER_IMAGE', payload: { uploadProgress: progress, currentTask: uploadTask } });
+          break;
+        default:
       }
-    })
-      .catch((error) => {
-        dispatch({ type: 'UPLOAD_CENTER_IMAGE_REJECTED', payload: error });
-      });
+    }, (error) => {
+    // A full list of error codes is available at
+    // https://firebase.google.com/docs/storage/web/handle-errors
+      switch (error.code) {
+        case 'storage/unauthorized':
+          dispatch({ type: 'UPLOAD_CENTER_IMAGE_REJECTED', payload: error });
+          // User doesn't have permission to access the object
+          break;
+
+        case 'storage/canceled':
+          dispatch({ type: 'UPLOADING_CENTER_IMAGE_CANCELLED' });
+          break;
+
+        case 'storage/unknown':
+          // Unknown error occurred, inspect error.serverResponse
+          break;
+        default:
+      }
+    }, () => {
+    // Upload completed successfully, now we can get the download URL
+      const url = uploadTask.snapshot.downloadURL;
+      dispatch({ type: 'UPLOAD_CENTER_IMAGE_RESOLVED', payload: { imageUrl: url } });
+    });
+  });
+
+const pauseUpload = (task =>
+  (task.currentTask.pause())
+);
+
+const resumeUpload = (task =>
+  (task.currentTask.resume())
+);
+
+const cancelUpload = (task =>
+  (task.currentTask.cancel())
+);
+
+const modificationPrompt = () =>
+  (dispatch) => {
+    dispatch({ type: 'MODIFICATION_PROMPT' });
   };
-};
+
+const imageChangePrompt = () =>
+  (dispatch) => {
+    dispatch({ type: 'IMAGE_CHANGE_PROMPT' });
+  };
+
+const deleteCenterPrompt = () =>
+  (dispatch) => {
+    dispatch({ type: 'DELETE_CENTER_PROMPT' });
+  };
 
 export {
   getAllCenters,
@@ -70,4 +146,11 @@ export {
   getRentalCostAndFacilities,
   getPrimaryCenterDetails,
   uploadImageAndGetUrl,
+  addCenter,
+  pauseUpload,
+  resumeUpload,
+  cancelUpload,
+  modificationPrompt,
+  imageChangePrompt,
+  deleteCenterPrompt,
 };

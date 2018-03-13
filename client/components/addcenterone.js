@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { userIsUnauthenticated, clearError } from '../actions/userActions';
 import { getPrimaryCenterDetails } from '../actions/centerActions';
 
 class addCenterFormOne extends Component {
@@ -12,7 +13,7 @@ class addCenterFormOne extends Component {
       capacity: undefined,
       address: undefined,
       mobileNumber: undefined,
-    }
+    };
   }
 
   getEventDetails = (e) => {
@@ -25,6 +26,18 @@ class addCenterFormOne extends Component {
       ...this.state,
     }))
   }
+  
+  componentWillMount () {
+    if (!localStorage.getItem('x-access-token')) {
+      this.props.dispatch(userIsUnauthenticated());
+    }
+  }
+
+  componentWillUnmount () {
+    if (this.props.user.status.error) {
+      this.props.dispatch(clearError());
+    }
+  }
 
   render() {
     console.log(this.props.center);
@@ -35,16 +48,17 @@ class addCenterFormOne extends Component {
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Center</p>
             </div>
-            { (this.props.user.error) &&
+            { (this.props.user.status.error) &&
             <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, background: 'none' }}>
-              <div className="text-center"><strong>{this.props.event.status.error}</strong></div>
+              <div className="text-center"><strong>{this.props.event.errorMessage}</strong></div>
             </div>}
             <form className="form form-group">
               <label>Name</label>
               <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
               <label>Type</label>
               <select className="form-control" name="type" onClick={this.getEventDetails}>
-                <option>Type of center i.e space</option>
+                <option>select type</option>
+                <option value="Club">Club</option>
                 <option value="Seminar">Seminar</option>
                 <option value="Wedding">Wedding</option>
                 <option value="Conference">Conference</option>
@@ -72,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  user: state.userReducer.status,
+  user: state.userReducer,
   center: state.centerReducer,
 });
 

@@ -5,19 +5,19 @@ import { userIsUnauthenticated } from '../actions/userActions';
 import { addEvent, clearError } from '../actions/eventActions';
 import { getAllCenters } from '../actions/centerActions';
 
-class AddEventPage extends Component {
+class ModifyEventPage extends Component {
   constructor(props) {
-  	super(props)
-  	this.state = {
-  	  name: '',
-  	  type: '',
-  	  center: '',
+    super(props)
+    this.state = {
+      name: '',
+      type: '',
+      center: '',
       date: '',
-  	};
+    };
   }
 
   componentWillUnmount() {
-  	this.props.dispatch(clearError());
+    this.props.dispatch(clearError());
   }
 
   componentWillMount() {
@@ -42,14 +42,14 @@ class AddEventPage extends Component {
   }
 
   render () {
-  	console.log(this.props.event)
+    console.log(this.props.event)
     console.log(this.props.center)
     return (
       <div className="add-event-form" style={{marginTop: `${3}%`}}>
         <div className="container signup-padder">
-          <div className="sign-in-container" style={{marginTop: `${2}%`, height: `${500}px`, border: 'none'}}>
-            <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Event</p>
+          <div className="sign-in-container" style={{marginTop: `${2}%`, height: `${500}px`, border: 'none', backgroundColor: 'white'}}>
+            <div className="form-header" style={{backgroundColor: "white", color: 'black' }}>
+              <h3 className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Modify Event name</h3>
             </div>
             { (this.props.event.status.error) &&
             <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, background: 'none', border: 'none'}}>
@@ -79,7 +79,7 @@ class AddEventPage extends Component {
                  })}
               </select>
               <br />
-              <div className="text-center"><button className="btn btn-default booked" onClick={this.addEvent}>Add Event</button></div>
+              <div className="text-center"><button className="btn btn-default booked" onClick={this.addEvent} style={{backgroundColor: 'black', color: 'pink'}}>Save</button></div>
             </form>
           </div>
         </div>
@@ -98,4 +98,4 @@ const mapStateToProps = (state) => ({
   user: state.userReducer,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddEventPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ModifyEventPage);

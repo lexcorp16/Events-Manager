@@ -37,6 +37,7 @@ export default class LandingpageBody extends Component {
             </div>
           </div>
         </div>
+        <div className="text-center" style={{ fontSize: `${1.1}em`, color: 'grey' }}>&copy; All rights reserved, Events-manager 2018</div>
       </div>
     );
   }

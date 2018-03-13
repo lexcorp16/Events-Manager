@@ -62,7 +62,7 @@ class User {
             lastname,
           };
           const token = jwt.sign(payload, secret, {
-            expiresIn: '10h', // expires in 1 hours
+            expiresIn: '100h', // expires in 1 hours
           });
           return res.status(201).send({ message: 'You have successfully signed up', token, user });
         })
@@ -100,7 +100,7 @@ class User {
               role: user.role,
             };
             const token = jwt.sign(payload, secret, {
-              expiresIn: '10h', // expires in 1 hours
+              expiresIn: '100h', // expires in 1 hours
             });
             return res.status(200).send({ message: 'You have successfully logged in', token , user });
           }
