@@ -1,46 +1,45 @@
 import React, { Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { logOut } from '../actions/userActions';
 
-import '../public/style.scss';
-
-const openNav = () => {
-  document.getElementById('mySidenav').style.width = '70%';
-  document.getElementById('mySidenav').style.backgroundColor = 'rgba(0,0,0,0.4)';
-  document.getElementById('mySidenav').style.color = 'Pink';
-  // document.getElementById("flipkart-navbar").style.width = "50%";
- };
-
-const closeNav = () => {
-  document.getElementById("mySidenav").style.width = "0";
-  document.body.style.backgroundColor = "white";
-};
-
-const search = () => {
-  document.getElementById("mySidenav").style.width = "0";
-  document.body.style.backgroundColor = "rgba(0,0,0,0)";
-  document.getElementById('smallsearch').classList.remove('d-none');
-  document.getElementById('smallsearch').classList.remove('d-lg-block');
-};
-
+/**
+ * 
+ * 
+ * @class Navbar
+ * @extends {Component}
+ */
 class Navbar extends Component {
   /**
-   *
-   *
-   * @returns
-   * @memberof Footer
+   * 
+   * 
+   * @param {any} event 
+   * @memberof Navbar
+   * @returns 
    */
   constructor(props) {
     super(props);
+    this.logOut = this.logOut.bind(this);
   }
-
-  logOut = (e) => {
-    e.preventDefault();
+  /**
+   * 
+   *
+   * @param {any} event
+   * @memberof Navbar
+   * @returns object
+   */
+  logOut(event) {
+    event.preventDefault();
     this.props.dispatch(logOut());
   }
-
+/**
+ * 
+ * 
+ * @returns 
+ * @memberof Navbar
+ */
   render() {
     return (
       <div>
@@ -56,7 +55,7 @@ class Navbar extends Component {
               <input className="form-control mr-sm-2" type="text" placeholder="Search" style={{ border: `${1}px solid pink`, width: '400px' }} />
               <button className="btn btn-outline-success my-2 my-sm-0" type="submit" style={{ border: `${1}px solid pink` }} ><span className="fa fa-search" style={{ color: 'pink'}}></span></button>
             </form>
-            <ul className="navbar-nav mr-auto mt-2 mt-md-0" style={{ marginLeft: `${45}%`, color: 'pink' }}>
+            <ul className="navbar-nav mr-auto mt-2 mt-md-0" style={{ marginLeft: '350px', color: 'pink' }}>
               {(!this.props.user.authenticated) &&
               <li className="nav-item">
                 <Link className="nav-link" to="/signup" style={{ color: 'pink' }}><b>Sign Up</b></Link>
@@ -67,7 +66,7 @@ class Navbar extends Component {
               </li>}
               {(this.props.user.authenticated) &&
               <li>
-                <button className="btn btn-danger" onClick={this.logOut}>LOG OUT</button>
+                <button className="btn btn-outline-danger" onClick={this.logOut}>LOG OUT</button>
               </li>}
             </ul>
           </div>
@@ -78,6 +77,7 @@ class Navbar extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/signup" style={{ color: 'grey' }}>Sign Up</Link>
               </li>}
+
               {(!this.props.user.authenticated) &&
               <li className="nav-item">
                 <Link className="nav-link" to="/signin" style={{ color: 'grey' }}>Sign In</Link>
@@ -114,12 +114,26 @@ class Navbar extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatch: (actionObject) => dispatch(actionObject)
-});
+const mapDispatchToProps = (dispatch =>
+  ({
+    dispatch: actionObject => dispatch(actionObject)
+  })
+);
 
-const mapStateToProps = (state) => ({
-  user: state.userReducer.status
-});
+const mapStateToProps = (state =>
+  ({
+    user: state.userReducer.status,
+    center: state.centerReducer,
+  })
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+
+const propTypes = {
+  user: PropTypes.shape({
+    status: PropTypes.objectOf(PropTypes.bool),
+  }).isRequired,
+  dispatch: PropTypes.objectOf(PropTypes.string).isRequired,
+};
+
+Navbar.propTypes = propTypes;
