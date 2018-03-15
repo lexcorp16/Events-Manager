@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import EventCard from './eventcard';
 import { seeEvents } from '../actions/eventActions';
 
@@ -11,14 +12,6 @@ import '../public/dashboard.scss';
  * @extends {Component}
  */
 class UserEvents extends Component {
-  /**
-   * Creates an instance of UserEvents.
-   * @param {any} props
-   * @memberof UserEvents
-   */
-  constructor(props) {
-    super(props);
-  }
   /**
  *
  *
@@ -62,3 +55,9 @@ const mapStateToProps = (state =>
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEvents);
+
+const propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+UserEvents.propTypes = propTypes;

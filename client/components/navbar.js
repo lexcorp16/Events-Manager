@@ -58,7 +58,7 @@ class Navbar extends Component {
                 <span className="fa fa-search" style={{ color: 'pink' }} />
               </button>
             </form>
-            <ul className="navbar-nav mr-auto mt-2 mt-md-0" style={{ marginLeft: '350px', color: 'pink' }}>
+            <ul className="navbar-nav mr-auto mt-2 mt-md-0" style={{ marginLeft: '400px', color: 'pink' }}>
               {(!this.props.user.status.authenticated) &&
               <li className="nav-item">
                 <Link className="nav-link" to="/signup" style={{ color: 'pink' }}><b>Sign Up</b></Link>
@@ -74,7 +74,7 @@ class Navbar extends Component {
             </ul>
           </div>
 
-          <div className="collapse text-center d-lg-none text-center" id="navbarTogglerDemo02" style={{ backgroundColor: "white" }}>
+          <div className="collapse text-center d-lg-none text-center" id="navbarTogglerDemo02" style={{ backgroundColor: 'white' }}>
             <ul className="navbar-nav mr-auto mt-2 mt-md-0">
               {(!this.props.user.status.authenticated) &&
               <li className="nav-item">

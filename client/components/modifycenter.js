@@ -65,15 +65,22 @@ class ModifyCenterPage extends Component {
             </div>
             <div className="row">
               <div className="center-image-section col-lg-4 container">
-                <img className="center-image img-fluid rounded img-center" src={demoimage} style={{ width:'300px', height: '300px', marginLeft: '20px', marginRight: '20px' }} alt="center" />
+                <img
+                  className="center-image img-fluid rounded img-center"
+                  src={demoimage}
+                  style={{
+                   width: '300px', height: '300px', marginLeft: '20px', marginRight: '20px'
+                  }}
+                  alt="center"
+                />
                 {(!this.props.center.status.changeImagePrompted) &&
-                <div className="text-center" style={{ marginTop: '10px' }}><button className="btn" style={{ backgroundColor: 'black', color: 'pink' }} onClick={this.promptImageChange} >CHANGE IMAGE</button></div>
+                <div className="text-center" style={{ marginTop: '10px', marginLeft: '20px' }}><button className="btn btn-outline-warning btn-block text-center" onClick={this.promptImageChange} >CHANGE IMAGE</button></div>
                 }
                 {(this.props.center.status.changeImagePrompted) &&
                   <div className="change-image-section container" style={{ marginTop: '5px' }}>
                     <form className="form from-group form-inline">
-                      <input type="file" placeholder="select file" style={{ width: '150px' }}/>
-                      <button className="btn btn-default" style={{ backgroundColor: 'black', color: 'pink'}}>upload</button>
+                      <input type="file" placeholder="select file" style={{ width: '150px' }} />
+                      <button className="btn btn-default" style={{ backgroundColor: 'black', color: 'pink' }}>upload</button>
                     </form>
                   </div>
                 }
