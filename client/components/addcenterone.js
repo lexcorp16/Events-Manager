@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { userIsUnauthenticated, clearError } from '../actions/userActions';
 import { getPrimaryCenterDetails } from '../actions/centerActions';
-
-class addCenterFormOne extends Component {
+/**
+ *
+ *
+ * @class AddCenterFormOne
+ * @extends {Component}
+ */
+class AddCenterFormOne extends Component {
+/**
+ * Creates an instance of AddCenterFormOne.
+ * @param {any} props
+ * @memberof AddCenterFormOne class component
+ */
   constructor(props) {
     super(props);
     this.state = {
@@ -14,49 +25,75 @@ class addCenterFormOne extends Component {
       address: undefined,
       mobileNumber: undefined,
     };
-  }
 
-  getEventDetails = (e) => {
-     this.setState({[e.target.name]: e.target.value});
+    this.addCenterDetails = this.addCenterDetails.bind(this);
+    this.getEventDetails = this.getEventDetails.bind(this);
   }
-
-  addCenterDetails = (e) => {
-    e.preventDefault();
-    this.props.dispatch(getPrimaryCenterDetails({
-      ...this.state,
-    }))
-  }
-  
-  componentWillMount () {
+  /**
+ *
+ *
+ * @memberof AddCenterFormOne
+ * @returns {object} state if user is unauthenticated,
+ */
+  componentWillMount() {
     if (!localStorage.getItem('x-access-token')) {
       this.props.dispatch(userIsUnauthenticated());
     }
   }
-
-  componentWillUnmount () {
+  /**
+ *
+ *
+ * @memberof AddCenterFormOne
+ * @returns {object} state after error is cleared,
+ */
+  componentWillUnmount() {
     if (this.props.user.status.error) {
       this.props.dispatch(clearError());
     }
   }
-
+  /**
+ *
+ *
+ * @param {any} event
+ * @memberof AddCenterFormOne
+ * @returns {string} sets the value of apps state from forms
+ */
+  getEventDetails(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+  /**
+ *
+ *
+ * @param {any} event
+ * @memberof AddCenterFormOne
+ * @returns {object} dispatches an action
+ */
+  addCenterDetails(event) {
+    event.preventDefault();
+    this.props.dispatch(getPrimaryCenterDetails({
+      ...this.state,
+    }));
+  }
+  /**
+ *
+ *
+ * @returns
+ * @memberof AddCenterFormOne
+ * @returns {object} object html component
+ */
   render() {
-    console.log(this.props.center);
     return (
-      <div className="add-center-form-one" style={{marginTop: `${3}%`}}>
+      <div className="add-center-form-one" style={{ marginTop: `${3}%` }}>
         <div className="container signup-padder">
-          <div className="sign-in-container" style={{marginTop: `${2}%`, height: `${520}px`, border: 'none'}}>
+          <div className="sign-in-container" style={{ marginTop: `${2}%`, height: `${520}px`, border: 'none' }}>
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Center</p>
             </div>
-            { (this.props.user.status.error) &&
-            <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{marginTop: `${1}%`, height: `${50}px`, background: 'none' }}>
-              <div className="text-center"><strong>{this.props.event.errorMessage}</strong></div>
-            </div>}
             <form className="form form-group">
-              <label>Name</label>
-              <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
-              <label>Type</label>
-              <select className="form-control" name="type" onClick={this.getEventDetails}>
+              <label htmlFor="name">Name</label>
+              <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" id="Name" />
+              <label htmlFor="type">Type</label>
+              <select className="form-control" name="type" onClick={this.getEventDetails} id="type">
                 <option>select type</option>
                 <option value="Club">Club</option>
                 <option value="Seminar">Seminar</option>
@@ -65,11 +102,11 @@ class addCenterFormOne extends Component {
                 <option value="Coporate">Coporate</option>
                 <option value="Party">Party</option>
               </select>
-              <label>Capacity</label>
-              <input type='number' className="form-control" onChange={this.getEventDetails} name="capacity" placeholder="capacity in numbers e.g 1000000" />
-              <label>Address</label>
+              <label htmlFor="capacity">Capacity</label>
+              <input type="number" className="form-control" onChange={this.getEventDetails} name="capacity" placeholder="capacity in numbers e.g 1000000" />
+              <label htmlFor="address">Address</label>
               <input onChange={this.getEventDetails} type="text" name="address" placeholder="Address" className="form-control first-name" />
-              <label>Contact mobileNumber</label>
+              <label htmlFor="mobile">Contact mobileNumber</label>
               <input onChange={this.getEventDetails} type="number" name="mobileNumber" placeholder="mobileNumber" className="form-control first-name" maxLength="11" />
               <br />
               <div className="text-center"><button className="btn" style={{ backgroundColor: 'black' }} onClick={this.addCenterDetails} ><i className='fa fa-chevron-right' style={{ fontSize:`${1.7}em`, color: 'pink'}}> </i> </button></div>
@@ -77,17 +114,32 @@ class addCenterFormOne extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatch: (actionObject) => dispatch(actionObject)
-});
+const mapDispatchToProps = (dispatch =>
+  ({
+    dispatch: (actionObject => dispatch(actionObject))
+  })
+);
 
-const mapStateToProps = (state) => ({
-  user: state.userReducer,
-  center: state.centerReducer,
-});
+const mapStateToProps = (state =>
+  ({
+    user: state.userReducer,
+    center: state.centerReducer,
+  })
+);
 
-export default connect(mapStateToProps, mapDispatchToProps)(addCenterFormOne);
+export default connect(mapStateToProps, mapDispatchToProps)(AddCenterFormOne);
+
+const propTypes = {
+  user: PropTypes.shape({
+    status: PropTypes.shape({
+      error: PropTypes.bool.isRequired,
+    }),
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+
+AddCenterFormOne.propTypes = propTypes;

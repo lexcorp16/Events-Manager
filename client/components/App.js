@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import SignupBody from '../components/signupbody';
 import Navbar from '../components/navbar';
@@ -6,50 +7,54 @@ import Navbar from '../components/navbar';
 import Sidebar from '../components/sidebar';
 import '../public/style.scss';
 
-/**
-* @Center, class containing all methods that
-* handle center related api endpoint
-*/
-class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>
-        <Navbar />
-        { (this.props.user.authenticated) &&
-        <div className="d-none d-lg-block large-view" style={{backgroundColor: 'white' }}>
-          <div className="row">
-            <div className="col-lg-2 col-xl-2 col-md-2 side-action">
-              <Sidebar />
-            </div>
-            <div className="col-lg-9 col-xs-9 col-md-9 action-view">
-              {this.props.children}
-            </div>
+const app = (props =>
+  (
+    <div>
+      <Navbar />
+      { (props.user.status.authenticated) &&
+      <div className="d-none d-lg-block large-view" style={{ backgroundColor: 'white' }}>
+        <div className="row">
+          <div className="col-lg-2 col-xl-2 col-md-2 side-action">
+            <Sidebar />
           </div>
-        </div>}
-        { (this.props.user.authenticated) &&
-        <div className="d-lg-none">
-          {this.props.children}
+          <div className="col-lg-9 col-xs-9 col-md-9 action-view">
+            {props.children}
+          </div>
         </div>
-        }
-        { (!this.props.user.authenticated) &&
-        <div>
-          {this.props.children}
-        </div>}
+      </div>}
+      { (props.user.status.authenticated) &&
+      <div className="d-lg-none">
+        {props.children}
       </div>
-    );
-  }
-}
+      }
+      { (!props.user.status.authenticated) &&
+      <div>
+        {props.children}
+      </div>}
+    </div>
+  )
+);
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatch: (actionObject) => dispatch(actionObject)
-});
+const mapDispatchToProps = (dispatch =>
+  ({
+    dispatch: (actionObject => dispatch(actionObject))
+  })
+);
 
-const mapStateToProps = (state) => ({
-  user: state.userReducer.status
-});
+const mapStateToProps = (state =>
+  ({
+    user: state.userReducer
+  })
+);
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(app);
+
+const propTypes = {
+  user: PropTypes.shape({
+    status: PropTypes.shape({
+      authenticated: PropTypes.bool
+    })
+  }).isRequired,
+};
+
+app.propTypes = propTypes;

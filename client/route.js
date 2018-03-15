@@ -12,9 +12,8 @@ import AddEventPage from './components/addevent';
 import Sidebar from './components/sidebar';
 import addCenterPageThreeForm from './components/addcenterthree';
 import CenterInfoPage from './components/centerInfo';
-import EventCardPage from './components/eventCard';
+import userEventsPage from './components/userevents';
 import ModifyCenterPage from './components/modifycenter';
-import ModifyEventPage from './components/modifyevent';
 import CentersPage from './components/centerCard';
 
 export default (
@@ -29,7 +28,7 @@ export default (
     <Route path="addcentertwo" component={AddCenterPageTwoForm} />
     <Route path="addcenterthree" component={addCenterPageThreeForm} />
     <Route path="centerinfo" component={CenterInfoPage} />
-    <Route path="userevents" component={EventCardPage} />
+    <Route path="userevents" component={userEventsPage} />
     <Route path="modifycenter" component={ModifyCenterPage} />
     <Route path="modifyevent" component={ModifyEventPage} />
     <Route path="centers" component={CentersPage} />

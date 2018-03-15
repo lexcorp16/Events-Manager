@@ -1,28 +1,23 @@
-import React ,{ Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-/**
- * Represents a component
- * @constructor
- */
-class centerEvents extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render () {
-    return (
-      
-    )
-  }
-}
+const centerEvents = () =>
+  (
+    <div>
+      <h3>WElcome it is working</h3>
+    </div>
+  );
+const mapDispatchToProps = (dispatch =>
+  ({
+    dispatch: (actionObject => dispatch(actionObject))
+  })
+);
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatch: (actionObject) => dispatch(actionObject)
-});
-
-const mapStateToProps = (state) => ({
-  event: state.eventReducer,
-  user: state.centerReducer,
-});
+const mapStateToProps = (state =>
+  ({
+    event: state.eventReducer,
+    user: state.centerReducer,
+  })
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(centerEvents);

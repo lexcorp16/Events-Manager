@@ -15,7 +15,7 @@ const initialState = {
   }
 };
 
-export default function reducer(state = initialState, action) {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_EVENT': {
       return {
@@ -30,8 +30,6 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'ADD_EVENT_RESOLVED': {
-      const { message,} = action.payload;
-      const { name, type, date, center } = action.payload.newEvent;
       return {
         ...state,
         allEvents: action.payload,
@@ -70,7 +68,6 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'FETCH_EVENTS_RESOLVED': {
-      const { message, userEvents } = action.payload;
       return {
         ...state,
         userEvents: action.payload,
@@ -111,4 +108,6 @@ export default function reducer(state = initialState, action) {
       return state;
     }
   }
-}
+};
+
+export default reducer;

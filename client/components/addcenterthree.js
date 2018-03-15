@@ -21,6 +21,13 @@ class AddCenterFormThree extends Component {
     this.state = {
       imageFile: undefined,
     };
+
+    this.getImageFile = this.getImageFile.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
+    this.pauseImageUpload = this.pauseImageUpload.bind(this);
+    this.resumeImageUpload = this.resumeImageUpload.bind(this);
+    this.cancelImageUpload = this.cancelImageUpload.bind(this);
+    this.addCenter = this.addCenter.bind(this);
   }
   /**
  *
@@ -32,7 +39,7 @@ class AddCenterFormThree extends Component {
     if (!localStorage.getItem('x-access-token')) {
       this.props.dispatch(userIsUnauthenticated());
     }
-    if(!this.props.center.status.addedCosts || !this.props.center.status.addedFacilities) {
+    if (!this.props.center.status.addedCosts || !this.props.center.status.addedFacilities) {
       browserHistory.push('/addcentertwo');
     }
   }
@@ -134,7 +141,8 @@ class AddCenterFormThree extends Component {
             <div className="alert alert-danger">
               <strong>An error occured,Please try again</strong>
             </div>}
-            { (this.props.center.status.uploadingImage || this.props.center.status.uploadImagePaused) &&
+            { (this.props.center.status.uploadingImage ||
+            this.props.center.status.uploadImagePaused) &&
             <div className="upload-percentage-indicator text-center">
               <strong className="text-center">{`${Math.floor(this.props.center.imageUpload.uploadProgress)}%`}</strong>
             </div>}
@@ -161,15 +169,16 @@ class AddCenterFormThree extends Component {
                 </div>}
             </div>
             <form className="form form-group" style={{ marginTop: `${20}px` }} >
-              {(!this.props.center.status.uploadedImage || !this.props.center.status.uploadingImage) &&
-              <input
-                type="file"
-                name="imageFile"
-                id="imageFile"
-                onChange={this.getImageFile}
-                style={{ color: 'white', border: 'white' }}
-                className="btn btn-default"
-              />}
+              {(!this.props.center.status.uploadedImage || !this.props.center.status.uploadingImage)
+               &&
+               <input
+                 type="file"
+                 name="imageFile"
+                 id="imageFile"
+                 onChange={this.getImageFile}
+                 style={{ color: 'white', border: 'white' }}
+                 className="btn btn-default"
+               />}
               <br />
               {(!this.props.center.status.uploadedImage) &&
               <div className="text-center">
@@ -204,21 +213,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddCenterFormThree);
 
 const propTypes = {
   center: PropTypes.shape({
-    status: {
+    status: PropTypes.shape({
       uploadingImage: PropTypes.bool.isRequired,
       uploadedImage: PropTypes.bool.isRequired,
       uploadImagePaused: PropTypes.bool.isRequired,
-    },
-    imageUpload: {
-      progress: PropTypes.string,
-    },
+      error: PropTypes.bool.isRequired,
+    }),
+    imageUpload: PropTypes.shape({
+      uploadProgress: PropTypes.string,
+      imageUrl: PropTypes.string.isRequired,
+    }),
     primaryCenterDetails: PropTypes.objectOf(PropTypes.string),
     rentalCostAndFacilities: PropTypes.shape({
       facilities: PropTypes.arrayOf(PropTypes.string),
       rentalCost: PropTypes.string,
     })
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 AddCenterFormThree.propTypes = propTypes;
-

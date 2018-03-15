@@ -1,15 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class centerList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render () {
-    return (
-        <option value={this.props.center.id} name={this.props.center.name}>{this.props.center.name}</option>
-    );
-  }
-}
+const centerList = (props =>
+  (
+    <option value={props.center.id} name={props.center.name}>
+      {props.center.name}
+    </option>
+  )
+);
 
 export default centerList;
+
+const propTypes = {
+  center: PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
+};
+
+centerList.propTypes = propTypes;

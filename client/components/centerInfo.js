@@ -3,36 +3,51 @@ import { connect } from 'react-redux';
 
 import { userIsUnauthenticated } from '../actions/userActions';
 import { clearError } from '../actions/eventActions';
-import demoimage from '../public/images/demoimage.jpg'
+import demoimage from '../public/images/demoimage.jpg';
 
-/** Class representing a centerpage. */
+/**
+ *
+ *
+ * @class CenterInfoPage
+ * @extends {Component}
+ */
 class CenterInfoPage extends Component {
-  /**
-     * Initiate Props
-     * @param {number} props - The x value.
-     */
-  constructor(props) {
-    super(props);
-  }
-
+/**
+ *
+ *
+ * @memberof CenterInfoPage
+ * @returns {object} state after action dispatched
+ */
   componentWillMount() {
     if (!localStorage.getItem('x-access-token')) {
       this.props.dispatch(userIsUnauthenticated());
     }
   }
 
+  /**
+ *
+ *
+ * @memberof CenterInfoPage
+ * @returns {object} state after object is created,
+ *
+ */
   componentWillUnmount() {
     if (this.props.user.status.error) {
       this.props.dispatch(clearError());
     }
   }
-
+  /**
+ *
+ *
+ * @returns {object} html dom object
+ * @memberof CenterInfoPage
+ */
   render() {
     return (
       <div>
         <div className="row">
           <div className="center-image col-lg-6 col-xs-12 col-xl-6" style={{ height: `${500}px`, width: `${500}px` }}>
-            <img className="img-fluid rounded-corners float-left image-center" alt="center Image" src={demoimage}/>
+            <img className="img-fluid rounded-corners float-left image-center" alt="center" src={demoimage}/>
           </div>
           <div className="center-image col-lg-6 col-xs-12 col-xl-6 center-info">
             <div className="center-info-header">

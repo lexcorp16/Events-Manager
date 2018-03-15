@@ -10,11 +10,11 @@ const sideBar = (props =>
     <div className="sidebar d-none d-lg-block" style={{ position: 'fixed' }}>
       <div className="sidelinks">
         <div className="event-links">
-          <Link className="text-center sidelink" style={{ color: 'black' }} ><button className="btn btn-block sidelink">Add events</button></Link>
-          <Link className="text-center sidelink" to="/addevent"><button className="btn btn-block sidelink"><i className="fa fa-menu " />Your events</button></Link>
+          <Link className="text-center sidelink" style={{ color: 'black' }} to="/addevent"><button className="btn btn-block sidelink">Add events</button></Link>
+          <Link className="text-center sidelink" to="/userevents"><button className="btn btn-block sidelink"><i className="fa fa-menu " />Your events</button></Link>
         </div>
         <div className="center-links">
-          <Link className="text-center sidelink" style={{ color: 'black' }}><button className="btn btn-block sidelink">Add center</button></Link>
+          <Link className="text-center sidelink" style={{ color: 'black' }} to="/addcenter"><button className="btn btn-block sidelink">Add center</button></Link>
           <Link className="text-center sidelink" to="/addcenter"><button className="btn btn-block sidelink">Your centers</button></Link>
         </div>
       </div>
