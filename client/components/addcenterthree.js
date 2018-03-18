@@ -218,6 +218,8 @@ const propTypes = {
       uploadedImage: PropTypes.bool.isRequired,
       uploadImagePaused: PropTypes.bool.isRequired,
       error: PropTypes.bool.isRequired,
+      addedCosts: PropTypes.bool,
+      addedFacilities: PropTypes.bool,
     }),
     imageUpload: PropTypes.shape({
       uploadProgress: PropTypes.string,

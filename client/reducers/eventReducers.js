@@ -1,21 +1,41 @@
-const initialState = {
-  allEvents: {
-    message: '',
-    name: '',
-    type: '',
-    date: '',
-    center: '',
-  },
-  userEvents: [],
-  errorMessage: '',
-  status: {
-    adding: false,
-    added: false,
-    error: false,
+const initialState = () => {
+  if (localStorage.getItem('eventObject')) {
+    return {
+      events: {
+        userEvents: [],
+        message: '',
+      },
+      eventObject: JSON.parse(localStorage.getItem('eventObject')),
+      errorMessage: '',
+      status: {
+        adding: false,
+        added: false,
+        error: false,
+        modifyEventPrompted: true,
+        deleteEventPrompted: false,
+        eventIsDeleted: false,
+      }
+    };
   }
+  return {
+    events: {
+      userEvents: [],
+      message: '',
+    },
+    eventObject: [],
+    errorMessage: '',
+    status: {
+      adding: false,
+      added: false,
+      error: false,
+      modifyEventPrompted: false,
+      deleteEventPrompted: false,
+      eventIsDeleted: false,
+    }
+  };
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState(), action) => {
   switch (action.type) {
     case 'ADD_EVENT': {
       return {
@@ -32,7 +52,6 @@ const reducer = (state = initialState, action) => {
     case 'ADD_EVENT_RESOLVED': {
       return {
         ...state,
-        allEvents: action.payload,
         state: {
           ...state.status,
           adding: false,
@@ -50,7 +69,7 @@ const reducer = (state = initialState, action) => {
           ...state.status,
           adding: false,
           added: false,
-          error: action.payload.error,
+          error: true,
         }
       };
     }
@@ -70,7 +89,7 @@ const reducer = (state = initialState, action) => {
     case 'FETCH_EVENTS_RESOLVED': {
       return {
         ...state,
-        userEvents: action.payload,
+        events: action.payload,
         state: {
           ...state.status,
           adding: false,
@@ -83,12 +102,57 @@ const reducer = (state = initialState, action) => {
     case 'FETCH_EVENTS_REJECTED': {
       return {
         ...state,
-
         status: {
           ...state.status,
           adding: false,
           added: false,
           error: true,
+        }
+      };
+    }
+
+    case 'DELETING_EVENT': {
+      return {
+        ...state,
+        status: {
+          ...state.status
+        }
+      };
+    }
+
+    case 'DELETE_EVENT_PROMPT': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          deleteEventPrompted: true,
+        }
+      };
+    }
+
+    case 'DELETE_EVENT_RESOLVED': {
+      return {
+        ...state,
+        events: {
+          userEvents: state.events.userEvents.filter(event => event.id !== action.eventId),
+        },
+        status: {
+          ...state.status,
+          deleteEventPrompted: false,
+          eventIsDeleted: true,
+        }
+      };
+    }
+
+    case 'MODIFY_EVENT_PROMPT': {
+      const newEventObject = state.events.userEvents.filter(event => event.id === action.eventId);
+      localStorage.setItem('eventObject', JSON.stringify(newEventObject));
+      return {
+        ...state,
+        eventObject: newEventObject,
+        status: {
+          ...state.status,
+          modifyEventPrompted: true,
         }
       };
     }
@@ -104,6 +168,7 @@ const reducer = (state = initialState, action) => {
         }
       };
     }
+
     default: {
       return state;
     }

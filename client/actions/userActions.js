@@ -2,7 +2,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import jwt from 'jsonwebtoken';
 
-const userSignup = (userDetails =>
+const userSignup = userDetails =>
   (dispatch) => {
     dispatch({ type: 'CREATE_USER' });
     axios.post('/api/v1/users', userDetails)
@@ -14,9 +14,9 @@ const userSignup = (userDetails =>
       .catch((err) => {
         dispatch({ type: 'CREATE_USER_REJECTED', payload: err.response.data });
       });
-  });
+  };
 
-const userLogin = (loginDetails =>
+const userLogin = loginDetails =>
   (dispatch) => {
     dispatch({ type: 'LOGIN_USER' });
     axios.post('/api/v1/users/signin', loginDetails)
@@ -28,7 +28,7 @@ const userLogin = (loginDetails =>
       .catch((err) => {
         dispatch({ type: 'LOGIN_REJECTED', payload: err.response.data });
       });
-  });
+  };
 
 const userIsUnauthenticated = () =>
   (dispatch) => {

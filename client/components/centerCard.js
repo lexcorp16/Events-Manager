@@ -7,7 +7,7 @@ import logo from '../public/images/coference2.jpg';
 
 const CenterCard = (props =>
   (
-    <div className="container">
+    <div className="container col">
       <div className="card" style={{ width: '270px', marginTop: '30px' }}>
         <img className="card-img-top img-fluid" src={logo} alt="Card" />
         <div className="card-body">

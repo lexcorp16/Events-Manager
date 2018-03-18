@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import SignupBody from '../components/signupbody';
 import Navbar from '../components/navbar';
-// import SigninBody from '../components/signinbody';
 import Sidebar from '../components/sidebar';
 import '../public/style.scss';
 
@@ -12,21 +10,16 @@ const app = (props =>
     <div>
       <Navbar />
       { (props.user.status.authenticated) &&
-      <div className="d-none d-lg-block large-view" style={{ backgroundColor: 'white' }}>
+      <div className="large-view" style={{ backgroundColor: 'white' }}>
         <div className="row">
-          <div className="col-lg-2 col-xl-2 col-md-2 side-action">
+          <div className="col-lg-2 side-action d-none d-lg-block ">
             <Sidebar />
           </div>
-          <div className="col-lg-9 col-xs-9 col-md-9 action-view">
+          <div className="col-lg-8 col-xs-12 col-sm-12 action-view container">
             {props.children}
           </div>
         </div>
       </div>}
-      { (props.user.status.authenticated) &&
-      <div className="d-lg-none">
-        {props.children}
-      </div>
-      }
       { (!props.user.status.authenticated) &&
       <div>
         {props.children}
@@ -55,6 +48,7 @@ const propTypes = {
       authenticated: PropTypes.bool
     })
   }).isRequired,
+  children: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
 app.propTypes = propTypes;

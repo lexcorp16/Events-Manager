@@ -7,10 +7,5 @@
   "plugins": [
       "transform-object-rest-spread",
       "transform-decorators-legacy"
-  ],
-  "env": {
-    "development": {
-      "presets": ["react-hmre"]
-    }
-  }
+  ]
 }

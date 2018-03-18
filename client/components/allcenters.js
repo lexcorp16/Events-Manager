@@ -12,15 +12,6 @@ import { getAllCenters } from '../actions/centerActions';
  * @extends {Component}
  */
 class CenterPage extends Component {
-/**
- * Creates an instance of CenterPage.
- * @param {any} props
- * @memberof CenterPage
- */
-  constructor(props) {
-    super(props);
-    this.promptDeleteCenter = this.promptDeleteCenter.bind(this);
-  }
   /**
  *
  *

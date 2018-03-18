@@ -115,7 +115,8 @@ class Event {
       }
     })
       .then((userEvents) => {
-        if (!userEvents) {
+        if (userEvents.length === 0) {
+          console.log('Worked')
           return res.status(404).send({ error: 'No events found for this User' });
         }
         return res.status(200).send({ message: 'Success', userEvents });

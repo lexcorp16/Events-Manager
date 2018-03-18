@@ -1,17 +1,12 @@
 $widthact : 1300px;
 
-.large-view {
-  width: 1300px;
-}
-
 .side-action {
   width: 600px;
 }
 
 .action-view {
-  margin-left: 50px;
-  margin-right: 50px;
-  width: 800px;
+  width: 100%;
+  height: 100%;
 }
 
 .upload-options-section {
@@ -23,7 +18,6 @@ $widthact : 1300px;
   padding-bottom: 10px;
 }
 
-i
 .one-events-info {
   margin-top: 80px;
   border-bottom: 2px solid black;

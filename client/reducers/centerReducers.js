@@ -38,7 +38,7 @@ const initialState = {
   }
 };
 
-export default function reducer(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADDING_CENTERS': {
       return {
@@ -47,7 +47,7 @@ export default function reducer(state = initialState, action) {
           ...state.status,
           addingCenter: true,
         }
-      }
+      };
     }
     case 'UPLOADING_CENTER_IMAGE': {
       return {

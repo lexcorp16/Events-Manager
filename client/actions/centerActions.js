@@ -17,7 +17,7 @@ const config = {
 
 firebase.initializeApp(config);
 
-const getAllCenters = (centers =>
+const getAllCenters = centers =>
   (dispatch) => {
     dispatch({ type: 'FETCH_CENTERS' });
     axios.get('/api/v1/centers', centers)
@@ -27,9 +27,9 @@ const getAllCenters = (centers =>
       .catch((err) => {
         dispatch({ type: 'FETCH_CENTERS_REJECTED', payload: err.response.data });
       });
-  });
+  };
 
-const addCenter = (centerData =>
+const addCenter = centerData =>
   (dispatch) => {
     dispatch({ type: 'ADDING_CENTER' });
     axios({
@@ -45,26 +45,26 @@ const addCenter = (centerData =>
       .catch((err) => {
         dispatch({ type: 'ADD_CENTERS_REJECTED', payload: err.response.data });
       });
-  });
+  };
 
 const clearError = () =>
   (dispatch) => {
     dispatch({ type: 'CLEAR_ERROR' });
   };
 
-const getRentalCostAndFacilities = (costAndFacilities =>
+const getRentalCostAndFacilities = costAndFacilities =>
   (dispatch) => {
     dispatch({ type: 'ADD_RENTAL_COST_AND_FACILITIES', payload: costAndFacilities });
     browserHistory.push('/addcenterthree');
-  });
+  };
 
-const getPrimaryCenterDetails = (centerDetails =>
+const getPrimaryCenterDetails = centerDetails =>
   (dispatch) => {
     dispatch({ type: 'ADD_PRIMARY_CENTER_DETAILS', payload: centerDetails });
     browserHistory.push('/addcentertwo');
-  });
+  };
 
-const uploadImageAndGetUrl = (imageFile =>
+const uploadImageAndGetUrl = imageFile =>
   (dispatch) => {
     const storageRef = firebase.storage().ref();
     const file = imageFile.imageFile;
@@ -111,19 +111,13 @@ const uploadImageAndGetUrl = (imageFile =>
       const url = uploadTask.snapshot.downloadURL;
       dispatch({ type: 'UPLOAD_CENTER_IMAGE_RESOLVED', payload: { imageUrl: url } });
     });
-  });
+  };
 
-const pauseUpload = (task =>
-  (task.currentTask.pause())
-);
+const pauseUpload = task => (task.currentTask.pause());
 
-const resumeUpload = (task =>
-  (task.currentTask.resume())
-);
+const resumeUpload = task => (task.currentTask.resume());
 
-const cancelUpload = (task =>
-  (task.currentTask.cancel())
-);
+const cancelUpload = task => (task.currentTask.cancel());
 
 const modificationPrompt = () =>
   (dispatch) => {

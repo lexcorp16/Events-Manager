@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { userIsUnauthenticated } from '../actions/userActions';
-import { addEvent } from '../actions/eventActions';
+import { addEvent, promptModify } from '../actions/eventActions';
 import { getAllCenters } from '../actions/centerActions';
-import centerList from './selectCenterList';
+import CenterList from './selectCenterList';
 /**
  *
  *
@@ -28,7 +28,8 @@ class AddEventPage extends Component {
     };
 
     this.getEventDetails = this.getEventDetails.bind(this);
-    this.getAllCenters = this.getAllCenters.bind(this);
+    this.addEvent = this.addEvent.bind(this);
+    this.getCenters = this.getCenters.bind(this);
   }
   /**
  *
@@ -40,7 +41,9 @@ class AddEventPage extends Component {
     if (!this.props.user.status.authenticated) {
       this.props.dispatch(userIsUnauthenticated());
     }
-    this.props.dispatch(getAllCenters());
+    if (this.props.event.status.modifyEventPrompted) {
+      this.props.dispatch(promptModify(this.props.event.eventObject[0].id));
+    }
   }
   /**
  *
@@ -51,6 +54,15 @@ class AddEventPage extends Component {
  */
   getEventDetails(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+  /**
+ *
+ *
+ * @memberof AddEventPage
+ * @returns {object} state after action is dispatched
+ */
+  getCenters() {
+    this.props.dispatch(getAllCenters());
   }
   /**
  *
@@ -76,9 +88,14 @@ class AddEventPage extends Component {
       <div className="add-event-form" style={{ marginTop: `${3}%` }}>
         <div className="container signup-padder">
           <div className="sign-in-container" style={{ marginTop: `${2}%`, height: `${500}px`, border: 'none' }}>
+            {(!this.props.event.status.modifyEventPrompted) &&
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Event</p>
-            </div>
+            </div>}
+            {(this.props.event.status.modifyEventPrompted) &&
+            <div className="form-header">
+              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Modify Event</p>
+            </div>}
             { (this.props.event.status.error) &&
             <div
               className="alert alert-warning alert-dismissible fade show"
@@ -91,9 +108,9 @@ class AddEventPage extends Component {
             </div>}
             <form className="form form-group">
               <label htmlFor="name-of-event">Name of event</label>
-              <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
+              <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" defaultValue={this.props.event.status.modifyEventPrompted ? this.props.event.eventObject[0].name : ''} />
               <label htmlFor="type-of-event">Type of event</label>
-              <select className="form-control" name="type" onChange={this.getEventDetails}>
+              <select className="form-control" name="type" onChange={this.getEventDetails} defaultValue={this.props.event.status.modifyEventPrompted ? this.props.event.eventObject[0].type : ''}>
                 <option value="Club">Club</option>
                 <option value="Seminar">Seminar</option>
                 <option value="Wedding">Wedding</option>
@@ -106,15 +123,20 @@ class AddEventPage extends Component {
                 <input type="date" id="date" name="date" className="form-control" onChange={this.getEventDetails} />
               </div>
               <label htmlFor="preferred-center">Preferred center</label>
-              <select className="form-control" onChange={this.getEventDetails} name="center">
+              <select className="form-control" onChange={this.getEventDetails} name="center" onClick={this.getCenters}>
                 <option>select center</option>
                 {this.props.center.allCenters.centers.map(center =>
                 (
-                  <div centerList center={center} />
+                  <CenterList center={center} key={center.id} />
                 ))}
               </select>
               <br />
-              <div className="text-center"><button className="btn btn-default booked" onClick={this.addEvent}>Add Event</button></div>
+              {(this.props.event.status.modifyEventPrompted) &&
+                <div className="text-center"><button className="btn btn-success booked" onClick={this.addEvent}>Modify Event</button></div>
+              }
+              {(!this.props.event.status.modifyEventPrompted) &&
+                <div className="text-center"><button className="btn btn-success booked" onClick={this.addEvent}>Add Event</button></div>
+              }
             </form>
           </div>
         </div>
@@ -141,26 +163,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddEventPage);
 
 const propTypes = {
   center: PropTypes.shape({
-    status: PropTypes.shape({
-      uploadingImage: PropTypes.bool.isRequired,
-      uploadedImage: PropTypes.bool.isRequired,
-      uploadImagePaused: PropTypes.bool.isRequired,
-    }),
     allCenters: PropTypes.shape({
-      centers: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+      centers: PropTypes.arrayOf(PropTypes.shape({
+        facilities: PropTypes.arrayOf(PropTypes.string),
+        capacity: PropTypes.string,
+        mobileNumber: PropTypes.string,
+        type: PropTypes.string,
+        rentalCost: PropTypes.string,
+        imageUrl: PropTypes.string,
+      })),
     }),
   }).isRequired,
   event: PropTypes.shape({
-    status: PropTypes.shape({
-      error: PropTypes.bool,
-    }),
+    status: PropTypes.objectOf(PropTypes.bool),
     errorMessage: PropTypes.string,
+    eventObject: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
   user: PropTypes.shape({
-    status: PropTypes.shape({
-      authenticated: PropTypes.bool,
-    })
+    status: PropTypes.objectOf(PropTypes.bool),
   }).isRequired,
 };
 
