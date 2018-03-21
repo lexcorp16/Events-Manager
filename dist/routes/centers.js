@@ -16,6 +16,10 @@ var _errors = require('../middlewares/errors');
 
 var _errors2 = _interopRequireDefault(_errors);
 
+var _upload = require('../helpers/upload');
+
+var _upload2 = _interopRequireDefault(_upload);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (app) {
@@ -26,4 +30,5 @@ exports.default = function (app) {
   app.put('/api/v1/centers/:centerId', _auth2.default, _errors2.default.checkNullInputModifyCenter, _center2.default.modifyCenter);
   app.get('/api/v1/centers', _center2.default.getAllCenters);
   app.get('/api/v1/centers/:centerId', _center2.default.getACenter);
+  app.post('/api/v1/centers/imageupload', _auth2.default, _upload2.default);
 };

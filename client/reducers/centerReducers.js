@@ -1,44 +1,6 @@
-const initialState = {
-  allCenters: {
-    message: '',
-    centers: []
-  },
-  rentalCostAndFacilities: {
-    facilities: [],
-    rentalCost: '',
-  },
-  primaryCenterDetails: {
-    name: '',
-    type: '',
-    capacity: '',
-    address: '',
-    mobileNumber: '',
-  },
-  errorMessage: '',
-  imageUpload: {
-    imageUrl: '',
-    uploadProgress: 0,
-    currentTask: undefined,
-  },
-  status: {
-    modificationPrompted: false,
-    fetching: false,
-    fetched: false,
-    addedCosts: false,
-    addedFacilities: false,
-    error: false,
-    uploadedImage: false,
-    uploadingImage: false,
-    addedPrimaryCenterDetails: false,
-    uploadImagePaused: false,
-    uploadImageCancelled: false,
-    addingCenter: false,
-    changeImagePrompted: false,
-    deleteCenterPrompted: false,
-  }
-};
+import initialState from '../utils/centerInitialState';
 
-export default (state = initialState, action) => {
+export default (state = initialState(), action) => {
   switch (action.type) {
     case 'ADDING_CENTERS': {
       return {
@@ -171,11 +133,38 @@ export default (state = initialState, action) => {
     }
 
     case 'MODIFICATION_PROMPT': {
+      const newCenterObject = state.allCenters.centers.filter(center =>
+        center.id === action.centerId);
+      localStorage.setItem('centerToBeModified', JSON.stringify(newCenterObject));
+      localStorage.setItem('allCenters', JSON.stringify(state.allCenters.centers));
+      return {
+        ...state,
+        centerToBeModified: newCenterObject,
+        status: {
+          ...state.status,
+          modificationPrompted: true,
+        }
+      };
+    }
+
+    case 'MODIFYING_CENTER': {
       return {
         ...state,
         status: {
           ...state.status,
-          modificationPrompted: true,
+          modifying: true,
+        }
+      };
+    }
+
+    case 'MODIFYING_CENTER_RESOLVED': {
+      localStorage.removeItem('centerToBeModified');
+      localStorage.removeItem('allCenters');
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          modifying: false,
         }
       };
     }
@@ -200,6 +189,18 @@ export default (state = initialState, action) => {
       };
     }
 
+    case 'PROMPT_SEE_A_CENTER': {
+      localStorage.setItem('center-to-get', action.centerToGet);
+      return {
+        ...state,
+        centerToGet: action.centerToGet,
+        status: {
+          ...state.status,
+          getACenterPrompted: true,
+        }
+      };
+    }
+
     case 'CLEAR_ERROR': {
       return {
         ...state,
@@ -215,4 +216,4 @@ export default (state = initialState, action) => {
       return state;
     }
   }
-}
+};

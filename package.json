@@ -4,13 +4,13 @@
   "description": "An event-manager app,andela developer challenge",
   "main": "app.js",
   "scripts": {
-    "localtest": "SET NODE_ENV=test&&nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
+    "localtest": "NODE_ENV=test&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/tests.js --compilers js:babel-core/register --timeout 500000 --exit",
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
     "start:dev": "nodemon ./server/app --exec babel-node ./server/app",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./server/ -d ./dist",
     "start": "node ./dist/app.js",
-    "start:react": "babel-node ./server/app.js",
+    "start:react": "babel ./server/ -d ./dist && node ./dist/app.js",
     "sendmail": "babel-node ./server/helpers/mailer.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.js"
   },

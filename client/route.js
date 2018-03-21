@@ -15,6 +15,7 @@ import userEventsPage from './components/userevents';
 import ModifyCenterPage from './components/modifycenter';
 import CentersPage from './components/centerCard';
 import aCenterPage from './components/aCenter';
+import modifyEventPage from './components/modifyEvent';
 
 export default (
   <Route path="/" component={App}>
@@ -25,13 +26,13 @@ export default (
     <Route path="signup" component={SignupPage} />
     <Route path="signin" component={SigninPage} />
     <Route path="centers" component={AllcentersPage} />
-    <Route path="event/:eventId/modify" component={AddEventPage} />
+    <Route path="modifyevent" component={modifyEventPage} />
     <Route path="addcenterone" component={AddCenterPageOneForm} />
     <Route path="addcentertwo" component={AddCenterPageTwoForm} />
     <Route path="addcenterthree" component={addCenterPageThreeForm} />
     <Route path="centerinfo" component={CenterInfoPage} />
     <Route path="events" component={userEventsPage} />
-    <Route path="center/:centerId" component={ModifyCenterPage} />
+    <Route path="modifycenter" component={ModifyCenterPage} />
     <Route path="centers" component={CentersPage} />
     <Route path="center" component={aCenterPage} />
   </Route>

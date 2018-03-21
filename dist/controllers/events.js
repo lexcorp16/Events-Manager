@@ -65,9 +65,6 @@ var Event = function () {
         }).then(function (newEvent) {
           return res.status(201).send({ message: 'Event successfully added', newEvent: newEvent });
         }).catch(function (error) {
-          if (error.message === 'insert or update on table \"Events\" violates foreign key constraint \"Events_center_fkey\"') {
-            return res.status(400).send({ error: 'chosen center does not exist' });
-          }
           return res.status(500).send({ error: error.message });
         });
       }).catch(function (error) {
@@ -103,11 +100,11 @@ var Event = function () {
             name: req.body.name || modifiedEvent.name,
             type: req.body.type || modifiedEvent.type,
             date: new Date(req.body.date).toISOString() || modifiedEvent.date,
-            center: req.body.center || modifiedEvent.center
+            center: center || modifiedEvent.center
           });
           return res.status(200).send({ message: 'successfully modified', modifiedEvent: modifiedEvent });
         }).catch(function (error) {
-          return res.status(500).send({ error: error.message });
+          return res.status(500).send({ error: 'HERE' + error.message });
         });
       }).catch(function (error) {
         return res.status(500).send({ error: error.message });
@@ -154,7 +151,8 @@ var Event = function () {
           user: req.decoded.userId
         }
       }).then(function (userEvents) {
-        if (!userEvents) {
+        if (userEvents.length === 0) {
+          console.log('Worked');
           return res.status(404).send({ error: 'No events found for this User' });
         }
         return res.status(200).send({ message: 'Success', userEvents: userEvents });

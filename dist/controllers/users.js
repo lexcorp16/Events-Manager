@@ -93,7 +93,7 @@ var User = function () {
             lastname: lastname
           };
           var token = _jsonwebtoken2.default.sign(payload, secret, {
-            expiresIn: '10h' // expires in 1 hours
+            expiresIn: '100h' // expires in 1 hours
           });
           return res.status(201).send({ message: 'You have successfully signed up', token: token, user: user });
         }).catch(function (error) {
@@ -132,7 +132,7 @@ var User = function () {
               role: user.role
             };
             var token = _jsonwebtoken2.default.sign(payload, secret, {
-              expiresIn: '10h' // expires in 1 hours
+              expiresIn: '100h' // expires in 1 hours
             });
             return res.status(200).send({ message: 'You have successfully logged in', token: token, user: user });
           }

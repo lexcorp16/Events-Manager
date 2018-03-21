@@ -8,14 +8,13 @@ exports.default = function (sequelize, DataTypes) {
   var Centers = sequelize.define('Centers', {
     id: {
       allowNull: false,
+      primaryKey: true,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
     name: {
       type: DataTypes.STRING,
-      primaryKey: true,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
     type: {
       type: DataTypes.STRING,
@@ -27,8 +26,12 @@ exports.default = function (sequelize, DataTypes) {
       unique: true
     },
     capacity: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true
+    },
+    rentalCost: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     user: {
       type: DataTypes.UUID,
@@ -39,6 +42,10 @@ exports.default = function (sequelize, DataTypes) {
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
+    },
+    facilities: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true
     },
     mobileNumber: {
       type: DataTypes.STRING,

@@ -199,7 +199,7 @@ describe('test-cases for api routes', () => {
           .expect((res) => {
             expect(res.body.error).to.equal('Invalid email or password');
           });
-       });
+      });
       it('responds with a 400 if a user email is incorrect', (done) => {
         userCredentials.email = 'efosaokpugie@gma.com';
         request(app)
@@ -297,6 +297,7 @@ describe('test-cases for api routes', () => {
         address: 'Number 22,yeru street',
         mobileNumber: '081567677787',
         capacity: '20000',
+        rentalCost: '230000',
       };
       it('makes an admin add a center', (done) => {
         request(app)
@@ -369,10 +370,10 @@ describe('test-cases for api routes', () => {
           .expect('Content-Type', /json/)
           .expect(200, done)
           .expect((res) => {
-              expect(res.body.message).to.equal('You have successfully modified the center');
-              expect(res.body.center.mobileNumber).to.equal('081743930');
-            });
-        });
+            expect(res.body.message).to.equal('You have successfully modified the center');
+            expect(res.body.center.mobileNumber).to.equal('081743930');
+          });
+      });
 
       it('modifies the availability status of a center if no request body is sent', (done) => {
         request(app)
@@ -381,10 +382,10 @@ describe('test-cases for api routes', () => {
           .expect('Content-Type', /json/)
           .expect(200, done)
           .expect((res) => {
-              expect(res.body.message).to.equal('Successfully changed center status to false');
-              expect(res.body.center.isAvailable).to.equal(false);
-            });
-        });
+            expect(res.body.message).to.equal('Successfully changed center status to false');
+            expect(res.body.center.isAvailable).to.equal(false);
+          });
+      });
       it('alternates status of a center if no request body is sent', (done) => {
         request(app)
           .put(`/api/v1/centers/${centerId}`)
@@ -392,11 +393,11 @@ describe('test-cases for api routes', () => {
           .expect('Content-Type', /json/)
           .expect(200, done)
           .expect((res) => {
-              expect(res.body.message).to.equal('Successfully changed availability status to true');
-              expect(res.body.center.isAvailable).to.equal(true);
-            });
-        });
+            expect(res.body.message).to.equal('Successfully changed availability status to true');
+            expect(res.body.center.isAvailable).to.equal(true);
+          });
       });
+    });
     describe('GET /api/v1/centers', () => {
       it('gets all centers', (done) => {
         request(app)

@@ -2,51 +2,50 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { userIsUnauthenticated } from '../actions/userActions';
-import { addEvent } from '../actions/eventActions';
+import { modifyEvent, promptModify } from '../actions/eventActions';
 import { getAllCenters } from '../actions/centerActions';
 import CenterList from './selectCenterList';
 /**
  *
  *
- * @class AddEventPage
+ * @class ModifyEventPage
  * @extends {Component}
  */
-class AddEventPage extends Component {
+class ModifyEventPage extends Component {
 /**
  * Creates an instance of AddEventPage.
  * @param {any} props
- * @memberof AddEventPage
+ * @memberof ModifyEventPage
  */
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      type: '',
-      center: '',
-      date: '',
+      name: undefined,
+      type: undefined,
+      center: undefined,
+      date: this.props.event.eventObject[0].date.slice(0, 10),
     };
 
     this.getEventDetails = this.getEventDetails.bind(this);
-    this.addEvent = this.addEvent.bind(this);
+    this.modifyEvent = this.modifyEvent.bind(this);
     this.getCenters = this.getCenters.bind(this);
   }
   /**
  *
  *
- * @memberof AddEventPage
- * @returns {object} state of the app
+ * @memberof ModifyEventPage
+ * @returns {object} new state after object dispatched
  */
   componentWillMount() {
-    if (!this.props.user.status.authenticated) {
-      this.props.dispatch(userIsUnauthenticated());
+    if (localStorage.getItem('eventObject')) {
+      this.props.dispatch(promptModify(this.props.event.eventObject[0].id));
     }
   }
   /**
  *
  *
  * @param {any} event
- * @memberof AddEventPage
+ * @memberof ModifyEventPage
  * @returns {string} value of input element
  */
   getEventDetails(event) {
@@ -55,7 +54,7 @@ class AddEventPage extends Component {
   /**
  *
  *
- * @memberof AddEventPage
+ * @memberof ModifyEventPage
  * @returns {object} state after action is dispatched
  */
   getCenters() {
@@ -65,20 +64,20 @@ class AddEventPage extends Component {
  *
  *
  * @param {any} event
- * @memberof AddEventPage
+ * @memberof ModifyEventPage
  * @returns {object} state of app after addingEvent
  */
-  addEvent(event) {
+  modifyEvent(event) {
     event.preventDefault();
-    this.props.dispatch(addEvent({
+    this.props.dispatch(modifyEvent({
       ...this.state,
-    }));
+    }, this.props.event.eventObject[0].id));
   }
   /**
  *
  *
  * @returns {object} dicument obbject model for browser rendering
- * @memberof AddEventPage
+ * @memberof ModifyEventPage
  */
   render() {
     return (
@@ -86,7 +85,7 @@ class AddEventPage extends Component {
         <div className="container signup-padder">
           <div className="sign-in-container" style={{ marginTop: `${2}%`, height: `${500}px`, border: 'none' }}>
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Event</p>
+              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Modify Event</p>
             </div>
             { (this.props.event.status.error) &&
             <div
@@ -100,9 +99,10 @@ class AddEventPage extends Component {
             </div>}
             <form className="form form-group">
               <label htmlFor="name-of-event">Name of event</label>
-              <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
+              <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" defaultValue={this.props.event.eventObject[0].name} />
               <label htmlFor="type-of-event">Type of event</label>
-              <select className="form-control" name="type" onChange={this.getEventDetails}>
+              <select className="form-control" name="type" onChange={this.getEventDetails} defaultValue={this.props.event.eventObject[0].type}>
+                <option>__Select__type</option>
                 <option value="Club">Club</option>
                 <option value="Seminar">Seminar</option>
                 <option value="Wedding">Wedding</option>
@@ -123,7 +123,7 @@ class AddEventPage extends Component {
                 ))}
               </select>
               <br />
-              <div className="text-center"><button className="btn btn-success booked" onClick={this.addEvent}>Add Event</button></div>
+              <div className="text-center"><button className="btn btn-success booked" onClick={this.modifyEvent}>Modify Event</button></div>
             </form>
           </div>
         </div>
@@ -146,7 +146,7 @@ const mapStateToProps = (state =>
   })
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddEventPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ModifyEventPage);
 
 const propTypes = {
   center: PropTypes.shape({
@@ -164,12 +164,9 @@ const propTypes = {
   event: PropTypes.shape({
     status: PropTypes.objectOf(PropTypes.bool),
     errorMessage: PropTypes.string,
-    eventObject: PropTypes.objectOf(PropTypes.string),
+    eventObject: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    status: PropTypes.objectOf(PropTypes.bool),
-  }).isRequired,
 };
 
-AddEventPage.propTypes = propTypes;
+ModifyEventPage.propTypes = propTypes;

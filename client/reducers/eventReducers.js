@@ -1,39 +1,4 @@
-const initialState = () => {
-  if (localStorage.getItem('eventObject')) {
-    return {
-      events: {
-        userEvents: [],
-        message: '',
-      },
-      eventObject: JSON.parse(localStorage.getItem('eventObject')),
-      errorMessage: '',
-      status: {
-        adding: false,
-        added: false,
-        error: false,
-        modifyEventPrompted: true,
-        deleteEventPrompted: false,
-        eventIsDeleted: false,
-      }
-    };
-  }
-  return {
-    events: {
-      userEvents: [],
-      message: '',
-    },
-    eventObject: [],
-    errorMessage: '',
-    status: {
-      adding: false,
-      added: false,
-      error: false,
-      modifyEventPrompted: false,
-      deleteEventPrompted: false,
-      eventIsDeleted: false,
-    }
-  };
-};
+import initialState from '../utils/eventInitialState';
 
 const reducer = (state = initialState(), action) => {
   switch (action.type) {
@@ -147,12 +112,40 @@ const reducer = (state = initialState(), action) => {
     case 'MODIFY_EVENT_PROMPT': {
       const newEventObject = state.events.userEvents.filter(event => event.id === action.eventId);
       localStorage.setItem('eventObject', JSON.stringify(newEventObject));
+      localStorage.setItem('allUserEvents', JSON.stringify(state.events.userEvents));
       return {
         ...state,
         eventObject: newEventObject,
         status: {
           ...state.status,
           modifyEventPrompted: true,
+        }
+      };
+    }
+
+    case 'MODIFY_EVENT_RESOLVED': {
+      localStorage.removeItem('eventObject');
+      localStorage.removeItem('allUserEvents');
+      return {
+        ...state,
+        eventObject: [],
+        status: {
+          ...state.status,
+          modifyEventPrompted: false,
+          eventIsDeleted: false,
+          eventIsModified: true,
+        }
+      };
+    }
+
+    case 'MODIFY_EVENT_REJECTED': {
+      return {
+        ...state,
+        eventObject: [],
+        errorMessage: action.payload.error,
+        status: {
+          ...state.status,
+          error: true,
         }
       };
     }

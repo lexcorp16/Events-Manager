@@ -137,10 +137,9 @@ const propTypes = {
   dispatch: PropTypes.func.isRequired,
   events: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   event: PropTypes.objectOf(PropTypes.shape({
+    eventObject: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
     errorMessage: PropTypes.string,
-    status: PropTypes.objectOf(PropTypes.shape({
-      error: PropTypes.bool,
-    })),
+    status: PropTypes.objectOf(PropTypes.bool),
   })).isRequired,
 };
 

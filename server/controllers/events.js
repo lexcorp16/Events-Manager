@@ -74,7 +74,6 @@ class Event {
               date: new Date(req.body.date).toISOString() || modifiedEvent.date,
               center: center || modifiedEvent.center,
             });
-            console.log(center)
             return res.status(200).send({ message: 'successfully modified', modifiedEvent });
           })
           .catch(error => res.status(500).send({ error: `HERE${error.message}` }));

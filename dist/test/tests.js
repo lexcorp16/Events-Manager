@@ -285,12 +285,12 @@ describe('test-cases for api routes', function () {
         var eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-12-05'
         };
+        console.log('HERE' + eventCredentials.center);
         (0, _supertest2.default)(_app2.default).post('/api/v1/events/').set('auth', secondToken).send(eventCredentials).expect(201, done).expect(function (res) {
           eventId = res.body.newEvent.id;
-          console.log('HERE ' + eventCredentials.CenterId);
           expect(res.body.message).to.equal('Event successfully added');
         });
       });
@@ -299,9 +299,10 @@ describe('test-cases for api routes', function () {
         var eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-12-05'
         };
+        console.log('HERE' + eventCredentials.center);
         (0, _supertest2.default)(_app2.default).post('/api/v1/events/').set('auth', secondToken).send(eventCredentials).expect(400, done).expect(function (res) {
           console.log('HERE ' + eventCredentials.CenterId);
           expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
@@ -322,9 +323,10 @@ describe('test-cases for api routes', function () {
         var eventCredentials = {
           name: 'For loop',
           type: 'Seminar',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-11-02'
         };
+        console.log(eventId);
         (0, _supertest2.default)(_app2.default).put('/api/v1/events/' + eventId).set('auth', secondToken).send(eventCredentials).expect(200, done).expect(function (res) {
           console.log('HERE ' + res.body.error);
           expect(res.body.message).to.equal('successfully modified');
@@ -334,7 +336,7 @@ describe('test-cases for api routes', function () {
         var eventCredentials = {
           name: 'Andela Bootcamp',
           type: 'coding Bootcamp',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-11-02'
         };
         (0, _supertest2.default)(_app2.default).put('/api/v1/events/' + eventId).set('auth', secondToken).send(eventCredentials).expect(400, done).expect(function (res) {
@@ -357,7 +359,7 @@ describe('test-cases for api routes', function () {
         var eventCredentials = {
           name: 'Graduation Party',
           type: 'Party',
-          center: 'Rogaros',
+          center: centerId,
           date: '2018-12-05'
         };
         (0, _supertest2.default)(_app2.default).post('/api/v1/events/').set('auth', secondToken).send(eventCredentials).expect(201, done).expect(function (res) {

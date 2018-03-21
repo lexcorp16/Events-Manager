@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { deleteEventPrompter, addEventPrompter } from '../utils/alerts.sweetalert';
+import { deleteEventPrompter, addEventPrompter, modifyEventPrompter } from '../utils/alerts.sweetalert';
 
 const addEvent = eventDetails =>
   (dispatch) => {
@@ -63,8 +63,28 @@ const deleteEvent = eventId =>
 const promptModify = event =>
   (dispatch) => {
     dispatch({ type: 'MODIFY_EVENT_PROMPT', eventId: event });
-    browserHistory.push(`/event/${event}/modify`);
+    browserHistory.push('/modifyevent');
   };
+
+const modifyEvent = (eventdetails, eventId) =>
+  (dispatch) => {
+    dispatch({ type: 'MODIFYING_EVENT' });
+    axios({
+      method: 'PUT',
+      url: `/api/v1/events/${eventId}`,
+      headers: { 'x-access-token': localStorage.getItem('x-access-token') },
+      data: eventdetails,
+    })
+      .then((res) => {
+        modifyEventPrompter();
+        browserHistory.push('/events');
+        dispatch({ type: 'MODIFY_EVENT_RESOLVED', payload: res.data, eventId });
+      })
+      .catch((err) => {
+        dispatch({ type: 'MODIFY_EVENTS_REJECTED', payload: err.response.data });
+      });
+  };
+
 
 export {
   addEvent,
@@ -73,4 +93,5 @@ export {
   promptDelete,
   deleteEvent,
   promptModify,
+  modifyEvent,
 };

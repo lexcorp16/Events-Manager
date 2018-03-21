@@ -17,11 +17,11 @@ exports.default = function (sequelize, DataTypes) {
       allowNull: false
     },
     center: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: true,
       references: {
         model: 'Centers',
-        key: 'name'
+        key: 'id'
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'

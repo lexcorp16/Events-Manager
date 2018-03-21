@@ -37,7 +37,6 @@ var Center = function () {
      * @returns {object} res.
      */
     value: function addCenter(req, res) {
-      console.log(req.decoded);
       var role = req.decoded.role;
       var _req$body = req.body,
           name = _req$body.name,
@@ -45,7 +44,9 @@ var Center = function () {
           capacity = _req$body.capacity,
           address = _req$body.address,
           imageUrl = _req$body.imageUrl,
-          mobileNumber = _req$body.mobileNumber;
+          mobileNumber = _req$body.mobileNumber,
+          facilities = _req$body.facilities,
+          rentalCost = _req$body.rentalCost;
 
       if (role === 'User') {
         return res.status(403).send({ error: 'You are not authorized to perform this action' });
@@ -57,6 +58,8 @@ var Center = function () {
         address: address,
         imageUrl: imageUrl,
         mobileNumber: mobileNumber,
+        facilities: facilities,
+        rentalCost: rentalCost,
         user: req.decoded.userId
       }).then(function (center) {
         return res.status(200).send({ message: 'You have successfully added a center', center: center });
@@ -116,6 +119,8 @@ var Center = function () {
           address: req.body.address || center.address,
           mobileNumber: req.body.mobileNumber || center.mobileNumber,
           imageUrl: req.body.imageUrl || center.imageUrl,
+          facilities: req.body.facilities || center.facilities,
+          rentalCost: req.body.rentalCost || center.rentalCost,
           capacity: parseFloat(req.body.capacity) || center.capacity
         });
         return res.status(200).send({ message: 'You have successfully modified the center', center: center });

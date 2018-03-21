@@ -27,7 +27,7 @@ class AddCenterFormOne extends Component {
     };
 
     this.addCenterDetails = this.addCenterDetails.bind(this);
-    this.getEventDetails = this.getEventDetails.bind(this);
+    this.getCenterDetails = this.getCenterDetails.bind(this);
   }
   /**
  *
@@ -58,7 +58,7 @@ class AddCenterFormOne extends Component {
  * @memberof AddCenterFormOne
  * @returns {string} sets the value of apps state from forms
  */
-  getEventDetails(event) {
+  getCenterDetails(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
   /**
@@ -91,9 +91,9 @@ class AddCenterFormOne extends Component {
             </div>
             <form className="form form-group">
               <label htmlFor="name">Name</label>
-              <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" id="Name" />
+              <input onChange={this.getCenterDetails} type="text" name="name" placeholder="Name of Center" className="form-control first-name" id="Name" />
               <label htmlFor="type">Type</label>
-              <select className="form-control" name="type" onClick={this.getEventDetails} id="type">
+              <select className="form-control" name="type" onChange={this.getCenterDetails} id="type">
                 <option>select type</option>
                 <option value="Club">Club</option>
                 <option value="Seminar">Seminar</option>
@@ -103,13 +103,13 @@ class AddCenterFormOne extends Component {
                 <option value="Party">Party</option>
               </select>
               <label htmlFor="capacity">Capacity</label>
-              <input type="number" className="form-control" onChange={this.getEventDetails} name="capacity" placeholder="capacity in numbers e.g 1000000" />
+              <input type="number" className="form-control" onChange={this.getCenterDetails} name="capacity" placeholder="capacity in numbers e.g 1000000" />
               <label htmlFor="address">Address</label>
-              <input onChange={this.getEventDetails} type="text" name="address" placeholder="Address" className="form-control first-name" />
+              <input onChange={this.getCenterDetails} type="text" name="address" placeholder="Address" className="form-control first-name" />
               <label htmlFor="mobile">Contact mobileNumber</label>
-              <input onChange={this.getEventDetails} type="number" name="mobileNumber" placeholder="mobileNumber" className="form-control first-name" maxLength="11" />
+              <input onChange={this.getCenterDetails} type="number" name="mobileNumber" placeholder="mobileNumber" className="form-control first-name" maxLength="11" />
               <br />
-              <div className="text-center"><button className="btn" style={{ backgroundColor: 'black' }} onClick={this.addCenterDetails} ><i className='fa fa-chevron-right' style={{ fontSize:`${1.7}em`, color: 'pink'}}> </i> </button></div>
+              <div className="text-center"><button className="btn" style={{ backgroundColor: 'black' }} onClick={this.addCenterDetails} ><i className="fa fa-chevron-right" style={{ fontSize: `${1.7}em`, color: 'pink' }} /></button></div>
             </form>
           </div>
         </div>

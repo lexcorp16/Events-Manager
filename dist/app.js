@@ -20,6 +20,26 @@ var _cors = require('cors');
 
 var _cors2 = _interopRequireDefault(_cors);
 
+var _webpack = require('webpack');
+
+var _webpack2 = _interopRequireDefault(_webpack);
+
+var _webpackDevMiddleware = require('webpack-dev-middleware');
+
+var _webpackDevMiddleware2 = _interopRequireDefault(_webpackDevMiddleware);
+
+var _webpackHotMiddleware = require('webpack-hot-middleware');
+
+var _webpackHotMiddleware2 = _interopRequireDefault(_webpackHotMiddleware);
+
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
+var _webpack3 = require('../webpack.config');
+
+var _webpack4 = _interopRequireDefault(_webpack3);
+
 var _centers = require('./routes/centers');
 
 var _centers2 = _interopRequireDefault(_centers);
@@ -34,11 +54,12 @@ var _events2 = _interopRequireDefault(_events);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// require all dependencies
 _dotenv2.default.config();
 
 // Set up the express app
+// require all dependencies
 var app = (0, _express2.default)();
+var compiler = (0, _webpack2.default)(_webpack4.default);
 
 // Log requests to the console.
 app.use((0, _morgan2.default)('dev'));
@@ -61,10 +82,15 @@ app.all('*', function (req, res, next) {
 
 app.set('port', process.env.PORT || 3000);
 
-app.get('*', function (req, res) {
-  return res.status(200).send({
-    message: 'Welcome to the beginning of nothingness.'
-  });
+app.use((0, _webpackDevMiddleware2.default)(compiler, {
+  hot: true,
+  publicPath: _webpack4.default.output.publicPath,
+  noInfo: true
+}));
+app.use((0, _webpackHotMiddleware2.default)(compiler));
+
+app.get('/*', function (req, res) {
+  res.sendFile(_path2.default.join(__dirname, '../client/index.html'));
 });
 
 // fire up server to listen on ap particular port

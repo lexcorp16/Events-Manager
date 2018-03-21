@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import dotenv from 'dotenv';
 import 'babel-polyfill';
 import { browserHistory } from 'react-router';
+import { centerModifiedPrompter } from '../utils/alerts.sweetalert';
 
 dotenv.config();
 
@@ -17,15 +18,32 @@ const config = {
 
 firebase.initializeApp(config);
 
-const getAllCenters = centers =>
+const getAllCenters = () =>
   (dispatch) => {
     dispatch({ type: 'FETCH_CENTERS' });
-    axios.get('/api/v1/centers', centers)
+    axios.get('/api/v1/centers')
       .then((res) => {
         dispatch({ type: 'FETCH_CENTERS_RESOLVED', payload: res.data });
       })
       .catch((err) => {
         dispatch({ type: 'FETCH_CENTERS_REJECTED', payload: err.response.data });
+      });
+  };
+
+const promptSeeCenter = centerId =>
+  (dispatch) => {
+    dispatch({ type: 'PROMPT_SEE_A_CENTER', centerToget: centerId });
+  };
+
+const getACenter = centerId =>
+  (dispatch) => {
+    dispatch({ type: 'FETCHING_A_CENTER' });
+    axios.get(`/api/v1/center/${centerId}`)
+      .then((res) => {
+        dispatch({ type: 'FETCH_A_CENTER_RESOLVED', payload: res.data });
+      })
+      .catch((err) => {
+        dispatch({ type: 'FETCH_A_CENTER_RESJECTED', payload: err.response.data });
       });
   };
 
@@ -89,8 +107,6 @@ const uploadImageAndGetUrl = imageFile =>
         default:
       }
     }, (error) => {
-    // A full list of error codes is available at
-    // https://firebase.google.com/docs/storage/web/handle-errors
       switch (error.code) {
         case 'storage/unauthorized':
           dispatch({ type: 'UPLOAD_CENTER_IMAGE_REJECTED', payload: error });
@@ -119,9 +135,29 @@ const resumeUpload = task => (task.currentTask.resume());
 
 const cancelUpload = task => (task.currentTask.cancel());
 
-const modificationPrompt = () =>
+const modificationPrompt = centerToBeModified =>
   (dispatch) => {
-    dispatch({ type: 'MODIFICATION_PROMPT' });
+    dispatch({ type: 'MODIFICATION_PROMPT', centerId: centerToBeModified });
+    browserHistory.push('/modifycenter');
+  };
+
+const modifyCenter = (detailsToBeModified, centerToBeModified) =>
+  (dispatch) => {
+    dispatch({ type: 'MODIFYING_CENTER' });
+    axios({
+      method: 'PUT',
+      url: `/api/v1/centers/${centerToBeModified}`,
+      headers: { 'x-access-token': localStorage.getItem('x-access-token') },
+      data: detailsToBeModified,
+    })
+      .then((res) => {
+        dispatch({ type: 'MODIFY_CENTER_RESOLVED', payload: res.data });
+        centerModifiedPrompter();
+        browserHistory.push('/centers');
+      })
+      .catch((err) => {
+        dispatch({ type: 'MODIFY_CENTER_REJECTED', payload: err.response.data });
+      });
   };
 
 const imageChangePrompt = () =>
@@ -147,4 +183,7 @@ export {
   modificationPrompt,
   imageChangePrompt,
   deleteCenterPrompt,
+  modifyCenter,
+  getACenter,
+  promptSeeCenter,
 };

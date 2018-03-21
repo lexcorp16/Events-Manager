@@ -6,20 +6,19 @@ module.exports = {
       id: {
         allowNull: false,
         type: Sequelize.UUID,
+        primaryKey: true,
         defaultValue: Sequelize.UUIDV4
       },
       name: {
         type: Sequelize.STRING,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       type: {
         type: Sequelize.STRING,
         allowNull: false
       },
       capacity: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: true
       },
       address: {
@@ -36,6 +35,14 @@ module.exports = {
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
+      },
+      rentalCost: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      facilities: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: true
       },
       mobileNumber: {
         type: Sequelize.STRING,

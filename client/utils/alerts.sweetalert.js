@@ -13,7 +13,23 @@ const deleteEventPrompter = () => {
   });
 };
 
+const modifyEventPrompter = () => {
+  swal({
+    text: 'Event has been modified successfully',
+    icon: 'success',
+  });
+};
+
+const centerModifiedPrompter = () => {
+  swal({
+    text: 'Center has been modified successfully',
+    icon: 'success',
+  });
+};
+
 export {
   addEventPrompter,
   deleteEventPrompter,
+  modifyEventPrompter,
+  centerModifiedPrompter,
 };
