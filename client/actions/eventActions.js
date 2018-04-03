@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { deleteEventPrompter, addEventPrompter, modifyEventPrompter } from '../utils/alerts.sweetalert';
+import { deleteEventPrompter, addEventPrompter, modifyEventPrompter, actionRejectedPrompter } from '../utils/alerts.sweetalert';
 
 const addEvent = eventDetails =>
   (dispatch) => {
@@ -18,6 +18,7 @@ const addEvent = eventDetails =>
       })
       .catch((err) => {
         dispatch({ type: 'ADD_EVENT_REJECTED', payload: err.response.data });
+        actionRejectedPrompter(err.response.data.error);
       });
   };
 
@@ -82,6 +83,7 @@ const modifyEvent = (eventdetails, eventId) =>
       })
       .catch((err) => {
         dispatch({ type: 'MODIFY_EVENTS_REJECTED', payload: err.response.data });
+        actionRejectedPrompter(err.response.data.error);
       });
   };
 

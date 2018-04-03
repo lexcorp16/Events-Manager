@@ -85,4 +85,4 @@ const checkInvalidUserSignIn = (req, res, next) => {
 export default {
   checkInvalidUserDetails,
   checkInvalidUserSignIn,
-}
+};

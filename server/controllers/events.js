@@ -60,7 +60,7 @@ class Event {
       }
     })
       .then((event) => {
-        if (event) {
+        if (event && event.id !== req.params.eventId) {
           return res.status(400).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
         }
         Events.findById(req.params.eventId)
@@ -76,7 +76,7 @@ class Event {
             });
             return res.status(200).send({ message: 'successfully modified', modifiedEvent });
           })
-          .catch(error => res.status(500).send({ error: `HERE${error.message}` }));
+          .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
       })
       .catch(error => res.status(500).send({ error: error.message }));
   }
@@ -99,7 +99,7 @@ class Event {
           .then(() => res.status(200).send({ message: 'Event successfully deleted' }))
           .catch(error => res.status(500).send({ error: error.message }));
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
   }
   /**
  * get User Events
@@ -115,7 +115,6 @@ class Event {
     })
       .then((userEvents) => {
         if (userEvents.length === 0) {
-          console.log('Worked')
           return res.status(404).send({ error: 'No events found for this User' });
         }
         return res.status(200).send({ message: 'Success', userEvents });

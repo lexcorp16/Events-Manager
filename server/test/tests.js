@@ -35,15 +35,8 @@ describe('test-cases for api routes', () => {
   let centerId;
   let eventId;
   let secUserId;
-  describe('GET /', () => {
-    it('responds with a 200 and welcome message in json', (done) => {
-      request(app)
-        .get('/')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200, { message: 'Welcome to the beginning of nothingness.' }, done);
-    });
-  });
+  let thirdUserToken;
+  let secondEventId;
 
   describe('GET /api', () => {
     it('responds with a 200 and welcome message in json', (done) => {
@@ -90,6 +83,25 @@ describe('test-cases for api routes', () => {
         .expect(201, done)
         .expect((res) => {
           secUserId = res.body.user.id;
+          expect(res.body.message).to.equal('You have successfully signed up');
+        });
+    });
+    it('creates a user and responds with 201', (done) => {
+      const testUserCredential = {
+        firstname: 'ororo',
+        lastname: 'orororere',
+        email: 'efosaokpugie23@outlook.com',
+        password: 'thegreatest',
+        confirmpassword: 'thegreatest',
+      };
+      request(app)
+        .post('/api/v1/users')
+        .send(testUserCredential)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201, done)
+        .expect((res) => {
+          thirdUserToken = res.body.token;
           expect(res.body.message).to.equal('You have successfully signed up');
         });
     });
@@ -183,7 +195,6 @@ describe('test-cases for api routes', () => {
           expect(typeof res.body.token).to.be.a('string');
         });
     });
-
     describe('It handles invalid user input', () => {
       const userCredentials = {
         email: 'lionelmessi@barca.com',
@@ -261,7 +272,7 @@ describe('test-cases for api routes', () => {
             expect(res.body.message).to.equal('You have successfully logged in');
           });
       });
-  });
+    });
     describe('PUT /api/v1/users/userId', () => {
       it('makes a user become an admin', (done) => {
         request(app)
@@ -289,7 +300,7 @@ describe('test-cases for api routes', () => {
           });
       });
     });
-    
+
     describe('POST /api/v1/centers', () => {
       const centerDetails = {
         name: 'Rogaros',
@@ -307,15 +318,24 @@ describe('test-cases for api routes', () => {
           .expect('Content-Type', /json/)
           .expect(200, done)
           .expect((res) => {
-            console.log(`HERE ${secondToken}`);
             centerId = res.body.center.id;
             expect(res.body.message).to.equal('You have successfully added a center');
             expect(typeof centerId).to.be.a('string');
-            console.log(`HERE ${centerId}`);
             centerId = res.body.center.id;
           });
       });
-
+      it('returns a 403 and error message if creator is an ordinary User', (done) => {
+        centerDetails.address = 'Alhaji Bakare street,ojodu';
+        request(app)
+          .post('/api/v1/centers/')
+          .set('auth', thirdUserToken)
+          .send(centerDetails)
+          .expect('Content-Type', /json/)
+          .expect(403, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('You are not authorized to perform this action');
+          });
+      });
       describe('it handles invalid input', () => {
         it('responds with a 400 if an input is null', (done) => {
           centerDetails.name = '';
@@ -358,10 +378,10 @@ describe('test-cases for api routes', () => {
       });
     });
 
-    describe('PUT /api/v1/cenetrs/centerId', () => {
+    describe('PUT /api/v1/centers/centerId', () => {
       it('modifies a center', (done) => {
         const modifyDetails = {
-          mobileNumber: '081743930'
+          mobileNumber: '08174393006'
         };
         request(app)
           .put(`/api/v1/centers/${centerId}`)
@@ -371,10 +391,61 @@ describe('test-cases for api routes', () => {
           .expect(200, done)
           .expect((res) => {
             expect(res.body.message).to.equal('You have successfully modified the center');
-            expect(res.body.center.mobileNumber).to.equal('081743930');
+            expect(res.body.center.mobileNumber).to.equal('08174393006');
           });
       });
-
+      it('returns an error message and 403 if modifier did not add center', (done) => {
+        const modifyDetails = {
+          mobileNumber: '08174393007'
+        };
+        request(app)
+          .put(`/api/v1/centers/${centerId}`)
+          .set('auth', token)
+          .send(modifyDetails)
+          .expect('Content-Type', /json/)
+          .expect(403, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('You cannot modify a center added by another user');
+          });
+      });
+      it('returns an error message and 500 if center id is invalid', (done) => {
+        const modifyDetails = {
+          mobileNumber: '08174393008'
+        };
+        request(app)
+          .put('/api/v1/centers/1')
+          .set('auth', secondToken)
+          .send(modifyDetails)
+          .expect('Content-Type', /json/)
+          .expect(500, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('oops, an error occured');
+          });
+      });
+      it('returns an error message and 400 if center to be modified is not found', (done) => {
+        const modifyDetails = {
+          mobileNumber: '08174393009'
+        };
+        request(app)
+          .put(`/api/v1/centers/c${centerId.slice(1)}`)
+          .set('auth', secondToken)
+          .send(modifyDetails)
+          .expect('Content-Type', /json/)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('center not found!');
+          });
+      });
+      it('returns a 403 and error message if modifier is an ordinary User', (done) => {
+        request(app)
+          .put(`/api/v1/centers/${centerId}`)
+          .set('auth', thirdUserToken)
+          .expect('Content-Type', /json/)
+          .expect(403, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('You are not authorized to perform this action');
+          });
+      });
       it('modifies the availability status of a center if no request body is sent', (done) => {
         request(app)
           .put(`/api/v1/centers/${centerId}`)
@@ -418,7 +489,6 @@ describe('test-cases for api routes', () => {
           center: centerId,
           date: '2018-12-05',
         };
-        console.log(`HERE${eventCredentials.center}`);
         request(app)
           .post('/api/v1/events/')
           .set('auth', secondToken)
@@ -429,7 +499,23 @@ describe('test-cases for api routes', () => {
             expect(res.body.message).to.equal('Event successfully added');
           });
       });
-
+      it('adds another new event', (done) => {
+        const eventCredentials = {
+          name: 'Birthday Party',
+          type: 'Party',
+          center: centerId,
+          date: '2018-12-08',
+        };
+        request(app)
+          .post('/api/v1/events/')
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(201, done)
+          .expect((res) => {
+            secondEventId = res.body.newEvent.id;
+            expect(res.body.message).to.equal('Event successfully added');
+          });
+      });
       it('checks if an event is slated for the center being used before saving', (done) => {
         const eventCredentials = {
           name: 'Graduation Party',
@@ -437,15 +523,61 @@ describe('test-cases for api routes', () => {
           center: centerId,
           date: '2018-12-05',
         };
-        console.log(`HERE${eventCredentials.center}`);
         request(app)
           .post('/api/v1/events/')
           .set('auth', secondToken)
           .send(eventCredentials)
           .expect(400, done)
           .expect((res) => {
-            console.log(`HERE ${eventCredentials.CenterId}`);
             expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
+          });
+      });
+      it('returns a 400 if date chosen for event is invalid', (done) => {
+        const eventCredentials = {
+          name: 'Graduation Party',
+          type: 'Party',
+          center: centerId,
+          date: '2017-12-05',
+        };
+        request(app)
+          .post('/api/v1/events/')
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('Invalid date');
+          });
+      });
+      it('returns a 400 for null input', (done) => {
+        const eventCredentials = {
+          name: '',
+          type: 'Party',
+          center: centerId,
+          date: '2018-08-05',
+        };
+        request(app)
+          .post('/api/v1/events/')
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('Please fill in all fields');
+          });
+      });
+      it('returns a 400 if date chosen for event is invalid', (done) => {
+        const eventCredentials = {
+          name: 'Burial ceremony',
+          type: 'Party',
+          center: centerId,
+          date: '2017-08-05',
+        };
+        request(app)
+          .post('/api/v1/events/')
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('Invalid date');
           });
       });
     });
@@ -470,14 +602,12 @@ describe('test-cases for api routes', () => {
           center: centerId,
           date: '2018-11-02',
         };
-        console.log(eventId);
         request(app)
           .put(`/api/v1/events/${eventId}`)
           .set('auth', secondToken)
           .send(eventCredentials)
           .expect(200, done)
           .expect((res) => {
-            console.log(`HERE ${res.body.error}`);
             expect(res.body.message).to.equal('successfully modified');
           });
       });
@@ -489,18 +619,102 @@ describe('test-cases for api routes', () => {
           date: '2018-11-02',
         };
         request(app)
-          .put(`/api/v1/events/${eventId}`)
+          .put(`/api/v1/events/${secondEventId}`)
           .set('auth', secondToken)
           .send(eventCredentials)
           .expect(400, done)
           .expect((res) => {
-            console.log(`HERE ${res.body.error}`);
             expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
+          });
+      });
+      it('returns a 404 and error message if event not found', (done) => {
+        const eventCredentials = {
+          name: 'Andela Bootcamp',
+          type: 'coding Dojo',
+          date: '2018-11-04'
+        };
+        request(app)
+          .put(`/api/v1/events/c${eventId.slice(1)}`)
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(404, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('No event found');
+          });
+      });
+      it('returns a 500 and error message if id of event is invalid', (done) => {
+        const eventCredentials = {
+          name: 'Andela Bootcamp',
+          type: 'coding regalia',
+          date: '2018-11-07'
+        };
+        request(app)
+          .put(`/api/v1/events/${1}`)
+          .set('auth', secondToken)
+          .send(eventCredentials)
+          .expect(500, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('oops, an error occured');
+          });
+      });
+    });
+
+    describe('GET /api/v1/centers/:centerId', () => {
+      it('gets a center and events slated for that center', (done) => {
+        request(app)
+          .get(`/api/v1/centers/${centerId}`)
+          .expect(200, done)
+          .expect((res) => {
+            expect(res.body.message).to.equal('Success');
+            expect(res.body.aCenter.venueOfEvent.length).to.equal(2);
+          });
+      });
+      it('returns a 400 if center not found', (done) => {
+        request(app)
+          .get(`/api/v1/centers/c${centerId.slice(1)}`)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('No center found');
+          });
+      });
+      it('returns a 500 and error message if invalid Id is supplied', (done) => {
+        request(app)
+          .get('/api/v1/centers/1')
+          .expect(500, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('oops, an error occured');
           });
       });
     });
 
     describe('DELETES /api/v1/events/<eventId>', () => {
+      it('does not delete an event added by another user', (done) => {
+        request(app)
+          .delete(`/api/v1/events/${eventId}`)
+          .set('auth', token)
+          .expect(403, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('You cannot delete an event added by another user');
+          });
+      });
+      it('returns a 404 and error message if the event is not found', (done) => {
+        request(app)
+          .delete(`/api/v1/events/c${eventId.slice(1)}`)
+          .set('auth', secondToken)
+          .expect(404, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('event not found');
+          });
+      });
+      it('returns a 500 if there is an invalid credential due to Id', (done) => {
+        request(app)
+          .delete(`/api/v1/events/${1}`)
+          .set('auth', secondToken)
+          .expect(500, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('oops, an error occured');
+          });
+      });
       it('deletes an event', (done) => {
         request(app)
           .delete(`/api/v1/events/${eventId}`)
@@ -512,7 +726,7 @@ describe('test-cases for api routes', () => {
       });
     });
 
-    describe('POST /api/v1/events', () => {
+    describe('POST /api/v1/events/eventId test suite for cancelling user events', () => {
       it('adds a new event', (done) => {
         const eventCredentials = {
           name: 'Graduation Party',
@@ -527,8 +741,47 @@ describe('test-cases for api routes', () => {
           .expect(201, done)
           .expect((res) => {
             eventId = res.body.newEvent.id;
-            console.log(`HERE ${eventCredentials.CenterId}`);
             expect(res.body.message).to.equal('Event successfully added');
+          });
+      });
+      it('returns a 403 and error message if unauthorized', (done) => {
+        request(app)
+          .post(`/api/v1/events/${eventId}`)
+          .set('auth', thirdUserToken)
+          .expect(403, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('You are not authorized to perform this action');
+          });
+      });
+      it('returns a 200 and sends email notification to user', (done) => {
+        request(app)
+          .post(`/api/v1/events/${eventId}`)
+          .set('auth', secondToken)
+          .expect(200, done)
+          .expect((res) => {
+            expect(res.body.message).to.equal('Event canceled and notification sent');
+          });
+      });
+    });
+
+    describe('GET /api/v1/centers/search', () => {
+      it('it performs a searchquery based on input', (done) => {
+        request(app)
+          .get('/api/v1/centers?name=Rogaros')
+          .set('auth', secondToken)
+          .expect(200, done)
+          .expect((res) => {
+            expect(res.body.message).to.equal('Success');
+            expect(res.body.centers[0].name).to.equal('Rogaros');
+          });
+      });
+      it('it returns a 200 and a message if no center is found', (done) => {
+        request(app)
+          .get('/api/v1/centers?name=Rogar')
+          .set('auth', secondToken)
+          .expect(400, done)
+          .expect((res) => {
+            expect(res.body.error).to.equal('There are no centers');
           });
       });
     });

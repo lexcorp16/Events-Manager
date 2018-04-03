@@ -21,4 +21,3 @@ export default (mailOptions) => {
     console.log('MESSAGE ID: ', info.messageId);
   });
 };
-

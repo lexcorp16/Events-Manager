@@ -102,7 +102,7 @@ class User {
             const token = jwt.sign(payload, secret, {
               expiresIn: '100h', // expires in 1 hours
             });
-            return res.status(200).send({ message: 'You have successfully logged in', token , user });
+            return res.status(200).send({ message: 'You have successfully logged in', token });
           }
           return res.status(400).send({ error: 'Invalid email or password' });
         });

@@ -49,6 +49,40 @@ export default (state = initialState(), action) => {
         },
       };
     }
+    case 'FETCHING_A_CENTER': {
+      return {
+        ...state,
+        oneCenter: {
+          aCenter: {},
+        },
+        status: {
+          ...state.status,
+          fetching: true,
+        },
+      };
+    }
+    case 'FETCH_A_CENTER_RESOLVED': {
+      localStorage.setItem('center-to-get-bulk', JSON.stringify(action.payload));
+      localStorage.removeItem('center-to-get');
+      return {
+        ...state,
+        oneCenter: action.payload,
+        status: {
+          ...state.status,
+          fetched: true,
+        },
+      };
+    }
+    case 'FETCH_A_CENTER_REJECTED': {
+      return {
+        ...state,
+        errorMessage: action.payload,
+        status: {
+          ...state.status,
+          error: true,
+        },
+      };
+    }
     case 'UPLOAD_CENTER_IMAGE_RESOLVED': {
       return {
         ...state,
@@ -111,7 +145,7 @@ export default (state = initialState(), action) => {
       return {
         ...state,
         allCenters: action.payload,
-        state: {
+        status: {
           ...state.status,
           fetching: false,
           fetched: true,
@@ -157,7 +191,7 @@ export default (state = initialState(), action) => {
       };
     }
 
-    case 'MODIFYING_CENTER_RESOLVED': {
+    case 'MODIFY_CENTER_RESOLVED': {
       localStorage.removeItem('centerToBeModified');
       localStorage.removeItem('allCenters');
       return {
@@ -205,10 +239,21 @@ export default (state = initialState(), action) => {
       return {
         ...state,
         status: {
-          ...state.status,
-          adding: false,
-          added: false,
+          fetching: false,
+          fetched: false,
+          addedCosts: false,
+          addedFacilities: false,
           error: false,
+          uploadedImage: false,
+          uploadingImage: false,
+          addedPrimaryCenterDetails: false,
+          uploadImagePaused: false,
+          uploadImageCancelled: false,
+          addingCenter: false,
+          changeImagePrompted: false,
+          deleteCenterPrompted: false,
+          modifying: false,
+          getACenterPrompted: false
         }
       };
     }

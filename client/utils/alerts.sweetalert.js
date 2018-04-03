@@ -27,9 +27,41 @@ const centerModifiedPrompter = () => {
   });
 };
 
+const signinPrompter = () => {
+  swal({
+    text: 'Welcome, You have signed in successfully',
+    icon: 'success',
+  });
+};
+
+const signupPrompter = () => {
+  swal({
+    text: 'Welcome to Events-Manager',
+    icon: 'success',
+  });
+};
+
+const actionRejectedPrompter = (errorMessage) => {
+  swal({
+    text: errorMessage,
+    icon: 'warning',
+  });
+};
+
+const selectAnEventPrompter = () => {
+  swal({
+    text: 'select an event to modify',
+    icon: 'warning',
+  });
+};
+
 export {
   addEventPrompter,
   deleteEventPrompter,
   modifyEventPrompter,
   centerModifiedPrompter,
+  actionRejectedPrompter,
+  signinPrompter,
+  signupPrompter,
+  selectAnEventPrompter,
 };

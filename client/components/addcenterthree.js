@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
-import { uploadImageAndGetUrl, addCenter, pauseUpload, resumeUpload, cancelUpload } from '../actions/centerActions';
+import { uploadImageAndGetUrl, addCenter, pauseUpload, resumeUpload, cancelUpload, clearErrors } from '../actions/centerActions';
 import { userIsUnauthenticated } from '../actions/userActions';
+import defaultImage from '../public/images/default-placeholder.png';
 /**
  *
  *
@@ -42,6 +43,15 @@ class AddCenterFormThree extends Component {
     if (!this.props.center.status.addedCosts || !this.props.center.status.addedFacilities) {
       browserHistory.push('/addcentertwo');
     }
+  }
+  /**
+ *
+ *
+ * @memberof AddCenterFormThree
+ * @returns {object} state after component is dispatched
+ */
+  componentWillUnmount() {
+    this.props.dispatch(clearErrors);
   }
   /**
    *
@@ -129,23 +139,22 @@ class AddCenterFormThree extends Component {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${8}%` }}>
         <div className="container signup-padder">
-          <div className="sign-in-container" style={{ marginTop: `${5}%`, height: `${300}px`, border: 'none' }}>
+          <div className="sign-in-container" style={{ marginTop: `${5}%`, height: `${500}px`, border: 'none' }}>
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >UPLOAD CENTER IMAGE</p>
             </div>
-            { (this.props.center.status.uploadedImage) &&
-            <div className="alert alert-success">
-              <strong>Image Successfully Uploaded!</strong>
-            </div>}
             { (this.props.center.status.error) &&
             <div className="alert alert-danger">
               <strong>An error occured,Please try again</strong>
             </div>}
+            <div className="img-center container">
+              <img alt="default" src={defaultImage} style={{ width: '285px', height: '285px' }} id="centerimage" />
+            </div>
             { (this.props.center.status.uploadingImage ||
             this.props.center.status.uploadImagePaused) &&
-            <div className="upload-percentage-indicator text-center">
-              <strong className="text-center">{`${Math.floor(this.props.center.imageUpload.uploadProgress)}%`}</strong>
-            </div>}
+              <div id="myProgress">
+                <div id="myBar" />
+              </div>}
             <div className="upload-options-section row">
               { (this.props.center.status.uploadingImage) &&
               <div className="col">

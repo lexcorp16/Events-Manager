@@ -18,12 +18,12 @@ const initialState = () => {
   };
   if (localStorage.getItem('eventObject')) {
     return {
+      ...state,
       events: {
         userEvents: JSON.parse(localStorage.getItem('allUserEvents')),
         message: '',
       },
       eventObject: JSON.parse(localStorage.getItem('eventObject')),
-      errorMessage: '',
       status: {
         ...state.status,
         modifyEventPrompted: true,

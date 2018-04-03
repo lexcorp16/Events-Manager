@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 const alphaNumeric = (inputtxt) => {
   const letterNumber = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
   if (inputtxt.match(letterNumber)) {
@@ -28,7 +30,9 @@ const checkNullInputAddEvent = (req, res, next) => {
   if (Number.isInteger(parseFloat(name)) || Number.isInteger(type)) {
     return res.status(400).send({ error: 'name and type fields cannot be digits or alphanumeric characters' });
   }
-
+  if (validator.isBefore(date)) {
+    return res.status(400).send({ error: 'Invalid date' });
+  }
   next();
 };
 
@@ -43,7 +47,7 @@ const checkNullInputAddCenter = (req, res, next) => {
   } = req.body;
   [name, type, capacity, mobileNumber, address].forEach((input) => {
     if (!input || input.trim() < 1) {
-     isNull = true;
+      isNull = true;
     }
   });
   if (isNull) {
@@ -61,7 +65,7 @@ const checkNullInputAddCenter = (req, res, next) => {
 
 const checkNullInputModifyEvent = (req, res, next) => {
   let isNull;
-  let modifiedParams = [];
+  const modifiedParams = [];
   const {
     name,
     type,
@@ -92,12 +96,14 @@ const checkNullInputModifyEvent = (req, res, next) => {
       return res.status(400).send({ error: 'name and type fields cannot be digits or alphanumeric characters' });
     }
   }
-
+  if (validator.isBefore(date)) {
+    return res.status(400).send({ error: 'Invalid date' });
+  }
   next();
 };
 
 const checkNullInputModifyCenter = (req, res, next) => {
-  let modifiedParams = [];
+  const modifiedParams = [];
   let isNull;
   const {
     name,

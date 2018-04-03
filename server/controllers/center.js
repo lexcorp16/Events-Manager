@@ -57,7 +57,7 @@ class Center {
       role,
     } = req.decoded;
     if (role === 'User') {
-      return res.status(400).send({ error: 'You are not authorized to perform this action' });
+      return res.status(403).send({ error: 'You are not authorized to perform this action' });
     }
     if (Object.keys(req.body).length < 1) {
       return Centers.findOne({
@@ -77,7 +77,7 @@ class Center {
           });
           return res.status(200).send({ message: 'Successfully changed availability status to true', center });
         })
-        .catch(error => res.status(200).send({ error: error.message }));
+        .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
     }
     return Centers
       .findOne({
@@ -90,7 +90,7 @@ class Center {
           return res.status(400).send({ error: 'center not found!' });
         }
         if (center && center.user !== req.decoded.userId) {
-          return res.status(400).send({ error: 'You cannot modify a center added by another user' });
+          return res.status(403).send({ error: 'You cannot modify a center added by another user' });
         }
         center.updateAttributes({
           name: req.body.name || center.name,
@@ -104,7 +104,7 @@ class Center {
         });
         return res.status(200).send({ message: 'You have successfully modified the center', center });
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
   }
   /**
  * Get all Centers
@@ -113,10 +113,25 @@ class Center {
  * @returns {array} res.
  */
   static getAllCenters(req, res) {
+    if (req.query.name) {
+      return Centers
+        .findAll({
+          where: {
+            name: req.query.name,
+          }
+        })
+        .then((centers) => {
+          if (centers.length < 1) {
+            return res.status(400).send({ error: 'There are no centers' });
+          }
+          return res.status(200).send({ message: 'Success', centers });
+        })
+        .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
+    }
     return Centers.findAll()
       .then((centers) => {
         if (centers.length < 1) {
-          return res.status(400).send({ message: 'There are no centers' });
+          return res.status(400).send({ error: 'There are no centers' });
         }
         return res.status(200).send({ message: 'Success', centers });
       })
@@ -151,7 +166,7 @@ class Center {
           .then(aCenter => res.status(200).send({ message: 'Success', aCenter }))
           .catch(error => res.status(500).send({ error: error.message }));
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
   }
 }
 

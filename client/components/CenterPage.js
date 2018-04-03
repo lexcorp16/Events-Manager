@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ACenter from './aCenter';
 import { getACenter } from '../actions/centerActions';
-
 /**
  *
  *
@@ -12,15 +11,17 @@ import { getACenter } from '../actions/centerActions';
  *
  */
 class CenterPage extends Component {
-  /**
-   *
-   *
-   * @memberof CenterPage
-   * @returns {object} state after action dispacthed
-   */
+/**
+ *
+ *
+ * @memberof CenterPage
+ * @returns {object} state after action is dispatched
+ */
   componentWillMount() {
-    const id = this.props.center.centerToGet;
-    this.props.dispatch(getACenter(id));
+    if (!this.props.center.oneCenter.aCenter) {
+      // console.log("oooooooo>", this.props.centerToGet);
+      this.props.dispatch(getACenter(this.props.centerToGet));
+    }
   }
   /**
  *
@@ -32,7 +33,7 @@ class CenterPage extends Component {
   render() {
     return (
       <div>
-        <ACenter />
+        <ACenter center={this.props.center.oneCenter.aCenter} key={this.props.center.oneCenter.aCenter.id}/>
       </div>
     );
   }
@@ -53,10 +54,23 @@ const mapStateToProps = (state =>
 export default connect(mapStateToProps, mapDispatchToProps)(CenterPage);
 
 const propTypes = {
-  dispatch: PropTypes.func.isRequired,
+
   center: PropTypes.shape({
     centerToGet: PropTypes.string,
-  }).isRequired
+    oneCenter: PropTypes.shape({
+      aCenter: PropTypes.shape({
+        facilities: PropTypes.arrayOf(PropTypes.string),
+        imageUrl: PropTypes.string,
+        date: PropTypes.string,
+      })
+    }),
+    allCenters: PropTypes.shape({
+      centers: PropTypes.arrayOf(PropTypes.shape({
+        isAvailable: PropTypes.bool,
+      }))
+    })
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 CenterPage.propTypes = propTypes;

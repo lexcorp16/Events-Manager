@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 
 import { modifyEvent, promptModify } from '../actions/eventActions';
 import { getAllCenters } from '../actions/centerActions';
 import CenterList from './selectCenterList';
+import { selectAnEventPrompter } from '../utils/alerts.sweetalert';
 /**
  *
  *
@@ -37,6 +39,10 @@ class ModifyEventPage extends Component {
  * @returns {object} new state after object dispatched
  */
   componentWillMount() {
+    if (this.props.event.eventObject.length === 0) {
+      selectAnEventPrompter();
+      browserHistory.push('/');
+    }
     if (localStorage.getItem('eventObject')) {
       this.props.dispatch(promptModify(this.props.event.eventObject[0].id));
     }

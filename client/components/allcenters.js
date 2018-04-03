@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import CenterCard from './centerCard';
 import '../public/style.scss';
 import '../public/scripts/slideshow';
-import { getAllCenters, modificationPrompt } from '../actions/centerActions';
+import { getAllCenters, modificationPrompt, getACenter } from '../actions/centerActions';
 /**
  *
  *
@@ -52,7 +52,7 @@ class CenterPage extends Component {
   promptSeeCenter(event) {
     event.preventDefault();
     const { id } = event.target;
-    this.props.dispatch(this.promptSeeCenter(id));
+    this.props.dispatch(getACenter(id));
   }
   /**
  *

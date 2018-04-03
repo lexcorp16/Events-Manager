@@ -3,7 +3,8 @@ import firebase from 'firebase';
 import dotenv from 'dotenv';
 import 'babel-polyfill';
 import { browserHistory } from 'react-router';
-import { centerModifiedPrompter } from '../utils/alerts.sweetalert';
+import { centerModifiedPrompter, modifyCenterRejectedPrompter } from '../utils/alerts.sweetalert';
+import { displayUploadedImage, updateImageUploadProgressbar } from '../utils/mescill.utils';
 
 dotenv.config();
 
@@ -30,20 +31,17 @@ const getAllCenters = () =>
       });
   };
 
-const promptSeeCenter = centerId =>
-  (dispatch) => {
-    dispatch({ type: 'PROMPT_SEE_A_CENTER', centerToget: centerId });
-  };
-
 const getACenter = centerId =>
   (dispatch) => {
+    dispatch({ type: 'PROMPT_SEE_A_CENTER', centerToGet: centerId });
     dispatch({ type: 'FETCHING_A_CENTER' });
-    axios.get(`/api/v1/center/${centerId}`)
+    axios.get(`/api/v1/centers/${centerId}`)
       .then((res) => {
         dispatch({ type: 'FETCH_A_CENTER_RESOLVED', payload: res.data });
+        browserHistory.push('/center');
       })
       .catch((err) => {
-        dispatch({ type: 'FETCH_A_CENTER_RESJECTED', payload: err.response.data });
+        dispatch({ type: 'FETCH_A_CENTER_REJECTED', payload: err.response.data });
       });
   };
 
@@ -65,7 +63,7 @@ const addCenter = centerData =>
       });
   };
 
-const clearError = () =>
+const clearErrors = () =>
   (dispatch) => {
     dispatch({ type: 'CLEAR_ERROR' });
   };
@@ -103,6 +101,7 @@ const uploadImageAndGetUrl = imageFile =>
           break;
         case firebase.storage.TaskState.RUNNING: // or 'cancel'
           dispatch({ type: 'UPLOADING_CENTER_IMAGE', payload: { uploadProgress: progress, currentTask: uploadTask } });
+          updateImageUploadProgressbar(Math.floor(progress));
           break;
         default:
       }
@@ -126,6 +125,7 @@ const uploadImageAndGetUrl = imageFile =>
     // Upload completed successfully, now we can get the download URL
       const url = uploadTask.snapshot.downloadURL;
       dispatch({ type: 'UPLOAD_CENTER_IMAGE_RESOLVED', payload: { imageUrl: url } });
+      displayUploadedImage(url);
     });
   };
 
@@ -157,6 +157,7 @@ const modifyCenter = (detailsToBeModified, centerToBeModified) =>
       })
       .catch((err) => {
         dispatch({ type: 'MODIFY_CENTER_REJECTED', payload: err.response.data });
+        modifyCenterRejectedPrompter(err.response.data.error);
       });
   };
 
@@ -172,7 +173,7 @@ const deleteCenterPrompt = () =>
 
 export {
   getAllCenters,
-  clearError,
+  clearErrors,
   getRentalCostAndFacilities,
   getPrimaryCenterDetails,
   uploadImageAndGetUrl,
@@ -185,5 +186,4 @@ export {
   deleteCenterPrompt,
   modifyCenter,
   getACenter,
-  promptSeeCenter,
 };

@@ -28,6 +28,7 @@ module.exports = {
         PROJECT_ID: JSON.stringify(process.env.PROJECT_ID),
         STORAGE_BUCKET: JSON.stringify(process.env.STORAGE_BUCKET),
         MESSAGING_SENDER_ID: JSON.stringify(process.env.MESSAGING_SENDER_ID),
+        BASE_URL: JSON.stringify(process.env.BASE_URL),
       }
     }),
   ],

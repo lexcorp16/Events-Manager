@@ -8,14 +8,12 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import path from 'path';
-
-import webpackConfig from '../webpack.config';
 import centerRoutes from './routes/centers';
 import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
+import webpackConfig from '../webpack.config';
 
 dotenv.config();
-
 
 // Set up the express app
 const app = express();
@@ -35,12 +33,16 @@ app.all('*', (req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 userRoutes(app);
 centerRoutes(app);
 eventRoutes(app);
-
-app.set('port', process.env.PORT || 3000);
 
 app.use(webpackMiddleware(compiler, {
   hot: true,
@@ -53,9 +55,11 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
+app.set('port', process.env.PORT || 3000);
+
 // fire up server to listen on ap particular port
 app.listen(app.get('port'), () => {
   console.log(`api running on port ${app.get('port')}`);
 });
 
-module.exports = app;
+export default app;

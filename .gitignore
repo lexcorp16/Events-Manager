@@ -4,3 +4,5 @@ templates
 server/db/migrations
 .nyc_output
 coverage
+dist
+npm-debug.log

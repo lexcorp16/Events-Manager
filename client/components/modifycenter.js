@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import prefillCheckbox from '../utils/checkboxprefill';
+import { imageToDisplay } from '../utils/mescill.utils';
 
 import { userIsUnauthenticated } from '../actions/userActions';
 import
@@ -14,6 +15,7 @@ import
   resumeUpload,
   modifyCenter,
 } from '../actions/centerActions';
+import defaultImage from '../public/images/default-placeholder.png';
 
 /** Class representing a centerpage. */
 class ModifyCenterPage extends Component {
@@ -27,11 +29,11 @@ class ModifyCenterPage extends Component {
       name: undefined,
       type: undefined,
       capacity: undefined,
-      imageUrl: this.props.center.centerToBeModified,
       rentalCost: undefined,
       facilities: this.props.center.centerToBeModified[0].facilities,
       address: undefined,
       mobileNumber: undefined,
+      imageFile: '',
     };
     this.promptImageChange = this.promptImageChange.bind(this);
     this.getCenterDetails = this.getCenterDetails.bind(this);
@@ -63,6 +65,7 @@ class ModifyCenterPage extends Component {
  */
   componentDidMount() {
     prefillCheckbox(this.props.center.centerToBeModified[0].facilities);
+    imageToDisplay(this.props.center.centerToBeModified[0].imageUrl);
   }
   /**
  *
@@ -92,6 +95,9 @@ class ModifyCenterPage extends Component {
  * @returns {array} modify facilities array based on input
  */
   addFacilities(event) {
+    if (this.props.center.centerToBeModified[0].facilities === null) {
+      this.state.facilities = [];
+    }
     if (this.state.facilities.includes(event.target.value)) {
       this.state.facilities.splice(this.state.facilities.indexOf(event.target.value), 1);
     } else {
@@ -113,12 +119,12 @@ class ModifyCenterPage extends Component {
  * @param {any} event
  * @memberof ModifyCenterPage
  * @returns {object} object of uploadImage response from firebase
- * @r
+ *
  */
   uploadImage(event) {
     event.preventDefault();
     this.props.dispatch(uploadImageAndGetUrl({
-      ...this.state,
+      ...this.state
     }));
   }
   /**
@@ -166,14 +172,14 @@ class ModifyCenterPage extends Component {
   modifyCenter(event) {
     event.preventDefault();
     this.props.dispatch(modifyCenter(
-      { ...this.state },
+      { ...this.state, imageUrl: this.props.center.imageUpload.imageUrl },
       this.props.center.centerToBeModified[0].id
     ));
   }
   /**
  *
  *
- * @returns {objecr} htm dom object
+ * @returns {object} htm dom object
  * @memberof ModifyCenterPage
  */
   render() {
@@ -182,26 +188,76 @@ class ModifyCenterPage extends Component {
         <div className="container modify-center">
           <div style={{ border: 'none', backgroundColor: 'white' }} className="modify-container">
             <div className="form-header" style={{ backgroundColor: 'white', color: 'black', borderBottom: '2px solid black' }} >
-              <h3 className="text-center">Edit {this.props.center.centerToBeModified[0].name} Center</h3>
+              <h3 className="text-center">Edit {this.props.center.centerToBeModified[0].name}</h3>
+            </div>
+            <div style={{ paddingLeft: '350px', paddingRight: '350px' }}>
+              <div className="row">
+                <div className="col-xs-6">
+                  <label htmlFor="isAvailable">
+                    Available:
+                  </label>
+                </div>
+                <div className="text-center col-xs-6">
+                  <label htmlFor="isavailable-checkbox" className="switch">
+                    <input type="checkbox" checked />
+                    <span className="slider round" />
+                  </label>
+                </div>
+              </div>
             </div>
             <div className="row">
               <div className="center-image-section col-lg-4 container">
-                <img
-                  className="center-image img-fluid rounded img-center"
-                  src={this.props.center.centerToBeModified[0].imageUrl}
-                  style={{
-                   width: '300px', height: '300px', marginLeft: '20px', marginRight: '20px'
-                  }}
-                  alt="center"
-                />
-                {(!this.props.center.status.changeImagePrompted) &&
+                {(!this.props.center.status.uploadingImage ||
+                  !this.props.center.status.uploadImagePaused) &&
+                  <img
+                    className="center-image img-fluid rounded img-center"
+                    style={{
+                    width: '300px', height: '300px', marginLeft: '20px', marginRight: '20px'
+                    }}
+                    alt="center"
+                    id="centerimage"
+                    src={defaultImage}
+                  />}
+                { (this.props.center.status.uploadingImage ||
+                  this.props.center.status.uploadImagePaused) &&
+                    <div id="myProgress" style={{ marginLeft: '20px' }}>
+                      <div id="myBar" />
+                    </div>}
+                <div className="upload-options-section row">
+                  { (this.props.center.status.uploadingImage) &&
+                  <div className="col">
+                    <div className="fa fa-pause" onClick={this.pauseImageUpload} role="button" tabIndex={0} onKeyDown={this.handleKeyDown} />
+                  </div>}
+                  { (this.props.center.status.uploadImagePaused) &&
+                    <div className="col">
+                      <div className="fa fa-play" onClick={this.resumeImageUpload} role="button" tabIndex={0} onKeyDown={this.handleKeyDown} />
+                    </div>}
+                  { (this.props.center.status.uploadingImage) &&
+                    <div className="col">
+                      <button
+                        className="btn"
+                        style={{
+                          fontSize: `${0.6}em`, height: `${20}px`, backgroundColor: 'white', color: 'red'
+                          }}
+                        onClick={this.cancelImageUpload}
+                      >
+                        cancel
+                      </button>
+                    </div>}
+                </div>
+                {(!this.props.center.status.changeImagePrompted &&
+                this.props.center.centerToBeModified[0].imageUrl === null) &&
+                <div className="text-center" style={{ marginTop: '10px' }}><button className="btn btn-outline-warning" onClick={this.promptImageChange} >ADD IMAGE</button></div>
+                }
+                {(!this.props.center.status.changeImagePrompted &&
+                this.props.center.centerToBeModified[0].imageUrl !== null) &&
                 <div className="text-center" style={{ marginTop: '10px' }}><button className="btn btn-outline-warning" onClick={this.promptImageChange} >CHANGE IMAGE</button></div>
                 }
                 {(this.props.center.status.changeImagePrompted) &&
                   <div className="change-image-section container" style={{ marginTop: '5px' }}>
                     <form className="form from-group form-inline">
-                      <input type="file" placeholder="select file" style={{ width: '150px' }} />
-                      <button className="btn btn-default" style={{ backgroundColor: 'black', color: 'pink' }}>upload</button>
+                      <input type="file" placeholder="select file" style={{ width: '150px' }} onChange={this.getImageFile} name="imageFile" />
+                      <button className="btn btn-default" style={{ backgroundColor: 'black', color: 'pink' }} onClick={this.uploadImage}>upload</button>
                     </form>
                   </div>
                 }
@@ -211,7 +267,7 @@ class ModifyCenterPage extends Component {
                   <label htmlFor="name">Name</label>
                   <input defaultValue={this.props.center.centerToBeModified[0].name} onChange={this.getCenterDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
                   <label htmlFor="type">Type</label>
-                  <select className="form-control" name="type" onClick={this.getCenterDetails} defaultValue={this.props.center.centerToBeModified[0].type}>
+                  <select className="form-control" name="type" onChange={this.getCenterDetails} defaultValue={this.props.center.centerToBeModified[0].type}>
                     <option>select type</option>
                     <option value="Club">Club</option>
                     <option value="Seminar">Seminar</option>
@@ -285,11 +341,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(ModifyCenterPage);
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
   center: PropTypes.shape({
-    status: PropTypes.shape({
-      changeImagePrompted: PropTypes.bool
-    }),
-    centerToBeModified: PropTypes.arrayOf(PropTypes.objectOf({
-      facilities: PropTypes.arrayOf(PropTypes.String),
+    status: PropTypes.objectOf(PropTypes.bool),
+    centerToBeModified: PropTypes.arrayOf(PropTypes.shape({
+      facilities: PropTypes.arrayOf(PropTypes.string),
+      name: PropTypes.string,
+      isAvailable: PropTypes.bool,
+      id: PropTypes.bool,
+      imageUrl: PropTypes.string,
+      type: PropTypes.string,
+      rentalCost: PropTypes.string,
+      mobileNumber: PropTypes.string,
+      address: PropTypes.string,
+      capacity: PropTypes.string,
     })),
     imageUpload: PropTypes.objectOf(PropTypes.string),
   }).isRequired,

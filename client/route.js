@@ -14,7 +14,7 @@ import CenterInfoPage from './components/centerInfo';
 import userEventsPage from './components/userevents';
 import ModifyCenterPage from './components/modifycenter';
 import CentersPage from './components/centerCard';
-import aCenterPage from './components/aCenter';
+import aCenterPage from './components/CenterPage';
 import modifyEventPage from './components/modifyEvent';
 
 export default (

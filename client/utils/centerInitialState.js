@@ -4,11 +4,15 @@ const initialState = () => {
       message: '',
       centers: [],
     },
-    centerToget: {},
+    centerToGet: {},
     centerToBeModified: [],
     rentalCostAndFacilities: {
       facilities: [],
       rentalCost: '',
+    },
+    oneCenter: {
+      aCenter: {},
+      message: '',
     },
     primaryCenterDetails: {
       name: '',
@@ -42,9 +46,22 @@ const initialState = () => {
       getACenterPrompted: false
     }
   };
+  if (localStorage.getItem('center-to-get')) {
+    console.log('cebter-to-get')
+    return {
+      ...state.state,
+      centerToGet: localStorage.getItem('center-to-get'),
+      oneCenter: {
+        aCenter: JSON.parse(localStorage.getItem('center-to-get-bulk')),
+      },
+      status: {
+        getACenterPrompted: true,
+      }
+    };
+  }
   if (localStorage.getItem('centerToBeModified')) {
     return {
-      ...state,
+      ...state.state,
       allCenters: {
         message: '',
         centers: JSON.parse(localStorage.getItem('allCenters')),
@@ -54,15 +71,6 @@ const initialState = () => {
       status: {
         ...state.status,
         modificationPrompted: true,
-      }
-    };
-  }
-  if (localStorage.getItem('center-to-get')) {
-    return {
-      ...state,
-      centerToget: localStorage.getItem('center-to-get'),
-      status: {
-        getACenterPrompted: true,
       }
     };
   }

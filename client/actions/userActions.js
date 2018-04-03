@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import jwt from 'jsonwebtoken';
+import { signinPrompter, signupPrompter } from '../utils/alerts.sweetalert';
+
+axios.defaults.withCredentials = true;
 
 const userSignup = userDetails =>
   (dispatch) => {
@@ -9,6 +12,7 @@ const userSignup = userDetails =>
       .then((res) => {
         localStorage.setItem('x-access-token', res.data.token);
         dispatch({ type: 'CREATE_USER_RESOLVED', payload: res.data, ...jwt.decode(localStorage.getItem('x-access-token')) });
+        signupPrompter();
         browserHistory.push('/addcenterone');
       })
       .catch((err) => {
@@ -23,6 +27,7 @@ const userLogin = loginDetails =>
       .then((res) => {
         localStorage.setItem('x-access-token', res.data.token);
         dispatch({ type: 'LOGIN_RESOLVED', payload: res.data, ...jwt.decode(localStorage.getItem('x-access-token')) });
+        signinPrompter();
         browserHistory.push('/addcenterone');
       })
       .catch((err) => {
