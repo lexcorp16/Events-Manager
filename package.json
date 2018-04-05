@@ -9,7 +9,7 @@
     "start:dev": "nodemon ./server/app --exec babel-node ./server/app",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./server/ -d ./dist",
-    "start": "node ./dist/app.js",
+    "start": "npm run build && node ./dist/app.js",
     "start:react": "nodemon ./client/server.js --exec babel-node ./client/server.js",
     "sendmail": "babel-node ./server/helpers/mailer.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.js"
