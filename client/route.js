@@ -1,39 +1,35 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import App from './components/App';
-import AddCenterPageOneForm from './components/addcenterone';
-import AddCenterPageTwoForm from './components/addcentertwo';
-import SignupPage from './components/signupbody';
-import LandingPage from './components/landing';
-import SigninPage from './components/signinbody';
-import AllcentersPage from './components/allcenters';
-import AddEventPage from './components/addevent';
-import addCenterPageThreeForm from './components/addcenterthree';
-import CenterInfoPage from './components/centerInfo';
-import userEventsPage from './components/userevents';
-import ModifyCenterPage from './components/modifycenter';
-import CentersPage from './components/centerCard';
-import aCenterPage from './components/CenterPage';
-import modifyEventPage from './components/modifyEvent';
+import App from './components/others/App';
+import AddCenterPageOneForm from './components/centers/AddCenterFormOne';
+import AddCenterPageTwoForm from './components/centers/AddCenterFormTwo';
+import addCenterPageThreeForm from './components/centers/AddCenterFormThree';
+import SignupPage from './components/others/SignupBody';
+import LandingPage from './components/others/LandingPageBody';
+import SigninPage from './components/others/SigninBody';
+import AllCentersPage from './components/centers/AllCenterPage';
+import AddEventPage from './components/events/AddEventPage';
+import CenterInfoPage from './components/centers/CenterPage';
+import UserEventsPage from './components/events/UserEvents';
+import ModifyCenterPage from './components/centers/ModifyCenterPage';
+import modifyEventPage from './components/events/ModifyEventPage';
 
 export default (
   <Route path="/" component={App}>
     {(!localStorage.getItem('x-access-token')) &&
     <IndexRoute component={LandingPage} />}
     {(localStorage.getItem('x-access-token')) &&
-    <IndexRoute component={AddEventPage} />}
+    <IndexRoute component={UserEventsPage} />}
     <Route path="signup" component={SignupPage} />
     <Route path="signin" component={SigninPage} />
-    <Route path="centers" component={AllcentersPage} />
     <Route path="modifyevent" component={modifyEventPage} />
     <Route path="addcenterone" component={AddCenterPageOneForm} />
     <Route path="addcentertwo" component={AddCenterPageTwoForm} />
     <Route path="addcenterthree" component={addCenterPageThreeForm} />
-    <Route path="centerinfo" component={CenterInfoPage} />
-    <Route path="events" component={userEventsPage} />
+    <Route path="addevent" component={AddEventPage} />
     <Route path="modifycenter" component={ModifyCenterPage} />
-    <Route path="centers" component={CentersPage} />
-    <Route path="center" component={aCenterPage} />
+    <Route path="centers" component={AllCentersPage} />
+    <Route path="center" component={CenterInfoPage} />
   </Route>
 );

@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { logOut } from '../actions/userActions';
+import { logOut } from '../../actions/userActions';
 
 /**
  *

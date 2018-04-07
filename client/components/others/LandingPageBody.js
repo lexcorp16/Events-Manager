@@ -2,12 +2,12 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import '../public/style.scss';
+import '../../public/style.scss';
 
-const landingPageBody = () =>
+const LandingPageBody = () =>
   (
     <div>
-      <div id="home" className="view jarallax hm-black-slight" data-jarallax='{"speed": 0.2}' max-height="device-height" style={{ marginTop: `${0}%`}}>
+      <div id="home" className="view jarallax hm-black-slight" data-jarallax='{"speed": 0.2}' max-height="device-height" style={{ marginTop: `${0}%` }}>
         <div className="full-bg-img">
           <div className="container flex-center">
             <div className="row smooth-scroll">
@@ -32,4 +32,4 @@ const landingPageBody = () =>
     </div>
   );
 
-export default landingPageBody;
+export default LandingPageBody;

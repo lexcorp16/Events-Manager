@@ -1,57 +1,52 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
 
-import { modifyEvent, promptModify } from '../actions/eventActions';
-import { getAllCenters } from '../actions/centerActions';
-import CenterList from './selectCenterList';
-import { selectAnEventPrompter } from '../utils/alerts.sweetalert';
+import { userIsUnauthenticated } from '../../actions/userActions';
+import { addEvent } from '../../actions/eventActions';
+import { getAllCenters } from '../../actions/centerActions';
+import CenterList from './CenterList';
 /**
  *
  *
- * @class ModifyEventPage
+ * @class AddEventPage
  * @extends {Component}
  */
-class ModifyEventPage extends Component {
+class AddEventPage extends Component {
 /**
  * Creates an instance of AddEventPage.
  * @param {any} props
- * @memberof ModifyEventPage
+ * @memberof AddEventPage
  */
   constructor(props) {
     super(props);
     this.state = {
-      name: undefined,
-      type: undefined,
-      center: undefined,
-      date: this.props.event.eventObject[0].date.slice(0, 10),
+      name: '',
+      type: '',
+      center: '',
+      date: '',
     };
 
     this.getEventDetails = this.getEventDetails.bind(this);
-    this.modifyEvent = this.modifyEvent.bind(this);
+    this.addEvent = this.addEvent.bind(this);
     this.getCenters = this.getCenters.bind(this);
   }
   /**
  *
  *
- * @memberof ModifyEventPage
- * @returns {object} new state after object dispatched
+ * @memberof AddEventPage
+ * @returns {object} state of the app
  */
   componentWillMount() {
-    if (this.props.event.eventObject.length === 0) {
-      selectAnEventPrompter();
-      browserHistory.push('/');
-    }
-    if (localStorage.getItem('eventObject')) {
-      this.props.dispatch(promptModify(this.props.event.eventObject[0].id));
+    if (!this.props.user.status.authenticated) {
+      this.props.dispatch(userIsUnauthenticated());
     }
   }
   /**
  *
  *
  * @param {any} event
- * @memberof ModifyEventPage
+ * @memberof AddEventPage
  * @returns {string} value of input element
  */
   getEventDetails(event) {
@@ -60,7 +55,7 @@ class ModifyEventPage extends Component {
   /**
  *
  *
- * @memberof ModifyEventPage
+ * @memberof AddEventPage
  * @returns {object} state after action is dispatched
  */
   getCenters() {
@@ -70,20 +65,20 @@ class ModifyEventPage extends Component {
  *
  *
  * @param {any} event
- * @memberof ModifyEventPage
+ * @memberof AddEventPage
  * @returns {object} state of app after addingEvent
  */
-  modifyEvent(event) {
+  addEvent(event) {
     event.preventDefault();
-    this.props.dispatch(modifyEvent({
+    this.props.dispatch(addEvent({
       ...this.state,
-    }, this.props.event.eventObject[0].id));
+    }));
   }
   /**
  *
  *
  * @returns {object} dicument obbject model for browser rendering
- * @memberof ModifyEventPage
+ * @memberof AddEventPage
  */
   render() {
     return (
@@ -91,7 +86,7 @@ class ModifyEventPage extends Component {
         <div className="container signup-padder">
           <div className="sign-in-container" style={{ marginTop: `${2}%`, height: `${500}px`, border: 'none' }}>
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Modify Event</p>
+              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Event</p>
             </div>
             { (this.props.event.status.error) &&
             <div
@@ -105,10 +100,9 @@ class ModifyEventPage extends Component {
             </div>}
             <form className="form form-group">
               <label htmlFor="name-of-event">Name of event</label>
-              <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" defaultValue={this.props.event.eventObject[0].name} />
+              <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
               <label htmlFor="type-of-event">Type of event</label>
-              <select className="form-control" name="type" onChange={this.getEventDetails} defaultValue={this.props.event.eventObject[0].type}>
-                <option>__Select__type</option>
+              <select className="form-control" name="type" onChange={this.getEventDetails}>
                 <option value="Club">Club</option>
                 <option value="Seminar">Seminar</option>
                 <option value="Wedding">Wedding</option>
@@ -122,14 +116,14 @@ class ModifyEventPage extends Component {
               </div>
               <label htmlFor="preferred-center">Preferred center</label>
               <select className="form-control" onChange={this.getEventDetails} name="center" onClick={this.getCenters}>
-                <option>select center</option>
+                <option>__Select_option__</option>
                 {this.props.center.allCenters.centers.map(center =>
-                (
-                  <CenterList center={center} key={center.id} />
-                ))}
+                  (
+                    <CenterList center={center} key={center.id} />
+                  ))}
               </select>
               <br />
-              <div className="text-center"><button className="btn btn-success booked" onClick={this.modifyEvent}>Modify Event</button></div>
+              <div className="text-center"><button className="btn btn-success booked" onClick={this.addEvent}>Add Event</button></div>
             </form>
           </div>
         </div>
@@ -152,7 +146,7 @@ const mapStateToProps = (state =>
   })
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModifyEventPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEventPage);
 
 const propTypes = {
   center: PropTypes.shape({
@@ -170,9 +164,12 @@ const propTypes = {
   event: PropTypes.shape({
     status: PropTypes.objectOf(PropTypes.bool),
     errorMessage: PropTypes.string,
-    eventObject: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    eventObject: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    status: PropTypes.objectOf(PropTypes.bool),
+  }).isRequired,
 };
 
-ModifyEventPage.propTypes = propTypes;
+AddEventPage.propTypes = propTypes;

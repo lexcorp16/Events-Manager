@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import '../public/signin.scss';
-import { userSignup, clearError } from '../actions/userActions';
+import '../../public/signin.scss';
+import { userSignup, clearError } from '../../actions/userActions';
 
 /**
  *

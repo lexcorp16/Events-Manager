@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
-import { userLogin, clearError } from '.././actions/userActions';
+import { userLogin, clearError } from '../../actions/userActions';
 
-import '../public/signin.scss';
+import '../../public/signin.scss';
 /**
 * @Center, class containing all methods that
 * handle center related api endpoint
@@ -88,7 +88,13 @@ class SigninBody extends Component {
                 <div><i className="fa fa-user-circle" style={{ fontSize: `${8}em`, paddingTop: `${10}px` }} /></div>
               </div>
               { (this.props.user.status.error) &&
-              <div className="alert alert-warning alert-dismissible fade show signin-alert" role="alert" style={{ marginTop: `${1}%`, height: `${50}px`, paddingBottom: `${10}px`, background: 'none', border: 'none' }} >
+              <div
+                className="alert alert-warning alert-dismissible fade show signin-alert"
+                role="alert"
+                style={{
+                  marginTop: `${1}%`, height: `${50}px`, paddingBottom: `${10}px`, background: 'none', border: 'none'
+                }}
+              >
                 <div className="text-center"><strong className="text-center">{this.props.user.errorMessage}</strong></div>
               </div>}
               { (this.props.user.status.unauthenticatedAttempt) &&

@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import CenterCard from './centerCard';
-import '../public/style.scss';
-import '../public/scripts/slideshow';
-import { getAllCenters, modificationPrompt, getACenter } from '../actions/centerActions';
+import CenterCard from './CenterCard';
+import '../../public/style.scss';
+import '../../public/scripts/slideshow';
+import { getAllCenters, modificationPrompt, getACenter } from '../../actions/centerActions';
 /**
  *
  *
  * @class CenterPage
  * @extends {Component}
  */
-class CenterPage extends Component {
+class AllCenterPage extends Component {
 /**
  * Creates an instance of CenterPage.
  * @param {any} props
@@ -62,11 +62,11 @@ class CenterPage extends Component {
  */
   render() {
     return (
-      <div className="container all-centers">
+      <div className="all-centers">
         <div className="header-section" style={{ borderBottom: '2px solid black' }}>
           <h3 className="text-center" style={{ color: 'black', marginTop: `${2}%` }}>All Centers</h3>
         </div>
-        <div className="catalogs container" id="descriptions container allcenters-section">
+        <div className="catalogs" id="descriptions container allcenters-section">
           <div className="row">
             {this.props.center.allCenters.centers.map(center =>
             (
@@ -96,7 +96,7 @@ const mapStateToProps = (state =>
   })
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(CenterPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AllCenterPage);
 
 const propTypes = {
   center: PropTypes.shape({
@@ -107,4 +107,4 @@ const propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-CenterPage.propTypes = propTypes;
+AllCenterPage.propTypes = propTypes;

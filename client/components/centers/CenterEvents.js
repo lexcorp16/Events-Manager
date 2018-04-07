@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const centerEvents = () =>
+const CenterEvents = () =>
   (
     <div>
       <h3>WElcome it is working</h3>
@@ -20,4 +20,4 @@ const mapStateToProps = (state =>
   })
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(centerEvents);
+export default connect(mapStateToProps, mapDispatchToProps)(CenterEvents);

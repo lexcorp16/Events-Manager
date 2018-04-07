@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const centerList = (props =>
+const CenterList = (props =>
   (
     <option value={props.center.id} name={props.center.name}>
       {props.center.name}
@@ -9,7 +9,7 @@ const centerList = (props =>
   )
 );
 
-export default centerList;
+export default CenterList;
 
 const propTypes = {
   center: PropTypes.shape({
@@ -18,4 +18,4 @@ const propTypes = {
   }).isRequired,
 };
 
-centerList.propTypes = propTypes;
+CenterList.propTypes = propTypes;

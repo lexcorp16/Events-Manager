@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import logo from '../public/images/coference2.jpg';
+import logo from '../../public/images/coference2.jpg';
 
-const aCenterPage = props =>
+const OneCenterPage = props =>
   (
     <div className="row">
       <div className="col-md-8" style={{ marginTop: '30px' }}>
@@ -42,7 +42,7 @@ const aCenterPage = props =>
     </div>
   );
 
-export default aCenterPage;
+export default OneCenterPage;
 
 const propTypes = {
   center: PropTypes.shape({
@@ -51,8 +51,7 @@ const propTypes = {
     address: PropTypes.string,
     imageUrl: PropTypes.string,
     capacity: PropTypes.string,
-    
   }).isRequired,
 };
 
-aCenterPage.propTypes = propTypes;
+OneCenterPage.propTypes = propTypes;

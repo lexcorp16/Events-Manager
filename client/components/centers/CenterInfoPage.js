@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { userIsUnauthenticated } from '../actions/userActions';
-import { clearError } from '../actions/eventActions';
-import demoimage from '../public/images/demoimage.jpg';
+import { userIsUnauthenticated } from '../../actions/userActions';
+import { clearError } from '../../actions/eventActions';
+import demoimage from '../../public/images/demoimage.jpg';
 
 /**
  *
@@ -47,7 +48,7 @@ class CenterInfoPage extends Component {
       <div>
         <div className="row">
           <div className="center-image col-lg-6 col-xs-12 col-xl-6" style={{ height: `${500}px`, width: `${500}px` }}>
-            <img className="img-fluid rounded-corners float-left image-center" alt="center" src={demoimage}/>
+            <img className="img-fluid rounded-corners float-left image-center" alt="center" src={demoimage} />
           </div>
           <div className="center-image col-lg-6 col-xs-12 col-xl-6 center-info">
             <div className="center-info-header">
@@ -56,8 +57,8 @@ class CenterInfoPage extends Component {
             <h4 className="center-capacity">23000<span>seats</span></h4>
             <div className="d-none center-features container">
               <table className="table table-dark table-striped text-center center-facilities">
-              <tbody className="text-center">
-                <th className="text-center">FACILITIES</th>
+                <tbody className="text-center">
+                  <th className="text-center">FACILITIES</th>
                   <tr>
                     <td>PROJECTOR</td>
                   </tr>
@@ -76,9 +77,6 @@ class CenterInfoPage extends Component {
                 </tbody>
               </table>
             </div>
-            <div>
-            <h3 className=""></h3>
-            </div>
           </div>
         </div>
       </div>
@@ -86,13 +84,24 @@ class CenterInfoPage extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatch: (actionObject) => dispatch(actionObject)
-});
+const mapDispatchToProps = dispatch =>
+  ({
+    dispatch: actionObject => dispatch(actionObject)
+  });
 
-const mapStateToProps = (state) => ({
-  event: state.eventReducer,
-  user: state.centerReducer,
-});
+const mapStateToProps = state =>
+  ({
+    event: state.eventReducer,
+    user: state.centerReducer,
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CenterInfoPage);
+
+const propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    status: PropTypes.objectOf(PropTypes.bool),
+  }).isRequired,
+};
+
+CenterInfoPage.propTypes = propTypes;

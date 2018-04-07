@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import logo from '../public/images/coference2.jpg';
+import logo from '../../public/images/coference2.jpg';
 
-const eventCard = (props =>
+const EventCard = (props =>
   (
     <div>
       <div className="col">
@@ -21,7 +21,7 @@ const eventCard = (props =>
   )
 );
 
-export default eventCard;
+export default EventCard;
 
 const propTypes = {
   events: PropTypes.shape({
@@ -33,4 +33,4 @@ const propTypes = {
   modifyPrompt: PropTypes.func.isRequired,
 };
 
-eventCard.propTypes = propTypes;
+EventCard.propTypes = propTypes;

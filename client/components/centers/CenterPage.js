@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ACenter from './aCenter';
-import { getACenter } from '../actions/centerActions';
+import ACenter from './OneCenterPage';
+import { getACenter } from '../../actions/centerActions';
 /**
  *
  *
@@ -20,7 +20,7 @@ class CenterPage extends Component {
   componentWillMount() {
     if (!this.props.center.oneCenter.aCenter) {
       // console.log("oooooooo>", this.props.centerToGet);
-      this.props.dispatch(getACenter(this.props.centerToGet));
+      this.props.dispatch(getACenter(this.props.center.centerToGet));
     }
   }
   /**
@@ -33,7 +33,10 @@ class CenterPage extends Component {
   render() {
     return (
       <div>
-        <ACenter center={this.props.center.oneCenter.aCenter} key={this.props.center.oneCenter.aCenter.id}/>
+        <ACenter
+          center={this.props.center.oneCenter.aCenter}
+          key={this.props.center.oneCenter.aCenter.id}
+        />
       </div>
     );
   }
@@ -62,6 +65,7 @@ const propTypes = {
         facilities: PropTypes.arrayOf(PropTypes.string),
         imageUrl: PropTypes.string,
         date: PropTypes.string,
+        id: PropTypes.string,
       })
     }),
     allCenters: PropTypes.shape({

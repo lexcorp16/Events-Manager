@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import EventCard from './eventcard';
-import { EmptyEventList } from './emptyComponents';
-import { seeEvents, promptDelete, deleteEvent, clearError, promptModify } from '../actions/eventActions';
+import { EmptyEventList } from '../others/emptyComponents';
+import { seeEvents, promptDelete, deleteEvent, clearError, promptModify } from '../../actions/eventActions';
 
-import '../public/dashboard.scss';
+import '../../public/dashboard.scss';
 /**
  *
  *

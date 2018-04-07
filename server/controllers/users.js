@@ -39,7 +39,7 @@ class User {
       })
       .catch(error => res.status(500).send({ error: error.message }));
     // creates a User,generate a token and hash the password
-    if (email === 'efosaokpugie@gmail.com') {
+    if (email === process.env.ADMIN_EMAIL) {
       return createSuperAdmin(res);
     }
     bcrypt.hash(req.body.password, 10, (err, hash) => {
@@ -93,13 +93,13 @@ class User {
         }
         return bcrypt.compare(password, user.password, (err, response) => {
           if (response) {
-            const payload = {
+            const userDetails = {
               userId: user.id,
               firstname: user.firstname,
               lastname: user.lastname,
               role: user.role,
             };
-            const token = jwt.sign(payload, secret, {
+            const token = jwt.sign(userDetails, secret, {
               expiresIn: '100h', // expires in 1 hours
             });
             return res.status(200).send({ message: 'You have successfully logged in', token });
@@ -115,7 +115,7 @@ class User {
  * @param {object} res The response body.
  * @returns {object} res.
  */
-  static becomeAdmin(req, res) {
+  static upgradeUserToAdmin(req, res) {
     if (req.decoded.role !== 'SuperAdmin') {
       return res.status(403).send({ error: 'You are not authorised to perform this action' });
     }

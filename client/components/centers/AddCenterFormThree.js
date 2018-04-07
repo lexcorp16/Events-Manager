@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
-import { uploadImageAndGetUrl, addCenter, pauseUpload, resumeUpload, cancelUpload, clearErrors } from '../actions/centerActions';
-import { userIsUnauthenticated } from '../actions/userActions';
-import defaultImage from '../public/images/default-placeholder.png';
+import { uploadImageAndGetUrl, addCenter, pauseUpload, resumeUpload, cancelUpload, clearErrors } from '../../actions/centerActions';
+import { userIsUnauthenticated } from '../../actions/userActions';
+import defaultImage from '../../public/images/default-placeholder.png';
 /**
  *
  *

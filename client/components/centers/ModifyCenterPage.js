@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import prefillCheckbox from '../utils/checkboxprefill';
-import { imageToDisplay } from '../utils/mescill.utils';
+import prefillCheckbox from '../../utils/checkboxprefill';
+import { imageToDisplay } from '../../utils/mescill.utils';
 
-import { userIsUnauthenticated } from '../actions/userActions';
+import { userIsUnauthenticated } from '../../actions/userActions';
 import
 {
   modificationPrompt,
@@ -14,8 +14,8 @@ import
   cancelUpload,
   resumeUpload,
   modifyCenter,
-} from '../actions/centerActions';
-import defaultImage from '../public/images/default-placeholder.png';
+} from '../../actions/centerActions';
+import defaultImage from '../../public/images/default-placeholder.png';
 
 /** Class representing a centerpage. */
 class ModifyCenterPage extends Component {

@@ -3,9 +3,9 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import '../public/style.scss';
+import '../../public/style.scss';
 
-const sideBar = (props =>
+const SideBar = (props =>
   (
     <div className="sidebar d-none d-lg-block" style={{ position: 'fixed' }}>
       <div className="sidelinks">
@@ -40,7 +40,7 @@ const mapStateToProps = state => ({
   user: state.userReducer,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(sideBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
 
 const propTypes = {
   user: PropTypes.shape({
@@ -51,5 +51,5 @@ const propTypes = {
   }).isRequired,
 };
 
-sideBar.propTypes = propTypes;
+SideBar.propTypes = propTypes;
 

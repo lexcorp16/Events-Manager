@@ -13,7 +13,11 @@ const userSignup = userDetails =>
         localStorage.setItem('x-access-token', res.data.token);
         dispatch({ type: 'CREATE_USER_RESOLVED', payload: res.data, ...jwt.decode(localStorage.getItem('x-access-token')) });
         signupPrompter();
-        browserHistory.push('/addcenterone');
+        if (jwt.decode(localStorage.getItem('x-access-token')).role !== 'User') {
+          browserHistory.push('/centers');
+        } else {
+          browserHistory.push('/');
+        }
       })
       .catch((err) => {
         dispatch({ type: 'CREATE_USER_REJECTED', payload: err.response.data });
@@ -28,7 +32,11 @@ const userLogin = loginDetails =>
         localStorage.setItem('x-access-token', res.data.token);
         dispatch({ type: 'LOGIN_RESOLVED', payload: res.data, ...jwt.decode(localStorage.getItem('x-access-token')) });
         signinPrompter();
-        browserHistory.push('/addcenterone');
+        if (jwt.decode(localStorage.getItem('x-access-token')).role !== 'User') {
+          browserHistory.push('/centers');
+        } else {
+          browserHistory.push('/');
+        }
       })
       .catch((err) => {
         dispatch({ type: 'LOGIN_REJECTED', payload: err.response.data });

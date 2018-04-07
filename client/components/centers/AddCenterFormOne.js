@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { userIsUnauthenticated, clearError } from '../actions/userActions';
-import { getPrimaryCenterDetails } from '../actions/centerActions';
+import { userIsUnauthenticated, clearError } from '../../actions/userActions';
+import { getPrimaryCenterDetails } from '../../actions/centerActions';
 /**
  *
  *

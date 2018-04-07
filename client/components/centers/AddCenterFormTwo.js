@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
-import { getRentalCostAndFacilities } from '../actions/centerActions';
-import { userIsUnauthenticated } from '../actions/userActions';
+import { getRentalCostAndFacilities } from '../../actions/centerActions';
+import { userIsUnauthenticated } from '../../actions/userActions';
 /**
  *
  *
@@ -98,7 +98,7 @@ class AddCenterFormTwo extends Component {
             <form className="form form-group" style={{ marginTop: `${60}px` }}>
               <div className="row facilities-checklist " style={{ marginBottom: `${30}px` }}>
                 <div className="col" style={{ marginBottom: '20px' }}>
-                  <input id="parkingLot" type="checkbox" value="parking lot" name="parkinglot" style={{ height: `${25}px`,width: `${25}px` }} onClick={this.addFacilities} />
+                  <input id="parkingLot" type="checkbox" value="parking lot" name="parkinglot" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
                   <label style={{ display: 'block' }} htmlFor="parkingLot">Parking-lot</label>
                 </div>
                 <div className="col">
