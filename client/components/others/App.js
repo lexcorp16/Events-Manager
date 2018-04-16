@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Navbar from './navbar';
-import Sidebar from './sidebar';
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
 import '../../public/style.scss';
 
 const app = (props =>
