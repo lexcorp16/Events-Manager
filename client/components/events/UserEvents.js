@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
-import EventCard from './eventcard';
+import EventCard from './EventCard';
 import { EmptyEventList } from '../others/emptyComponents';
 import { seeEvents, promptDelete, deleteEvent, clearError, promptModify } from '../../actions/eventActions';
 
