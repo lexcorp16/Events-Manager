@@ -2,22 +2,23 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import models from '../db/models';
 import createSuperAdmin from '../helpers/admin';
-import trimm from '../helpers/trim';
+import sendError from '../helpers/errorSender';
 
 const secret = process.env.SECRET;
 
 const { Users } = models;
-
 /**
-* @User, class containing all methods that
-* handle center related api endpoint
-*/
+ * contains logic for user related endpoints
+ * @class User
+ *
+ */
 class User {
 /**
  * SignUp a User
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
  * @returns {object} res.
+ * signs up new user
  */
   static signup(req, res) {
     const {
@@ -25,22 +26,9 @@ class User {
       lastname,
     } = req.body;
     const email = req.body.email.toLowerCase();
-    // check if another user with same mail already exists
-    Users
-      .findOne({
-        where: {
-          email: email.trim(),
-        }
-      })
-      .then((user) => {
-        if (user) {
-          return res.status(400).send({ error: 'Another user with this email already exists' });
-        }
-      })
-      .catch(error => res.status(500).send({ error: error.message }));
     // creates a User,generate a token and hash the password
     if (email === process.env.ADMIN_EMAIL) {
-      return createSuperAdmin(res);
+      return createSuperAdmin(req, res);
     }
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
@@ -55,18 +43,18 @@ class User {
           password,
         })
         .then((user) => {
-          const payload = {
+          const userDetails = {
             userId: user.id,
             role: user.role,
             firstname,
             lastname,
           };
-          const token = jwt.sign(payload, secret, {
+          const token = jwt.sign(userDetails, secret, {
             expiresIn: '100h', // expires in 1 hours
           });
-          return res.status(201).send({ message: 'You have successfully signed up', token, user });
+          return res.status(201).send({ message: 'You have successfully signed up', token });
         })
-        .catch(error => res.status(500).send({ error: error.message }));
+        .catch(error => sendError(error, res, false));
     });
   }
   /**
@@ -74,13 +62,13 @@ class User {
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
  * @returns {object} res.
+ * signs in new user
  */
   static signin(req, res) {
     const {
       password,
     } = req.body;
     const email = req.body.email.toLowerCase();
-    trimm([email, password]);
     return Users
       .findOne({
         where: {
@@ -107,7 +95,7 @@ class User {
           return res.status(400).send({ error: 'Invalid email or password' });
         });
       })
-      .catch(() => res.status(500).send({ error: 'an error occurred' }));
+      .catch(error => sendError(error, res, false));
   }
   /**
  * Make A User an Admin
@@ -126,7 +114,7 @@ class User {
         });
         return res.status(202).send({ message: 'Admin User successfully created' });
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(error => sendError(error, res, false));
   }
 }
 

@@ -1,4 +1,5 @@
 import models from '../db/models';
+import sendError from '../helpers/errorSender';
 
 const {
   Centers,
@@ -44,7 +45,7 @@ class Center {
         user: req.decoded.userId,
       })
       .then(center => res.status(200).send({ message: 'You have successfully added a center', center }))
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(error => sendError(error, res, true));
   }
   /**
  * modify a center
@@ -77,7 +78,7 @@ class Center {
           });
           return res.status(200).send({ message: 'Successfully changed availability status to true', center });
         })
-        .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
+        .catch(error => sendError(error, res, true));
     }
     return Centers
       .findOne({
@@ -87,7 +88,7 @@ class Center {
       })
       .then((center) => {
         if (!center) {
-          return res.status(400).send({ error: 'center not found!' });
+          return res.status(404).send({ error: 'center not found!' });
         }
         if (center && center.user !== req.decoded.userId) {
           return res.status(403).send({ error: 'You cannot modify a center added by another user' });
@@ -104,7 +105,7 @@ class Center {
         });
         return res.status(200).send({ message: 'You have successfully modified the center', center });
       })
-      .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
+      .catch(error => sendError(error, res, true));
   }
   /**
  * Get all Centers
@@ -135,7 +136,7 @@ class Center {
         }
         return res.status(200).send({ message: 'Success', centers });
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(error => sendError(error, res, true));
   }
   /**
  * Get A Centers
@@ -166,7 +167,7 @@ class Center {
           .then(aCenter => res.status(200).send({ message: 'Success', aCenter }))
           .catch(error => res.status(500).send({ error: error.message }));
       })
-      .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
+      .catch(error => sendError(error, res, true));
   }
 }
 

@@ -27,6 +27,13 @@ const centerModifiedPrompter = () => {
   });
 };
 
+const modifyCenterRejectedPrompter = (errorMessage) => {
+  swal({
+    text: errorMessage,
+    icon: 'success',
+  });
+};
+
 const signinPrompter = () => {
   swal({
     text: 'Welcome, You have signed in successfully',
@@ -64,4 +71,5 @@ export {
   signinPrompter,
   signupPrompter,
   selectAnEventPrompter,
+  modifyCenterRejectedPrompter,
 };

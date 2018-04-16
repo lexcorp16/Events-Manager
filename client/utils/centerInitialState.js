@@ -46,13 +46,12 @@ const initialState = () => {
       getACenterPrompted: false
     }
   };
-  if (localStorage.getItem('center-to-get')) {
-    console.log('cebter-to-get')
+  if (localStorage.getItem('center-to-get-bulk') !== null) {
     return {
       ...state.state,
-      centerToGet: localStorage.getItem('center-to-get'),
+      centerToGet: JSON.parse(localStorage.getItem('center-to-get-bulk')).aCenter.id,
       oneCenter: {
-        aCenter: JSON.parse(localStorage.getItem('center-to-get-bulk')),
+        aCenter: JSON.parse(localStorage.getItem('center-to-get-bulk')).aCenter,
       },
       status: {
         getACenterPrompted: true,

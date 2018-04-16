@@ -21,6 +21,7 @@ const checkInvalidUserDetails = (req, res, next) => {
     4: 'confirmpassword',
   };
   const reqBody = [firstname, lastname, email, password, confirmpassword];
+  let errorMessage = '';
   let undefinedBody;
   let isNull = false;
   let isDigit = false;
@@ -43,41 +44,47 @@ const checkInvalidUserDetails = (req, res, next) => {
   });
 
   if (undefinedBody) {
-    return res.status(400).send({ error: `Please input ${undefinedBody}` });
+    errorMessage += `Please input ${undefinedBody}`;
   }
   if (isNull) {
-    return res.status(400).send({ error: 'Please fill in all input field' });
+    errorMessage += 'Please fill in all input field \n';
   }
   if (req.body.password.length < 6) {
-    return res.status(400).send({ error: 'password must be at least six characters long' });
+    errorMessage += 'password must be at least six characters long \n';
   }
   if (!isValidEmail(email)) {
-    return res.status(400).send({ error: 'Invalid email format' });
+    errorMessage += 'Invalid email format \n';
   }
   if (isDigit) {
-    return res.status(400).send({ error: 'Your names cannot be digits only' });
+    errorMessage += 'Your names cannot be digits only \n';
   }
   if (password !== confirmpassword) {
-    return res.status(400).send({ error: 'password and confirmpassword are not equal' });
+    errorMessage += 'password and confirmpassword are not equal \n';
+  }
+  if (errorMessage !== '') {
+    return res.status(400).send({ error: errorMessage });
   }
   next();
 };
 
 const checkInvalidUserSignIn = (req, res, next) => {
+  let errorMessage = '';
   if (req.body.email === undefined) {
-    return res.status(400).send({ error: 'Please Input email' });
+    errorMessage += 'Please Input email \n';
   }
   if (req.body.password === undefined) {
-    return res.status(400).send({ error: 'Please Input password' });
+    errorMessage = 'Please Input password \n';
   }
-  if (req.body.email.trim().length < 1) {
-    return res.status(400).send({ error: 'Please fill in all input fields' });
+  if (req.body.email) {
+    if (req.body.email.trim().length < 1) {
+      errorMessage += 'Please fill in all input fields \n';
+    }
   }
   if (!isValidEmail(req.body.email)) {
-    return res.status(400).send({ error: 'Invalid email format' });
+    errorMessage += 'Invalid email format ';
   }
-  if (req.body.email.trim().length < 1) {
-    return res.status(400).send({ error: 'Please fill in all input fields' });
+  if (errorMessage !== '') {
+    return res.status(400).send({ error: errorMessage });
   }
   next();
 };

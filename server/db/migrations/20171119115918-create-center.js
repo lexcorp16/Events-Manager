@@ -10,6 +10,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       type: {
         type: Sequelize.STRING,
@@ -45,13 +46,14 @@ module.exports = {
       mobileNumber: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       imageUrl: {
         type: Sequelize.STRING,
         allowNull: true,
       },
       isAvailable: {
-        type: Sequelize.STRING,
+        type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
       createdAt: {

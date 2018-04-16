@@ -1,23 +1,13 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import models from '../db/models';
+import sendError from './errorSender';
 
 const { Users } = models;
 
 const secret = process.env.SECRET;
-export default (res) => {
-  bcrypt.hash('swampious', 10, (err, hash) => {
-    Users.findOne({
-      where: {
-        email: 'efosaokpugie@gmail.com',
-      }
-    })
-      .then((user) => {
-        if (user) {
-          return res.status(400).send({ error: 'Another user with this email already exists' });
-        }
-      })
-      .catch(error => res.status(500).send({ error: error.message }));
+export default (req, res) => {
+  bcrypt.hash(req.body.password, 10, (err, hash) => {
     Users
       .create({
         email: 'efosaokpugie@gmail.com',
@@ -38,6 +28,6 @@ export default (res) => {
         });
         return res.status(201).send({ message: 'SuperAdmin created', token });
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(error => sendError(error, res, false));
   });
 };

@@ -45,6 +45,16 @@ class AddEventPage extends Component {
   /**
  *
  *
+ * @memberof AddEventPage
+ * @returns {null} removes redundant items from localStorage
+ */
+  componentWillUnmount() {
+    localStorage.removeItem('eventObject');
+    localStorage.removeItem('allUserEvents');
+  }
+  /**
+ *
+ *
  * @param {any} event
  * @memberof AddEventPage
  * @returns {string} value of input element
@@ -74,6 +84,7 @@ class AddEventPage extends Component {
       ...this.state,
     }));
   }
+
   /**
  *
  *

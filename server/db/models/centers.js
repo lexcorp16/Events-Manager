@@ -9,6 +9,7 @@ export default (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     type: {
       type: DataTypes.STRING,
@@ -44,6 +45,7 @@ export default (sequelize, DataTypes) => {
     mobileNumber: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     imageUrl: {
       type: DataTypes.STRING,

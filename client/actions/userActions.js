@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import jwt from 'jsonwebtoken';
-import { signinPrompter, signupPrompter } from '../utils/alerts.sweetalert';
+import { signinPrompter, signupPrompter, actionRejectedPrompter } from '../utils/alerts.sweetalert';
 
 axios.defaults.withCredentials = true;
 
@@ -21,6 +21,7 @@ const userSignup = userDetails =>
       })
       .catch((err) => {
         dispatch({ type: 'CREATE_USER_REJECTED', payload: err.response.data });
+        actionRejectedPrompter(err.response.data.error);
       });
   };
 
@@ -40,6 +41,7 @@ const userLogin = loginDetails =>
       })
       .catch((err) => {
         dispatch({ type: 'LOGIN_REJECTED', payload: err.response.data });
+        actionRejectedPrompter(err.response.data.error);
       });
   };
 

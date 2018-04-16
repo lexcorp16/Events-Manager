@@ -52,4 +52,3 @@ const propTypes = {
 };
 
 SideBar.propTypes = propTypes;
-

@@ -1,5 +1,6 @@
 import models from '../db/models';
 import mailSender from '../helpers/mailer';
+import sendError from '../helpers/errorSender';
 
 const { Events, Users } = models;
 
@@ -41,9 +42,9 @@ class Event {
             user: req.decoded.userId,
           })
           .then(newEvent => res.status(201).send({ message: 'Event successfully added', newEvent }))
-          .catch(error => res.status(500).send({ error: error.message }));
+          .catch(error => sendError(error, res, false));
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(error => sendError(error, res, false));
   }
   /**
  * modify an event
@@ -76,7 +77,7 @@ class Event {
             });
             return res.status(200).send({ message: 'successfully modified', modifiedEvent });
           })
-          .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
+          .catch(error => sendError(error, res, false));
       })
       .catch(error => res.status(500).send({ error: error.message }));
   }
@@ -97,9 +98,9 @@ class Event {
         }
         event.destroy()
           .then(() => res.status(200).send({ message: 'Event successfully deleted' }))
-          .catch(error => res.status(500).send({ error: error.message }));
+          .catch(error => sendError(error, res, false));
       })
-      .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
+      .catch(error => sendError(error, res, false));
   }
   /**
  * get User Events
@@ -119,7 +120,7 @@ class Event {
         }
         return res.status(200).send({ message: 'Success', userEvents });
       })
-      .catch(error => res.status(500).send({ error: 'oops an error occured' }));
+      .catch(error => sendError(error, res, false));
   }
   /**
  * get User Events
@@ -147,9 +148,9 @@ class Event {
             mailSender(mailOptions);
             return res.status(200).send({ message: 'Event canceled and notification sent' });
           })
-          .catch(error => res.status(500).send({ error: error.message }));
+          .catch(error => sendError(error, res, false));
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(error => sendError(error, res, false));
   }
 }
 

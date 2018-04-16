@@ -10,6 +10,7 @@ const alphaNumeric = (inputtxt) => {
 
 const checkNullInputAddEvent = (req, res, next) => {
   let isNull;
+  let errorMessage = '';
   const {
     name,
     type,
@@ -22,21 +23,25 @@ const checkNullInputAddEvent = (req, res, next) => {
     }
   });
   if (isNull) {
-    return res.status(400).send({ error: 'Please fill in all fields' });
+    errorMessage += 'Please fill in all fields \n';
   }
   if (new Date(date).toISOString() === 'Uncaught RangeError: Invalid time value at Date.toISOString') {
-    return res.status(400).send({ error: 'invalid date fromat' });
+    errorMessage += 'invalid date fromat \n';
   }
   if (Number.isInteger(parseFloat(name)) || Number.isInteger(type)) {
-    return res.status(400).send({ error: 'name and type fields cannot be digits or alphanumeric characters' });
+    errorMessage += 'name and type fields cannot be digits or alphanumeric characters \n';
   }
   if (validator.isBefore(date)) {
-    return res.status(400).send({ error: 'Invalid date' });
+    errorMessage += 'Invalid date \n';
+  }
+  if (errorMessage !== '') {
+    return res.status(400).send({ error: errorMessage });
   }
   next();
 };
 
 const checkNullInputAddCenter = (req, res, next) => {
+  let errorMessage = '';
   let isNull;
   const {
     name,
@@ -51,19 +56,23 @@ const checkNullInputAddCenter = (req, res, next) => {
     }
   });
   if (isNull) {
-    return res.status(400).send({ error: 'please fill in all fields' });
+    errorMessage += 'please fill in all fields \n';
   }
   if (alphaNumeric(capacity) || alphaNumeric(mobileNumber)) {
-    return res.status(400).send({ error: 'capacity and mobileNumber fields can only be digits' });
+    errorMessage += 'capacity and mobileNumber fields can only be digits \n';
+    return res.status(400).send({ error: errorMessage });
   }
   if (!Number.isInteger(parseFloat(mobileNumber)) || !Number.isInteger(parseFloat(capacity))) {
-    return res.status(400).send({ error: 'capacity and mobileNumber fields can only be digits' });
+    errorMessage += 'capacity and mobileNumber fields can only be digits \n';
   }
-
+  if (errorMessage !== '') {
+    return res.status(400).send({ error: errorMessage });
+  }
   next();
 };
 
 const checkNullInputModifyEvent = (req, res, next) => {
+  let errorMessage = '';
   let isNull;
   const modifiedParams = [];
   const {
@@ -84,25 +93,29 @@ const checkNullInputModifyEvent = (req, res, next) => {
     }
   });
   if (isNull) {
-    return res.status(400).send({ error: 'Please fill in all fields' });
+    errorMessage += 'Please fill in all fields \n';
   }
   if (name) {
     if (Number.isInteger(parseFloat(name))) {
-      return res.status(400).send({ error: 'name and type fields cannot be digits or alphanumeric characters' });
+      errorMessage += 'name and type fields cannot be digits or alphanumeric characters \n';
     }
   }
   if (type) {
     if (Number.isInteger(parseFloat(type))) {
-      return res.status(400).send({ error: 'name and type fields cannot be digits or alphanumeric characters' });
+      errorMessage += 'name and type fields cannot be digits or alphanumeric characters';
     }
   }
   if (validator.isBefore(date)) {
-    return res.status(400).send({ error: 'Invalid date' });
+    errorMessage += 'Invalid date';
+  }
+  if (errorMessage !== '') {
+    return res.status(400).send({ error: errorMessage });
   }
   next();
 };
 
 const checkNullInputModifyCenter = (req, res, next) => {
+  let errorMessage = '';
   const modifiedParams = [];
   let isNull;
   const {
@@ -123,27 +136,30 @@ const checkNullInputModifyCenter = (req, res, next) => {
     }
   });
   if (isNull) {
-    return res.status(400).send({ error: 'please fill in all fields' });
+    errorMessage += 'please fill in all fields \n';
   }
   if (capacity) {
     if (alphaNumeric(capacity)) {
-      return res.status(400).send({ error: 'capacity field can only be digits' });
+      errorMessage += 'capacity field can only be digits';
     }
   }
   if (mobileNumber) {
     if (alphaNumeric(mobileNumber)) {
-      return res.status(400).send({ error: 'mobileNumber field can only be digits' });
+      errorMessage += 'mobileNumber field can only be digits';
     }
   }
   if (mobileNumber) {
     if (!Number.isInteger(parseFloat(mobileNumber))) {
-      return res.status(400).send({ error: 'mobileNumber field can only be digits' });
+      errorMessage += 'mobileNumber field can only be digits \n';
     }
   }
   if (capacity) {
     if (!Number.isInteger(parseFloat(capacity))) {
-      return res.status(400).send({ error: 'capacity field can only be digits' });
+      errorMessage += 'capacity field can only be digits \n';
     }
+  }
+  if (errorMessage !== '') {
+    return res.status(400).send({ error: errorMessage });
   }
   next();
 };

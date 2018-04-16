@@ -14,6 +14,8 @@ const initialState = () => {
       deleteEventPrompted: false,
       eventIsDeleted: false,
       eventIsModified: false,
+      cancellingEvent: false,
+      eventCancelled: false,
     }
   };
   if (localStorage.getItem('eventObject')) {

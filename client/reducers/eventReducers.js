@@ -80,7 +80,8 @@ const reducer = (state = initialState(), action) => {
       return {
         ...state,
         status: {
-          ...state.status
+          ...state.status,
+          error: false,
         }
       };
     }
@@ -90,6 +91,7 @@ const reducer = (state = initialState(), action) => {
         ...state,
         status: {
           ...state.status,
+          error: false,
           deleteEventPrompted: true,
         }
       };
@@ -103,6 +105,7 @@ const reducer = (state = initialState(), action) => {
         },
         status: {
           ...state.status,
+          error: false,
           deleteEventPrompted: false,
           eventIsDeleted: true,
         }
@@ -118,6 +121,7 @@ const reducer = (state = initialState(), action) => {
         eventObject: newEventObject,
         status: {
           ...state.status,
+          error: false,
           modifyEventPrompted: true,
         }
       };
@@ -131,6 +135,7 @@ const reducer = (state = initialState(), action) => {
         eventObject: [],
         status: {
           ...state.status,
+          error: false,
           modifyEventPrompted: false,
           eventIsDeleted: false,
           eventIsModified: true,
@@ -158,6 +163,42 @@ const reducer = (state = initialState(), action) => {
           adding: false,
           added: false,
           error: false,
+        }
+      };
+    }
+
+    case 'CANCELLING_USER_EVENT': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          error: false,
+          cancellingEvent: true,
+          eventCancelled: false,
+        }
+      };
+    }
+
+    case 'CANCEL_USER_EVENT_ACCEPTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          error: false,
+          cancellingEvent: false,
+          eventCancelled: true,
+        }
+      };
+    }
+
+    case 'CANCEL_USER_EVENT_REJECTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          error: true,
+          cancellingEvent: false,
+          eventCancelled: false,
         }
       };
     }

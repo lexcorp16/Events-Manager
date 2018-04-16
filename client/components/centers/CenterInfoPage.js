@@ -23,6 +23,7 @@ class CenterInfoPage extends Component {
     if (!localStorage.getItem('x-access-token')) {
       this.props.dispatch(userIsUnauthenticated());
     }
+    localStorage.removeItem('center-to-get-bulk');
   }
 
   /**

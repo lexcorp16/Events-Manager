@@ -50,6 +50,17 @@ class ModifyEventPage extends Component {
   /**
  *
  *
+ * @memberof ModifyEventPage
+ * @returns {null} removes redundant items from localStorage
+ */
+  componentWillUnmount() {
+    localStorage.removeItem('eventObject');
+    localStorage.removeItem('allUserEvents');
+  }
+  /**
+  /**
+ *
+ *
  * @param {any} event
  * @memberof ModifyEventPage
  * @returns {string} value of input element

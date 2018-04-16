@@ -70,6 +70,17 @@ class ModifyCenterPage extends Component {
   /**
  *
  *
+ * @memberof ModifyCenterPage
+ * @returns {null}
+ * removes redundant items from localStorage
+ */
+  componentWillUnmount() {
+    localStorage.removeItem('centerToBeModified');
+    localStorage.removeItem('allCenters');
+  }
+  /**
+ *
+ *
  * @param {any} event
  * @memberof ModifyCenterPage
  * @returns {object} updates this.state from user input
@@ -171,8 +182,14 @@ class ModifyCenterPage extends Component {
  */
   modifyCenter(event) {
     event.preventDefault();
+    let imageLink;
+    if (this.props.center.imageUpload) {
+      imageLink = this.props.center.imageUpload.imageUrl;
+    } else {
+      imageLink = null;
+    }
     this.props.dispatch(modifyCenter(
-      { ...this.state, imageUrl: this.props.center.imageUpload.imageUrl },
+      { ...this.state, imageUrl: imageLink },
       this.props.center.centerToBeModified[0].id
     ));
   }
@@ -189,21 +206,6 @@ class ModifyCenterPage extends Component {
           <div style={{ border: 'none', backgroundColor: 'white' }} className="modify-container">
             <div className="form-header" style={{ backgroundColor: 'white', color: 'black', borderBottom: '2px solid black' }} >
               <h3 className="text-center">Edit {this.props.center.centerToBeModified[0].name}</h3>
-            </div>
-            <div style={{ paddingLeft: '350px', paddingRight: '350px' }}>
-              <div className="row">
-                <div className="col-xs-6">
-                  <label htmlFor="isAvailable">
-                    Available:
-                  </label>
-                </div>
-                <div className="text-center col-xs-6">
-                  <label htmlFor="isavailable-checkbox" className="switch">
-                    <input type="checkbox" checked />
-                    <span className="slider round" />
-                  </label>
-                </div>
-              </div>
             </div>
             <div className="row">
               <div className="center-image-section col-lg-4 container">

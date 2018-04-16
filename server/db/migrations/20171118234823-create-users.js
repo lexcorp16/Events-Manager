@@ -39,7 +39,5 @@ module.exports = {
       },
     });
   },
-  down: (queryInterface) => {
-    return queryInterface.dropTable('Users');
-  },
+  down: queryInterface => queryInterface.dropTable('Users')
 };

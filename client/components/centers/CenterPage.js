@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ACenter from './OneCenterPage';
-import { getACenter } from '../../actions/centerActions';
+import { getACenter, cancelUserEvent } from '../../actions/centerActions';
 /**
  *
  *
@@ -12,6 +12,15 @@ import { getACenter } from '../../actions/centerActions';
  */
 class CenterPage extends Component {
 /**
+ * Creates an instance of CenterPage.
+ * @param {any} props
+ * @memberof CenterPage
+ */
+  constructor(props) {
+    super(props);
+    this.cancelEvent = this.cancelEvent.bind(this);
+  }
+  /**
  *
  *
  * @memberof CenterPage
@@ -26,16 +35,38 @@ class CenterPage extends Component {
   /**
  *
  *
+ * @memberof CenterPage
+ * @returns {null} remove item from localstorage
+ */
+  componentWillUnmount() {
+    localStorage.removeItem('center-to-get-bulk');
+  }
+  /**
+ *
+ *
+ * @param {any} event access html dom of event object
+ * @memberof CenterPage
+ * @returns {object} new app's state after action is dispatched
+ */
+  cancelEvent(event) {
+    const { id } = event.target;
+    this.props.dispatch(cancelUserEvent(id));
+  }
+  /**
+ *
+ *
  * @returns
  * @memberof CenterPage
  * @returns {object} html dom object
  */
   render() {
     return (
-      <div>
+      <div style={{ marginTop: '50px' }}>
         <ACenter
           center={this.props.center.oneCenter.aCenter}
           key={this.props.center.oneCenter.aCenter.id}
+          cancelEvent={this.props.cancelEvent}
+          centerStatus={this.props.center.status}
         />
       </div>
     );
@@ -57,7 +88,7 @@ const mapStateToProps = (state =>
 export default connect(mapStateToProps, mapDispatchToProps)(CenterPage);
 
 const propTypes = {
-
+  cancelEvent: PropTypes.func.isRequired,
   center: PropTypes.shape({
     centerToGet: PropTypes.string,
     oneCenter: PropTypes.shape({
@@ -68,6 +99,7 @@ const propTypes = {
         id: PropTypes.string,
       })
     }),
+    status: PropTypes.objectOf(PropTypes.bool),
     allCenters: PropTypes.shape({
       centers: PropTypes.arrayOf(PropTypes.shape({
         isAvailable: PropTypes.bool,

@@ -14,7 +14,7 @@ const addEvent = eventDetails =>
       .then((res) => {
         dispatch({ type: 'ADD_EVENT_RESOLVED', payload: res.data });
         addEventPrompter();
-        browserHistory.push('/events');
+        browserHistory.push('/');
       })
       .catch((err) => {
         dispatch({ type: 'ADD_EVENT_REJECTED', payload: err.response.data });
@@ -78,7 +78,7 @@ const modifyEvent = (eventdetails, eventId) =>
     })
       .then((res) => {
         modifyEventPrompter();
-        browserHistory.push('/events');
+        browserHistory.push('/');
         dispatch({ type: 'MODIFY_EVENT_RESOLVED', payload: res.data, eventId });
       })
       .catch((err) => {
@@ -87,6 +87,22 @@ const modifyEvent = (eventdetails, eventId) =>
       });
   };
 
+const cancelUserEvent = eventId =>
+  (dispatch) => {
+    dispatch({ type: 'CANCELLING_USER_EVENT' });
+    axios({
+      method: 'POST',
+      url: `api/v1/event${eventId}`,
+      headers: { 'x-access-token': localStorage.getItem('x-access-token') },
+    })
+      .then((res) => {
+        browserHistory.push(`${document.URL}`);
+        dispatch({ type: 'CANCEL_USER_EVENT_ACCEPTED', payload: res.data });
+      })
+      .catch((err) => {
+        dispatch({ type: 'CANCEL_USER_EVENT_REJECTED', payload: err.response.data });
+      });
+  };
 
 export {
   addEvent,
@@ -96,4 +112,5 @@ export {
   deleteEvent,
   promptModify,
   modifyEvent,
+  cancelUserEvent,
 };
