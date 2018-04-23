@@ -63,8 +63,8 @@ class AllCenterPage extends Component {
   render() {
     return (
       <div className="all-centers">
-        <div className="header-section" style={{ borderBottom: '2px solid black' }}>
-          <h3 className="text-center" style={{ color: 'black', marginTop: `${2}%` }}>All Centers</h3>
+        <div className="header-section">
+          <h3 className="text-center section-header">All Centers</h3>
         </div>
         <div className="catalogs" id="descriptions container allcenters-section">
           <div className="row">

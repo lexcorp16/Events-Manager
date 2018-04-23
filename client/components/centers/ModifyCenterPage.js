@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import prefillCheckbox from '../../utils/checkboxprefill';
 import { imageToDisplay } from '../../utils/mescill.utils';
+import { UploadProgressBar } from '../others/LoaderComponents';
 
 import { userIsUnauthenticated } from '../../actions/userActions';
 import
@@ -204,8 +205,8 @@ class ModifyCenterPage extends Component {
       <div>
         <div className="container modify-center">
           <div style={{ border: 'none', backgroundColor: 'white' }} className="modify-container">
-            <div className="form-header" style={{ backgroundColor: 'white', color: 'black', borderBottom: '2px solid black' }} >
-              <h3 className="text-center">Edit {this.props.center.centerToBeModified[0].name}</h3>
+            <div className="form-header">
+              <h3 className="text-center" style={{ color: '#BDBDBD', marginBottom: '20px' }}>Edit {this.props.center.centerToBeModified[0].name}</h3>
             </div>
             <div className="row">
               <div className="center-image-section col-lg-4 container">
@@ -214,7 +215,7 @@ class ModifyCenterPage extends Component {
                   <img
                     className="center-image img-fluid rounded img-center"
                     style={{
-                    width: '300px', height: '300px', marginLeft: '20px', marginRight: '20px'
+                    width: '100%', height: '300px', marginLeft: '20px', marginRight: '20px'
                     }}
                     alt="center"
                     id="centerimage"
@@ -222,9 +223,10 @@ class ModifyCenterPage extends Component {
                   />}
                 { (this.props.center.status.uploadingImage ||
                   this.props.center.status.uploadImagePaused) &&
-                    <div id="myProgress" style={{ marginLeft: '20px' }}>
-                      <div id="myBar" />
-                    </div>}
+                    <UploadProgressBar
+                      ariaValuenow={this.props.center.imageUpload.uploadProgress}
+                    />
+                    }
                 <div className="upload-options-section row">
                   { (this.props.center.status.uploadingImage) &&
                   <div className="col">
@@ -249,23 +251,23 @@ class ModifyCenterPage extends Component {
                 </div>
                 {(!this.props.center.status.changeImagePrompted &&
                 this.props.center.centerToBeModified[0].imageUrl === null) &&
-                <div className="text-center" style={{ marginTop: '10px' }}><button className="btn btn-outline-warning" onClick={this.promptImageChange} >ADD IMAGE</button></div>
+                <div className="text-center add-image-btn" style={{ marginTop: '10px' }}><button className="btn btn-outline-warning text-center" onClick={this.promptImageChange} >ADD IMAGE</button></div>
                 }
                 {(!this.props.center.status.changeImagePrompted &&
                 this.props.center.centerToBeModified[0].imageUrl !== null) &&
-                <div className="text-center" style={{ marginTop: '10px' }}><button className="btn btn-outline-warning" onClick={this.promptImageChange} >CHANGE IMAGE</button></div>
+                <div className="text-center modify-image-btn" style={{ marginTop: '10px' }}><button className="btn btn-outline-warning" onClick={this.promptImageChange} >CHANGE IMAGE</button></div>
                 }
                 {(this.props.center.status.changeImagePrompted) &&
                   <div className="change-image-section container" style={{ marginTop: '5px' }}>
                     <form className="form from-group form-inline">
                       <input type="file" placeholder="select file" style={{ width: '150px' }} onChange={this.getImageFile} name="imageFile" />
-                      <button className="btn btn-default" style={{ backgroundColor: 'black', color: 'pink' }} onClick={this.uploadImage}>upload</button>
+                      <button className="btn btn-default" onClick={this.uploadImage}>upload</button>
                     </form>
                   </div>
                 }
               </div>
-              <div className="edit-form col-lg-8">
-                <form className="form form-group">
+              <div className="edit-form form-section col-lg-8" style={{ marginTop: '5px' }}>
+                <form className="form form-group form-container container">
                   <label htmlFor="name">Name</label>
                   <input defaultValue={this.props.center.centerToBeModified[0].name} onChange={this.getCenterDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
                   <label htmlFor="type">Type</label>
@@ -313,7 +315,7 @@ class ModifyCenterPage extends Component {
                       <input type="checkbox" value="Photo gallery" id="Photo gallery" name="photogallery" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} /><label style={{ display: 'block' }} htmlFor="photo-gallery">Photo gallery</label>
                     </div>
                   </div>
-                  <div className="text-center"><button className="btn" style={{ backgroundColor: 'black', color: 'pink' }} onClick={this.modifyCenter} >SAVE</button></div>
+                  <div className="text-center"><button className="btn btn-default" onClick={this.modifyCenter} >SAVE</button></div>
                 </form>
               </div>
             </div>

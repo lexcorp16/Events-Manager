@@ -165,7 +165,7 @@ class Center {
           }]
         })
           .then(aCenter => res.status(200).send({ message: 'Success', aCenter }))
-          .catch(error => res.status(500).send({ error: error.message }));
+          .catch(error => sendError(error, res, true, req.params.centerId));
       })
       .catch(error => sendError(error, res, true));
   }

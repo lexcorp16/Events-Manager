@@ -44,10 +44,10 @@ const checkInvalidUserDetails = (req, res, next) => {
   });
 
   if (undefinedBody) {
-    errorMessage += `Please input ${undefinedBody}`;
+    errorMessage += `Please input ${undefinedBody} \n`;
   }
   if (isNull) {
-    errorMessage += 'Please fill in all input field \n';
+    return res.status(400).send({ error: 'Please fill in all input fields' });
   }
   if (req.body.password.length < 6) {
     errorMessage += 'password must be at least six characters long \n';
@@ -81,7 +81,7 @@ const checkInvalidUserSignIn = (req, res, next) => {
     }
   }
   if (!isValidEmail(req.body.email)) {
-    errorMessage += 'Invalid email format ';
+    errorMessage += 'Invalid email format \n';
   }
   if (errorMessage !== '') {
     return res.status(400).send({ error: errorMessage });

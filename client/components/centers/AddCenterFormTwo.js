@@ -86,8 +86,8 @@ class AddCenterFormTwo extends Component {
   render() {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${3}%` }}>
-        <div className="container signup-padder">
-          <div className="sign-in-container" style={{ marginTop: `${5}%`, height: `${570}px`, border: 'none' }}>
+        <div className="container form-section">
+          <div className="sign-in-container form-container sign-in-container" style={{ marginTop: `${5}%`, height: `${570}px`, border: 'none' }}>
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >CENTER PRICING AND FACILITIES</p>
             </div>
@@ -95,7 +95,7 @@ class AddCenterFormTwo extends Component {
             <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{ marginTop: `${1}%`, height: `${50}px`, background: 'none' }}>
               <div className="text-center"><strong>An error has occurred</strong></div>
             </div>}
-            <form className="form form-group" style={{ marginTop: `${60}px` }}>
+            <form className="form form-group container" style={{ marginTop: `${60}px` }}>
               <div className="row facilities-checklist " style={{ marginBottom: `${30}px` }}>
                 <div className="col" style={{ marginBottom: '20px' }}>
                   <input id="parkingLot" type="checkbox" value="parking lot" name="parkinglot" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
@@ -134,8 +134,8 @@ class AddCenterFormTwo extends Component {
               <input id="rentalCost" name="rentalCost" type="number" placeholder="Amount e.g 300000 in Naira" className="form-control" onChange={this.getRentalCost} />
               <br />
               <div className="text-center">
-                <button className="btn" style={{ backgroundColor: 'black' }} onClick={this.addFacilitiesAndRentalCost} >
-                  <i className="fa fa-chevron-righ" style={{ fontSize: `${1.7}em`, color: 'pink' }} />
+                <button className="btn" onClick={this.addFacilitiesAndRentalCost} >
+                  <i className="fa fa-chevron-right" style={{ fontSize: `${1.7}em`, color: '#F50057' }} />
                 </button>
               </div>
             </form>

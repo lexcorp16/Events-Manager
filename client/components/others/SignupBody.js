@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import '../../public/signin.scss';
 import { userSignup, clearError } from '../../actions/userActions';
 
+import { LoadingProgressBar } from './LoaderComponents';
+
 /**
  *
  *
@@ -72,29 +74,29 @@ class SignupBody extends Component {
   render() {
     return (
       <div>
-        <div className="signup-padder container">
-          <div className="sign-in-container" style={{ height: `${540}px` }}>
-            <div className="form-header" style={{ paddingBottom: `${20}px` }}>
-              <p
-                className="text-center header-form"
+        <div className="signup-page">
+          <div className="form-section container">
+            <form className="form form-group form-container sign-in-container container">
+              <div className="form-header" style={{ paddingBottom: `${10}px` }}>
+                <p
+                  className="text-center header-form"
+                  style={{
+                    marginTop: `${10}%`, paddingTop: `${20}px`
+                  }}
+                >
+                  SIGN UP
+                </p>
+              </div>
+              { (this.props.user.status.error) &&
+              <div
+                className="alert alert-warning alert-dismissible fade show"
+                role="alert"
                 style={{
-                  fontSize: `${1.4}em`, marginTop: `${10}%`, fontFamily: 'verdana', paddingTop: `${20}px`
+                  height: `${50}px`, paddingBottom: `${1}px`, background: 'none', border: 'none'
                 }}
               >
-                SIGN UP
-              </p>
-            </div>
-            { (this.props.user.status.error) &&
-            <div
-              className="alert alert-warning alert-dismissible fade show"
-              role="alert"
-              style={{
-               marginTop: `${4}%`, height: `${50}px`, paddingBottom: `${1}px`, background: 'none', border: 'none'
-              }}
-            >
-              <div className="text-center"><strong className="text-center">{this.props.user.errorMessage}</strong></div>
-            </div>}
-            <form className="form form-group signup form-container">
+                <div className="text-center"><strong className="text-center">{this.props.user.errorMessage}</strong></div>
+              </div>}
               <div>
                 <label htmlFor="firstname">firstname</label>
                 <input onChange={this.getSignUpDetails} type="text" name="firstname" placeholder="firstname" className="form-control first-name" />
@@ -106,12 +108,15 @@ class SignupBody extends Component {
                 <input onChange={this.getSignUpDetails} type="password" name="password" placeholder="password" className="form-control" />
                 <label htmlFor="confirmpassword">retype password</label>
                 <input onChange={this.getSignUpDetails} type="password" name="confirmpassword" placeholder="retype password" className="form-control" />
-                <br />
-                <div className="button-container">
-                  <button className="btn btn-submit btn-default" type="submit" onClick={this.signup}><span className="text-center">Sign Up</span></button>
+                <div className="text-center btn-padder">
+                  <button className="btn btn-submit btn-outline" type="submit" onClick={this.signup}><span className="text-center">Sign Up</span></button>
                 </div>
+                { (this.props.user.status.fetching) &&
+                <LoadingProgressBar />
+                }
+                <br />
                 <div>
-                  <p className="text-center">Have an account already? sign in <span className="switchform" style={{ color: 'skyblue' }}><Link to="/signin"> here</Link></span></p>
+                  <p className="text-center">Already have an account? sign in<span className="switchform" style={{ color: 'skyblue', fontSize: '0.8em', marginTop: '10px', marginBottom: '10px' }}><Link to="/signin"> here</Link></span></p>
                 </div>
               </div>
             </form>
@@ -141,6 +146,7 @@ const propTypes = {
     status: PropTypes.shape({
       unauthenticatedAttempt: PropTypes.bool,
       error: PropTypes.bool,
+      fetching: PropTypes.bool,
     }),
     unauthenticatedErrorMessage: PropTypes.string,
     errorMessage: PropTypes.string,

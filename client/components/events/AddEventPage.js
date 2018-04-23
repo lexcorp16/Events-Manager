@@ -94,8 +94,8 @@ class AddEventPage extends Component {
   render() {
     return (
       <div className="add-event-form" style={{ marginTop: `${3}%` }}>
-        <div className="container signup-padder">
-          <div className="sign-in-container" style={{ marginTop: `${2}%`, height: `${500}px`, border: 'none' }}>
+        <div className="container form-section">
+          <div className="form-container container" style={{ marginTop: `${2}%`, height: `${500}px`, border: 'none' }}>
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Event</p>
             </div>
@@ -134,7 +134,7 @@ class AddEventPage extends Component {
                   ))}
               </select>
               <br />
-              <div className="text-center"><button className="btn btn-success booked" onClick={this.addEvent}>Add Event</button></div>
+              <div className="text-center"><button className="btn btn-submit booked" onClick={this.addEvent}>Add Event</button></div>
             </form>
           </div>
         </div>

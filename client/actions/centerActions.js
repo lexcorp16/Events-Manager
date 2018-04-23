@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import 'babel-polyfill';
 import { browserHistory } from 'react-router';
 import { centerModifiedPrompter, modifyCenterRejectedPrompter } from '../utils/alerts.sweetalert';
-import { displayUploadedImage, updateImageUploadProgressbar } from '../utils/mescill.utils';
+import { displayUploadedImage } from '../utils/mescill.utils';
 
 dotenv.config();
 
@@ -101,7 +101,6 @@ const uploadImageAndGetUrl = imageFile =>
           break;
         case firebase.storage.TaskState.RUNNING: // or 'cancel'
           dispatch({ type: 'UPLOADING_CENTER_IMAGE', payload: { uploadProgress: progress, currentTask: uploadTask } });
-          updateImageUploadProgressbar(Math.floor(progress));
           break;
         default:
       }

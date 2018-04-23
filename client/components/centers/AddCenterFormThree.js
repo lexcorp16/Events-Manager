@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { uploadImageAndGetUrl, addCenter, pauseUpload, resumeUpload, cancelUpload, clearErrors } from '../../actions/centerActions';
 import { userIsUnauthenticated } from '../../actions/userActions';
 import defaultImage from '../../public/images/default-placeholder.png';
+import { UploadProgressBar } from '../others/LoaderComponents';
 /**
  *
  *
@@ -138,10 +139,10 @@ class AddCenterFormThree extends Component {
   render() {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${8}%` }}>
-        <div className="container signup-padder">
-          <div className="sign-in-container" style={{ marginTop: `${5}%`, height: `${500}px`, border: 'none' }}>
+        <div className="container form-section">
+          <div className="sign-in-container form-container" style={{ marginTop: `${5}%`, height: `${500}px`, border: 'none' }}>
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >UPLOAD CENTER IMAGE</p>
+              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.1}em` }} >UPLOAD CENTER IMAGE</p>
             </div>
             { (this.props.center.status.error) &&
             <div className="alert alert-danger">
@@ -152,9 +153,10 @@ class AddCenterFormThree extends Component {
             </div>
             { (this.props.center.status.uploadingImage ||
             this.props.center.status.uploadImagePaused) &&
-              <div id="myProgress">
-                <div id="myBar" />
-              </div>}
+              <UploadProgressBar
+                ariaValuenow={this.props.center.imageUpload.uploadProgress}
+              />
+              }
             <div className="upload-options-section row">
               { (this.props.center.status.uploadingImage) &&
               <div className="col">
@@ -177,21 +179,25 @@ class AddCenterFormThree extends Component {
                   </button>
                 </div>}
             </div>
-            <form className="form form-group" style={{ marginTop: `${20}px` }} >
+            <form className="form form-group container" style={{ marginTop: `${20}px` }} >
               {(!this.props.center.status.uploadedImage || !this.props.center.status.uploadingImage)
                &&
-               <input
-                 type="file"
-                 name="imageFile"
-                 id="imageFile"
-                 onChange={this.getImageFile}
-                 style={{ color: 'white', border: 'white' }}
-                 className="btn btn-default"
-               />}
+               <div className="section-upload">
+                 <label htmlFor="imageFile" className="file-label">
+                   <input
+                     type="file"
+                     name="imageFile"
+                     id="imageFile"
+                     onChange={this.getImageFile}
+                     style={{ color: 'white', border: 'white' }}
+                     className="btn btn-default"
+                   />
+                 </label>
+               </div>}
               <br />
               {(!this.props.center.status.uploadedImage) &&
               <div className="text-center">
-                <button className="btn btn-default" onClick={this.uploadImage} >UPLOAD IMAGE</button>
+                <button className="btn btn-default upload-btn" onClick={this.uploadImage} >upload</button>
               </div>}
               {(this.props.center.status.uploadedImage) &&
                 <div className="text-center">

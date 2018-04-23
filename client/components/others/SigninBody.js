@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { userLogin, clearError } from '../../actions/userActions';
+import { LoadingProgressBar } from './LoaderComponents';
 
 import '../../public/signin.scss';
 /**
@@ -71,20 +72,20 @@ class SigninBody extends Component {
  */
   render() {
     return (
-      <div className="sign-in-form">
-        <div className="container signup-padder">
+      <div className="signin-page">
+        <div className="container form-section">
           <div className="sign-in-container" style={{ height: `${550}px` }}>
-            <div className="form-header">
-              <p
-                className="text-center header-form"
-                style={{
-                fontSize: `${1.4}em`, marginTop: `${10}%`, fontFamily: 'verdana', paddingTop: `${20}px`, paddingBottom: `${20}px`
-                }}
-              >SIGN IN
-              </p>
-            </div>
-            <form className="form form-group signin">
-              <div className="usericon">
+            <form className="form form-group container form-container">
+              <div className="form-header">
+                <p
+                  className="text-center header-form"
+                  style={{
+                    paddingTop: `${20}px`, paddingBottom: `${20}px`
+                  }}
+                >SIGN IN
+                </p>
+              </div>
+              <div className="usericon text-center">
                 <div><i className="fa fa-user-circle" style={{ fontSize: `${8}em`, paddingTop: `${10}px` }} /></div>
               </div>
               { (this.props.user.status.error) &&
@@ -111,11 +112,14 @@ class SigninBody extends Component {
               <br />
               <input onChange={this.getSignInDetails} type="password" name="password" placeholder="password" className="form-control" />
               <br />
-              <div className="button-container">
-                <button className="btn btn-submit btn-default" style={{ fontFamily: 'Lobster Two' }} onClick={this.signin}>Sign In</button>
+              <div className="button-container text-center">
+                <button className="btn btn-submit btn-default" onClick={this.signin}>Sign In</button>
               </div>
+              { (this.props.user.status.fetching) &&
+              <LoadingProgressBar />
+              }
               <div>
-                <p className="text-center" style={{ fontSize: `${1.1}em` }}>Do not have an account? sign up <span className="switchform" style={{ color: 'skyblue' }}><Link to="/signup"> here</Link></span></p>
+                <p className="text-center" style={{ fontSize: `${0.8}em`, marginTop: '10px', marginBottom: '10px' }}>Do not have an account? sign up <span className="switchform" style={{ color: 'skyblue' }}><Link to="/signup"> here</Link></span></p>
               </div>
             </form>
           </div>
@@ -143,6 +147,7 @@ const propTypes = {
     status: PropTypes.shape({
       unauthenticatedAttempt: PropTypes.bool,
       error: PropTypes.bool,
+      fetching: PropTypes.bool,
     }),
     unauthenticatedErrorMessage: PropTypes.string,
     errorMessage: PropTypes.string,

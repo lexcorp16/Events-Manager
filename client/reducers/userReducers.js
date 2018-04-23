@@ -19,7 +19,13 @@ const initialState = () => {
   }
   return undefined;
 };
-
+/**
+ *
+ * @export es6 module export
+ * @param {object} state previous state of app
+ * @param {any} action
+ * @returns {object} new state of app
+ */
 export default function reducer(state = initialState() || {
   token: '',
   errorMessage: '',

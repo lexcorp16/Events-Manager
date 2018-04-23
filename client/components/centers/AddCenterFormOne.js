@@ -84,12 +84,12 @@ class AddCenterFormOne extends Component {
   render() {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${3}%` }}>
-        <div className="container signup-padder">
-          <div className="sign-in-container" style={{ marginTop: `${2}%`, height: `${520}px`, border: 'none' }}>
+        <div className="container form-section">
+          <div className="sign-in-container form-container sign-in-container" style={{ marginTop: `${2}%`, height: `${520}px`, border: 'none' }}>
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Center</p>
             </div>
-            <form className="form form-group">
+            <form className="form form-group container">
               <label htmlFor="name">Name</label>
               <input onChange={this.getCenterDetails} type="text" name="name" placeholder="Name of Center" className="form-control first-name" id="Name" />
               <label htmlFor="type">Type</label>
@@ -109,7 +109,7 @@ class AddCenterFormOne extends Component {
               <label htmlFor="mobile">Contact mobileNumber</label>
               <input onChange={this.getCenterDetails} type="number" name="mobileNumber" placeholder="mobileNumber" className="form-control first-name" maxLength="11" />
               <br />
-              <div className="text-center"><button className="btn" style={{ backgroundColor: 'black' }} onClick={this.addCenterDetails} ><i className="fa fa-chevron-right" style={{ fontSize: `${1.7}em`, color: 'pink' }} /></button></div>
+              <div className="text-center"><button className="btn" onClick={this.addCenterDetails} ><i className="fa fa-chevron-right" style={{ fontSize: `${1.7}em`, color: '#F50057' }} /></button></div>
             </form>
           </div>
         </div>

@@ -115,10 +115,10 @@ describe('test-cases for api routes', () => {
           .set('Accept', 'application/json')
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('Please input confirmpassword \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
-      it('sends a 400 response status if user input contain only digits', (done) => {
+      it('sends a 400 response status and errormessages if user input contain only digits', (done) => {
         userCredentials.confirmpassword = 'thegreatest';
         userCredentials.firstname = '2345';
         request(app)
@@ -127,10 +127,10 @@ describe('test-cases for api routes', () => {
           .set('Accept', 'application/json')
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('Your names cannot be digits only \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
-      it('sends a 400 response status if a user input is null', (done) => {
+      it('sends a 400 response status and errormessages if a user input is null', (done) => {
         userCredentials.firstname = '';
         userCredentials.confirmpassword = 'thegreatest';
         request(app)
@@ -139,7 +139,7 @@ describe('test-cases for api routes', () => {
           .set('Accept', 'application/json')
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('Please fill in all input field \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
       it('sends a 400 response status if a user input contains just whitespaces', (done) => {
@@ -151,7 +151,7 @@ describe('test-cases for api routes', () => {
           .set('Accept', 'application/json')
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('Please fill in all input field \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
       it('sends a 400 response status if a user password and confirmpassword is not equal', (done) => {
@@ -163,7 +163,7 @@ describe('test-cases for api routes', () => {
           .set('Accept', 'application/json')
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('password and confirmpassword are not equal \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
       it('sends a 400 response status if email is invalid', (done) => {
@@ -174,7 +174,7 @@ describe('test-cases for api routes', () => {
           .set('Accept', 'application/json')
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('Invalid email format \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
     });
@@ -233,7 +233,7 @@ describe('test-cases for api routes', () => {
           .expect('Content-Type', /json/)
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('Please Input email \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
       it('responds with a 400 if a user input contains just whitespaces', (done) => {
@@ -245,7 +245,7 @@ describe('test-cases for api routes', () => {
           .expect('Content-Type', /json/)
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('Please fill in all input fields \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
       it('responds with a 400 if a user email is invalid', (done) => {

@@ -79,7 +79,7 @@ class Event {
           })
           .catch(error => sendError(error, res, false));
       })
-      .catch(error => res.status(500).send({ error: error.message }));
+      .catch(error => sendError(error, res, false));
   }
   /**
  * delete an event

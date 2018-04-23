@@ -9,16 +9,35 @@ body {
   width: 100%;
   margin-right: 50px;
 }
-
+.img-center {
+  padding-left: 85px;
+  padding-right: 85px;
+}
+.navbar {
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+}
+// .display-3 {
+//   margin-top: 25%;
+// }
 .action-view {
   max-width: 1000px;
 }
 
-.upload-options-section {
-  padding-right: 40px;
-  padding-left: 40px;
+.upload-btn {
+  width: 70px;
+  height: 30px;
+  font-size: 0.8em;
+  margin-top: -120px;
+  background: #BDBDBD;
+  margin-left: 120px;
 }
 
+.section-upload {
+  padding-left: 50px;
+  padding-right: 50px;
+  width: 100%;
+}
 .events-header-name {
   padding-bottom: 10px;
 }
@@ -28,25 +47,59 @@ body {
   border-bottom: 2px solid black;
 }
 
-.welcome:hover {
-  color: black;
-  display: none;
+.btn-search:hover {
+  background-color: #C51162;
+  color: 'white'
 }
 
-.sidebar {
-  color: #fff;
-  transition: all 0.3s;
-  height: 740px;
-  width: 230px;
-  background-image: url(./images/bg.jpeg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-size: cover;
+.fa-search:hover {
+  color: 'white'
+}
+
+.join-us-btn {
+  background-color:#C51162;
+  color: white;
+}
+
+.view-centers-btn {
+  background-color: #C51162;
+  color: white;
+}
+
+@media (max-width: 991.98px) { 
+  .display-3 {
+    margin-top: 50px;
+  }
+ }
+
+.btn-card-info {
+  background-color: #F50057
+}
+
+.auth-nav-links:visited {
+  color: #BDBDBD;
+}
+
+.auth-nav-links {
+  font-size: 0.7em;
+}
+
+.auth-nav-links:hover {
+  color: #F50057;
 }
 
 .sidelinks {
   padding-top: 120px;
   font-size: 1.2em;
+}
+
+.dark-grey-text {
+  margin-top: 120px;
+}
+
+.add-image-btn {
+  margin-left: 40%;
+  margin-right: 40%;
 }
 
 .profile-links {
@@ -84,36 +137,13 @@ body {
   margin-left: 50px;
 }
 
-.logout-btn {
-  margin-top: 100px;
+.btn-logout {
+  border-radius: 25px;
 }
 
-.center-links {
-  border-top: 2px solid grey;
-  margin-top: 5px;
-}
-
-.initial-symbol {
-  font-size: 1.8em;
-  font-family: verdana;
-}
-
-.sidelink {
-  width: 200px;
-  margin-left: 12px;
-  margin-right: 12px;
-  margin-bottom: 10px;
-  height: 40px;
-  background-color: grey;
-  color: black;
-  border-radius: 0px;
-  color: pink;
-}
-
-.sidelink:hover {
-  animation-name: increaseFontSize;
-  animation-duration: 2s;
-  animation-iteration-count: 1;
+.btn-logout:hover {
+  background-color: #C51162;
+  color: white
 }
 
 a:hover {
@@ -125,16 +155,19 @@ a:hover {
 
 #home {
   background-image: url(./images/landingimg.jpg);
+  background-attachment: fixed;
   background-size: 100% 100%;
   background-size: cover;
   background-repeat: no-repeat;
+  background-color: rgba(0,0,0,0.4);
   position: relative;
-  height: 680px;
+  height: 500px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .slide-up {
   color: white;
-  margin-top: 105%;
+  margin-top: 100px;
   background-color: pink;}
 
 /* Caption text */
@@ -147,12 +180,18 @@ a:hover {
   width: 100%;
   text-align: center; }
 
+  .nav-item {
+    margin-left: 5px;
+  }
+
 .footer {
-  background-color: pink;
   left: 0;
   bottom: 0;
   width: 100%;
   color: white;
+  border-top: 1px solid #BDBDBD;
+  margin-top: 15px;
+  font-family: 'Open Sans', sans-serif;
   height: 100px;
   height: 50px;}
 
@@ -162,7 +201,6 @@ a:hover {
   margin-left: 80%;
   font-size: 1em; }
 
-gh-pages
 .text-footer {
   margin-top: 1%;
   margin-left: 2%; }
@@ -177,17 +215,108 @@ gh-pages
 
 .smallnavsection {
   margin-left: 15%;
-  margin-right: 15%
+  margin-right: 15%;
 }
 
-.nav-item:hover {
-  border-bottom : 4px solid grey;
+.nav-link {
+  color: #BDBDBD;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.nav-link:hover {
+  color: #F50057;
 }
 
 .userevents-large {
   margin-top: 100px;
   margin-left: 100px;
   margin-right: 100px;
+}
+
+label {
+  font-family: 'Open sans', sans-serif;
+}
+
+.upcoming-events-section,  .about-us-section, .testimonies-section{
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 30px;
+  border-top: 1px solid #BDBDBD;
+}
+
+.about-us-section {
+  background-color: #212121;
+}
+
+video {
+  z-index: 1000;
+}
+
+.testimonies {
+  margin-top: 30px;  
+}
+
+.about-us {
+  margin-top: 50px;
+}
+
+.fa-plus, .fa-check {
+  font-size: 2.4em;
+  color: #BDBDBD;
+}
+
+.text-testimony {
+  width: 300px;
+
+}
+
+.upcoming-events-section-header, .about-us-section-header, .testimonies-section-header {
+  margin-top: 30px;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+}
+
+.about-us-section-header {
+  color: white;
+}
+
+.img-correspondent {
+  width: 120px;
+  height: 120px;
+}
+
+.card-title {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.testimony-info {
+  margin-top: 10px;
+  width: 350px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.name-testimonial {
+  font-weight: bold;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.card-body {
+  height: 80px;
+}
+
+.date-of-event {
+  margin-left: 20px;
+  color: #BDBDBD;
+  font-size: 0.7em;
+  font-weight: bolder;
+}
+
+.card-menu {
+  color: #BDBDBD;
+  margin-top: -40px;
+  padding-left: 250px;
 }
 
 .userevents-small {
@@ -197,14 +326,30 @@ gh-pages
 }
 
 .center-info-header {
-  font-family: 'Anton', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 1.4em;
   border-bottom: '2px solid black'
 }
 
+.c-menu {
+  font-size: 0.8em;
+  background-color: #F50057;
+  width: 80px;
+  height: 30px;
+  color: white;
+}
+
+.c-menu:hover, .btn-get-started:hover {
+  background-color: #C51162
+}
+
+.btn-get-started {
+  border-radius: 25px;
+}
+
 .center-name {
   font-size: 2.3em;
-  font-family: verdana;
+  font-family: 'Open Sans', serif;;
   font-weight: 5px;
 }
 
@@ -234,11 +379,16 @@ gh-pages
 
 .center-image-section {
   margin-bottom: 12px;
+  margin-top: 20px;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .edit-section {
   padding-left: 90px;
   padding-right: 90px;
+  width: 400px;
 }
 
 .edit-section2, .edit-section3, .edit-section1 {
@@ -255,6 +405,15 @@ gh-pages
   margin-left: 20px;
 }
 
+.card:hover {
+  z-index: 20px;
+}
+
+.upcoming-events {
+  margin-top: 15px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
 .catalogs {
   padding-left: 60px;
   max-width: 100%;
@@ -262,8 +421,8 @@ gh-pages
 }
 
 .all-centers {
-  margin-top: 70px;
-  position: inherit;
+  margin-top: 80px;
+  width: 100%;
 }
 
 .delete-prompt {
@@ -301,6 +460,11 @@ gh-pages
   display: inline-block;
   width: 60px;
   height: 34px;
+}
+
+.upcoming-events-section {
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
 .switch input {display:none;}
@@ -343,6 +507,7 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;
@@ -351,4 +516,157 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+.feature-center-card {
+  width: 350px;
+  margin-left: -40px;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  border-radius: 10px;
+}
+
+.card {
+  width: 350px;
+  margin-left: -40px;
+}
+
+.card-body {
+  font-family: 'Open Sans', sans-serif;
+}
+.header-section {
+  color: #F50057;
+  border-bottom: 1px solid #BDBDBD;
+}
+
+.btn-logout {
+  color: white;
+  background-color: #F50057;
+}
+
+.section-header {
+  font-family : 'Open-sans', sans-serif;
+}
+
+.action-buttons {
+  margin-left: -80px;
+}
+.edit-btn {
+  background-color: #64DD17;
+  color: white;
+  width: 80px;
+  font-size: 0.8em;
+}
+
+.modify-btn {
+  background-color: #F50057;
+  color: white;
+  width: 20px;
+  font-size: 0.8em;
+  width: 80px;
+}
+@media (max-width: 575.98px) {
+  .dark-grey-text {
+    margin-top: 40px;
+  }
+  // .upcoming-events {
+  //   margin-left: 20px;
+  //   margin-right: 20px;
+  // }
+  .img-center {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .white-text {
+    font-size: 2.1em;
+    margin-top: 5px;
+  }
+  .testimonies-section {
+    width: 100%;
+  }
+  .first-testimony, .second-testimony {
+    width: 100%;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  }
+  .testimony-info {
+    width: 100%;
+  }
+  .feature-center-card {
+    width: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .card-menu {
+    margin-left: -50px;
+  }
+  .first-info {
+    margin-bottom: 50px;
+  }
+  .view-centers-btn {
+    background-color: #C51162;
+    color: white;
+  }
+  .join-us-btn {
+    background-color: #F50057;
+    color: white;
+  }
+  .img-correspondent {
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+ }
+ @media (max-width: 767.98px) {
+  .first-info {
+    margin-bottom: 50px;
+  }
+  .view-centers-btn {
+    background-color: #C51162;
+    color: white
+  }
+  .join-us-btn {
+    background-color: #F50057;
+    color: white;
+  }
+  .testimony-info {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  }
+
+  @media (max-width: 991.98px) {
+    .testimony-info {
+      margin-right: 0px;
+      margin-left: 0px;
+    }
+    .testimony-info {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    .upcoming-events-section {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    // .dispay-3 {
+    //   margin-top: 50px;
+    // }
+  }
+
+  // @media (max-width: 1025px) {
+  //   .feature-center-card {
+  //     width: 285px;
+  //   }
+  //   .card-menu {
+  //     margin-left: -60px;
+  //   }
+  // }
+  
+  @media (max-width: 1199.98px) {
+    .img-correspondent {
+      margin-left: 50px;
+    }
+    // .feature-center-card {
+    //   width: 285px;
+    // }
+    // .card-menu {
+    //   margin-left: -60px;
+    // }
+  }
 /*# sourceMappingURL=style.css.map */

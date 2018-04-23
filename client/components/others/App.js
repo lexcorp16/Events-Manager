@@ -2,31 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Navbar from './Navbar';
-import Sidebar from './sidebar';
 import '../../public/style.scss';
 
-const app = (props =>
+const app = props =>
   (
     <div>
       <Navbar />
-      { (props.user.status.authenticated) &&
-      <div className="large-view" style={{ backgroundColor: 'white', maxWidth: '100%' }}>
-        <div className="row">
-          <div className="col-lg-2 side-action d-none d-lg-block ">
-            <Sidebar />
-          </div>
-          <div className="col-lg-10 action-view">
-            {props.children}
-          </div>
-        </div>
-      </div>}
-      { (!props.user.status.authenticated) &&
-      <div>
+      <div className="auth-pages">
         {props.children}
-      </div>}
+      </div>
     </div>
-  )
-);
+  );
 
 const mapDispatchToProps = (dispatch =>
   ({
@@ -43,12 +29,7 @@ const mapStateToProps = (state =>
 export default connect(mapStateToProps, mapDispatchToProps)(app);
 
 const propTypes = {
-  user: PropTypes.shape({
-    status: PropTypes.shape({
-      authenticated: PropTypes.bool
-    })
-  }).isRequired,
-  children: PropTypes.objectOf(PropTypes.func).isRequired,
+  children: PropTypes.objectOf(PropTypes.symbol).isRequired,
 };
 
 app.propTypes = propTypes;

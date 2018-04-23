@@ -10,17 +10,7 @@ const displayUploadedImage = (imageUrl) => {
   }
 };
 
-const updateImageUploadProgressbar = (progress) => {
-  const elem = document.getElementById('myBar');
-  let lastprogress = 0;
-  let width = 0;
-  width = progress - lastprogress;
-  width += 1;
-  elem.style.width = `${width}%`;
-  lastprogress = progress;
-};
 export {
   imageToDisplay,
   displayUploadedImage,
-  updateImageUploadProgressbar,
 };
