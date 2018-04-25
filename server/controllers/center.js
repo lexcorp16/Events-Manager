@@ -113,7 +113,7 @@ class Center {
         })
         .then((centers) => {
           if (centers.length < 1) {
-            return res.status(400).send({ error: 'There are no centers' });
+            return res.status(404).send({ error: 'There are no centers' });
           }
           return res.status(200).send({ message: 'Success', centers });
         })
@@ -122,7 +122,7 @@ class Center {
     return Centers.findAll()
       .then((centers) => {
         if (centers.length < 1) {
-          return res.status(400).send({ error: 'There are no centers' });
+          return res.status(404).send({ error: 'There are no centers' });
         }
         return res.status(200).send({ message: 'Success', centers });
       })
@@ -143,7 +143,7 @@ class Center {
       })
       .then((center) => {
         if (!center) {
-          return res.status(400).send({ error: 'No center found' });
+          return res.status(404).send({ error: 'No center found' });
         }
         Centers.findOne({
           where: {

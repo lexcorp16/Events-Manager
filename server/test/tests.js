@@ -686,10 +686,10 @@ describe('test-cases for api routes', () => {
           expect(res.body.aCenter.venueOfEvent.length).to.equal(2);
         });
     });
-    it('returns a 400 if center not found', (done) => {
+    it('returns a 404 if center not found', (done) => {
       request(app)
         .get(`/api/v1/centers/c${centerId.slice(1)}`)
-        .expect(400, done)
+        .expect(404, done)
         .expect((res) => {
           expect(res.body.error).to.equal('No center found');
         });
@@ -796,7 +796,7 @@ describe('test-cases for api routes', () => {
       request(app)
         .get('/api/v1/centers?name=Rogar')
         .set('auth', secondToken)
-        .expect(400, done)
+        .expect(404, done)
         .expect((res) => {
           expect(res.body.error).to.equal('There are no centers');
         });
