@@ -5,11 +5,11 @@
   "main": "app.js",
   "scripts": {
     "localtest": "export NODE_ENV=test&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/tests.js --compilers js:babel-core/register --timeout 25000 --exit",
-    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
+    "test": "npm install bcrypt&&nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
     "start:dev": "nodemon ./server/app --exec babel-node ./server/app",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./server/ -d ./dist",
-    "start": "npm run build && node ./dist/app.js",
+    "start": "npm install bcrypt&&npm run build && node ./dist/app.js",
     "start:react": "nodemon ./client/server.js --exec babel-node ./client/server.js",
     "sendmail": "babel-node ./server/helpers/mailer.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.js"
@@ -52,6 +52,7 @@
     "express": "^4.16.2",
     "file-loader": "^1.1.5",
     "firebase": "^4.10.1",
+    "fs": "0.0.1-security",
     "history": "^4.7.2",
     "image-loader": "0.0.1",
     "image-webpack-loader": "^3.4.2",
