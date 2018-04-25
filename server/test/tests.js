@@ -361,7 +361,7 @@ describe('test-cases for api routes', () => {
           .expect('Content-Type', /json/)
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('capacity and mobileNumber fields can only be digits \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
       it('responds with a 400 if capacity or mobileNumber input alphabets only', (done) => {

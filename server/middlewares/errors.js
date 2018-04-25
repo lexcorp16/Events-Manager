@@ -69,18 +69,20 @@ const checkNullInputAddCenter = (req, res, next) => {
   if (isNull) {
     errorMessage += 'please fill in all fields \n';
   }
-  if (alphaNumeric(capacity) || alphaNumeric(mobileNumber)) {
-    errorMessage += 'capacity and mobileNumber fields can only be digits \n';
-    return res.status(400).send({ error: errorMessage });
-  }
   if (capacity) {
     if (!Number.isInteger(parseFloat(capacity))) {
       errorMessage += 'capacity field can only be digits \n';
+    }
+    if (alphaNumeric(capacity)) {
+      errorMessage += 'capacity cannot be alphanumeric \n';
     }
   }
   if (mobileNumber) {
     if (!Number.isInteger(parseFloat(mobileNumber))) {
       errorMessage += 'mobileNumber field can only be digits \n';
+    }
+    if (alphaNumeric(capacity)) {
+      errorMessage += 'mobileNumber cannot be alphanumeric \n';
     }
     if (mobileNumber.length !== 11) {
       errorMessage += 'invalid mobileNumber';
@@ -165,23 +167,22 @@ const checkNullInputModifyCenter = (req, res, next) => {
     errorMessage += 'please fill in all fields \n';
   }
   if (capacity) {
-    if (alphaNumeric(capacity)) {
-      errorMessage += 'capacity field can only be digits';
+    if (!Number.isInteger(parseFloat(capacity))) {
+      errorMessage += 'capacity field can only be digits \n';
     }
-  }
-  if (mobileNumber) {
-    if (alphaNumeric(mobileNumber)) {
-      errorMessage += 'mobileNumber field can only be digits';
+    if (alphaNumeric(capacity)) {
+      errorMessage += 'capacity cannot be alphanumeric \n';
     }
   }
   if (mobileNumber) {
     if (!Number.isInteger(parseFloat(mobileNumber))) {
       errorMessage += 'mobileNumber field can only be digits \n';
     }
-  }
-  if (capacity) {
-    if (!Number.isInteger(parseFloat(capacity))) {
-      errorMessage += 'capacity field can only be digits \n';
+    if (alphaNumeric(mobileNumber)) {
+      errorMessage += 'mobileNumber cannot be alphanumeric \n';
+    }
+    if (mobileNumber.length !== 11) {
+      errorMessage += 'invalid mobileNumber';
     }
   }
   if (errorMessage !== '') {
