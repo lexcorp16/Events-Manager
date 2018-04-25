@@ -26,9 +26,9 @@ const checkInvalidUserDetails = (req, res, next) => {
   let isNull = false;
   let isDigit = false;
   for (let i = 0; i < reqBody.length; i += 1) {
-    if (reqBody[i] === undefined) {
+    if (!reqBody[i]) {
       undefinedBody = matchingDetails[i];
-      break;
+      errorMessage += `Please input ${undefinedBody} \n`;
     }
     if (!undefinedBody) {
       if (reqBody[i].trim().length < 1) {
@@ -42,23 +42,21 @@ const checkInvalidUserDetails = (req, res, next) => {
       isDigit = true;
     }
   });
-
-  if (undefinedBody) {
-    errorMessage += `Please input ${undefinedBody} \n`;
-  }
   if (isNull) {
     return res.status(400).send({ error: 'Please fill in all input fields' });
   }
-  if (req.body.password.length < 6) {
-    errorMessage += 'password must be at least six characters long \n';
+  if (password) {
+    if (req.body.password.length < 6) {
+      errorMessage += 'password must be at least six characters long \n';
+    }
   }
-  if (!isValidEmail(email)) {
+  if (email && !isValidEmail(email)) {
     errorMessage += 'Invalid email format \n';
   }
   if (isDigit) {
-    errorMessage += 'Your names cannot be digits only \n';
+    errorMessage += 'Your name cannot be digits only \n';
   }
-  if (password !== confirmpassword) {
+  if (password && confirmpassword && password !== confirmpassword) {
     errorMessage += 'password and confirmpassword are not equal \n';
   }
   if (errorMessage !== '') {
@@ -73,14 +71,14 @@ const checkInvalidUserSignIn = (req, res, next) => {
     errorMessage += 'Please Input email \n';
   }
   if (req.body.password === undefined) {
-    errorMessage = 'Please Input password \n';
+    errorMessage += 'Please Input password \n';
   }
   if (req.body.email) {
     if (req.body.email.trim().length < 1) {
       errorMessage += 'Please fill in all input fields \n';
     }
   }
-  if (!isValidEmail(req.body.email)) {
+  if (req.body.email && !isValidEmail(req.body.email)) {
     errorMessage += 'Invalid email format \n';
   }
   if (errorMessage !== '') {

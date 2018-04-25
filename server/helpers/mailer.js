@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export default (mailOptions) => {
+export default (mailOptions, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -15,9 +15,8 @@ export default (mailOptions) => {
     }
   });
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    console.log('ERROR: ', err);
-    console.log('ENVELOPE: ', info.envelope);
-    console.log('MESSAGE ID: ', info.messageId);
+  transporter.sendMail(mailOptions, (err) => {
+    if (err) return res.status(500).send({ error: 'oops, an error occured' });
+    return res.status(200).send({ message: 'Event canceled and notification sent' });
   });
 };

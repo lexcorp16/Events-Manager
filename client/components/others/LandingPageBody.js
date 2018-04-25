@@ -38,7 +38,7 @@ const LandingPageBody = () =>
               <img className="card-img-top" src={demoImage} alt="Your browser does not support" style={{ width: '100%', height: '240px' }} />
               <div className="card-body">
                 <h4 className="card-title">K & K Event Center</h4>
-                <p className="card-text date-of-event" style={{ marginLeft: '-60px' }}>APRIL 16, 2018</p>
+                <p className="card-text date-of-event">APRIL 16, 2018</p>
                 <div className="card-menu">
                   <button className="btn c-menu">see info</button>
                 </div>
@@ -104,13 +104,17 @@ const LandingPageBody = () =>
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 first-testimony">
             <div className="text-center">
               <img className="img rounded-circle img-correspondent" alt="no browser support" src={correspondent1} />
-              <p className="text-center testimony-info">Making Arrangements for my wedding was so much easier as I did not have to worry about the center of the event.<br /><span className="name-testimonial"><b>- Kolawole taiwo</b></span></p>
+              <div className="testimony-text-section">
+                <p className="text-center testimony-info">Making Arrangements for my wedding was so much easier as I did not have to worry about the center of the event.<br /><span className="name-testimonial"><b>- Kolawole taiwo</b></span></p>
+              </div>
             </div>
           </div>
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 second-testimony">
             <div className="text-center">
               <img className="img rounded-circle img-correspondent" alt="no browser support" src={correspondent2} />
-              <p className="text-center testimony-info">Organising business meetings and conferences has been much more efficient with event manger, it really makes my business life easier.<br /><span className="name-testimonial"><b>- Felix Amande</b></span></p>
+              <div className="text-center testimony-text-section">
+                <p className="testimony-info">Organising business meetings and conferences has been much more efficient with event manger, it really makes my business life easier.<br /><span className="name-testimonial"><b>- Felix Amande</b></span></p>
+              </div>
             </div>
           </div>
         </div>

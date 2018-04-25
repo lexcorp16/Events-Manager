@@ -16,6 +16,7 @@ body {
 .navbar {
   width: 100%;
   font-family: 'Open Sans', sans-serif;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
 }
 // .display-3 {
 //   margin-top: 25%;
@@ -241,7 +242,9 @@ label {
   font-family: 'Open Sans', sans-serif;
   margin-top: 30px;
   border-top: 1px solid #BDBDBD;
+  width: 100%;
 }
+
 
 .about-us-section {
   background-color: #212121;
@@ -289,11 +292,11 @@ video {
   margin-left: 20px;
 }
 
-.testimony-info {
+.testimony-text-section {
+  width: 100%;
+  padding-right: 20%;
+  padding-left: 20%;
   margin-top: 10px;
-  width: 350px;
-  margin-left: 80px;
-  margin-right: 80px;
 }
 
 .name-testimonial {
@@ -465,6 +468,7 @@ video {
 .upcoming-events-section {
   padding-left: 25px;
   padding-right: 25px;
+  width: 95%;
 }
 
 .switch input {display:none;}
@@ -517,15 +521,14 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 .feature-center-card {
-  width: 350px;
+  width: 0px;
   margin-left: -40px;
-  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
   border-radius: 10px;
 }
 
 .card {
-  width: 350px;
-  margin-left: -40px;
+  width: 415px;
 }
 
 .card-body {
@@ -584,10 +587,7 @@ input:checked + .slider:before {
   }
   .first-testimony, .second-testimony {
     width: 100%;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
-  }
-  .testimony-info {
-    width: 100%;
+    box-shadow: 0px;
   }
   .feature-center-card {
     width: 300px;
@@ -611,6 +611,17 @@ input:checked + .slider:before {
   .img-correspondent {
     margin-right: 50px;
     margin-left: 50px;
+  }
+  .upcoming-events {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .testimony-text-section {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-top: 10px;
   }
  }
  @media (max-width: 767.98px) {

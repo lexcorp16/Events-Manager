@@ -11,23 +11,24 @@ const {
 } = models;
 
 const { expect } = chai;
+before(() => {
+  Users.destroy({
+    cascade: true,
+    truncate: true,
+    restartIdentity: true,
+  });
 
-Users.destroy({
-  cascade: true,
-  truncate: true,
-  restartIdentity: true,
-});
+  Events.destroy({
+    cascade: true,
+    truncate: true,
+    restartIdentity: true,
+  });
 
-Events.destroy({
-  cascade: true,
-  truncate: true,
-  restartIdentity: true,
-});
-
-Centers.destroy({
-  cascade: true,
-  truncate: true,
-  restartIdentity: true,
+  Centers.destroy({
+    cascade: true,
+    truncate: true,
+    restartIdentity: true,
+  });
 });
 
 describe('test-cases for api routes', () => {
@@ -308,7 +309,7 @@ describe('test-cases for api routes', () => {
       name: 'Rogaros',
       type: 'Wedding Reception',
       address: 'Number 22,yeru street',
-      mobileNumber: '081567677787',
+      mobileNumber: '08156767778',
       capacity: '20000',
       rentalCost: '230000',
     };
@@ -318,9 +319,8 @@ describe('test-cases for api routes', () => {
         .set('auth', secondToken)
         .send(centerDetails)
         .expect('Content-Type', /json/)
-        .expect(200, done)
+        .expect(201, done)
         .expect((res) => {
-          centerId = res.body.center.id;
           expect(res.body.message).to.equal('You have successfully added a center');
           expect(typeof centerId).to.be.a('string');
           centerId = res.body.center.id;
@@ -364,7 +364,7 @@ describe('test-cases for api routes', () => {
             expect(res.body.error).to.equal('capacity and mobileNumber fields can only be digits \n');
           });
       });
-      it('responds with a 400 if capacity or mobileNumber input alphabetsonly', (done) => {
+      it('responds with a 400 if capacity or mobileNumber input alphabets only', (done) => {
         centerDetails.capacity = '2000';
         centerDetails.mobileNumber = 'jhfgffgfnhfh';
         request(app)
@@ -374,7 +374,7 @@ describe('test-cases for api routes', () => {
           .expect('Content-Type', /json/)
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('capacity and mobileNumber fields can only be digits \n');
+            expect(typeof res.body.error).to.equal('string');
           });
       });
     });
@@ -497,8 +497,8 @@ describe('test-cases for api routes', () => {
         .send(eventCredentials)
         .expect(201, done)
         .expect((res) => {
-          eventId = res.body.newEvent.id;
           expect(res.body.message).to.equal('Event successfully added');
+          eventId = res.body.newEvent.id;
         });
     });
     it('adds another new event', (done) => {
@@ -514,8 +514,8 @@ describe('test-cases for api routes', () => {
         .send(eventCredentials)
         .expect(201, done)
         .expect((res) => {
-          secondEventId = res.body.newEvent.id;
           expect(res.body.message).to.equal('Event successfully added');
+          secondEventId = res.body.newEvent.id;
         });
     });
     it('checks if an event is slated for the center being used before saving', (done) => {
@@ -529,7 +529,7 @@ describe('test-cases for api routes', () => {
         .post('/api/v1/events/')
         .set('auth', secondToken)
         .send(eventCredentials)
-        .expect(400, done)
+        .expect(409, done)
         .expect((res) => {
           expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
         });
@@ -613,6 +613,21 @@ describe('test-cases for api routes', () => {
           expect(res.body.message).to.equal('successfully modified');
         });
     });
+    it('checks if a date is specified else rteturns and error', (done) => {
+      const eventCredentials = {
+        name: 'Andela Bootcamp',
+        type: 'coding Bootcamp',
+        center: centerId,
+      };
+      request(app)
+        .put(`/api/v1/events/${eventId}`)
+        .set('auth', secondToken)
+        .send(eventCredentials)
+        .expect(400, done)
+        .expect((res) => {
+          expect(res.body.error).to.equal('Please specify date');
+        });
+    });
     it('checks if an event is slated for the center before modifying', (done) => {
       const eventCredentials = {
         name: 'Andela Bootcamp',
@@ -624,7 +639,7 @@ describe('test-cases for api routes', () => {
         .put(`/api/v1/events/${secondEventId}`)
         .set('auth', secondToken)
         .send(eventCredentials)
-        .expect(400, done)
+        .expect(409, done)
         .expect((res) => {
           expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
         });
@@ -734,7 +749,7 @@ describe('test-cases for api routes', () => {
         name: 'Graduation Party',
         type: 'Party',
         center: centerId,
-        date: '2018-12-05',
+        date: '2018-12-12',
       };
       request(app)
         .post('/api/v1/events/')

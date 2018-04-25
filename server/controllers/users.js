@@ -45,9 +45,6 @@ class User {
         .then((user) => {
           const userDetails = {
             userId: user.id,
-            role: user.role,
-            firstname,
-            lastname,
           };
           const token = jwt.sign(userDetails, secret, {
             expiresIn: '100h', // expires in 1 hours
@@ -83,9 +80,6 @@ class User {
           if (response) {
             const userDetails = {
               userId: user.id,
-              firstname: user.firstname,
-              lastname: user.lastname,
-              role: user.role,
             };
             const token = jwt.sign(userDetails, secret, {
               expiresIn: '100h', // expires in 1 hours
@@ -104,9 +98,6 @@ class User {
  * @returns {object} res.
  */
   static upgradeUserToAdmin(req, res) {
-    if (req.decoded.role !== 'SuperAdmin') {
-      return res.status(403).send({ error: 'You are not authorised to perform this action' });
-    }
     Users.findById(req.params.userId)
       .then((user) => {
         user.updateAttributes({

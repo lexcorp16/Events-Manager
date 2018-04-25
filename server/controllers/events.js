@@ -31,7 +31,7 @@ class Event {
       })
       .then((event) => {
         if (event) {
-          return res.status(400).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
+          return res.status(409).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
         }
         return Events
           .create({
@@ -62,7 +62,7 @@ class Event {
     })
       .then((event) => {
         if (event && event.id !== req.params.eventId) {
-          return res.status(400).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
+          return res.status(409).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
         }
         Events.findById(req.params.eventId)
           .then((modifiedEvent) => {
@@ -129,9 +129,6 @@ class Event {
  * @returns {object} res.
  */
   static cancelUserEvent(req, res) {
-    if (req.decoded.role === 'User') {
-      return res.status(403).send({ error: 'You are not authorized to perform this action' });
-    }
     Events.findById(req.params.eventId)
       .then((event) => {
         event.updateAttributes({
@@ -145,8 +142,7 @@ class Event {
               subject: 'Notice Of cancellation of event',
               text: 'This Is to Inform You that For some reasons ,Your event has been canceled!',
             };
-            mailSender(mailOptions);
-            return res.status(200).send({ message: 'Event canceled and notification sent' });
+            return mailSender(mailOptions, res);
           })
           .catch(error => sendError(error, res, false));
       })

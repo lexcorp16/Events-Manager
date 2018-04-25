@@ -55,6 +55,8 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
+app.use((req, res) => res.status(404).send({ error: 'url not valid' }));
+
 app.set('port', process.env.PORT || 3000);
 
 // fire up server to listen on ap particular port

@@ -18,7 +18,6 @@ class Center {
  * @returns {object} res.
  */
   static addCenter(req, res) {
-    const { role } = req.decoded;
     const {
       name,
       type,
@@ -29,9 +28,6 @@ class Center {
       facilities,
       rentalCost,
     } = req.body;
-    if (role === 'User') {
-      return res.status(403).send({ error: 'You are not authorized to perform this action' });
-    }
     return Centers
       .create({
         name,
@@ -44,7 +40,7 @@ class Center {
         rentalCost,
         user: req.decoded.userId,
       })
-      .then(center => res.status(200).send({ message: 'You have successfully added a center', center }))
+      .then(center => res.status(201).send({ message: 'You have successfully added a center', center }))
       .catch(error => sendError(error, res, true));
   }
   /**
@@ -54,12 +50,6 @@ class Center {
  * @returns {object} res.
  */
   static modifyCenter(req, res) {
-    const {
-      role,
-    } = req.decoded;
-    if (role === 'User') {
-      return res.status(403).send({ error: 'You are not authorized to perform this action' });
-    }
     if (Object.keys(req.body).length < 1) {
       return Centers.findOne({
         where: {

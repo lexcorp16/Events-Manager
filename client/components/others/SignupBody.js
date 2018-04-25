@@ -99,13 +99,13 @@ class SignupBody extends Component {
               </div>}
               <div>
                 <label htmlFor="firstname">firstname</label>
-                <input onChange={this.getSignUpDetails} type="text" name="firstname" placeholder="firstname" className="form-control first-name" />
+                <input onChange={this.getSignUpDetails} type="text" name="firstname" className="form-control first-name" />
                 <label htmlFor="lastname">lastname</label>
-                <input onChange={this.getSignUpDetails} type="text" name="lastname" placeholder="lastname" className="form-control" />
+                <input onChange={this.getSignUpDetails} type="text" name="lastname" className="form-control" />
                 <label htmlFor="email">email</label>
-                <input onChange={this.getSignUpDetails} type="text" name="email" placeholder="email" className="form-control" />
+                <input onChange={this.getSignUpDetails} type="text" name="email" placeholder="example@gmail.com" className="form-control" />
                 <label htmlFor="password">password</label>
-                <input onChange={this.getSignUpDetails} type="password" name="password" placeholder="password" className="form-control" />
+                <input onChange={this.getSignUpDetails} type="password" name="password" className="form-control" />
                 <label htmlFor="confirmpassword">retype password</label>
                 <input onChange={this.getSignUpDetails} type="password" name="confirmpassword" placeholder="retype password" className="form-control" />
                 <div className="text-center btn-padder">
