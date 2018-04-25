@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "An event-manager app,andela developer challenge",
   "main": "app.js",
-  "engines": {
-    "node": ">=0.4.7 <0.7.0",
-    "npm": ">=1.0.0"
-  },
   "scripts": {
     "localtest": "export NODE_ENV=test&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/tests.js --compilers js:babel-core/register --timeout 25000 --exit",
     "test": "npm install bcrypt&&nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
