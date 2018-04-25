@@ -5,83 +5,63 @@
 Events Manager is a web app that helps you manage an event-center.
 Given you manage an events center, this app will help you accept applications to use your center / facilities, and will either decline events when the proposed day is already taken, or suggest an available day.
 
-# Project Title
-
-One Paragraph of project description goes here
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
-What things you need to install the software and how to install them
+To get a working version of this app locally, You would need  the following
 
 ```
-Give examples
+Node.js
+
+PostgresQl
 ```
 
 ### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
+Clone this repository
 ```
-Give the example
-```
+git clone https://github.com/Efosaok/Events-Manager
 
-And repeat
+cd into cloned directory  cd Events-manager
 
-```
-until finished
-```
+run npm install to install all necessary dependencies
 
-End with an example of getting some data out of the system or using it for a little demo
+create a .env file and setup all environment variables as listed in the `.env.example` file
+```
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+After installing, run
 ```
-Give an example
+npm run localtest
 ```
 
-### And coding style tests
+### Coding Style
 
-Explain what these tests test and why
+This app was built was built with strict adherence to airbnb style guide
 
-```
-Give an example
-```
+For complete eslint rule configuration, see the .eslintrc.json file
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+To deploy this app to heroku, simply push to another git remote branch and deploy from there,To 
+
+refactor the start script, work on the Procfile
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Node.js](https://nodejs.org) - The server side web framework.
+* [PostgreSQL](https://postgresql.org) - database
+* [Sequelize](http://docs.sequelizejs.com/manual/tutorial/models-usage.html) database ORM
+* [React.js](https://reactjs.org) - Client side library
+* [Redux](https://redux.js.org) - App state management framework
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read the CONTRIBUTING.md for details on code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+Efosa Okpugie
 
 ## License
 
@@ -89,10 +69,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+* Andela Cohort 34 members
+* Andela Bootcamp LFA's
+* Simulations LFA - Mark Edomwande
 
-## Getting Started
-A live version of the UI templates can be accessed
-[here](https://efosaok.github.io/Events-Manager/)
+## Live version
+Live version of app hosted on heroku
+[here](https://events-manager-efosa.herokuapp.com/)
