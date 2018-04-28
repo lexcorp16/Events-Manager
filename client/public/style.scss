@@ -565,7 +565,9 @@ input:checked + .slider:before {
   font-size: 0.8em;
   width: 80px;
 }
-@media (max-width: 575.98px) {
+
+//  Galaxy S5 screens
+@media (max-width: 380.98px) {
   .dark-grey-text {
     margin-top: 40px;
   }
@@ -621,9 +623,68 @@ input:checked + .slider:before {
     width: 100%;
     padding-right: 0px;
     padding-left: 0px;
+    margin-top: 10px; 
+  }
+ }
+
+ //Pixel 2 screens
+
+ @media (max-width: 575.98px) and (min-width: 381.00px) {
+  .dark-grey-text {
+    margin-top: 40px;
+  }
+  .img-center {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .white-text {
+    font-size: 2.1em;
+    margin-top: 5px;
+  }
+  .testimonies-section {
+    width: 100%;
+  }
+  .first-testimony, .second-testimony {
+    width: 100%;
+    box-shadow: 0px;
+  }
+  .feature-center-card {
+    width: 350px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .card-menu {
+    margin-left: -50px;
+  }
+  .first-info {
+    margin-bottom: 50px;
+  }
+  .view-centers-btn {
+    background-color: #C51162;
+    color: white;
+  }
+  .join-us-btn {
+    background-color: #F50057;
+    color: white;
+  }
+  .img-correspondent {
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+  .upcoming-events {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .testimony-text-section {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
     margin-top: 10px;
   }
  }
+
  @media (max-width: 767.98px) {
   .first-info {
     margin-bottom: 50px;
