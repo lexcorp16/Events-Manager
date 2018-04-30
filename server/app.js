@@ -8,6 +8,8 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger.json';
 import centerRoutes from './routes/centers';
 import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
@@ -17,6 +19,8 @@ dotenv.config();
 
 // Set up the express app
 const app = express();
+// setting up swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const compiler = webpack(webpackConfig);
 
 // Log requests to the console.
