@@ -53,7 +53,7 @@ Below are links to resources on how to deploy this Node.js app on different host
 * [Heroku](https://devcenter.heroku.com/articles/deploying-nodejs)
 * [Nodejitsu](https://blog.codeship.com/node-js-deployment-github-nodejitsu/)
 
-## Built With
+## Technologies
 
 * [Node.js](https://nodejs.org) - The server side web framework.
 * [PostgreSQL](https://postgresql.org) - database
