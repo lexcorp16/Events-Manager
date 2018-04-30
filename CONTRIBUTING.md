@@ -8,7 +8,7 @@ When contributing to this repository, please first discuss the change you wish t
 
 ## Coding Style
 
-For you pull request to be merged it is important you adhere to the airbnb javascript style guide,
+For your pull request to be merged it is important you adhere to the airbnb javascript style guide,
 
 the eslintr.json file make sure  of that so make sure to set it up locally.
 
