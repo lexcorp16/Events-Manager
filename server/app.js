@@ -4,7 +4,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
@@ -18,6 +17,7 @@ dotenv.config();
 
 // Set up the express app
 const app = express();
+const compiler = webpack(webpackConfig);
 
 // Log requests to the console.
 app.use(logger('dev'));
