@@ -61,6 +61,15 @@ Below are links to resources on how to deploy this Node.js app on different host
 * [React.js](https://reactjs.org) - Client side library
 * [Redux](https://redux.js.org) - App state management framework
 
+## Limitations
+
+* This App doesn't support third-party authentications.
+
+* This App cannot enable users rate or review an event
+
+* This App cannot enable event owners add invitees or accept invites for their events
+
+
 ## Contributing
 
 Please read the CONTRIBUTING.md for details on code of conduct, and the process for submitting pull requests to us.
