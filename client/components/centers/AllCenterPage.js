@@ -5,6 +5,7 @@ import CenterCard from './CenterCard';
 import '../../public/style.scss';
 import '../../public/scripts/slideshow';
 import { getAllCenters, modificationPrompt, getACenter } from '../../actions/centerActions';
+import { imageToDisplay } from '../../utils/mescill.utils';
 /**
  *
  *
@@ -62,9 +63,9 @@ class AllCenterPage extends Component {
  */
   render() {
     return (
-      <div className="all-centers">
-        <div className="header-section">
-          <h3 className="text-center section-header">All Centers</h3>
+      <div className="all-centers container">
+        <div className="header-section text-center">
+          <h3 className="section-header">All Centers</h3>
         </div>
         <div className="catalogs" id="descriptions container allcenters-section">
           <div className="row">

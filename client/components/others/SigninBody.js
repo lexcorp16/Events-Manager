@@ -90,7 +90,7 @@ class SigninBody extends Component {
               </div>
               { (this.props.user.status.error) &&
               <div
-                className="alert alert-warning alert-dismissible fade show signin-alert"
+                className="alert alert-warning alert-dismissible animated fadeIn show signin-alert"
                 role="alert"
                 style={{
                   marginTop: `${1}%`, height: `${50}px`, paddingBottom: `${10}px`, background: 'none', border: 'none'
@@ -110,14 +110,16 @@ class SigninBody extends Component {
               </div>}
               <input onChange={this.getSignInDetails} type="text" name="email" placeholder="email" className="form-control" />
               <br />
-              <input onChange={this.getSignInDetails} type="password" name="password" placeholder="password" className="form-control" />
+              <input onChange={this.getSignInDetails} type="password" name="password" placeholder="password" className="form-control password-signin" />
               <br />
               <div className="button-container text-center">
                 <button className="btn btn-submit btn-default" onClick={this.signin}>Sign In</button>
-              </div>
-              { (this.props.user.status.fetching) &&
-              <LoadingProgressBar />
+                { (this.props.user.status.fetching) &&
+                <div className="animated fadeIn">
+                  <LoadingProgressBar />
+                </div>
               }
+              </div>
               <div>
                 <p className="text-center" style={{ fontSize: `${0.8}em`, marginTop: '10px', marginBottom: '10px' }}>Do not have an account? sign up <span className="switchform" style={{ color: 'skyblue' }}><Link to="/signup"> here</Link></span></p>
               </div>

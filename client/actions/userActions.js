@@ -41,7 +41,6 @@ const userLogin = loginDetails =>
       })
       .catch((err) => {
         dispatch({ type: 'LOGIN_REJECTED', payload: err.response.data });
-        actionRejectedPrompter(err.response.data.error);
       });
   };
 

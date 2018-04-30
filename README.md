@@ -3,9 +3,11 @@
 
 # Events-Manager
 Events Manager is a web app that helps you manage an event-center.
-Given you manage an events center, this app will help you accept applications to use your center / facilities, and will either decline events when the proposed day is already taken, or suggest an available day.
+Given you manage an events center, this app will help you accept applications to use your center / facilities,It contains
+features like notifying users of event cancellation via email notification.
+Get a feel of the app [here](https://events-manager-efosa.herokuapp.com/)
 
-### Prerequisites
+### Prerequisites/System Dependencies
 
 To get a working version of this app locally, You would need  the following
 
@@ -15,9 +17,9 @@ Node.js
 PostgresQl
 ```
 
-### Installing
+### Installing this app locally
 Clone this repository
-```
+
 git clone https://github.com/Efosaok/Events-Manager
 
 cd into cloned directory  cd Events-manager
@@ -25,14 +27,17 @@ cd into cloned directory  cd Events-manager
 run npm install to install all necessary dependencies
 
 create a .env file and setup all environment variables as listed in the `.env.example` file
-```
 
 ## Running the tests
+This app is built with the concept of TDD, The tests were written with the Mocha framework.
 
-After installing, run
+To get the tests to run locally:
+
 ```
-npm run localtest
+$ npm run localtest
 ```
+
+That would also give you a local coverage report from coveralls.
 
 ### Coding Style
 
@@ -42,9 +47,11 @@ For complete eslint rule configuration, see the .eslintrc.json file
 
 ## Deployment
 
-To deploy this app to heroku, simply push to another git remote branch and deploy from there,To 
+Below are links to resources on how to deploy this Node.js app on different hosting services;
 
-refactor the start script, work on the Procfile
+* [AWS](https://aws.amazon.com/getting-started/projects/deploy-nodejs-web-app/)
+* [Heroku](https://devcenter.heroku.com/articles/deploying-nodejs)
+* [Nodejitsu](https://blog.codeship.com/node-js-deployment-github-nodejitsu/)
 
 ## Built With
 
@@ -63,16 +70,8 @@ Please read the CONTRIBUTING.md for details on code of conduct, and the process 
 
 Efosa Okpugie
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
 ## Acknowledgments
 
 * Andela Cohort 34 members
 * Andela Bootcamp LFA's
 * Simulations LFA - Mark Edomwande
-
-## Live version
-Live version of app hosted on heroku
-[here](https://events-manager-efosa.herokuapp.com/)

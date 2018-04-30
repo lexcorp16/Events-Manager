@@ -104,22 +104,30 @@ class Center {
  * @returns {array} res.
  */
   static getAllCenters(req, res) {
+    const offset = req.query.offset || 0;
+    const limit = req.query.limit || 6;
+
     if (req.query.name) {
       return Centers
-        .findAll({
+        .findAndCountAll({
           where: {
             name: req.query.name,
-          }
+          },
+          limit,
+          offset,
         })
         .then((centers) => {
-          if (centers.length < 1) {
-            return res.status(404).send({ error: 'There are no centers' });
+          if (centers.rows.length < 1) {
+            return res.status(404).send({ error: 'no centers found' });
           }
           return res.status(200).send({ message: 'Success', centers });
         })
         .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
     }
-    return Centers.findAll()
+    return Centers.findAll({
+      limit,
+      offset,
+    })
       .then((centers) => {
         if (centers.length < 1) {
           return res.status(404).send({ error: 'There are no centers' });
@@ -139,22 +147,18 @@ class Center {
       .findOne({
         where: {
           id: req.params.centerId,
-        }
+        },
       })
       .then((center) => {
         if (!center) {
           return res.status(404).send({ error: 'No center found' });
         }
-        Centers.findOne({
+        Events.findAll({
           where: {
-            name: center.name,
+            center: req.params.id,
           },
-          include: [{
-            model: Events,
-            as: 'venueOfEvent',
-          }]
         })
-          .then(aCenter => res.status(200).send({ message: 'Success', aCenter }))
+          .then(venueOfEvent => res.status(200).send({ message: 'Center successfully fetched', center, venueOfEvent }))
           .catch(error => sendError(error, res, true, req.params.centerId));
       })
       .catch(error => sendError(error, res, true));

@@ -206,7 +206,7 @@ class ModifyCenterPage extends Component {
         <div className="container modify-center">
           <div style={{ border: 'none', backgroundColor: 'white' }} className="modify-container">
             <div className="form-header">
-              <h3 className="text-center" style={{ color: '#BDBDBD', marginBottom: '20px' }}>Edit {this.props.center.centerToBeModified[0].name}</h3>
+              <h3 className="text-center" style={{ color: '#BDBDBD', marginBottom: '20px', marginTop: '20px' }}>Edit {this.props.center.centerToBeModified[0].name}</h3>
             </div>
             <div className="row">
               <div className="center-image-section col-lg-4 container">
@@ -214,35 +214,31 @@ class ModifyCenterPage extends Component {
                   !this.props.center.status.uploadImagePaused) &&
                   <img
                     className="center-image img-fluid rounded img-center"
-                    style={{
-                    width: '100%', height: '300px', marginLeft: '20px', marginRight: '20px'
-                    }}
                     alt="center"
                     id="centerimage"
                     src={defaultImage}
                   />}
                 { (this.props.center.status.uploadingImage ||
                   this.props.center.status.uploadImagePaused) &&
+                  <div className="uploadbar-m">
                     <UploadProgressBar
                       ariaValuenow={this.props.center.imageUpload.uploadProgress}
                     />
+                  </div>
                     }
-                <div className="upload-options-section row">
+                <div className="upload-options-section-m row">
                   { (this.props.center.status.uploadingImage) &&
                   <div className="col">
-                    <div className="fa fa-pause" onClick={this.pauseImageUpload} role="button" tabIndex={0} onKeyDown={this.handleKeyDown} />
+                    <div className="fa fa-pause animated fadeIn" onClick={this.pauseImageUpload} role="button" tabIndex={0} onKeyDown={this.handleKeyDown} />
                   </div>}
                   { (this.props.center.status.uploadImagePaused) &&
-                    <div className="col">
+                    <div className="col animated fadeIn">
                       <div className="fa fa-play" onClick={this.resumeImageUpload} role="button" tabIndex={0} onKeyDown={this.handleKeyDown} />
                     </div>}
                   { (this.props.center.status.uploadingImage) &&
                     <div className="col">
                       <button
-                        className="btn"
-                        style={{
-                          fontSize: `${0.6}em`, height: `${20}px`, backgroundColor: 'white', color: 'red'
-                          }}
+                        className="cancel-btn btn"
                         onClick={this.cancelImageUpload}
                       >
                         cancel
@@ -251,23 +247,26 @@ class ModifyCenterPage extends Component {
                 </div>
                 {(!this.props.center.status.changeImagePrompted &&
                 this.props.center.centerToBeModified[0].imageUrl === null) &&
-                <div className="text-center add-image-btn" style={{ marginTop: '10px' }}><button className="btn btn-outline-warning text-center" onClick={this.promptImageChange} >ADD IMAGE</button></div>
+                <div className="text-center" style={{ marginTop: '10px' }}><button className="btn btn-outline text-center add-image-m-btn" onClick={this.promptImageChange} >ADD IMAGE</button></div>
                 }
                 {(!this.props.center.status.changeImagePrompted &&
                 this.props.center.centerToBeModified[0].imageUrl !== null) &&
                 <div className="text-center modify-image-btn" style={{ marginTop: '10px' }}><button className="btn btn-outline-warning" onClick={this.promptImageChange} >CHANGE IMAGE</button></div>
                 }
-                {(this.props.center.status.changeImagePrompted) &&
-                  <div className="change-image-section container" style={{ marginTop: '5px' }}>
+                {(this.props.center.status.changeImagePrompted &&
+                !this.props.center.status.uploadingImage) &&
+                  <div className="change-image-section container text-center" style={{ marginTop: '5px' }}>
                     <form className="form from-group form-inline">
                       <input type="file" placeholder="select file" style={{ width: '150px' }} onChange={this.getImageFile} name="imageFile" />
-                      <button className="btn btn-default" onClick={this.uploadImage}>upload</button>
+                      {(this.state.imageFile !== '') &&
+                      <button className="btn btn-default upload-btn-m" onClick={this.uploadImage}>upload</button>
+                      }
                     </form>
                   </div>
                 }
               </div>
-              <div className="edit-form form-section col-lg-8" style={{ marginTop: '5px' }}>
-                <form className="form form-group form-container container">
+              <div className="edit-form col-lg-8" style={{ marginTop: '5px' }}>
+                <form className="form form-group container edit-label">
                   <label htmlFor="name">Name</label>
                   <input defaultValue={this.props.center.centerToBeModified[0].name} onChange={this.getCenterDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
                   <label htmlFor="type">Type</label>
@@ -288,7 +287,7 @@ class ModifyCenterPage extends Component {
                   <input onChange={this.getCenterDetails} type="number" name="mobileNumber" placeholder="mobileNumber" className="form-control first-name" maxLength="11" defaultValue={this.props.center.centerToBeModified[0].mobileNumber} />
                   <label htmlFor="rentalcost">rental Cost</label>
                   <input name="rentalCost" type="number" placeholder="Amount e.g 300000 in Naira" className="form-control" onChange={this.getCenterDetails} defaultValue={this.props.center.centerToBeModified[0].rentalCost} />
-                  <h3 className="text-center" style={{ marginTop: '10px' }}>FACILITIES</h3>
+                  <h3 className="text-center facilities-header" style={{ marginTop: '10px' }}>FACILITIES</h3>
                   <div className="row facilities-checklist " style={{ marginBottom: `${30}px` }}>
                     <div className="col">
                       <input type="checkbox" value="parking lot" id="parking lot" name="parkinglot" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} /><label style={{ display: 'block' }} htmlFor="parking-ot">Parking-lot</label>
@@ -315,7 +314,7 @@ class ModifyCenterPage extends Component {
                       <input type="checkbox" value="Photo gallery" id="Photo gallery" name="photogallery" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} /><label style={{ display: 'block' }} htmlFor="photo-gallery">Photo gallery</label>
                     </div>
                   </div>
-                  <div className="text-center"><button className="btn btn-default" onClick={this.modifyCenter} >SAVE</button></div>
+                  <div className="text-center"><button className="btn btn-default btn-save-m" onClick={this.modifyCenter} >SAVE</button></div>
                 </form>
               </div>
             </div>
@@ -350,7 +349,7 @@ const propTypes = {
       facilities: PropTypes.arrayOf(PropTypes.string),
       name: PropTypes.string,
       isAvailable: PropTypes.bool,
-      id: PropTypes.bool,
+      id: PropTypes.string,
       imageUrl: PropTypes.string,
       type: PropTypes.string,
       rentalCost: PropTypes.string,

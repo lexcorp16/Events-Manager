@@ -87,9 +87,9 @@ class AddCenterFormTwo extends Component {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${3}%` }}>
         <div className="container form-section">
-          <div className="sign-in-container form-container sign-in-container" style={{ marginTop: `${5}%`, height: `${570}px`, border: 'none' }}>
+          <div className="sign-in-container form-container sign-in-container" style={{ marginTop: `${5}%`, border: 'none' }}>
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >CENTER PRICING AND FACILITIES</p>
+              <p className="text-center header-form" style={{ marginTop: `${3}%` }} >SELECT FACILITIES AND RENTALCOST</p>
             </div>
             { (this.props.user.status.error) &&
             <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{ marginTop: `${1}%`, height: `${50}px`, background: 'none' }}>

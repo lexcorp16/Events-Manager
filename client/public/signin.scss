@@ -6,6 +6,11 @@
 .signup-page, .signin-page {
   margin-top: 150px;
 }
+
+.button-container {
+  margin-bottom : 50px;
+}
+
 .form-section {
   width: 500px;
   margin-top: 100px;
@@ -18,6 +23,10 @@
   border-bottom: 1px solid #F50057;
   font-family: 'Open Sans', sans-serif;
   margin-bottom: 15px;
+}
+
+.password-signin {
+  margin-bottom: 5px;
 }
 
 .auth-pages {
@@ -36,12 +45,13 @@
 
 .form-container {
   margin-top: 5px;
-  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
 }
 
 .usericon {
-  margin-bottom: 10px;
+  margin-bottom: 40px;
+  margin-top: -20px;
 }
 
 .btn-submit {
@@ -69,8 +79,6 @@ label {
 .lds-ring {
   display: inline-block;
   position: relative;
-  width: 64px;
-  height: 50px;
 }
 .lds-ring div {
   box-sizing: border-box;
@@ -87,7 +95,8 @@ label {
 
 .custom-loader {
   margin-left: 85%;
-  margin-top: -8%;
+  margin-top: -50px;
+  margin-right: 15px;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
@@ -109,6 +118,9 @@ label {
 
 @media (max-width: 575.98px) { 
   .form-section {
-    width: 380px;
+    width: 360px;
+  }
+  .signin-page, .signup-page {
+    margin-top: 20px;
   }
  }

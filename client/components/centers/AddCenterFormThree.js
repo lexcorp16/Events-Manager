@@ -140,7 +140,7 @@ class AddCenterFormThree extends Component {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${8}%` }}>
         <div className="container form-section">
-          <div className="sign-in-container form-container" style={{ marginTop: `${5}%`, height: `${500}px`, border: 'none' }}>
+          <div className="sign-in-container form-container form-add-center-one" style={{ marginTop: `${5}%`, height: `${500}px`, border: 'none' }}>
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.1}em` }} >UPLOAD CENTER IMAGE</p>
             </div>
@@ -148,8 +148,8 @@ class AddCenterFormThree extends Component {
             <div className="alert alert-danger">
               <strong>An error occured,Please try again</strong>
             </div>}
-            <div className="img-center container">
-              <img alt="default" src={defaultImage} style={{ width: '285px', height: '285px' }} id="centerimage" />
+            <div className="img-center-a container">
+              <img alt="default" src={defaultImage} style={{ width: '100%', height: '285px' }} id="centerimage" />
             </div>
             { (this.props.center.status.uploadingImage ||
             this.props.center.status.uploadImagePaused) &&
@@ -190,12 +190,12 @@ class AddCenterFormThree extends Component {
                      id="imageFile"
                      onChange={this.getImageFile}
                      style={{ color: 'white', border: 'white' }}
-                     className="btn btn-default"
                    />
                  </label>
                </div>}
               <br />
-              {(!this.props.center.status.uploadedImage) &&
+              {(!this.props.center.status.uploadedImage ||
+              this.state.imageFile) &&
               <div className="text-center">
                 <button className="btn btn-default upload-btn" onClick={this.uploadImage} >upload</button>
               </div>}
@@ -237,7 +237,7 @@ const propTypes = {
       addedFacilities: PropTypes.bool,
     }),
     imageUpload: PropTypes.shape({
-      uploadProgress: PropTypes.string,
+      uploadProgress: PropTypes.number,
       imageUrl: PropTypes.string.isRequired,
     }),
     primaryCenterDetails: PropTypes.objectOf(PropTypes.string),

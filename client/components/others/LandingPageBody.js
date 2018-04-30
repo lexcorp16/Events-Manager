@@ -51,7 +51,7 @@ const LandingPageBody = () =>
               <div className="card-body">
                 <h4 className="card-title">K & K Event Center</h4>
                 <p className="card-text date-of-event">APRIL 16, 2018</p>
-                <div className="card-menu">
+                <div className="card-menu justify-content-end">
                   <button className="btn c-menu">see info</button>
                 </div>
               </div>

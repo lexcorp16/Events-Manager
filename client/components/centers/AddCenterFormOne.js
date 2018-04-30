@@ -85,9 +85,9 @@ class AddCenterFormOne extends Component {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${3}%` }}>
         <div className="container form-section">
-          <div className="sign-in-container form-container sign-in-container" style={{ marginTop: `${2}%`, height: `${520}px`, border: 'none' }}>
+          <div className="sign-in-container form-container form-add-center-one" style={{ border: 'none' }}>
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Center</p>
+              <p className="text-center header-form" style={{ marginTop: `${3}%` }} >Add Center</p>
             </div>
             <form className="form form-group container">
               <label htmlFor="name">Name</label>

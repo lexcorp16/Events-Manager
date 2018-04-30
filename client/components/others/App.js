@@ -29,7 +29,7 @@ const mapStateToProps = (state =>
 export default connect(mapStateToProps, mapDispatchToProps)(app);
 
 const propTypes = {
-  children: PropTypes.objectOf(PropTypes.symbol).isRequired,
+  children: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
 app.propTypes = propTypes;

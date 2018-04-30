@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import dotenv from 'dotenv';
 import 'babel-polyfill';
 import { browserHistory } from 'react-router';
-import { centerModifiedPrompter, modifyCenterRejectedPrompter } from '../utils/alerts.sweetalert';
+import { centerModifiedPrompter, modifyCenterRejectedPrompter, actionRejectedPrompter } from '../utils/alerts.sweetalert';
 import { displayUploadedImage } from '../utils/mescill.utils';
 
 dotenv.config();
@@ -60,6 +60,7 @@ const addCenter = centerData =>
       })
       .catch((err) => {
         dispatch({ type: 'ADD_CENTERS_REJECTED', payload: err.response.data });
+        actionRejectedPrompter(err.response.data.error);
       });
   };
 

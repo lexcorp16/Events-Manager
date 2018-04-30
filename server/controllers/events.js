@@ -109,10 +109,14 @@ class Event {
  * @returns {object} res.
  */
   static getUserEvents(req, res) {
+    const offset = req.query.offset || 0;
+    const limit = req.query.limit || 6;
     Events.findAll({
       where: {
         user: req.decoded.userId,
-      }
+      },
+      offset,
+      limit,
     })
       .then((userEvents) => {
         if (userEvents.length === 0) {

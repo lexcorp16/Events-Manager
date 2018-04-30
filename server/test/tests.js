@@ -312,6 +312,7 @@ describe('test-cases for api routes', () => {
       mobileNumber: '08156767778',
       capacity: '20000',
       rentalCost: '230000',
+      facilities: ['swimming-pool', 'jacuzzi'],
     };
     it('makes an admin add a center', (done) => {
       request(app)
@@ -348,7 +349,7 @@ describe('test-cases for api routes', () => {
           .expect('Content-Type', /json/)
           .expect(400, done)
           .expect((res) => {
-            expect(res.body.error).to.equal('please fill in all fields \n');
+            expect(res.body.error).to.equal('Please fill in all fields \n');
           });
       });
       it('responds with a 400 if capacity or mobileNumber input is alphanumeric', (done) => {
@@ -534,7 +535,7 @@ describe('test-cases for api routes', () => {
           expect(res.body.error).to.equal('Another event is slated for the chosen center,Please choose another date or center');
         });
     });
-    it('returns a 400 if date chosen for event is invalid', (done) => {
+    it('returns a 406 if date chosen for event is past', (done) => {
       const eventCredentials = {
         name: 'Graduation Party',
         type: 'Party',
@@ -545,9 +546,25 @@ describe('test-cases for api routes', () => {
         .post('/api/v1/events/')
         .set('auth', secondToken)
         .send(eventCredentials)
+        .expect(406, done)
+        .expect((res) => {
+          expect(res.body.error).to.equal('The date chosen is past, please choose another date \n');
+        });
+    });
+    it('returns a 400 if date chosen for event is invalid', (done) => {
+      const eventCredentials = {
+        name: 'Burial ceremonial',
+        type: 'Party',
+        center: centerId,
+        date: 'saturdaay',
+      };
+      request(app)
+        .put(`/api/v1/events/${eventId}`)
+        .set('auth', secondToken)
+        .send(eventCredentials)
         .expect(400, done)
         .expect((res) => {
-          expect(res.body.error).to.equal('Invalid date \n');
+          expect(res.body.error).to.equal('invalid date \n');
         });
     });
     it('returns a 400 for null input', (done) => {
@@ -564,22 +581,6 @@ describe('test-cases for api routes', () => {
         .expect(400, done)
         .expect((res) => {
           expect(res.body.error).to.equal('Please fill in all fields \n');
-        });
-    });
-    it('returns a 400 if date chosen for event is invalid', (done) => {
-      const eventCredentials = {
-        name: 'Burial ceremony',
-        type: 'Party',
-        center: centerId,
-        date: '2017-08-05',
-      };
-      request(app)
-        .post('/api/v1/events/')
-        .set('auth', secondToken)
-        .send(eventCredentials)
-        .expect(400, done)
-        .expect((res) => {
-          expect(res.body.error).to.equal('Invalid date \n');
         });
     });
   });
@@ -626,6 +627,38 @@ describe('test-cases for api routes', () => {
         .expect(400, done)
         .expect((res) => {
           expect(res.body.error).to.equal('Please specify date');
+        });
+    });
+    it('returns a 406 if date chosen for event is past', (done) => {
+      const eventCredentials = {
+        name: 'Graduation Party',
+        type: 'Party',
+        center: centerId,
+        date: '2017-12-05',
+      };
+      request(app)
+        .put(`/api/v1/events/${eventId}`)
+        .set('auth', secondToken)
+        .send(eventCredentials)
+        .expect(406, done)
+        .expect((res) => {
+          expect(res.body.error).to.equal('The date chosen is past, please choose another date \n');
+        });
+    });
+    it('returns a 400 if date chosen for event is invalid', (done) => {
+      const eventCredentials = {
+        name: 'Burial ceremonial',
+        type: 'Party',
+        center: centerId,
+        date: 'saturdaay',
+      };
+      request(app)
+        .put(`/api/v1/events/${eventId}`)
+        .set('auth', secondToken)
+        .send(eventCredentials)
+        .expect(400, done)
+        .expect((res) => {
+          expect(res.body.error).to.equal('invalid date \n');
         });
     });
     it('checks if an event is slated for the center before modifying', (done) => {
@@ -682,8 +715,7 @@ describe('test-cases for api routes', () => {
         .get(`/api/v1/centers/${centerId}`)
         .expect(200, done)
         .expect((res) => {
-          expect(res.body.message).to.equal('Success');
-          expect(res.body.aCenter.venueOfEvent.length).to.equal(2);
+          expect(res.body.message).to.equal('Center successfully fetched');
         });
     });
     it('returns a 404 if center not found', (done) => {
@@ -789,16 +821,15 @@ describe('test-cases for api routes', () => {
         .expect(200, done)
         .expect((res) => {
           expect(res.body.message).to.equal('Success');
-          expect(res.body.centers[0].name).to.equal('Rogaros');
         });
     });
     it('it returns a 200 and a message if no center is found', (done) => {
       request(app)
-        .get('/api/v1/centers?name=Rogar')
+        .get('/api/v1/centers?name=Rogarioiioio')
         .set('auth', secondToken)
         .expect(404, done)
         .expect((res) => {
-          expect(res.body.error).to.equal('There are no centers');
+          expect(res.body.error).to.equal('no centers found');
         });
     });
   });

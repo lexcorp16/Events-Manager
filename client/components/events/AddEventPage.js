@@ -95,9 +95,9 @@ class AddEventPage extends Component {
     return (
       <div className="add-event-form" style={{ marginTop: `${3}%` }}>
         <div className="container form-section">
-          <div className="form-container container" style={{ marginTop: `${2}%`, height: `${500}px`, border: 'none' }}>
+          <div className="form-container container" style={{ marginTop: `${2}%`, height: `${540}px`, border: 'none' }}>
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.5}em` }} >Add Event</p>
+              <h3 className="text-center header-form" style={{ marginTop: `${3}%` }} >Add Event</h3>
             </div>
             { (this.props.event.status.error) &&
             <div

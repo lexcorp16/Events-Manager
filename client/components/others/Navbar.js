@@ -119,7 +119,7 @@ class Navbar extends Component {
             </ul>
           </div>
 
-          <div className="collapse text-center d-lg-none text-center" id="navbarTogglerDemo02" style={{ backgroundColor: 'white' }}>
+          <div className="collapse text-center d-lg-none" id="navbarTogglerDemo02" style={{ backgroundColor: 'white' }}>
             <ul className="navbar-nav mr-auto mt-2 mt-md-0">
               {(!this.props.user.status.authenticated) &&
               <li className="nav-item">

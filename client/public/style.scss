@@ -1,5 +1,8 @@
 $widthact : 1300px;
 
+.header-form {
+  margin-top: 50px;
+}
 body {
   max-width: 100%;
   font-family: Tajawal;
@@ -9,20 +12,63 @@ body {
   width: 100%;
   margin-right: 50px;
 }
-.img-center {
-  padding-left: 85px;
-  padding-right: 85px;
-}
 .navbar {
-  width: 100%;
   font-family: 'Open Sans', sans-serif;
-  box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.5)
 }
-// .display-3 {
-//   margin-top: 25%;
-// }
+
 .action-view {
   max-width: 1000px;
+}
+
+.facilities-header {
+  font-family: "Open Sans", sans-serif;
+}
+
+.form-control {
+  margin-top: 10px;
+}
+.add-image-m-btn, .modify-image-btn {
+  margin-left: 220px;
+  background-color: #C51162;
+  color: white;
+  border-radius: 25px;
+}
+
+.add-image-m-btn:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+label {
+  margin-top: 10px;
+}
+
+.upload-btn-m {
+  margin-left: 100px;
+  background-color: #aaaaaaaa;
+}
+
+.uploadbar-m {
+  width: 400px;
+  margin-left: 120px;
+}
+
+.upload-options-section-m {
+  margin-left: 180px;
+  margin-top: 15px;
+}
+
+.fa-play, .fa-pause {
+  font-size: 1.3em;
+  color: #F50057;
+}
+
+.cancel-btn {
+  font-size: 0.8em;
+  border-radius: 25px;
+  background-color: #C51162;
+  color: white;
+  height: 30px;
+  margin-left: 50px;
 }
 
 .upload-btn {
@@ -39,6 +85,14 @@ body {
   padding-right: 50px;
   width: 100%;
 }
+
+.btn-save-m {
+  width: 70px;
+  border-radius: 25px;
+  background-color: #C51162;
+  color: white;
+}
+
 .events-header-name {
   padding-bottom: 10px;
 }
@@ -53,8 +107,44 @@ body {
   color: 'white'
 }
 
+.change-image-section {
+  margin-left: 100px;
+}
+
 .fa-search:hover {
   color: 'white'
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+
+.btn-choose-file {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.btn-save-m {
+  background-color: #C51162;
+  width: 150px;
+  border-radius: 25px;
+}
+
+.btn:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
 }
 
 .join-us-btn {
@@ -66,12 +156,6 @@ body {
   background-color: #C51162;
   color: white;
 }
-
-@media (max-width: 991.98px) { 
-  .display-3 {
-    margin-top: 50px;
-  }
- }
 
 .btn-card-info {
   background-color: #F50057
@@ -166,6 +250,10 @@ a:hover {
   font-family: 'Open Sans', sans-serif;
 }
 
+.full-bg-img {
+  background-color: rgba(0,0,0,0.4);
+  height: 500px;
+}
 .slide-up {
   color: white;
   margin-top: 100px;
@@ -214,10 +302,6 @@ a:hover {
   width: 80%;
 }
 
-.smallnavsection {
-  margin-left: 15%;
-  margin-right: 15%;
-}
 
 .nav-link {
   color: #BDBDBD;
@@ -238,7 +322,7 @@ label {
   font-family: 'Open sans', sans-serif;
 }
 
-.upcoming-events-section,  .about-us-section, .testimonies-section{
+.upcoming-events-section,  .about-us-section, .testimonies-section {
   font-family: 'Open Sans', sans-serif;
   margin-top: 30px;
   border-top: 1px solid #BDBDBD;
@@ -375,22 +459,33 @@ video {
   font-size: 4.5em;
 }
 
+.edit-form {
+  width: 500px;
+  padding-left: 200px;
+  padding-right: 220px;
+}
 .modify-center {
-  margin-top: 80px;
+  margin-top: 50px;
   background-color: white;
+  width: 100%;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .center-image-section {
   margin-bottom: 12px;
   margin-top: 20px;
-  width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
+  width: 280px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.center-image {
+  width: 400px;
+  margin-left: 120px;
 }
 
 .edit-section {
-  padding-left: 90px;
-  padding-right: 90px;
   width: 400px;
 }
 
@@ -412,7 +507,7 @@ video {
   z-index: 20px;
 }
 
-.upcoming-events {
+.upcoming-events, .acenter {
   margin-top: 15px;
   padding-left: 50px;
   padding-right: 50px;
@@ -424,6 +519,7 @@ video {
 }
 
 .all-centers {
+  margin-left: -20px;
   margin-top: 80px;
   width: 100%;
 }
@@ -520,23 +616,29 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-.feature-center-card {
+.feature-center-card, .all-centers-card {
   width: 0px;
   margin-left: -40px;
-  box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
 }
 
 .card {
   width: 415px;
+  border-radius: 0px;
 }
 
 .card-body {
   font-family: 'Open Sans', sans-serif;
 }
+
 .header-section {
   color: #F50057;
-  border-bottom: 1px solid #BDBDBD;
+  margin-top: 50px;
+}
+
+.section-header {
+  margin-top: 50px;
 }
 
 .btn-logout {
@@ -546,40 +648,164 @@ input:checked + .slider:before {
 
 .section-header {
   font-family : 'Open-sans', sans-serif;
+
+}
+.action-buttons {
+  margin-left: 30px;
 }
 
-.action-buttons {
-  margin-left: -80px;
+.edit-btn:hover, .modify-btn:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 .edit-btn {
-  background-color: #64DD17;
+  background-color: #C51162;
   color: white;
-  width: 80px;
-  font-size: 0.8em;
+  width: 60px;
+  font-size: 0.6em;
+  height: 25px
+}
+
+.img-center-a {
+  width: 100%;
+}
+
+.form-three {
+  width: 400px,
 }
 
 .modify-btn {
   background-color: #F50057;
   color: white;
   width: 20px;
-  font-size: 0.8em;
-  width: 80px;
+  font-size: 0.6em;
+  width: 60px;
+  height: 25px
 }
 
-//  Galaxy S5 screens
+  @media (max-width: 1199.98px) {
+    .img-correspondent {
+      margin-left: 50px;
+    }
+    .all-centers-card {
+      width: 280px;
+      margin-right: 20px;
+    }
+    .action-buttons {
+      margin-left: -100px;
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    .testimony-info {
+      margin-right: 0px;
+      margin-left: 0px;
+    }
+    .all-centers-card {
+      width: 300px;
+      margin-left: -30px;
+    }
+    .testimony-info {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    .upcoming-events-section, .all-centers  {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .action-buttons {
+      margin-left: -80px;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .first-info {
+      margin-bottom: 50px;
+    }
+    .view-centers-btn {
+      background-color: #C51162;
+      color: white
+    }
+    .join-us-btn {
+      background-color: #F50057;
+      color: white;
+    }
+    .testimony-info {
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+  }
+    
+
+  @media (max-width: 575.98px) and (min-width: 381.00px) {
+    .dark-grey-text {
+      margin-top: 40px;
+    }
+    .img-center {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    .all-centers-card {
+      width: 350px;
+      margin-left: -55px;
+    }
+    .section-header {
+      margin-left: 40px;
+    }
+    .white-text {
+      font-size: 2.1em;
+      margin-top: 5px;
+    }
+    .testimonies-section {
+      width: 100%;
+    }
+    .first-testimony, .second-testimony {
+      width: 100%;
+      box-shadow: 0px;
+    }
+    .feature-center-card{
+      width: 350px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    .card-menu {
+      margin-left: -50px;
+    }
+    .first-info {
+      margin-bottom: 50px;
+    }
+    .view-centers-btn {
+      background-color: #C51162;
+      color: white;
+    }
+    .join-us-btn {
+      background-color: #F50057;
+      color: white;
+    }
+    .img-correspondent {
+      margin-right: 50px;
+      margin-left: 50px;
+    }
+    .upcoming-events {
+      margin-top: 15px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .testimony-text-section {
+      width: 100%;
+      padding-right: 0px;
+      padding-left: 0px;
+      margin-top: 10px;
+    }
+   }
 @media (max-width: 380.98px) {
   .dark-grey-text {
     margin-top: 40px;
   }
-  // .upcoming-events {
-  //   margin-left: 20px;
-  //   margin-right: 20px;
-  // }
   .img-center {
     padding-left: 30px;
     padding-right: 30px;
   }
-
   .white-text {
     font-size: 2.1em;
     margin-top: 5px;
@@ -591,13 +817,27 @@ input:checked + .slider:before {
     width: 100%;
     box-shadow: 0px;
   }
+  .section-header {
+    margin-left: 40px;
+  }
+  .all-centers {
+    width: 100%;
+  }
   .feature-center-card {
     width: 300px;
     margin-left: 10px;
     margin-right: 10px;
   }
+  .all-centers-card {
+    width: 300px;
+    margin-left: -55px;
+  }
   .card-menu {
-    margin-left: -50px;
+    margin-left: -20px;
+  }
+
+  .action-buttons {
+    margin-left: -80px;
   }
   .first-info {
     margin-bottom: 50px;
@@ -625,120 +865,17 @@ input:checked + .slider:before {
     padding-left: 0px;
     margin-top: 10px; 
   }
- }
-
- //Pixel 2 screens
-
- @media (max-width: 575.98px) and (min-width: 381.00px) {
-  .dark-grey-text {
-    margin-top: 40px;
+  .modify-center {
+    margin-top: 100px;
   }
-  .img-center {
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-
-  .white-text {
-    font-size: 2.1em;
-    margin-top: 5px;
-  }
-  .testimonies-section {
+  .center-image-section {
+    margin-bottom: 12px;
+    margin-top: 20px;
     width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
   }
-  .first-testimony, .second-testimony {
-    width: 100%;
-    box-shadow: 0px;
-  }
-  .feature-center-card {
-    width: 350px;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  .card-menu {
-    margin-left: -50px;
-  }
-  .first-info {
-    margin-bottom: 50px;
-  }
-  .view-centers-btn {
-    background-color: #C51162;
-    color: white;
-  }
-  .join-us-btn {
-    background-color: #F50057;
-    color: white;
-  }
-  .img-correspondent {
-    margin-right: 50px;
-    margin-left: 50px;
-  }
-  .upcoming-events {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  .testimony-text-section {
-    width: 100%;
-    padding-right: 0px;
-    padding-left: 0px;
-    margin-top: 10px;
+  .center-image {
+    width: 1000px;
   }
  }
-
- @media (max-width: 767.98px) {
-  .first-info {
-    margin-bottom: 50px;
-  }
-  .view-centers-btn {
-    background-color: #C51162;
-    color: white
-  }
-  .join-us-btn {
-    background-color: #F50057;
-    color: white;
-  }
-  .testimony-info {
-    margin-left: 50px;
-    margin-right: 50px;
-  }
-  }
-
-  @media (max-width: 991.98px) {
-    .testimony-info {
-      margin-right: 0px;
-      margin-left: 0px;
-    }
-    .testimony-info {
-      padding-left: 30px;
-      padding-right: 30px;
-    }
-    .upcoming-events-section {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-    // .dispay-3 {
-    //   margin-top: 50px;
-    // }
-  }
-
-  // @media (max-width: 1025px) {
-  //   .feature-center-card {
-  //     width: 285px;
-  //   }
-  //   .card-menu {
-  //     margin-left: -60px;
-  //   }
-  // }
-  
-  @media (max-width: 1199.98px) {
-    .img-correspondent {
-      margin-left: 50px;
-    }
-    // .feature-center-card {
-    //   width: 285px;
-    // }
-    // .card-menu {
-    //   margin-left: -60px;
-    // }
-  }
-/*# sourceMappingURL=style.css.map */
