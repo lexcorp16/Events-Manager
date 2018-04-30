@@ -13,14 +13,11 @@ import centerRoutes from './routes/centers';
 import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
 import webpackConfig from '../webpack.config';
-import swaggerDocument from './swagger.json';
 
 dotenv.config();
 
 // Set up the express app
 const app = express();
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-const compiler = webpack(webpackConfig);
 
 // Log requests to the console.
 app.use(logger('dev'));
