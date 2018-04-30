@@ -20,8 +20,11 @@ For every pull request raised, please make sure to write tests for that feature.
 
 Mocha is the testing framework used for this app and we would love to keep it that way
 
-To get started with Mocha, check their official docs here.
+To get started with Mocha, check their official docs [here](mochajs.org).
 
 
-Looking forward to working with you..
+
+
+
+Happy Coding...
 
