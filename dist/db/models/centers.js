@@ -14,7 +14,8 @@ exports.default = function (sequelize, DataTypes) {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     type: {
       type: DataTypes.STRING,
@@ -22,8 +23,7 @@ exports.default = function (sequelize, DataTypes) {
     },
     address: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
     capacity: {
       type: DataTypes.STRING,

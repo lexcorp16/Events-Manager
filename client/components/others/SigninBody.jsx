@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { userLogin, clearError } from '../../actions/userActions';
-import { LoadingProgressBar } from './LoaderComponents';
+import { LoadingIcon } from './LoaderComponents';
+import isValidDetails from '../../validations/signin.validate';
+import { actionRejectedPrompter } from '../../utils/alerts.sweetalert';
 
 import '../../public/signin.scss';
 /**
@@ -56,12 +58,12 @@ class SigninBody extends Component {
  */
   signin(event) {
     event.preventDefault();
-    const {
-      email, password
-    } = this.state;
+    const validationErrors = isValidDetails(this.state);
+    if (Array.isArray(validationErrors)) {
+      return actionRejectedPrompter(validationErrors);
+    }
     this.props.dispatch(userLogin({
-      email,
-      password,
+      ...this.state,
     }));
   }
   /**
@@ -88,16 +90,6 @@ class SigninBody extends Component {
               <div className="usericon text-center">
                 <div><i className="fa fa-user-circle" style={{ fontSize: `${8}em`, paddingTop: `${10}px` }} /></div>
               </div>
-              { (this.props.user.status.error) &&
-              <div
-                className="alert alert-warning alert-dismissible animated fadeIn show signin-alert"
-                role="alert"
-                style={{
-                  marginTop: `${1}%`, height: `${50}px`, paddingBottom: `${10}px`, background: 'none', border: 'none'
-                }}
-              >
-                <div className="text-center"><strong className="text-center">{this.props.user.errorMessage}</strong></div>
-              </div>}
               { (this.props.user.status.unauthenticatedAttempt) &&
               <div
                 className="alert alert-warning alert-dismissible fade show signin-alert"
@@ -116,7 +108,7 @@ class SigninBody extends Component {
                 <button className="btn btn-submit btn-default" onClick={this.signin}>Sign In</button>
                 { (this.props.user.status.fetching) &&
                 <div className="animated fadeIn">
-                  <LoadingProgressBar />
+                  <LoadingIcon />
                 </div>
               }
               </div>

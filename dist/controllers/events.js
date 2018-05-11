@@ -14,6 +14,10 @@ var _mailer = require('../helpers/mailer');
 
 var _mailer2 = _interopRequireDefault(_mailer);
 
+var _errorSender = require('../helpers/errorSender');
+
+var _errorSender2 = _interopRequireDefault(_errorSender);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -54,7 +58,7 @@ var Event = function () {
         }
       }).then(function (event) {
         if (event) {
-          return res.status(400).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
+          return res.status(409).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
         }
         return Events.create({
           name: name,
@@ -65,10 +69,10 @@ var Event = function () {
         }).then(function (newEvent) {
           return res.status(201).send({ message: 'Event successfully added', newEvent: newEvent });
         }).catch(function (error) {
-          return res.status(500).send({ error: error.message });
+          return (0, _errorSender2.default)(error, res, false);
         });
       }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
+        return (0, _errorSender2.default)(error, res, false);
       });
     }
     /**
@@ -89,8 +93,8 @@ var Event = function () {
           center: center
         }
       }).then(function (event) {
-        if (event) {
-          return res.status(400).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
+        if (event && event.id !== req.params.eventId) {
+          return res.status(409).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
         }
         Events.findById(req.params.eventId).then(function (modifiedEvent) {
           if (!modifiedEvent) {
@@ -104,10 +108,10 @@ var Event = function () {
           });
           return res.status(200).send({ message: 'successfully modified', modifiedEvent: modifiedEvent });
         }).catch(function (error) {
-          return res.status(500).send({ error: 'HERE' + error.message });
+          return (0, _errorSender2.default)(error, res, false);
         });
       }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
+        return (0, _errorSender2.default)(error, res, false);
       });
     }
     /**
@@ -130,10 +134,10 @@ var Event = function () {
         event.destroy().then(function () {
           return res.status(200).send({ message: 'Event successfully deleted' });
         }).catch(function (error) {
-          return res.status(500).send({ error: error.message });
+          return (0, _errorSender2.default)(error, res, false);
         });
       }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
+        return (0, _errorSender2.default)(error, res, false);
       });
     }
     /**
@@ -146,18 +150,22 @@ var Event = function () {
   }, {
     key: 'getUserEvents',
     value: function getUserEvents(req, res) {
-      Events.findAll({
+      var limit = req.query.limit || 1;
+      var offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
+      Events.findAndCountAll({
         where: {
           user: req.decoded.userId
-        }
+        },
+        offset: offset,
+        limit: limit,
+        order: [['createdAt', 'DESC']]
       }).then(function (userEvents) {
         if (userEvents.length === 0) {
-          console.log('Worked');
           return res.status(404).send({ error: 'No events found for this User' });
         }
-        return res.status(200).send({ message: 'Success', userEvents: userEvents });
+        return res.status(200).send({ message: 'Success', userEvents: userEvents.rows, pages: Math.ceil(userEvents.count / limit) });
       }).catch(function (error) {
-        return res.status(500).send({ error: 'oops an error occured' });
+        return (0, _errorSender2.default)(error, res, false);
       });
     }
     /**
@@ -170,9 +178,6 @@ var Event = function () {
   }, {
     key: 'cancelUserEvent',
     value: function cancelUserEvent(req, res) {
-      if (req.decoded.role === 'User') {
-        return res.status(403).send({ error: 'You are not authorized to perform this action' });
-      }
       Events.findById(req.params.eventId).then(function (event) {
         event.updateAttributes({
           center: null
@@ -184,13 +189,12 @@ var Event = function () {
             subject: 'Notice Of cancellation of event',
             text: 'This Is to Inform You that For some reasons ,Your event has been canceled!'
           };
-          (0, _mailer2.default)(mailOptions);
-          return res.status(200).send({ message: 'Event canceled and notification sent' });
+          return (0, _mailer2.default)(mailOptions, res);
         }).catch(function (error) {
-          return res.status(500).send({ error: error.message });
+          return (0, _errorSender2.default)(error, res, false);
         });
       }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
+        return (0, _errorSender2.default)(error, res, false);
       });
     }
   }]);

@@ -77,5 +77,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'client'),
     historyApiFallback: true
-  }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };

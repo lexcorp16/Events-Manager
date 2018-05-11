@@ -22,9 +22,9 @@ var _admin = require('../helpers/admin');
 
 var _admin2 = _interopRequireDefault(_admin);
 
-var _trim = require('../helpers/trim');
+var _errorSender = require('../helpers/errorSender');
 
-var _trim2 = _interopRequireDefault(_trim);
+var _errorSender2 = _interopRequireDefault(_errorSender);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,11 +33,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var secret = process.env.SECRET;
 
 var Users = _models2.default.Users;
-
 /**
-* @User, class containing all methods that
-* handle center related api endpoint
-*/
+ * contains logic for user related endpoints
+ * @class User
+ *
+ */
 
 var User = function () {
   function User() {
@@ -52,6 +52,7 @@ var User = function () {
      * @param {object} req The request body of the request.
      * @param {object} res The response body.
      * @returns {object} res.
+     * signs up new user
      */
     value: function signup(req, res) {
       var _req$body = req.body,
@@ -59,21 +60,9 @@ var User = function () {
           lastname = _req$body.lastname;
 
       var email = req.body.email.toLowerCase();
-      // check if another user with same mail already exists
-      Users.findOne({
-        where: {
-          email: email.trim()
-        }
-      }).then(function (user) {
-        if (user) {
-          return res.status(400).send({ error: 'Another user with this email already exists' });
-        }
-      }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
-      });
       // creates a User,generate a token and hash the password
-      if (email === 'efosaokpugie@gmail.com') {
-        return (0, _admin2.default)(res);
+      if (email === process.env.ADMIN_EMAIL) {
+        return (0, _admin2.default)(req, res);
       }
       _bcrypt2.default.hash(req.body.password, 10, function (err, hash) {
         if (err) {
@@ -86,18 +75,15 @@ var User = function () {
           email: email,
           password: password
         }).then(function (user) {
-          var payload = {
-            userId: user.id,
-            role: user.role,
-            firstname: firstname,
-            lastname: lastname
+          var userDetails = {
+            userId: user.id
           };
-          var token = _jsonwebtoken2.default.sign(payload, secret, {
+          var token = _jsonwebtoken2.default.sign(userDetails, secret, {
             expiresIn: '100h' // expires in 1 hours
           });
-          return res.status(201).send({ message: 'You have successfully signed up', token: token, user: user });
+          return res.status(201).send({ message: 'You have successfully signed up', token: token });
         }).catch(function (error) {
-          return res.status(500).send({ error: error.message });
+          return (0, _errorSender2.default)(error, res, false);
         });
       });
     }
@@ -106,6 +92,7 @@ var User = function () {
     * @param {object} req The request body of the request.
     * @param {object} res The response body.
     * @returns {object} res.
+    * signs in new user
     */
 
   }, {
@@ -114,7 +101,6 @@ var User = function () {
       var password = req.body.password;
 
       var email = req.body.email.toLowerCase();
-      (0, _trim2.default)([email, password]);
       return Users.findOne({
         where: {
           email: email.trim()
@@ -125,21 +111,18 @@ var User = function () {
         }
         return _bcrypt2.default.compare(password, user.password, function (err, response) {
           if (response) {
-            var payload = {
-              userId: user.id,
-              firstname: user.firstname,
-              lastname: user.lastname,
-              role: user.role
+            var userDetails = {
+              userId: user.id
             };
-            var token = _jsonwebtoken2.default.sign(payload, secret, {
+            var token = _jsonwebtoken2.default.sign(userDetails, secret, {
               expiresIn: '100h' // expires in 1 hours
             });
-            return res.status(200).send({ message: 'You have successfully logged in', token: token, user: user });
+            return res.status(200).send({ message: 'You have successfully logged in', token: token });
           }
           return res.status(400).send({ error: 'Invalid email or password' });
         });
-      }).catch(function () {
-        return res.status(500).send({ error: 'an error occurred' });
+      }).catch(function (error) {
+        return (0, _errorSender2.default)(error, res, false);
       });
     }
     /**
@@ -150,18 +133,15 @@ var User = function () {
     */
 
   }, {
-    key: 'becomeAdmin',
-    value: function becomeAdmin(req, res) {
-      if (req.decoded.role !== 'SuperAdmin') {
-        return res.status(403).send({ error: 'You are not authorised to perform this action' });
-      }
+    key: 'upgradeUserToAdmin',
+    value: function upgradeUserToAdmin(req, res) {
       Users.findById(req.params.userId).then(function (user) {
         user.updateAttributes({
           role: 'Admin'
         });
         return res.status(202).send({ message: 'Admin User successfully created' });
       }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
+        return (0, _errorSender2.default)(error, res, false);
       });
     }
   }]);

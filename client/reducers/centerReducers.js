@@ -1,5 +1,14 @@
 import initialState from '../utils/centerInitialState';
 
+const assignNullValueToCancelledEvent = (value, arr) => {
+  arr.forEach((index) => {
+    if (index.id === value) {
+      arr.splice(arr.indexOf(index), 1);
+    }
+  });
+  return arr;
+};
+
 export default (state = initialState(), action) => {
   switch (action.type) {
     case 'ADDING_CENTERS': {
@@ -58,18 +67,18 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           fetching: true,
+          fetchingACenter: true,
         },
       };
     }
     case 'FETCH_A_CENTER_RESOLVED': {
-      localStorage.setItem('center-to-get-bulk', JSON.stringify(action.payload));
-      localStorage.removeItem('center-to-get');
       return {
         ...state,
         oneCenter: action.payload,
         status: {
           ...state.status,
           fetched: true,
+          fetchingACenter: false,
         },
       };
     }
@@ -80,6 +89,7 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           error: true,
+          fetchingACenter: false,
         },
       };
     }
@@ -135,6 +145,7 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           fetching: true,
+          fetchingCenters: true,
           fetched: false,
           error: false,
         }
@@ -148,6 +159,7 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           fetching: false,
+          fetchingCenters: false,
           fetched: true,
           error: false,
         }
@@ -160,6 +172,7 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           fetching: false,
+          fetchingCenters: false,
           fetched: false,
           error: true,
         }
@@ -223,11 +236,54 @@ export default (state = initialState(), action) => {
       };
     }
 
-    case 'PROMPT_SEE_A_CENTER': {
-      localStorage.setItem('center-to-get', action.centerToGet);
+    case 'CANCELLING_USER_EVENT': {
       return {
         ...state,
-        centerToGet: action.centerToGet,
+        status: {
+          ...state.status,
+          error: false,
+          cancellingEvent: true,
+          eventCancelled: false,
+        }
+      };
+    }
+
+    case 'CANCEL_USER_EVENT_RESOLVED': {
+      return {
+        ...state,
+        oneCenter: {
+          ...state.oneCenter,
+          aCenter: {
+            ...state.oneCenter.aCenter,
+            venueOfEvent: assignNullValueToCancelledEvent(action.eventId, state.oneCenter.aCenter.venueOfEvent),
+          }
+        },
+        status: {
+          ...state.status,
+          error: false,
+          cancellingEvent: false,
+          eventCancelled: true,
+        }
+      };
+    }
+
+    case 'CANCEL_USER_EVENT_REJECTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          error: true,
+          cancellingEvent: false,
+          eventCancelled: false,
+        }
+      };
+    }
+
+    case 'PROMPT_SEE_A_CENTER': {
+      localStorage.setItem('center-to-get', action.centerId);
+      return {
+        ...state,
+        centerToGet: action.centerId,
         status: {
           ...state.status,
           getACenterPrompted: true,
@@ -257,6 +313,7 @@ export default (state = initialState(), action) => {
         }
       };
     }
+
     default: {
       return state;
     }

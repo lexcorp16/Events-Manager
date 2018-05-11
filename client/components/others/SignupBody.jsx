@@ -4,9 +4,9 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import '../../public/signin.scss';
 import { userSignup, clearError } from '../../actions/userActions';
-
-import { LoadingProgressBar } from './LoaderComponents';
-
+import isValidDetails from '../../validations/signup.validate';
+import { LoadingIcon, } from './LoaderComponents';
+import { actionRejectedPrompter } from '../../utils/alerts.sweetalert';
 /**
  *
  *
@@ -61,6 +61,10 @@ class SignupBody extends Component {
  */
   signup(event) {
     event.preventDefault();
+    const validationErrors = isValidDetails(this.state);
+    if (!isValidDetails(Array.isArray(validationErrors))) {
+      return actionRejectedPrompter(validationErrors);
+    }
     this.props.dispatch(userSignup({
       ...this.state,
     }));
@@ -87,16 +91,6 @@ class SignupBody extends Component {
                   SIGN UP
                 </p>
               </div>
-              { (this.props.user.status.error) &&
-              <div
-                className="alert alert-warning alert-dismissible fade show"
-                role="alert"
-                style={{
-                  height: `${50}px`, paddingBottom: `${1}px`, background: 'none', border: 'none'
-                }}
-              >
-                <div className="text-center"><strong className="text-center">{this.props.user.errorMessage}</strong></div>
-              </div>}
               <div>
                 <label htmlFor="firstname">firstname</label>
                 <input onChange={this.getSignUpDetails} type="text" name="firstname" className="form-control first-name" />
@@ -112,7 +106,7 @@ class SignupBody extends Component {
                   <button className="btn btn-submit btn-outline" type="submit" onClick={this.signup}><span className="text-center">Sign Up</span></button>
                 </div>
                 { (this.props.user.status.fetching) &&
-                <LoadingProgressBar />
+                <LoadingIcon />
                 }
                 <br />
                 <div>

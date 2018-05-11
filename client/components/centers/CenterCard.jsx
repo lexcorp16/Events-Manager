@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import isAdmin from '../../helpers/isAdmin';
+
 import '../../public/style.scss';
 import placeholderImage from '../../public/images/default-placeholder.png';
 
@@ -14,8 +16,10 @@ const CenterCard = (props =>
           <p className="card-text date-of-event"># <b>{props.center.rentalCost}</b> per day</p>
           <div className="card-menu action-buttons">
             <div className="btn-group">
-              <button className="btn edit-btn center-btn" onClick={props.promptSeeCenter} id={props.center.id}>DETAILS</button>
+              {(isAdmin()) &&
               <button className="btn modify-btn center-btn" onClick={props.promptModifyCenter} id={props.center.id}>EDIT</button>
+              }
+              <button className="btn edit-btn center-btn" onClick={props.promptSeeCenter} id={props.center.id}>DETAILS</button>
             </div>
           </div>
         </div>

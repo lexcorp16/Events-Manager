@@ -26,13 +26,14 @@ var checkInvalidUserDetails = function checkInvalidUserDetails(req, res, next) {
     4: 'confirmpassword'
   };
   var reqBody = [firstname, lastname, email, password, confirmpassword];
+  var errorMessage = '';
   var undefinedBody = void 0;
   var isNull = false;
   var isDigit = false;
   for (var i = 0; i < reqBody.length; i += 1) {
-    if (reqBody[i] === undefined) {
+    if (!reqBody[i]) {
       undefinedBody = matchingDetails[i];
-      break;
+      errorMessage += 'Please input ' + undefinedBody + ' \n';
     }
     if (!undefinedBody) {
       if (reqBody[i].trim().length < 1) {
@@ -46,43 +47,47 @@ var checkInvalidUserDetails = function checkInvalidUserDetails(req, res, next) {
       isDigit = true;
     }
   });
-
-  if (undefinedBody) {
-    return res.status(400).send({ error: 'Please input ' + undefinedBody });
-  }
   if (isNull) {
-    return res.status(400).send({ error: 'Please fill in all input field' });
+    return res.status(400).send({ error: 'Please fill in all input fields' });
   }
-  if (req.body.password.length < 6) {
-    return res.status(400).send({ error: 'password must be at least six characters long' });
+  if (password) {
+    if (req.body.password.length < 6) {
+      errorMessage += 'password must be at least six characters long \n';
+    }
   }
-  if (!isValidEmail(email)) {
-    return res.status(400).send({ error: 'Invalid email format' });
+  if (email && !isValidEmail(email)) {
+    errorMessage += 'Invalid email format \n';
   }
   if (isDigit) {
-    return res.status(400).send({ error: 'Your names cannot be digits only' });
+    errorMessage += 'Your name cannot be digits only \n';
   }
-  if (password !== confirmpassword) {
-    return res.status(400).send({ error: 'password and confirmpassword are not equal' });
+  if (password && confirmpassword && password !== confirmpassword) {
+    errorMessage += 'password and confirmpassword are not equal \n';
+  }
+  if (errorMessage !== '') {
+    return res.status(400).send({ error: errorMessage });
   }
   next();
 };
 
 var checkInvalidUserSignIn = function checkInvalidUserSignIn(req, res, next) {
+  var errorMessage = '';
   if (req.body.email === undefined) {
-    return res.status(400).send({ error: 'Please Input email' });
+    errorMessage += 'Please Input email \n';
   }
   if (req.body.password === undefined) {
-    return res.status(400).send({ error: 'Please Input password' });
+    errorMessage += 'Please Input password \n';
   }
-  if (req.body.email.trim().length < 1) {
-    return res.status(400).send({ error: 'Please fill in all input fields' });
+  if (req.body.email) {
+    if (req.body.email.trim().length < 1) {
+      errorMessage += 'Please fill in all input fields \n';
+    }
   }
-  if (!isValidEmail(req.body.email)) {
-    return res.status(400).send({ error: 'Invalid email format' });
+  if (req.body.email && !isValidEmail(req.body.email)) {
+    errorMessage += 'Invalid email format \n';
   }
-  if (req.body.email.trim().length < 1) {
-    return res.status(400).send({ error: 'Please fill in all input fields' });
+  if (errorMessage !== '') {
+    return res.status(400).send({ error: errorMessage });
   }
   next();
 };

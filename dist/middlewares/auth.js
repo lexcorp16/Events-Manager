@@ -23,7 +23,7 @@ var verifyToken = function verifyToken(req, res, next) {
       next();
     });
   } else {
-    return res.status(403).send({ error: 'You have to login First' });
+    return res.status(401).send({ error: 'You have to login First' });
   }
 };
 

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import prefillCheckbox from '../../utils/checkboxprefill';
 import { imageToDisplay } from '../../utils/mescill.utils';
 import { UploadProgressBar } from '../others/LoaderComponents';
+import isValidModifyCenterDetails from '../../validations/modifycenter.validate';
+import { actionRejectedPrompter } from '../../utils/alerts.sweetalert';
 
 import { userIsUnauthenticated } from '../../actions/userActions';
 import
@@ -189,6 +191,10 @@ class ModifyCenterPage extends Component {
     } else {
       imageLink = null;
     }
+    const validationErrors = isValidModifyCenterDetails(this.state);
+    if (Array.isArray(validationErrors)) {
+      return actionRejectedPrompter(validationErrors);
+    }
     this.props.dispatch(modifyCenter(
       { ...this.state, imageUrl: imageLink },
       this.props.center.centerToBeModified[0].id
@@ -217,6 +223,7 @@ class ModifyCenterPage extends Component {
                     alt="center"
                     id="centerimage"
                     src={defaultImage}
+                    style={{ height: '300px' }}
                   />}
                 { (this.props.center.status.uploadingImage ||
                   this.props.center.status.uploadImagePaused) &&
@@ -245,13 +252,8 @@ class ModifyCenterPage extends Component {
                       </button>
                     </div>}
                 </div>
-                {(!this.props.center.status.changeImagePrompted &&
-                this.props.center.centerToBeModified[0].imageUrl === null) &&
-                <div className="text-center" style={{ marginTop: '10px' }}><button className="btn btn-outline text-center add-image-m-btn" onClick={this.promptImageChange} >ADD IMAGE</button></div>
-                }
-                {(!this.props.center.status.changeImagePrompted &&
-                this.props.center.centerToBeModified[0].imageUrl !== null) &&
-                <div className="text-center modify-image-btn" style={{ marginTop: '10px' }}><button className="btn btn-outline-warning" onClick={this.promptImageChange} >CHANGE IMAGE</button></div>
+                {(!this.props.center.status.changeImagePrompted) &&
+                <div className="text-center" style={{ marginTop: '10px' }}><button className="btn btn-outline text-center add-image-m-btn" onClick={this.promptImageChange} >CHANGE IMAGE</button></div>
                 }
                 {(this.props.center.status.changeImagePrompted &&
                 !this.props.center.status.uploadingImage) &&

@@ -54,7 +54,6 @@ const deleteEvent = eventId =>
       .then((res) => {
         dispatch({ type: 'DELETE_EVENT_RESOLVED', payload: res.data, eventId });
         deleteEventPrompter();
-        browserHistory.push('/events');
       })
       .catch((err) => {
         dispatch({ type: 'DELETE_EVENTS_REJECTED', payload: err.response.data });
@@ -92,12 +91,12 @@ const cancelUserEvent = eventId =>
     dispatch({ type: 'CANCELLING_USER_EVENT' });
     axios({
       method: 'POST',
-      url: `api/v1/event${eventId}`,
+      url: `api/v1/events/${eventId}`,
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
     })
       .then((res) => {
-        browserHistory.push(`${document.URL}`);
-        dispatch({ type: 'CANCEL_USER_EVENT_ACCEPTED', payload: res.data });
+        browserHistory.push('/center');
+        dispatch({ type: 'CANCEL_USER_EVENT_RESOLVED', payload: res.data, eventId });
       })
       .catch((err) => {
         dispatch({ type: 'CANCEL_USER_EVENT_REJECTED', payload: err.response.data });

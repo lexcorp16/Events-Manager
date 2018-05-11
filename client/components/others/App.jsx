@@ -14,17 +14,15 @@ const app = props =>
     </div>
   );
 
-const mapDispatchToProps = (dispatch =>
+const mapDispatchToProps = dispatch =>
   ({
     dispatch: (actionObject => dispatch(actionObject))
-  })
-);
+  });
 
-const mapStateToProps = (state =>
+const mapStateToProps = state =>
   ({
-    user: state.userReducer
-  })
-);
+    user: state.userReducer,
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(app);
 

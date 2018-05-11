@@ -16,10 +16,14 @@ var _auth = require('../middlewares/auth');
 
 var _auth2 = _interopRequireDefault(_auth);
 
+var _superAdminCheck = require('../helpers/superAdminCheck');
+
+var _superAdminCheck2 = _interopRequireDefault(_superAdminCheck);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (app) {
   app.post('/api/v1/users', _users4.default.checkInvalidUserDetails, _users2.default.signup);
   app.post('/api/v1/users/signin', _users4.default.checkInvalidUserSignIn, _users2.default.signin);
-  app.put('/api/v1/users/:userId', _auth2.default, _users2.default.becomeAdmin);
+  app.put('/api/v1/users/:userId', _auth2.default, _superAdminCheck2.default, _users2.default.upgradeUserToAdmin);
 };

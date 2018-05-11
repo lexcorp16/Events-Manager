@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import jwt from 'jsonwebtoken';
-import { signinPrompter, signupPrompter, actionRejectedPrompter } from '../utils/alerts.sweetalert';
+import { signinPrompter, signupPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
 
 axios.defaults.withCredentials = true;
 
@@ -11,7 +11,7 @@ const userSignup = userDetails =>
     axios.post('/api/v1/users', userDetails)
       .then((res) => {
         localStorage.setItem('x-access-token', res.data.token);
-        dispatch({ type: 'CREATE_USER_RESOLVED', payload: res.data, ...jwt.decode(localStorage.getItem('x-access-token')) });
+        dispatch({ type: 'CREATE_USER_RESOLVED', payload: res.data });
         signupPrompter();
         if (jwt.decode(localStorage.getItem('x-access-token')).role !== 'User') {
           browserHistory.push('/centers');
@@ -41,6 +41,7 @@ const userLogin = loginDetails =>
       })
       .catch((err) => {
         dispatch({ type: 'LOGIN_REJECTED', payload: err.response.data });
+        actionRejectedPrompter(err.response.data.error);
       });
   };
 
@@ -62,10 +63,45 @@ const logOut = () =>
     browserHistory.push('/signin');
   };
 
+const getAllUsers = () =>
+  (dispatch) => {
+    dispatch({ type: 'FETCHING_ALL_USERS' });
+    axios({
+      method: 'GET',
+      url: '/api/v1/users',
+      headers: { 'x-access-token': localStorage.getItem('x-access-token') },
+    })
+      .then((res) => {
+        dispatch({ type: 'FETCH_ALL_USERS_RESOLVED', payload: res.data });
+      })
+      .catch((err) => {
+        dispatch({ type: 'FETCH_ALL_USERS_REJECTED', payload: err.response.data });
+      });
+  };
+
+const assignUserRole = userId =>
+  (dispatch) => {
+    dispatch({ type: 'ASSIGNING_USER_NEW_ROLE' });
+    axios({
+      url: `/api/v1/users/${userId}`,
+      method: 'PUT',
+      headers: { 'x-access-token': localStorage.getItem('x-access-token') },
+    })
+      .then((res) => {
+        dispatch({ type: 'ASSIGNING_USER_NEW_ROLE_RESOLVED', payload: res.data, userId, });
+        toastPrompter('role of user successfully changed');
+      })
+      .catch((err) => {
+        dispatch({ type: 'ASSIGNING_USER_NEW_ROLE_REJECTED', payload: err.response.data });
+      });
+  };
+
 export {
   userSignup,
   userLogin,
   clearError,
   userIsUnauthenticated,
   logOut,
+  getAllUsers,
+  assignUserRole,
 };

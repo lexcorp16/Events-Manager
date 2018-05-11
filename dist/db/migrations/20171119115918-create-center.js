@@ -11,7 +11,8 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       type: {
         type: Sequelize.STRING,
@@ -23,8 +24,7 @@ module.exports = {
       },
       address: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       user: {
         type: Sequelize.UUID,
@@ -53,7 +53,7 @@ module.exports = {
         allowNull: true
       },
       isAvailable: {
-        type: Sequelize.STRING,
+        type: Sequelize.BOOLEAN,
         defaultValue: true
       },
       createdAt: {

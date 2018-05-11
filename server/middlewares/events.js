@@ -1,8 +1,7 @@
 import validator from 'validator';
 
 const checkInvalidAddEventDetails = (req, res, next) => {
-  let isUndefined;
-  let errorMessage = '';
+  const errorMessage = [];
   const {
     name,
     type,
@@ -10,11 +9,6 @@ const checkInvalidAddEventDetails = (req, res, next) => {
     date,
   } = req.body;
   const eventDetails = [name, type, center, date];
-  eventDetails.forEach((input) => {
-    if (!input) {
-      isUndefined = true;
-    }
-  });
   const matchingDetails = {
     0: 'name',
     1: 'type',
@@ -23,39 +17,41 @@ const checkInvalidAddEventDetails = (req, res, next) => {
   };
   for (let counter = -1; counter < eventDetails.length - 1;) {
     counter += 1;
-    if (eventDetails[counter].trim === '') {
-      errorMessage += `${matchingDetails[counter]} cannot be empty \n`;
+    if (eventDetails[counter] === undefined) {
+      errorMessage.push(`${matchingDetails[counter]} is required`);
+    }
+    if (eventDetails[counter] !== undefined) {
+      if (eventDetails[counter].trim() === '') {
+        errorMessage.push(`${matchingDetails[counter]} cannot be empty`);
+      }
     }
   }
-  if (isUndefined) {
-    errorMessage += 'Please fill in all fields \n';
-  }
   if (name) {
-    if (Number.isInteger(parseFloat(name))) {
-      errorMessage += 'name field cannot be digits or alphanumeric characters \n';
+    if (name.trim() !== '' && Number.isInteger(parseFloat(name))) {
+      errorMessage.push('name field cannot be digits or alphanumeric characters');
     }
   }
   if (type) {
-    if (Number.isInteger(parseFloat(type))) {
-      errorMessage += 'type field cannot be digits or alphanumeric characters \n';
+    if (type.trim() !== '' && Number.isInteger(parseFloat(type))) {
+      errorMessage.push('type field cannot be digits or alphanumeric characters');
     }
   }
   if (date) {
-    if (validator.isBefore(date)) {
-      return res.status(406).send({ error: 'The date chosen is past, please choose another date \n' });
+    if (date.trim() !== '' && validator.isBefore(date)) {
+      return res.status(406).send({ error: 'The date chosen is past, please choose another date' });
     }
     if (validator.toDate(date) === null) {
-      errorMessage += 'invalid date \n';
+      errorMessage.push('invalid date');
     }
   }
-  if (errorMessage !== '') {
+  if (errorMessage.length !== 0) {
     return res.status(400).send({ error: errorMessage });
   }
   next();
 };
 
 const checkInvalidModifyEventDetails = (req, res, next) => {
-  let errorMessage = '';
+  const errorMessage = [];
   const modifiedParams = [];
   const {
     name,
@@ -69,33 +65,33 @@ const checkInvalidModifyEventDetails = (req, res, next) => {
     }
   });
   if (!date) {
-    return res.status(400).send({ error: 'Please specify date' });
+    return res.status(400).send({ error: 'Please specify date first' });
   }
   if (name) {
     if (name.trim() === '') {
-      errorMessage += 'name field cannot be empty';
+      errorMessage.push('name field cannot be empty');
     }
     if (Number.isInteger(parseFloat(name))) {
-      errorMessage += 'name cannot be digits or alphanumeric characters \n';
+      errorMessage.push('name cannot be digits or alphanumeric characters');
     }
   }
   if (type) {
     if (type.trim() === '') {
-      errorMessage += 'name field cannot be empty';
+      errorMessage.push('name field cannot be empty');
     }
     if (Number.isInteger(parseFloat(type))) {
-      errorMessage += 'type fields cannot be digits or alphanumeric characters \n';
+      errorMessage.push('type fields cannot be digits or alphanumeric characters');
     }
   }
   if (date) {
-    if (validator.isBefore(date)) {
-      return res.status(406).send({ error: 'The date chosen is past, please choose another date \n' });
+    if (date.trim() !== '' && validator.isBefore(date)) {
+      return res.status(406).send({ error: 'The date chosen is past, please choose another date' });
     }
     if (validator.toDate(date) === null) {
-      errorMessage += 'invalid date \n';
+      errorMessage.push('invalid date');
     }
   }
-  if (errorMessage !== '') {
+  if (errorMessage.length !== 0) {
     return res.status(400).send({ error: errorMessage });
   }
   next();

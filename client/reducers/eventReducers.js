@@ -10,6 +10,7 @@ const reducer = (state = initialState(), action) => {
           adding: true,
           added: false,
           error: false,
+          creatingEvent: true,
         }
       };
     }
@@ -22,6 +23,7 @@ const reducer = (state = initialState(), action) => {
           adding: false,
           added: true,
           error: false,
+          creatingEvent: false,
         }
       };
     }
@@ -35,6 +37,7 @@ const reducer = (state = initialState(), action) => {
           adding: false,
           added: false,
           error: true,
+          creatingEvent: false,
         }
       };
     }
@@ -44,6 +47,7 @@ const reducer = (state = initialState(), action) => {
         ...state,
         status: {
           ...state.status,
+          fetchingEvents: true,
           adding: true,
           added: false,
           error: false,
@@ -57,6 +61,7 @@ const reducer = (state = initialState(), action) => {
         events: action.payload,
         state: {
           ...state.status,
+          fetchingEvents: false,
           adding: false,
           added: true,
           error: false,
@@ -69,6 +74,7 @@ const reducer = (state = initialState(), action) => {
         ...state,
         status: {
           ...state.status,
+          fetchingEvents: false,
           adding: false,
           added: false,
           error: true,
@@ -127,6 +133,17 @@ const reducer = (state = initialState(), action) => {
       };
     }
 
+    case 'MODIFYING_EVENT': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          error: false,
+          modifyingEvent: true,
+        }
+      };
+    }
+
     case 'MODIFY_EVENT_RESOLVED': {
       localStorage.removeItem('eventObject');
       localStorage.removeItem('allUserEvents');
@@ -139,6 +156,7 @@ const reducer = (state = initialState(), action) => {
           modifyEventPrompted: false,
           eventIsDeleted: false,
           eventIsModified: true,
+          modifyingEvent: false,
         }
       };
     }
@@ -151,6 +169,7 @@ const reducer = (state = initialState(), action) => {
         status: {
           ...state.status,
           error: true,
+          modifyingEvent: false,
         }
       };
     }
@@ -163,42 +182,6 @@ const reducer = (state = initialState(), action) => {
           adding: false,
           added: false,
           error: false,
-        }
-      };
-    }
-
-    case 'CANCELLING_USER_EVENT': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          error: false,
-          cancellingEvent: true,
-          eventCancelled: false,
-        }
-      };
-    }
-
-    case 'CANCEL_USER_EVENT_ACCEPTED': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          error: false,
-          cancellingEvent: false,
-          eventCancelled: true,
-        }
-      };
-    }
-
-    case 'CANCEL_USER_EVENT_REJECTED': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          error: true,
-          cancellingEvent: false,
-          eventCancelled: false,
         }
       };
     }

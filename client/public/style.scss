@@ -3,6 +3,7 @@ $widthact : 1300px;
 .header-form {
   margin-top: 50px;
 }
+
 body {
   max-width: 100%;
   font-family: Tajawal;
@@ -12,13 +13,35 @@ body {
   width: 100%;
   margin-right: 50px;
 }
+
 .navbar {
   font-family: 'Open Sans', sans-serif;
-  box-shadow: 5px 5px 5px rgba(0,0,0,0.5)
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+  height: 65px;
 }
 
 .action-view {
   max-width: 1000px;
+}
+
+th {
+  text-align: center;
+  margin-left: 50px;
+}
+
+.btn-upgrade, .btn-downgrade {
+ height: 30px;
+ font-size: 0.7em;
+}
+
+.btn-upgrade {
+  background-color: #C51162;
+  color: #f2f2f2;
+}
+
+.all-users-page {
+  margin-top: 7%;
+  font-family: 'Open-Sans', sans-serif;
 }
 
 .facilities-header {
@@ -47,6 +70,12 @@ label {
   background-color: #aaaaaaaa;
 }
 
+.cancel-btn {
+  font-size: 0.8em;
+  color: #C51162;
+  border-radius: 25px;
+}
+
 .uploadbar-m {
   width: 400px;
   margin-left: 120px;
@@ -55,6 +84,11 @@ label {
 .upload-options-section-m {
   margin-left: 180px;
   margin-top: 15px;
+}
+
+.upload-options-section {
+  margin-left: 50px;
+  margin-top: 5px;
 }
 
 .fa-play, .fa-pause {
@@ -75,13 +109,23 @@ label {
   width: 70px;
   height: 30px;
   font-size: 0.8em;
-  margin-top: -120px;
+  margin-top: -105px;
   background: #BDBDBD;
   margin-left: 120px;
 }
 
+.btn-addcenter {
+  background-color: #C51162;
+  color: white;
+  width: 30%;
+}
+
+.btn-back-section {
+  border-bottom: 50px;
+}
+
 .section-upload {
-  padding-left: 50px;
+  padding-left: 100px;
   padding-right: 50px;
   width: 100%;
 }
@@ -95,6 +139,10 @@ label {
 
 .events-header-name {
   padding-bottom: 10px;
+}
+
+.btn-add, .btn-modify {
+  margin-bottom: 20px;
 }
 
 .one-events-info {
@@ -120,6 +168,36 @@ label {
   display: inline-block;
 }
 
+.btn-facilities {
+  background-color: #C51162;
+}
+
+.center-btn-group {
+  margin-left: 50px;
+}
+
+.title-booked {
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-booked-dates {
+  background-color: #F50057;
+}
+
+.btn {
+  border-radius: 25px;
+}
+
+.table-booked {
+  text-align: center;
+}
+
+.center-name {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-bottom: 200px;
+}
 
 .btn-choose-file {
   border: 2px solid gray;
@@ -251,7 +329,7 @@ a:hover {
 }
 
 .full-bg-img {
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.8);
   height: 500px;
 }
 .slide-up {
@@ -302,6 +380,10 @@ a:hover {
   width: 80%;
 }
 
+.load-user-icon {
+  margin-top: 200px;
+  margin-right: 500px;
+}
 
 .nav-link {
   color: #BDBDBD;
@@ -310,6 +392,10 @@ a:hover {
 
 .nav-link:hover {
   color: #F50057;
+}
+
+.users-page {
+  margin-top: 20px;
 }
 
 .userevents-large {
@@ -382,6 +468,13 @@ video {
   padding-left: 20%;
   margin-top: 10px;
 }
+
+.btn-modify {
+  width: 250px;
+  background-color: #F50057;
+  color: white;
+}
+
 
 .name-testimonial {
   font-weight: bold;
@@ -538,6 +631,19 @@ video {
   animation: spin 2s linear infinite;
 }
 
+.one-center {
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 150px;
+}
+
+.img-oneCenter:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.nav-center {
+  margin-top: 50px;
+  border-radius: 15px;
+}
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
@@ -565,6 +671,11 @@ video {
   padding-left: 25px;
   padding-right: 25px;
   width: 95%;
+}
+
+.left-right-btns {
+  margin-left: -5px;
+  border-bottom: 5px;
 }
 
 .switch input {display:none;}
@@ -666,6 +777,33 @@ input:checked + .slider:before {
   height: 25px
 }
 
+.btn-add {
+  background-color: #C51162;
+  margin-bottom: 20px;
+  color: white
+}
+.event-name {
+  margin-left: 60px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.eventDetails {
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 1px solid #BDBDBD;
+}
+
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 2px;
+  background-color: #C51162;
+  font-size: 12px;
+  border: 1px solid #C51162;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.toast-prompt {
+  font-family: 'Open Sans', sans-serif;
+}
 .img-center-a {
   width: 100%;
 }
@@ -683,6 +821,78 @@ input:checked + .slider:before {
   height: 25px
 }
 
+.event-action-buttons {
+  padding-left: 125px;
+  padding-right: 125px;
+}
+
+.detail-key {
+  font-weight: bold;
+}
+
+.modify-event-form, .add-event-form {
+  margin-top: 130px;
+}
+
+.all-centers-text {
+  margin-top: -200px;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  font-size: 4.5em;
+  text-align: center;
+}
+
+.event-body {
+  margin-top: -20px;
+}
+
+.spinner {
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #333;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+  background-color: #F50057
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+  background-color: #F50057
+}
+
+.spinner .bounce3 {
+  background-color: #F50057
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
   @media (max-width: 1199.98px) {
     .img-correspondent {
       margin-left: 50px;
@@ -694,12 +904,28 @@ input:checked + .slider:before {
     .action-buttons {
       margin-left: -100px;
     }
+    .one-center {
+      margin-top: 90px;
+    }
+
+    .modify-event-form, .add-event-form {
+      margin-top: 50px;
+    }
+    .upload-options-section {
+      margin-left: 10px;
+      margin-top: 5px;
+    }
   }
 
   @media (max-width: 991.98px) {
     .testimony-info {
       margin-right: 0px;
       margin-left: 0px;
+    }
+    .navbar {
+      font-family: 'Open Sans', sans-serif;
+      box-shadow: none;
+      height: 60px;
     }
     .all-centers-card {
       width: 300px;
@@ -877,5 +1103,9 @@ input:checked + .slider:before {
   }
   .center-image {
     width: 1000px;
+  }
+  .upload-options-section {
+    margin-left: 10px;
+    margin-top: 5px;
   }
  }

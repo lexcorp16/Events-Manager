@@ -109,20 +109,21 @@ class Event {
  * @returns {object} res.
  */
   static getUserEvents(req, res) {
-    const offset = req.query.offset || 0;
-    const limit = req.query.limit || 6;
-    Events.findAll({
+    const limit = req.query.limit || 3;
+    const offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
+    Events.findAndCountAll({
       where: {
         user: req.decoded.userId,
       },
       offset,
       limit,
+      order: [['createdAt', 'DESC']]
     })
       .then((userEvents) => {
-        if (userEvents.length === 0) {
+        if (userEvents.rows.length === 0) {
           return res.status(404).send({ error: 'No events found for this User' });
         }
-        return res.status(200).send({ message: 'Success', userEvents });
+        return res.status(200).send({ message: 'Success', userEvents: userEvents.rows, pages: Math.ceil(userEvents.count / limit) });
       })
       .catch(error => sendError(error, res, false));
   }

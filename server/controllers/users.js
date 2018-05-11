@@ -1,8 +1,11 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import Sequelize from 'sequelize';
 import models from '../db/models';
 import createSuperAdmin from '../helpers/admin';
 import sendError from '../helpers/errorSender';
+
+const { Op } = Sequelize;
 
 const secret = process.env.SECRET;
 
@@ -45,6 +48,7 @@ class User {
         .then((user) => {
           const userDetails = {
             userId: user.id,
+            role: user.role,
           };
           const token = jwt.sign(userDetails, secret, {
             expiresIn: '100h', // expires in 1 hours
@@ -80,6 +84,7 @@ class User {
           if (response) {
             const userDetails = {
               userId: user.id,
+              role: user.role,
             };
             const token = jwt.sign(userDetails, secret, {
               expiresIn: '100h', // expires in 1 hours
@@ -100,12 +105,66 @@ class User {
   static upgradeUserToAdmin(req, res) {
     Users.findById(req.params.userId)
       .then((user) => {
+        if (user.role !== 'User') {
+          user.updateAttributes({
+            role: 'User',
+          });
+          return res.status(202).send({ message: 'Admin User successfully downgraded' });
+        }
         user.updateAttributes({
           role: 'Admin',
         });
-        return res.status(202).send({ message: 'Admin User successfully created' });
+        return res.status(202).send({ message: 'Ordinary User successfully upgraded' });
       })
       .catch(error => sendError(error, res, false));
+  }
+  /**
+ *
+ *
+ * @static
+ * @param {any} req
+ * @param {any} res
+ * @memberof User
+ * @returns {object} response in json
+ */
+  static fetchAUser(req, res) {
+    return Users.findById(req.decoded.userId)
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({ error: 'user not found' });
+        }
+        return res.status(200).send({ message: 'User successfully fetched', user });
+      })
+      .catch(err => sendError(err, res, false));
+  }
+  /**
+ *
+ *
+ * @static
+ * @param {any} req
+ * @param {any} res
+ * @memberof User
+ * @returns {object} response in json.
+ */
+  static getAllUsers(req, res) {
+    const limit = req.query.limit || 5;
+    const offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
+    return Users.findAndCountAll({
+      where: {
+        id: {
+          [Op.ne]: req.decoded.userId,
+        }
+      },
+      limit,
+      offset,
+    })
+      .then((users) => {
+        if (users.rows.length === 0) {
+          return res.status(404).send({ error: 'No users found', });
+        }
+        return res.status(200).send({ message: 'users successfully found', users: users.rows, pages: Math.ceil(users.count / limit) });
+      })
+      .catch(err => sendError(err, res, false));
   }
 }
 

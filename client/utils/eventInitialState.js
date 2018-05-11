@@ -4,7 +4,7 @@ const initialState = () => {
       userEvents: [],
       message: '',
     },
-    eventObject: [],
+    eventObject: {},
     errorMessage: '',
     status: {
       adding: false,
@@ -16,6 +16,7 @@ const initialState = () => {
       eventIsModified: false,
       cancellingEvent: false,
       eventCancelled: false,
+      fetchingEvents: false,
     }
   };
   if (localStorage.getItem('eventObject')) {

@@ -13,7 +13,8 @@ import AddEventPage from './components/events/AddEventPage';
 import CenterInfoPage from './components/centers/CenterPage';
 import UserEventsPage from './components/events/UserEvents';
 import ModifyCenterPage from './components/centers/ModifyCenterPage';
-import modifyEventPage from './components/events/ModifyEventPage';
+import ModifyEventPage from './components/events/ModifyEventPage';
+import AllUsersPage from './components/others/AllUsersPage';
 
 export default (
   <Route path="/" component={App}>
@@ -23,7 +24,7 @@ export default (
     <IndexRoute component={UserEventsPage} />}
     <Route path="signup" component={SignupPage} />
     <Route path="signin" component={SigninPage} />
-    <Route path="modifyevent" component={modifyEventPage} />
+    <Route path="modifyevent" component={ModifyEventPage} />
     <Route path="addcenterone" component={AddCenterPageOneForm} />
     <Route path="addcentertwo" component={AddCenterPageTwoForm} />
     <Route path="addcenterthree" component={addCenterPageThreeForm} />
@@ -31,5 +32,6 @@ export default (
     <Route path="modifycenter" component={ModifyCenterPage} />
     <Route path="centers" component={AllCentersPage} />
     <Route path="center" component={CenterInfoPage} />
+    <Route path="users" component={AllUsersPage} />
   </Route>
 );

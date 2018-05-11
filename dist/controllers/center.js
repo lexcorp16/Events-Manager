@@ -10,6 +10,10 @@ var _models = require('../db/models');
 
 var _models2 = _interopRequireDefault(_models);
 
+var _errorSender = require('../helpers/errorSender');
+
+var _errorSender2 = _interopRequireDefault(_errorSender);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37,7 +41,6 @@ var Center = function () {
      * @returns {object} res.
      */
     value: function addCenter(req, res) {
-      var role = req.decoded.role;
       var _req$body = req.body,
           name = _req$body.name,
           type = _req$body.type,
@@ -48,9 +51,6 @@ var Center = function () {
           facilities = _req$body.facilities,
           rentalCost = _req$body.rentalCost;
 
-      if (role === 'User') {
-        return res.status(403).send({ error: 'You are not authorized to perform this action' });
-      }
       return Centers.create({
         name: name,
         type: type,
@@ -62,9 +62,9 @@ var Center = function () {
         rentalCost: rentalCost,
         user: req.decoded.userId
       }).then(function (center) {
-        return res.status(200).send({ message: 'You have successfully added a center', center: center });
+        return res.status(201).send({ message: 'You have successfully added a center', center: center });
       }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
+        return (0, _errorSender2.default)(error, res, true);
       });
     }
     /**
@@ -77,11 +77,6 @@ var Center = function () {
   }, {
     key: 'modifyCenter',
     value: function modifyCenter(req, res) {
-      var role = req.decoded.role;
-
-      if (role === 'User') {
-        return res.status(400).send({ error: 'You are not authorized to perform this action' });
-      }
       if (Object.keys(req.body).length < 1) {
         return Centers.findOne({
           where: {
@@ -99,7 +94,7 @@ var Center = function () {
           });
           return res.status(200).send({ message: 'Successfully changed availability status to true', center: center });
         }).catch(function (error) {
-          return res.status(200).send({ error: error.message });
+          return (0, _errorSender2.default)(error, res, true);
         });
       }
       return Centers.findOne({
@@ -108,10 +103,10 @@ var Center = function () {
         }
       }).then(function (center) {
         if (!center) {
-          return res.status(400).send({ error: 'center not found!' });
+          return res.status(404).send({ error: 'center not found!' });
         }
         if (center && center.user !== req.decoded.userId) {
-          return res.status(400).send({ error: 'You cannot modify a center added by another user' });
+          return res.status(403).send({ error: 'You cannot modify a center added by another user' });
         }
         center.updateAttributes({
           name: req.body.name || center.name,
@@ -125,7 +120,7 @@ var Center = function () {
         });
         return res.status(200).send({ message: 'You have successfully modified the center', center: center });
       }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
+        return (0, _errorSender2.default)(error, res, true);
       });
     }
     /**
@@ -138,13 +133,20 @@ var Center = function () {
   }, {
     key: 'getAllCenters',
     value: function getAllCenters(req, res) {
-      return Centers.findAll().then(function (centers) {
-        if (centers.length < 1) {
-          return res.status(400).send({ message: 'There are no centers' });
+      var limit = req.query.limit || 1;
+      var offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
+      if (req.query.name) {}
+      return Centers.findAndCountAll({
+        limit: limit,
+        offset: offset,
+        order: [['createdAt', 'DESC']]
+      }).then(function (centers) {
+        if (centers.rows.length < 1) {
+          return res.status(404).send({ error: 'no centers found' });
         }
-        return res.status(200).send({ message: 'Success', centers: centers });
+        return res.status(200).send({ message: 'Success', centers: centers.rows, pages: Math.ceil(centers.count / limit) });
       }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
+        return (0, _errorSender2.default)(error, res, true);
       });
     }
     /**
@@ -163,23 +165,19 @@ var Center = function () {
         }
       }).then(function (center) {
         if (!center) {
-          return res.status(400).send({ error: 'No center found' });
+          return res.status(404).send({ error: 'No center found' });
         }
-        Centers.findOne({
+        Events.findAll({
           where: {
-            name: center.name
-          },
-          include: [{
-            model: Events,
-            as: 'venueOfEvent'
-          }]
-        }).then(function (aCenter) {
-          return res.status(200).send({ message: 'Success', aCenter: aCenter });
+            center: req.params.id
+          }
+        }).then(function (venueOfEvent) {
+          return res.status(200).send({ message: 'Center successfully fetched', center: center, venueOfEvent: venueOfEvent });
         }).catch(function (error) {
-          return res.status(500).send({ error: error.message });
+          return (0, _errorSender2.default)(error, res, true, req.params.centerId);
         });
       }).catch(function (error) {
-        return res.status(500).send({ error: error.message });
+        return (0, _errorSender2.default)(error, res, true);
       });
     }
   }]);

@@ -6,7 +6,7 @@
     "description": "An Events Manager Api",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
-      "name": "Swagger API Team"
+      "name": "Events Manager"
     }
   },
   "host": "localhost:1234",
@@ -28,107 +28,79 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "tags",
-            "in": "query",
-            "description": "tags to filter by",
-            "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "csv"
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "maximum number of results to return",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
         "responses": {
           "200": {
-            "description": "pet response",
+            "description": "a simple welcome response",
             "schema": {
-              "type": "array",
+              "type": "object",
               "items": {
-                "$ref": "#/definitions/Pet"
+                "$ref": "#/definitions/usersignin"
               }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "schema": {
-              "$ref": "#/definitions/ErrorModel"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new pet in the store.  Duplicates are allowed",
-        "operationId": "addPet",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "pet",
-            "in": "body",
-            "description": "Pet to add to the store",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/NewPet"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "pet response",
-            "schema": {
-              "$ref": "#/definitions/Pet"
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "schema": {
-              "$ref": "#/definitions/ErrorModel"
             }
           }
         }
       }
     },
-    "/pets/{id}": {
-      "get": {
-        "description": "Returns a user based on a single ID, if the user does not have access to the pet",
-        "operationId": "findPetById",
+    "/api/v1/users": {
+      "post": {
+        "description": "Returns a token and message or just an error message",
+        "operationId": "signUpuser",
         "produces": [
-          "application/json",
-          "application/xml",
-          "text/xml",
-          "text/html"
+          "application/json"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of pet to fetch",
+            "name": "firstname",
+            "in": "body",
+            "description": "firstname of user who wants to signup",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
+          },
+          {
+            "name": "lastname",
+            "in": "body",
+            "description": "lastname of user who wants to signup",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "body",
+            "description": "email of user who wants to signup",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "passord of user who wants to signup",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "confirmpassword",
+            "in": "body",
+            "description": "repetition of passord of user who wants to signup",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "pet response",
+          "201": {
+            "description": "a success response if no error is found containing jwt token",
             "schema": {
+              "type": "application/json",
               "$ref": "#/definitions/Pet"
             }
           },
-          "default": {
-            "description": "unexpected error",
+          "400": {
+            "description": "client side error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          },
+          "409": {
+            "description": "conflict error",
             "schema": {
               "$ref": "#/definitions/ErrorModel"
             }

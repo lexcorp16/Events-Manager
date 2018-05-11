@@ -8,16 +8,34 @@ const UploadProgressBar = props =>
     </div>
   );
 
-const LoadingProgressBar = () =>
+const LoadingIcon = () =>
   (
     <div className="custom-loader text-center" style={{ color: '#F50057' }}>
       <div className="lds-ring"><div /><div /><div /><div /></div>
     </div>
   );
 
+const SpinnerProgressBar = () =>
+  (
+    <div className="spinner">
+      <div className="bounce1" />
+      <div className="bounce2" />
+      <div className="bounce3" />
+    </div>
+  );
+
+const LargeLoadingIcon = () =>
+  (
+    <div className="custom-loader2 text-center" style={{ color: '#F50057' }}>
+      <div className="lds-ring2"><div /><div /><div /><div /></div>
+    </div>
+  );
+
 export {
   UploadProgressBar,
-  LoadingProgressBar,
+  LoadingIcon,
+  SpinnerProgressBar,
+  LargeLoadingIcon,
 };
 
 const propTypes = {

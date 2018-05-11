@@ -9,7 +9,7 @@ const alphaNumeric = (inputtxt) => {
 };
 
 const checkInvalidAddCenterDetails = (req, res, next) => {
-  let errorMessage = '';
+  const errorMessage = [];
   const {
     name,
     type,
@@ -27,53 +27,53 @@ const checkInvalidAddCenterDetails = (req, res, next) => {
     5: 'rentalCost',
   };
   const centerDetails = [name, type, capacity, mobileNumber, address, rentalCost];
-  centerDetails.forEach((input) => {
-    if (!input) {
-      errorMessage += 'Please fill in all fields \n';
-    }
-  });
+  // centerDetails.forEach((input) => {
+  //   if (!input) {
+  //     errorMessage += 'Please fill in all fields \n';
+  //   }
+  // });
   for (let counter = -1; counter < centerDetails.length - 1;) {
     counter += 1;
-    if (centerDetails[counter]) {
+    if (centerDetails[counter] === undefined) {
+      errorMessage.push(`${matchingDetails[counter]} is required`);
+    }
+    if (centerDetails[counter] !== undefined) {
       if (centerDetails[counter].trim() === '') {
-        errorMessage += `${matchingDetails[counter]} cannot be empty \n`;
+        errorMessage.push(`${matchingDetails[counter]} cannot be empty`);
       }
     }
   }
 
   if (!req.body.facilities) {
-    errorMessage += 'Please specify facilities \n';
+    errorMessage.push('Please specify facilities');
   }
-  if (!req.body.rentalCost) {
-    errorMessage += 'Please specify rentalCost \n';
-  }
-  if (capacity) {
+  if (capacity && capacity.trim() !== '') {
     if (!Number.isInteger(parseFloat(capacity))) {
-      errorMessage += 'capacity field can only be digits \n';
+      errorMessage.push('capacity field can only be digits');
     }
     if (alphaNumeric(capacity)) {
-      errorMessage += 'capacity cannot be alphanumeric \n';
+      errorMessage.push('capacity cannot be alphanumeric');
     }
   }
-  if (mobileNumber) {
+  if (mobileNumber && mobileNumber.trim() !== '') {
     if (!Number.isInteger(parseFloat(mobileNumber))) {
-      errorMessage += 'mobileNumber field can only be digits \n';
+      errorMessage.push('mobileNumber field can only be digits');
     }
     if (alphaNumeric(mobileNumber)) {
-      errorMessage += 'mobileNumber cannot be alphanumeric \n';
+      errorMessage.push('mobileNumber cannot be alphanumeric');
     }
     if (mobileNumber.length !== 11) {
-      errorMessage += 'invalid mobileNumber';
+      errorMessage.push('invalid mobileNumber');
     }
   }
-  if (errorMessage !== '') {
+  if (errorMessage.length !== 0) {
     return res.status(400).send({ error: errorMessage });
   }
   next();
 };
 
 const checkInvalidModifyCenterDetails = (req, res, next) => {
-  let errorMessage = '';
+  const errorMessage = [];
   const modifiedParams = [];
   let isNull;
   const {
@@ -89,33 +89,35 @@ const checkInvalidModifyCenterDetails = (req, res, next) => {
     }
   });
   modifiedParams.forEach((value) => {
-    if (value.trim() < 1) {
-      isNull = true;
+    if (value !== undefined) {
+      if (value.trim() < 1) {
+        isNull = true;
+      }
     }
   });
   if (isNull) {
-    errorMessage += 'please fill in all fields \n';
+    errorMessage.push('Fields to be modified should not be empty');
   }
   if (capacity) {
     if (!Number.isInteger(parseFloat(capacity))) {
-      errorMessage += 'capacity field can only be digits \n';
+      errorMessage.push('capacity field can only be digits');
     }
     if (alphaNumeric(capacity)) {
-      errorMessage += 'capacity cannot be alphanumeric \n';
+      errorMessage.push('capacity cannot be alphanumeric');
     }
   }
   if (mobileNumber) {
     if (!Number.isInteger(parseFloat(mobileNumber))) {
-      errorMessage += 'mobileNumber field can only be digits \n';
+      errorMessage.push('mobileNumber field can only be digits');
     }
     if (alphaNumeric(mobileNumber)) {
-      errorMessage += 'mobileNumber cannot be alphanumeric \n';
+      errorMessage.push('mobileNumber cannot be alphanumeric');
     }
     if (mobileNumber.length !== 11) {
-      errorMessage += 'invalid mobileNumber';
+      errorMessage.push('invalid mobileNumber');
     }
   }
-  if (errorMessage !== '') {
+  if (errorMessage.length !== 0) {
     return res.status(400).send({ error: errorMessage });
   }
   next();

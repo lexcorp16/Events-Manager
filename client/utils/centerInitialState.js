@@ -4,7 +4,7 @@ const initialState = () => {
       message: '',
       centers: [],
     },
-    centerToGet: {},
+    centerToGet: '',
     centerToBeModified: [],
     rentalCostAndFacilities: {
       facilities: [],
@@ -43,21 +43,10 @@ const initialState = () => {
       changeImagePrompted: false,
       deleteCenterPrompted: false,
       modifying: false,
-      getACenterPrompted: false
+      getACenterPrompted: false,
+      fetchingACenter: true,
     }
   };
-  if (localStorage.getItem('center-to-get-bulk') !== null) {
-    return {
-      ...state.state,
-      centerToGet: JSON.parse(localStorage.getItem('center-to-get-bulk')).aCenter.id,
-      oneCenter: {
-        aCenter: JSON.parse(localStorage.getItem('center-to-get-bulk')).aCenter,
-      },
-      status: {
-        getACenterPrompted: true,
-      }
-    };
-  }
   if (localStorage.getItem('centerToBeModified')) {
     return {
       ...state.state,

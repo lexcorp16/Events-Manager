@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import isAdmin from '../../helpers/isAdmin';
+import isSuperAdmin from '../../helpers/isSuperAdmin';
 
 import { logOut } from '../../actions/userActions';
 
@@ -92,13 +94,13 @@ class Navbar extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/signin">sign in</Link>
               </li>}
-              {(this.props.user.status.authenticated) &&
+              {(this.props.user.status.authenticated && isAdmin()) &&
               <li>
                 <Link className="nav-link auth-nav-links" to="/addcenterone">ADD CENTER</Link>
               </li>}
               {(this.props.user.status.authenticated) &&
               <li>
-                <Link className="nav-link auth-nav-links" to="/centers">YOUR CENTERS</Link>
+                <Link className="nav-link auth-nav-links" to="/centers">CENTERS</Link>
               </li>}
               {(this.props.user.status.authenticated) &&
               <li>
@@ -108,9 +110,9 @@ class Navbar extends Component {
               <li>
                 <Link className="nav-link auth-nav-links" to="/">YOUR EVENTS</Link>
               </li>}
-              {(this.props.user.status.authenticated) &&
+              {(this.props.user.status.authenticated && isSuperAdmin()) &&
               <li>
-                <Link className="nav-link auth-nav-links" to="/">PROFILE</Link>
+                <Link className="nav-link auth-nav-links" to="/users">GRANT ACCESS</Link>
               </li>}
               {(this.props.user.status.authenticated) &&
               <li>
@@ -138,13 +140,17 @@ class Navbar extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/" style={{ border: 'none' }}>Your events</Link>
               </li>}
-              {(this.props.user.status.authenticated) &&
+              {(this.props.user.status.authenticated && isAdmin()) &&
               <li className="nav-item">
                 <Link className="nav-link" to="/addcenterone" style={{ border: 'none' }}>Add center</Link>
               </li>}
               {(this.props.user.status.authenticated) &&
               <li className="nav-item">
-                <Link className="nav-link" to="/centers" style={{ border: 'none' }}>Your centers</Link>
+                <Link className="nav-link" to="/centers" style={{ border: 'none' }}>Centers</Link>
+              </li>}
+              {(this.props.user.status.authenticated && isSuperAdmin()) &&
+              <li className="nav-item">
+                <Link className="nav-link" to="/users" style={{ border: 'none' }}>Grant Access</Link>
               </li>}
               {(this.props.user.status.authenticated) &&
               <li className="nav-item">

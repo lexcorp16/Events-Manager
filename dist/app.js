@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
@@ -36,9 +40,13 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _webpack3 = require('../webpack.config');
+var _swaggerUiExpress = require('swagger-ui-express');
 
-var _webpack4 = _interopRequireDefault(_webpack3);
+var _swaggerUiExpress2 = _interopRequireDefault(_swaggerUiExpress);
+
+var _swagger = require('../swagger.json');
+
+var _swagger2 = _interopRequireDefault(_swagger);
 
 var _centers = require('./routes/centers');
 
@@ -52,6 +60,10 @@ var _events = require('./routes/events');
 
 var _events2 = _interopRequireDefault(_events);
 
+var _webpack3 = require('../webpack.config');
+
+var _webpack4 = _interopRequireDefault(_webpack3);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config();
@@ -59,6 +71,8 @@ _dotenv2.default.config();
 // Set up the express app
 // require all dependencies
 var app = (0, _express2.default)();
+// setting up swagger
+app.use('/api-docs', _swaggerUiExpress2.default.serve, _swaggerUiExpress2.default.setup(_swagger2.default));
 var compiler = (0, _webpack2.default)(_webpack4.default);
 
 // Log requests to the console.
@@ -75,12 +89,16 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 (0, _users2.default)(app);
 (0, _centers2.default)(app);
 (0, _events2.default)(app);
-
-app.set('port', process.env.PORT || 3000);
 
 app.use((0, _webpackDevMiddleware2.default)(compiler, {
   hot: true,
@@ -93,9 +111,15 @@ app.get('/*', function (req, res) {
   res.sendFile(_path2.default.join(__dirname, '../client/index.html'));
 });
 
+app.use(function (req, res) {
+  return res.status(404).send({ error: 'url not valid' });
+});
+
+app.set('port', process.env.PORT || 3000);
+
 // fire up server to listen on ap particular port
 app.listen(app.get('port'), function () {
   console.log('api running on port ' + app.get('port'));
 });
 
-module.exports = app;
+exports.default = app;

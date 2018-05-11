@@ -31,7 +31,6 @@
 
 .auth-pages {
   width: 100%;
-  min-height: 100vh;
 }
 
 .form-header {
@@ -80,6 +79,25 @@ label {
   display: inline-block;
   position: relative;
 }
+
+.lds-ring2 div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  margin: 2px;
+  border: 2px solid #F50057;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #F50057 transparent transparent transparent;
+}
+
+.loaderSection {
+  z-index: 999;
+  margin-top: 300px;
+}
+
 .lds-ring div {
   box-sizing: border-box;
   display: block;
@@ -93,11 +111,28 @@ label {
   border-color: #F50057 transparent transparent transparent;
 }
 
+.custom-loader2 {
+  margin-left: 85%;
+  margin-top: -50px;
+  margin-right: 15px;
+}
+
 .custom-loader {
   margin-left: 85%;
   margin-top: -50px;
   margin-right: 15px;
 }
+
+.lds-ring2 div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring2 div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring2 div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
 }

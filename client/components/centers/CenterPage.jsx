@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ACenter from './OneCenterPage';
-import { getACenter, cancelUserEvent } from '../../actions/centerActions';
+import { cancelUserEvent } from '../../actions/eventActions';
+import { getACenter } from '../../actions/centerActions';
+import { LargeLoadingIcon } from '../others/LoaderComponents';
 /**
  *
  *
@@ -27,10 +29,7 @@ class CenterPage extends Component {
  * @returns {object} state after action is dispatched
  */
   componentWillMount() {
-    if (!this.props.center.oneCenter.aCenter) {
-      // console.log("oooooooo>", this.props.centerToGet);
-      this.props.dispatch(getACenter(this.props.center.centerToGet));
-    }
+    this.props.dispatch(getACenter(localStorage.getItem('center-to-get')));
   }
   /**
  *
@@ -39,7 +38,7 @@ class CenterPage extends Component {
  * @returns {null} remove item from localstorage
  */
   componentWillUnmount() {
-    localStorage.removeItem('center-to-get-bulk');
+    localStorage.removeItem('center-to-get');
   }
   /**
  *
@@ -61,13 +60,17 @@ class CenterPage extends Component {
  */
   render() {
     return (
-      <div style={{ marginTop: '50px' }}>
-        <ACenter
-          center={this.props.center.oneCenter.aCenter}
-          key={this.props.center.oneCenter.aCenter.id}
-          cancelEvent={this.props.cancelEvent}
-          centerStatus={this.props.center.status}
-        />
+      <div className="container one-center">
+        {this.props.center.status.fetchingACenter ?
+          <div className="text-center load-user-icon">
+            <LargeLoadingIcon />
+          </div> :
+          <ACenter
+            center={this.props.center.oneCenter.aCenter}
+            key={this.props.center.oneCenter.aCenter.id}
+            cancelEvent={this.cancelEvent}
+            eventStatus={this.props.center.status}
+          />}
       </div>
     );
   }
@@ -88,7 +91,6 @@ const mapStateToProps = (state =>
 export default connect(mapStateToProps, mapDispatchToProps)(CenterPage);
 
 const propTypes = {
-  cancelEvent: PropTypes.func.isRequired,
   center: PropTypes.shape({
     centerToGet: PropTypes.string,
     oneCenter: PropTypes.shape({

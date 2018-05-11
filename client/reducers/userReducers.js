@@ -1,5 +1,20 @@
 import jwt from 'jsonwebtoken';
 
+const modifyArrayOfUsersByUpgradeChange = (value, arr) => {
+  arr.forEach((index) => {
+    if (index.id === value) {
+      if (index.role === 'Admin') {
+        index.role = 'User';
+        return;
+      }
+      if (index.role === 'User') {
+        index.role = 'Admin';
+      }
+    }
+  });
+  return arr;
+};
+
 const initialState = () => {
   if (localStorage.getItem('x-access-token')) {
     return {
@@ -14,6 +29,8 @@ const initialState = () => {
         fetching: false,
         fetched: true,
         error: false,
+        userRoleIschanged: false,
+        fetchingAllUsers: true,
       }
     };
   }
@@ -67,8 +84,6 @@ export default function reducer(state = initialState() || {
       return {
         ...state,
         token: action.token,
-        firstname: action.firstname,
-        lastname: action.lastname,
         status: {
           ...state.status,
           fetching: false,
@@ -106,8 +121,6 @@ export default function reducer(state = initialState() || {
       return {
         ...state,
         token: action.token,
-        firstname: action.firstname,
-        lastname: action.lastname,
         status: {
           ...state.status,
           fetching: false,
@@ -127,6 +140,71 @@ export default function reducer(state = initialState() || {
           error: true,
           authenticated: false,
           unauthenticatedAttempt: false,
+        }
+      };
+    }
+    case 'FETCHING_ALL_USERS': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          fetchingAllUsers: true,
+        }
+      };
+    }
+    case 'FETCH_ALL_USERS_RESOLVED': {
+      return {
+        ...state,
+        allusers: action.payload,
+        status: {
+          ...state.status,
+          fetchingAllUsers: false,
+        }
+      };
+    }
+    case 'FETCH_ALL_USERS_REJECTED': {
+      return {
+        ...state,
+        errorMessage: 'oops, an error occured',
+        status: {
+          ...state.status,
+          fetchingAllUsers: false,
+          error: true,
+        }
+      };
+    }
+    case 'ASSIGNING_USER_NEW_ROLE': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          assigning: true,
+          error: false,
+        }
+      };
+    }
+    case 'ASSIGNING_USER_NEW_ROLE_RESOLVED': {
+      return {
+        ...state,
+        allusers: {
+          ...state.allusers,
+          users: modifyArrayOfUsersByUpgradeChange(action.userId, state.allusers.users)
+        },
+        status: {
+          ...state.status,
+          assigning: false,
+          error: false,
+          userRoleIschanged: true,
+        }
+      };
+    }
+    case 'ASSIGNING_USER_NEW_ROLE_REJECTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          assigning: false,
+          error: true,
         }
       };
     }

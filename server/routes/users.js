@@ -7,4 +7,6 @@ export default (app) => {
   app.post('/api/v1/users', errorChecker.checkInvalidUserDetails, userController.signup);
   app.post('/api/v1/users/signin', errorChecker.checkInvalidUserSignIn, userController.signin);
   app.put('/api/v1/users/:userId', auth, checkIfUserIsSuperAdmin, userController.upgradeUserToAdmin);
+  app.get('/api/v1/user', auth, userController.fetchAUser);
+  app.get('/api/v1/users', auth, checkIfUserIsSuperAdmin, userController.getAllUsers);
 };

@@ -16,6 +16,10 @@ var _models = require('../db/models');
 
 var _models2 = _interopRequireDefault(_models);
 
+var _errorSender = require('./errorSender');
+
+var _errorSender2 = _interopRequireDefault(_errorSender);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Users = _models2.default.Users;
@@ -23,19 +27,8 @@ var Users = _models2.default.Users;
 
 var secret = process.env.SECRET;
 
-exports.default = function (res) {
-  _bcrypt2.default.hash('swampious', 10, function (err, hash) {
-    Users.findOne({
-      where: {
-        email: 'efosaokpugie@gmail.com'
-      }
-    }).then(function (user) {
-      if (user) {
-        return res.status(400).send({ error: 'Another user with this email already exists' });
-      }
-    }).catch(function (error) {
-      return res.status(500).send({ error: error.message });
-    });
+exports.default = function (req, res) {
+  _bcrypt2.default.hash(req.body.password, 10, function (err, hash) {
     Users.create({
       email: 'efosaokpugie@gmail.com',
       firstname: 'Efosa',
@@ -54,7 +47,7 @@ exports.default = function (res) {
       });
       return res.status(201).send({ message: 'SuperAdmin created', token: token });
     }).catch(function (error) {
-      return res.status(500).send({ error: error.message });
+      return (0, _errorSender2.default)(error, res, false);
     });
   });
 };

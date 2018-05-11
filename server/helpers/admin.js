@@ -19,8 +19,6 @@ export default (req, res) => {
       .then((superAdmin) => {
         const payload = {
           userId: superAdmin.id,
-          firstname: superAdmin.firstname,
-          lastname: superAdmin.lastname,
           role: superAdmin.role,
         };
         const token = jwt.sign(payload, secret, {

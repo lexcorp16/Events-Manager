@@ -1,5 +1,5 @@
 const isValidEmail = (mail) => {
-  if (/^\w+([\.-]?\w+)*@\w+([ \.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+  if (/^\w+([.-]?\w+)*@\w+([ .-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
     return true;
   }
   return false;
@@ -21,67 +21,68 @@ const checkInvalidUserDetails = (req, res, next) => {
     4: 'confirmpassword',
   };
   const reqBody = [firstname, lastname, email, password, confirmpassword];
-  let errorMessage = '';
-  let undefinedBody;
-  let isNull = false;
+  const errorMessage = [];
   let isDigit = false;
   for (let i = 0; i < reqBody.length; i += 1) {
-    if (!reqBody[i]) {
-      undefinedBody = matchingDetails[i];
-      errorMessage += `Please input ${undefinedBody} \n`;
-    }
-    if (!undefinedBody) {
-      if (reqBody[i].trim().length < 1) {
-        isNull = true;
+    if (reqBody[i] !== undefined) {
+      if (reqBody[i].trim() === '') {
+        errorMessage.push(`${matchingDetails[i]} field cannot be empty`);
       }
+    }
+    if (reqBody[i] === undefined) {
+      errorMessage.push(`${matchingDetails[i]} field is required`);
     }
   }
 
   [firstname, lastname].forEach((field) => {
-    if (!undefinedBody && Number.isInteger(parseFloat(field))) {
+    if ((firstname || lastname) && Number.isInteger(parseFloat(field))) {
       isDigit = true;
     }
   });
-  if (isNull) {
-    return res.status(400).send({ error: 'Please fill in all input fields' });
-  }
-  if (password) {
+  if (password && password.trim() !== '') {
     if (req.body.password.length < 6) {
-      errorMessage += 'password must be at least six characters long \n';
+      errorMessage.push('password must be at least six characters long');
     }
   }
-  if (email && !isValidEmail(email)) {
-    errorMessage += 'Invalid email format \n';
+  if (email && !isValidEmail(email) && email.trim() !== '') {
+    errorMessage.push('Invalid email format');
   }
   if (isDigit) {
-    errorMessage += 'Your name cannot be digits only \n';
+    errorMessage.push('Your name cannot be numbers');
   }
-  if (password && confirmpassword && password !== confirmpassword) {
-    errorMessage += 'password and confirmpassword are not equal \n';
+  if (password && confirmpassword && password !== confirmpassword && password.trim() !== '' && confirmpassword.trim() !== '') {
+    errorMessage.push('password and confirmpassword are not equal');
   }
-  if (errorMessage !== '') {
+  if (errorMessage.length !== 0) {
     return res.status(400).send({ error: errorMessage });
   }
   next();
 };
 
 const checkInvalidUserSignIn = (req, res, next) => {
-  let errorMessage = '';
-  if (req.body.email === undefined) {
-    errorMessage += 'Please Input email \n';
+  const errorMessage = [];
+  if (!req.body.email) {
+    errorMessage.push('email field is required');
   }
-  if (req.body.password === undefined) {
-    errorMessage += 'Please Input password \n';
+  if (!req.body.password) {
+    errorMessage.push('password field is required');
   }
   if (req.body.email) {
-    if (req.body.email.trim().length < 1) {
-      errorMessage += 'Please fill in all input fields \n';
+    if (req.body.email.trim() === '') {
+      errorMessage.push('email field cannot be empty');
     }
   }
-  if (req.body.email && !isValidEmail(req.body.email)) {
-    errorMessage += 'Invalid email format \n';
+  if (req.body.password) {
+    if (req.body.password.trim() === '') {
+      errorMessage.push('password field cannot be empty');
+    }
   }
-  if (errorMessage !== '') {
+  if (req.body.email) {
+    if (req.body.email.trim() !== '' && !isValidEmail(req.body.email)) {
+      errorMessage.push('Invalid email format');
+    }
+  }
+  if (errorMessage.length !== 0) {
     return res.status(400).send({ error: errorMessage });
   }
   next();

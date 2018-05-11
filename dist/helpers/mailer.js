@@ -16,7 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _dotenv2.default.config();
 
-exports.default = function (mailOptions) {
+exports.default = function (mailOptions, res) {
   var transporter = _nodemailer2.default.createTransport({
     service: 'gmail',
     auth: {
@@ -28,9 +28,8 @@ exports.default = function (mailOptions) {
     }
   });
 
-  transporter.sendMail(mailOptions, function (err, info) {
-    console.log('ERROR: ', err);
-    console.log('ENVELOPE: ', info.envelope);
-    console.log('MESSAGE ID: ', info.messageId);
+  transporter.sendMail(mailOptions, function (err) {
+    if (err) return res.status(500).send({ error: 'oops, an error occured' });
+    return res.status(200).send({ message: 'Event canceled and notification sent' });
   });
 };

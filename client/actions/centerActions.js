@@ -19,10 +19,14 @@ const config = {
 
 firebase.initializeApp(config);
 
-const getAllCenters = () =>
+const getAllCenters = nameOfCenter =>
   (dispatch) => {
     dispatch({ type: 'FETCH_CENTERS' });
-    axios.get('/api/v1/centers')
+    let url = '/api/v1/centers';
+    if (nameOfCenter) {
+      url = `/api/v1/centers?name=${nameOfCenter}`;
+    }
+    axios.get(url)
       .then((res) => {
         dispatch({ type: 'FETCH_CENTERS_RESOLVED', payload: res.data });
       })
@@ -31,18 +35,29 @@ const getAllCenters = () =>
       });
   };
 
-const getACenter = centerId =>
+const getACenter = (centerId, centerOnly) =>
   (dispatch) => {
-    dispatch({ type: 'PROMPT_SEE_A_CENTER', centerToGet: centerId });
     dispatch({ type: 'FETCHING_A_CENTER' });
-    axios.get(`/api/v1/centers/${centerId}`)
+    let url = `/api/v1/centers/${centerId}`;
+    if (centerOnly) {
+      url = `/api/v1/centers/${centerId}?centeronly=true`;
+    }
+    axios.get(url)
       .then((res) => {
         dispatch({ type: 'FETCH_A_CENTER_RESOLVED', payload: res.data });
-        browserHistory.push('/center');
+        if (!centerOnly) {
+          browserHistory.push('/center');
+        }
       })
       .catch((err) => {
         dispatch({ type: 'FETCH_A_CENTER_REJECTED', payload: err.response.data });
       });
+  };
+
+const promptSeeCenter = centerId =>
+  (dispatch) => {
+    dispatch({ type: 'PROMPT_SEE_A_CENTER', centerId });
+    browserHistory.push('/center');
   };
 
 const addCenter = centerData =>
@@ -56,7 +71,7 @@ const addCenter = centerData =>
     })
       .then((res) => {
         dispatch({ type: 'ADD_CENTER_RESOLVED', payload: res.data });
-        browserHistory.push('/addcenterone');
+        browserHistory.push('/');
       })
       .catch((err) => {
         dispatch({ type: 'ADD_CENTERS_REJECTED', payload: err.response.data });
@@ -186,4 +201,5 @@ export {
   deleteCenterPrompt,
   modifyCenter,
   getACenter,
+  promptSeeCenter,
 };

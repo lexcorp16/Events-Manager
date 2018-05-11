@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { uploadImageAndGetUrl, addCenter, pauseUpload, resumeUpload, cancelUpload, clearErrors } from '../../actions/centerActions';
 import { userIsUnauthenticated } from '../../actions/userActions';
 import defaultImage from '../../public/images/default-placeholder.png';
 import { UploadProgressBar } from '../others/LoaderComponents';
+import { actionRejectedPrompterTimer, actionRejectedPrompter } from '../../utils/alerts.sweetalert';
+import isvalidCenterDetails from '../../validations/addcenter.validate';
 /**
  *
  *
@@ -73,6 +75,10 @@ class AddCenterFormThree extends Component {
  */
   uploadImage(event) {
     event.preventDefault();
+    if (!this.state.imageFile) {
+      return actionRejectedPrompterTimer('Please choose a file before attempting to upload');
+    }
+    console.log(...this.state);
     this.props.dispatch(uploadImageAndGetUrl({
       ...this.state,
     }));
@@ -122,6 +128,13 @@ class AddCenterFormThree extends Component {
  */
   addCenter(event) {
     event.preventDefault();
+    const validationErrors = isvalidCenterDetails({
+      ...this.props.center.primaryCenterDetails,
+      ...this.props.center.rentalCostAndFacilities,
+    });
+    if (Array.isArray(validationErrors)) {
+      return actionRejectedPrompter(validationErrors);
+    }
     const { imageUrl } = this.props.center.imageUpload;
     this.props.dispatch(addCenter({
       ...this.props.center.primaryCenterDetails,
@@ -138,11 +151,11 @@ class AddCenterFormThree extends Component {
  */
   render() {
     return (
-      <div className="add-center-form-one" style={{ marginTop: `${8}%` }}>
+      <div className="add-center-form-one" style={{ marginTop: `${10}%` }}>
         <div className="container form-section">
-          <div className="sign-in-container form-container form-add-center-one" style={{ marginTop: `${5}%`, height: `${500}px`, border: 'none' }}>
+          <div className="sign-in-container form-container form-add-center-one" style={{ marginTop: `${5}%`, border: 'none' }}>
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.1}em` }} >UPLOAD CENTER IMAGE</p>
+              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.1}em` }} >Upload Center Image</p>
             </div>
             { (this.props.center.status.error) &&
             <div className="alert alert-danger">
@@ -169,17 +182,14 @@ class AddCenterFormThree extends Component {
               { (this.props.center.status.uploadingImage) &&
                 <div className="col">
                   <button
-                    className="btn"
-                    style={{
-                       fontSize: `${0.6}em`, height: `${20}px`, backgroundColor: 'white', color: 'red'
-                      }}
+                    className="btn cancel-btn"
                     onClick={this.cancelImageUpload}
                   >
                     cancel
                   </button>
                 </div>}
             </div>
-            <form className="form form-group container" style={{ marginTop: `${20}px` }} >
+            <form className="form form-group container form-upload" style={{ marginTop: `${20}px` }} >
               {(!this.props.center.status.uploadedImage || !this.props.center.status.uploadingImage)
                &&
                <div className="section-upload">
@@ -189,7 +199,7 @@ class AddCenterFormThree extends Component {
                      name="imageFile"
                      id="imageFile"
                      onChange={this.getImageFile}
-                     style={{ color: 'white', border: 'white' }}
+                     style={{ color: 'white', border: 'white', width: '100%' }}
                    />
                  </label>
                </div>}
@@ -201,8 +211,15 @@ class AddCenterFormThree extends Component {
               </div>}
               {(this.props.center.status.uploadedImage) &&
                 <div className="text-center">
-                  <button className="btn btn-default" onClick={this.addCenter} >FINISH</button>
+                  <button className="btn btn-default btn-addcenter" onClick={this.addCenter} >FINISH</button>
                 </div>}
+              <div className="btn-back-section">
+                <Link to="/addcentertwo">
+                  <button className="btn">
+                    <i className="fa fa-chevron-left" style={{ fontSize: `${1.7}em`, color: '#F50057' }} />
+                  </button>
+                </Link>
+              </div>
             </form>
           </div>
         </div>
@@ -238,7 +255,7 @@ const propTypes = {
     }),
     imageUpload: PropTypes.shape({
       uploadProgress: PropTypes.number,
-      imageUrl: PropTypes.string.isRequired,
+      imageUrl: PropTypes.string,
     }),
     primaryCenterDetails: PropTypes.objectOf(PropTypes.string),
     rentalCostAndFacilities: PropTypes.shape({
