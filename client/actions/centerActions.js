@@ -2,7 +2,7 @@ import axios from 'axios';
 import firebase from 'firebase';
 import 'babel-polyfill';
 import { browserHistory } from 'react-router';
-import { centerModifiedPrompter, actionRejectedPrompter } from '../utils/alerts.sweetalert';
+import { centerModifiedPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
 import { displayUploadedImage } from '../utils/mescill.utils';
 import generateCenterUrl from '../helpers/generateCenterUrl';
 
@@ -71,6 +71,7 @@ const addCenter = centerData =>
       data: centerData,
     })
       .then((res) => {
+        toastPrompter('Center Succesfully added');
         dispatch({ type: 'ADD_CENTER_RESOLVED', payload: res.data });
         browserHistory.push('/');
       })

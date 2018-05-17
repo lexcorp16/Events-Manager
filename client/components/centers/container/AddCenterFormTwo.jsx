@@ -142,7 +142,7 @@ class AddCenterFormTwo extends Component {
                   <label style={{ display: 'block' }} htmlFor="barbecue">Parking-lot</label>
                 </div>
                 <div className="col">
-                  <input id="Restroom" type="checkbox" value="Rest room" name="restroom" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
+                  <input id="Rest room" type="checkbox" value="Rest room" name="restroom" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
                   <label style={{ display: 'block' }} htmlFor="restroom">Rest room</label>
                 </div>
                 <div className="col">
