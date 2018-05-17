@@ -83,7 +83,7 @@ const LandingPageBody = () =>
               <p className="text-center" style={{ color: 'white' }}>add an event in a few steps</p>
             </div>
             <div className="join-us text-center">
-              <button className="btn join-us-btn">sign up now</button>
+              <Link to="/signup"><button className="btn join-us-btn">sign up now</button></Link>
             </div>
           </div>
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 second-info" style={{ width: '600px', borderBottom: '20px solid #212121' }}>
@@ -94,7 +94,7 @@ const LandingPageBody = () =>
               <p className="text-center" style={{ color: 'white' }}>get a center for your event</p>
             </div>
             <div className="join-us text-center">
-              <button className="btn view-centers-btn">view centers</button>
+              <Link to="/centers"><button className="btn view-centers-btn">view centers</button></Link>
             </div>
           </div>
         </div>
