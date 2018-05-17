@@ -106,7 +106,7 @@ const LandingPageBody = () =>
             <div className="text-center">
               <img className="img rounded-circle img-correspondent" alt="no browser support" src={correspondent1} />
               <div className="testimony-text-section">
-                <p className="text-center testimony-info">Making Arrangements for my wedding was so much easier as I did not have to worry about the center of the event.<br /><span className="name-testimonial"><b>- Kolawole taiwo</b></span></p>
+                <p className="text-center testimony-info">Making Arrangements for my Birthday was so much easier as I did not have to worry about the center for the event.<br /><span className="name-testimonial"><b>- Kolawole taiwo</b></span></p>
               </div>
             </div>
           </div>
