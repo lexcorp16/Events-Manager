@@ -173,6 +173,12 @@ const reducer = (state = initialState(), action) => {
       };
     }
 
+    case 'USER_LOGOUT': {
+      localStorage.removeItem('eventObject');
+      return {
+        ...initialState(),
+      };
+    }
     case 'CLEAR_ERROR': {
       return {
         ...state,

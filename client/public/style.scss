@@ -748,8 +748,9 @@ video {
 }
 
 .add-event-link-btn-section {
-  margin-top: 120px;
-  margin-left: 85%;
+  left: 90%;
+  top: 90%;
+  z-index: 999;
   position: fixed;
   color: white;
 }

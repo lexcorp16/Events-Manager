@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Link } from 'react-router';
-import placeholder from '../../../public/images/coference2.jpg';
+import placeholder from '../../../public/images/default-placeholder.png';
 import { SpinnerProgressBar } from '../../utils/LoaderComponents';
 import isAdmin from '../../../helpers/isAdmin';
 import isAuthenticated from '../../../helpers/isAuthenticated';

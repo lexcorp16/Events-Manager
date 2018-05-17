@@ -131,6 +131,14 @@ class UserEvents extends Component {
             <LargeLoadingIcon />
           </div> :
           <div>
+            {(!this.props.event.status.fetchingEvents) &&
+            <div className="add-event-link-btn-section">
+              <Link to="/addevent">
+                <button className="btn add-event-link-btn" data-toggle="tooltip" data-placement="left" title="add event" style={{ cursor: 'pointer' }}>
+                  <i className="fa fa-plus" />
+                </button>
+              </Link>
+            </div>}
             {(userEvents.length !== 0) &&
             <h3 style={{ color: '#F50057', fontFamily: 'Open Sans, sans-serif' }} className="text-center">Your Events</h3>}
             <div className="catalogs" id="descriptions container allcenters-section">
@@ -170,14 +178,6 @@ class UserEvents extends Component {
             <EmptyEventList />
           </div>
         }
-        {(!this.props.event.status.fetchingEvents) &&
-        <div className="add-event-link-btn-section">
-          <Link to="/addevent">
-            <button className="btn add-event-link-btn infinite animated fadeIn" data-toggle="tooltip" data-placement="left" title="add event" style={{ cursor: 'pointer' }}>
-              <i className="fa fa-plus" />
-            </button>
-          </Link>
-        </div>}
       </div>
     );
   }

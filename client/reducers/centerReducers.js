@@ -293,6 +293,14 @@ export default (state = initialState(), action) => {
       };
     }
 
+    case 'USER_LOGOUT': {
+      localStorage.removeItem('centerToBeModified');
+      localStorage.removeItem('center-to-get');
+      return {
+        ...initialState(),
+      };
+    }
+
     case 'PROMPT_SEE_A_CENTER': {
       localStorage.setItem('center-to-get', action.centerId);
       return {
