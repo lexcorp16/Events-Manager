@@ -280,10 +280,11 @@ class ModifyCenterPage extends Component {
                     <option value="">select type</option>
                     <option value="Club">Club</option>
                     <option value="Seminar">Seminar</option>
-                    <option value="Wedding">Wedding</option>
+                    <option value="Wedding hall">Wedding Hall</option>
                     <option value="Conference">Conference</option>
                     <option value="Coporate">Coporate</option>
                     <option value="Party">Party</option>
+                    <option value="Multipurpose Hall">Multipurpose hall</option>
                   </select>
                   <label htmlFor="capacity">Capacity</label>
                   <input type="number" className="form-control" onChange={this.getCenterDetails} name="capacity" placeholder="capacity in numbers e.g 1000000" defaultValue={this.props.center.centerToBeModified[0].capacity} />

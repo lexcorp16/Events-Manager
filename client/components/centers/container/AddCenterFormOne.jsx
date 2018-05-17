@@ -93,10 +93,11 @@ class AddCenterFormOne extends Component {
                 <option>select type</option>
                 <option value="Club">Club</option>
                 <option value="Seminar">Seminar</option>
-                <option value="Wedding">Wedding</option>
+                <option value="Wedding hall">Wedding hall</option>
                 <option value="Conference">Conference</option>
                 <option value="Coporate">Coporate</option>
                 <option value="Party">Party</option>
+                <option value="Multipurpose Hall">Multipurpose hall</option>
               </select>
               <label htmlFor="capacity">Capacity</label>
               <input type="number" className="form-control" onChange={this.getCenterDetails} name="capacity" placeholder="capacity in numbers e.g 1000000" defaultValue={primaryCenterDetails.capacity ? primaryCenterDetails.capacity : null} />
