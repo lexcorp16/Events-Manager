@@ -75,7 +75,7 @@ const addCenter = centerData =>
         browserHistory.push('/');
       })
       .catch((err) => {
-        dispatch({ type: 'ADD_CENTERS_REJECTED', payload: err.response.data });
+        dispatch({ type: 'ADD_CENTER_REJECTED', payload: err.response.data });
         actionRejectedPrompter(err.response.data.error);
       });
   };

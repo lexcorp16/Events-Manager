@@ -11,7 +11,7 @@ const assignNullValueToCancelledEvent = (value, arr) => {
 
 export default (state = initialState(), action) => {
   switch (action.type) {
-    case 'ADDING_CENTERS': {
+    case 'ADDING_CENTER': {
       return {
         ...state,
         status: {
@@ -20,6 +20,28 @@ export default (state = initialState(), action) => {
         }
       };
     }
+
+    case 'ADD_CENTER_RESOLVED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          addingCenter: false,
+        }
+      };
+    }
+
+    case 'ADD_CENTER_REJECTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          addingCenter: false,
+          error: true,
+        }
+      };
+    }
+
     case 'UPLOADING_CENTER_IMAGE': {
       return {
         ...state,

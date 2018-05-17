@@ -4,9 +4,8 @@ import { browserHistory, Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { uploadImageAndGetUrl, addCenter, pauseUpload, resumeUpload, cancelUpload, clearErrors } from '../../../actions/centerActions';
 import defaultImage from '../../../public/images/default-placeholder.png';
-import { UploadProgressBar } from '../../utils/LoaderComponents';
-import { actionRejectedPrompterTimer, actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
-import isvalidCenterDetails from '../../../validations/addcenter.validate';
+import { UploadProgressBar, LoadingIcon } from '../../utils/LoaderComponents';
+import { actionRejectedPrompterTimer } from '../../../utils/alerts.sweetalert';
 import ComponentsHoc from '../../HOC/AuthPagesHoc';
 /**
  *
@@ -124,13 +123,6 @@ class AddCenterFormThree extends Component {
  */
   addCenter(event) {
     event.preventDefault();
-    const validationErrors = isvalidCenterDetails({
-      ...this.props.center.primaryCenterDetails,
-      ...this.props.center.rentalCostAndFacilities,
-    });
-    if (Array.isArray(validationErrors)) {
-      return actionRejectedPrompter(validationErrors);
-    }
     const { imageUrl } = this.props.center.imageUpload;
     this.props.dispatch(addCenter({
       ...this.props.center.primaryCenterDetails,
@@ -204,6 +196,10 @@ class AddCenterFormThree extends Component {
               {(this.props.center.status.uploadedImage) &&
                 <div className="text-center">
                   <button className="btn btn-default btn-addcenter" onClick={this.addCenter} >FINISH</button>
+                  {(this.props.center.status.addingCenter) &&
+                  <div className="loadingSection" style={{ marginLeft: '-10px' }}>
+                    <LoadingIcon />
+                  </div>}
                 </div>}
               <div className="btn-back-section">
                 <Link to="/addcentertwo">
@@ -237,14 +233,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ComponentsHoc(AddCen
 
 const propTypes = {
   center: PropTypes.shape({
-    status: PropTypes.shape({
-      uploadingImage: PropTypes.bool.isRequired,
-      uploadedImage: PropTypes.bool.isRequired,
-      uploadImagePaused: PropTypes.bool.isRequired,
-      error: PropTypes.bool.isRequired,
-      addedCosts: PropTypes.bool,
-      addedFacilities: PropTypes.bool,
-    }),
+    status: PropTypes.objectOf(PropTypes.bool),
     imageUpload: PropTypes.shape({
       uploadProgress: PropTypes.number,
       imageUrl: PropTypes.string,
