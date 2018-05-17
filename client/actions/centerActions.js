@@ -1,12 +1,10 @@
 import axios from 'axios';
 import firebase from 'firebase';
-import dotenv from 'dotenv';
 import 'babel-polyfill';
 import { browserHistory } from 'react-router';
 import { centerModifiedPrompter, modifyCenterRejectedPrompter, actionRejectedPrompter } from '../utils/alerts.sweetalert';
 import { displayUploadedImage } from '../utils/mescill.utils';
-
-dotenv.config();
+import generateCenterUrl from '../helpers/generateCenterUrl';
 
 const config = {
   apiKey: process.env.API_KEY,
@@ -19,12 +17,15 @@ const config = {
 
 firebase.initializeApp(config);
 
-const getAllCenters = nameOfCenter =>
+const getAllCenters = centerQueries =>
   (dispatch) => {
     dispatch({ type: 'FETCH_CENTERS' });
-    let url = '/api/v1/centers';
-    if (nameOfCenter) {
-      url = `/api/v1/centers?name=${nameOfCenter}`;
+    let url;
+    if (!centerQueries) {
+      url = '/api/v1/centers';
+    } else {
+      const generatedUrl = generateCenterUrl(centerQueries);
+      url = generatedUrl.substring(0, generatedUrl.length - 1);
     }
     axios.get(url)
       .then((res) => {

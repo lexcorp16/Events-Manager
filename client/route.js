@@ -1,27 +1,27 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import App from './components/others/App';
-import AddCenterPageOneForm from './components/centers/AddCenterFormOne';
-import AddCenterPageTwoForm from './components/centers/AddCenterFormTwo';
-import addCenterPageThreeForm from './components/centers/AddCenterFormThree';
-import SignupPage from './components/others/SignupBody';
-import LandingPage from './components/others/LandingPageBody';
-import SigninPage from './components/others/SigninBody';
-import AllCentersPage from './components/centers/AllCenterPage';
-import AddEventPage from './components/events/AddEventPage';
-import CenterInfoPage from './components/centers/CenterPage';
-import UserEventsPage from './components/events/UserEvents';
-import ModifyCenterPage from './components/centers/ModifyCenterPage';
-import ModifyEventPage from './components/events/ModifyEventPage';
-import AllUsersPage from './components/others/AllUsersPage';
+import App from './components/root/App';
+import AddCenterPageOneForm from './components/centers/container/AddCenterFormOne';
+import AddCenterPageTwoForm from './components/centers/container/AddCenterFormTwo';
+import addCenterPageThreeForm from './components/centers/container/AddCenterFormThree';
+import SignupPage from './components/users/container/SignupBody';
+import LandingPage from './components/utils/LandingPageBody';
+import SigninPage from './components/users/container/SigninBody';
+import AllCentersPage from './components/centers/container/AllCenterPage';
+import AddEventPage from './components/events/container/AddEventPage';
+import CenterInfoPage from './components/centers/container/CenterPage';
+import UserEventsPage from './components/events/container/UserEvents';
+import ModifyCenterPage from './components/centers/container/ModifyCenterPage';
+import ModifyEventPage from './components/events/container/ModifyEventPage';
+import AllUsersPage from './components/users/container/AllUsersPage';
+import SearchPage from './components/centers/container/SearchCenterPage';
+import PageNotFound from './components/utils/PageNotFound';
 
-export default (
+const Router = (
   <Route path="/" component={App}>
-    {(!localStorage.getItem('x-access-token')) &&
-    <IndexRoute component={LandingPage} />}
-    {(localStorage.getItem('x-access-token')) &&
-    <IndexRoute component={UserEventsPage} />}
+    <IndexRoute component={LandingPage} />
+    <Route path="events" component={UserEventsPage} />
     <Route path="signup" component={SignupPage} />
     <Route path="signin" component={SigninPage} />
     <Route path="modifyevent" component={ModifyEventPage} />
@@ -33,5 +33,9 @@ export default (
     <Route path="centers" component={AllCentersPage} />
     <Route path="center" component={CenterInfoPage} />
     <Route path="users" component={AllUsersPage} />
+    <Route path="search" component={SearchPage} />
+    <Route path="*" component={PageNotFound} />
   </Route>
 );
+
+export default Router;

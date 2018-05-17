@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-require('dotenv').config();
 
 module.exports = {
   entry: [
@@ -19,6 +18,15 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      sourceMap: true,
+      comments: false,
+      compress: {
+        warnings: false,
+        drop_console: true,
+      }
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         API_KEY: JSON.stringify(process.env.API_KEY),
@@ -28,6 +36,7 @@ module.exports = {
         STORAGE_BUCKET: JSON.stringify(process.env.STORAGE_BUCKET),
         MESSAGING_SENDER_ID: JSON.stringify(process.env.MESSAGING_SENDER_ID),
         BASE_URL: JSON.stringify(process.env.BASE_URL),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       }
     }),
   ],
@@ -75,6 +84,6 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'client'),
-    historyApiFallback: true
-  }
+    historyApiFallback: true,
+  },
 };

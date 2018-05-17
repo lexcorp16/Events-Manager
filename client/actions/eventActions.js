@@ -22,12 +22,16 @@ const addEvent = eventDetails =>
       });
   };
 
-const seeEvents = () =>
+const fetchEvents = id =>
   (dispatch) => {
+    let urlLink = '/api/v1/events/user';
+    if (id) {
+      urlLink = `/api/v1/events/user?page=${id}`;
+    }
     dispatch({ type: 'FETCH_EVENTS' });
     axios({
       method: 'GET',
-      url: '/api/v1/events/user',
+      url: urlLink,
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
     })
       .then((res) => {
@@ -81,7 +85,7 @@ const modifyEvent = (eventdetails, eventId) =>
         dispatch({ type: 'MODIFY_EVENT_RESOLVED', payload: res.data, eventId });
       })
       .catch((err) => {
-        dispatch({ type: 'MODIFY_EVENTS_REJECTED', payload: err.response.data });
+        dispatch({ type: 'MODIFY_EVENT_REJECTED', payload: err.response.data });
         actionRejectedPrompter(err.response.data.error);
       });
   };
@@ -105,7 +109,7 @@ const cancelUserEvent = eventId =>
 
 export {
   addEvent,
-  seeEvents,
+  fetchEvents,
   clearError,
   promptDelete,
   deleteEvent,

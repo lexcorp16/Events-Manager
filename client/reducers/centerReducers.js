@@ -169,6 +169,9 @@ export default (state = initialState(), action) => {
     case 'FETCH_CENTERS_REJECTED': {
       return {
         ...state,
+        allCenters: {
+          centers: [],
+        },
         status: {
           ...state.status,
           fetching: false,
@@ -249,13 +252,14 @@ export default (state = initialState(), action) => {
     }
 
     case 'CANCEL_USER_EVENT_RESOLVED': {
+      const { venueOfEvent } = state.oneCenter.aCenter;
       return {
         ...state,
         oneCenter: {
           ...state.oneCenter,
           aCenter: {
             ...state.oneCenter.aCenter,
-            venueOfEvent: assignNullValueToCancelledEvent(action.eventId, state.oneCenter.aCenter.venueOfEvent),
+            venueOfEvent: assignNullValueToCancelledEvent(action.eventId, venueOfEvent),
           }
         },
         status: {

@@ -147,7 +147,7 @@ class User {
  * @returns {object} response in json.
  */
   static getAllUsers(req, res) {
-    const limit = req.query.limit || 5;
+    const limit = req.query.limit || 10;
     const offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
     return Users.findAndCountAll({
       where: {
@@ -162,7 +162,12 @@ class User {
         if (users.rows.length === 0) {
           return res.status(404).send({ error: 'No users found', });
         }
-        return res.status(200).send({ message: 'users successfully found', users: users.rows, pages: Math.ceil(users.count / limit) });
+        return res.status(200).send({
+          message: 'users successfully found',
+          users: users.rows,
+          pages: Math.ceil(users.count / limit),
+          currentPage: offset,
+        });
       })
       .catch(err => sendError(err, res, false));
   }

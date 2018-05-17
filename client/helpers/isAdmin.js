@@ -3,7 +3,7 @@ import isSuperAdmin from './isSuperAdmin';
 
 const isAdmin = () => {
   if (localStorage.getItem('x-access-token')) {
-    if (jwt.decode(localStorage.getItem('x-access-token')) === 'Admin' || isSuperAdmin()) {
+    if (jwt.decode(localStorage.getItem('x-access-token')).role === 'Admin' || isSuperAdmin()) {
       return true;
     }
   }

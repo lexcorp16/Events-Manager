@@ -2,6 +2,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import jwt from 'jsonwebtoken';
 import { signinPrompter, signupPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
+import isAdmin from '../helpers/isAdmin';
 
 axios.defaults.withCredentials = true;
 
@@ -33,7 +34,7 @@ const userLogin = loginDetails =>
         localStorage.setItem('x-access-token', res.data.token);
         dispatch({ type: 'LOGIN_RESOLVED', payload: res.data, ...jwt.decode(localStorage.getItem('x-access-token')) });
         signinPrompter();
-        if (jwt.decode(localStorage.getItem('x-access-token')).role !== 'User') {
+        if (isAdmin()) {
           browserHistory.push('/centers');
         } else {
           browserHistory.push('/');
@@ -45,12 +46,6 @@ const userLogin = loginDetails =>
       });
   };
 
-const userIsUnauthenticated = () =>
-  (dispatch) => {
-    dispatch({ type: 'USER_IS_NOT_AUTHENTICATED', payload: 'You have to login first' });
-    browserHistory.push('/signin');
-  };
-
 const clearError = () =>
   (dispatch) => {
     dispatch({ type: 'CLEAR_ERROR' });
@@ -59,6 +54,9 @@ const clearError = () =>
 const logOut = () =>
   (dispatch) => {
     localStorage.removeItem('x-access-token');
+    localStorage.removeItem('center-to-get');
+    localStorage.removeItem('centerToBeModified');
+    localStorage.removeItem('eventObject');
     dispatch({ type: 'USER_LOGOUT' });
     browserHistory.push('/signin');
   };
@@ -93,6 +91,7 @@ const assignUserRole = userId =>
       })
       .catch((err) => {
         dispatch({ type: 'ASSIGNING_USER_NEW_ROLE_REJECTED', payload: err.response.data });
+        actionRejectedPrompter(err.response.data.error);
       });
   };
 
@@ -100,7 +99,6 @@ export {
   userSignup,
   userLogin,
   clearError,
-  userIsUnauthenticated,
   logOut,
   getAllUsers,
   assignUserRole,

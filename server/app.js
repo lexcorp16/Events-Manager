@@ -14,6 +14,7 @@ import centerRoutes from './routes/centers';
 import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
 import webpackConfig from '../webpack.config';
+import webpackConfigProduction from '../webpack.config.prod';
 
 dotenv.config();
 
@@ -21,7 +22,10 @@ dotenv.config();
 const app = express();
 // setting up swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-const compiler = webpack(webpackConfig);
+let compiler = webpack(webpackConfig);
+if (process.NODE_ENV === 'production') {
+  compiler = webpack(webpackConfigProduction);
+}
 
 // Log requests to the console.
 app.use(logger('dev'));

@@ -4,6 +4,9 @@ const initialState = () => {
       userEvents: [],
       message: '',
     },
+    oneEventDetail: {
+      name: ''
+    },
     eventObject: {},
     errorMessage: '',
     status: {

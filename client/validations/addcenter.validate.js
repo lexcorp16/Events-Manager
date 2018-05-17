@@ -6,7 +6,7 @@ const alphaNumeric = (inputtxt) => {
   return false;
 };
 
-const checkInvalidAddCenterDetails = (req) => {
+const checkInvalidPrimaryCenterDetails = (req) => {
   const errorMessage = [];
   const {
     name,
@@ -14,7 +14,6 @@ const checkInvalidAddCenterDetails = (req) => {
     capacity,
     mobileNumber,
     address,
-    rentalCost,
   } = req;
   const matchingDetails = {
     0: 'name',
@@ -22,9 +21,8 @@ const checkInvalidAddCenterDetails = (req) => {
     2: 'capacity',
     3: 'mobileNumber',
     4: 'address',
-    5: 'rentalCost',
   };
-  const centerDetails = [name, type, capacity, mobileNumber, address, rentalCost];
+  const centerDetails = [name, type, capacity, mobileNumber, address];
   // centerDetails.forEach((input) => {
   //   if (!input) {
   //     errorMessage += 'Please fill in all fields \n';
@@ -41,16 +39,12 @@ const checkInvalidAddCenterDetails = (req) => {
       }
     }
   }
-
-  if (!req.facilities || req.facilities.length === 0) {
-    errorMessage.push('Please specify facilities');
-  }
   if (capacity && capacity.trim() !== '') {
     if (!Number.isInteger(parseFloat(capacity))) {
       errorMessage.push('capacity field can only be digits');
     }
     if (alphaNumeric(capacity)) {
-      errorMessage.push('capacity cannot be alphanumeric');
+      errorMessage.push('capacity cannot contain numbers and letters');
     }
   }
   if (mobileNumber && mobileNumber.trim() !== '') {
@@ -58,7 +52,7 @@ const checkInvalidAddCenterDetails = (req) => {
       errorMessage.push('mobileNumber field can only be digits');
     }
     if (alphaNumeric(mobileNumber)) {
-      errorMessage.push('mobileNumber cannot be alphanumeric');
+      errorMessage.push('mobileNumber cannot contain numbers and letters');
     }
     if (mobileNumber.length !== 11) {
       errorMessage.push('invalid mobileNumber');
@@ -70,4 +64,34 @@ const checkInvalidAddCenterDetails = (req) => {
   return true;
 };
 
-export default checkInvalidAddCenterDetails;
+const checkInvalidRentalCostAndFacilities = (req) => {
+  const errorMessage = [];
+  const { facilities, rentalCost } = req;
+  if (rentalCost === undefined) {
+    errorMessage.push('rental cost is required');
+  }
+  if (rentalCost !== undefined) {
+    if (rentalCost.trim() === '') {
+      errorMessage.push('rental cost cannot be empty');
+    }
+  }
+  if (!facilities || facilities.length === 0) {
+    errorMessage.push('Please specify facilities');
+  }
+  if (rentalCost && rentalCost.trim() !== '') {
+    if (!Number.isInteger(parseFloat(rentalCost))) {
+      errorMessage.push('rental cost field can only be digits');
+    }
+    if (alphaNumeric(rentalCost)) {
+      errorMessage.push('rental cost cannot contain numbers and letters');
+    }
+  }
+  if (errorMessage.length !== 0) {
+    return errorMessage;
+  }
+  return true;
+};
+export {
+  checkInvalidPrimaryCenterDetails,
+  checkInvalidRentalCostAndFacilities,
+};

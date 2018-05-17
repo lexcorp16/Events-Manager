@@ -1,27 +1,21 @@
+import Sequelize from 'sequelize';
 import models from '../db/models';
+import sendErrors from '../helpers/errorSender';
 
+const { Op } = Sequelize;
 const { Centers } = models;
 
 const search = (req, res) => {
-  const limit = req.query.limit || 1;
+  const limit = req.query.limit || 6;
   const offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
-  let searchQuery = {};
-  if (req.query.name) {
-    searchQuery = { name: req.query.name };
-  }
-  if (req.query.type) {
-    searchQuery = { type: req.query.type };
-  }
-  if (req.query.capacity) {
-    searchQuery = { capacity: req.query.capacity };
-  }
-  if (req.query.rentalCost) {
-    searchQuery = { capacity: req.query.rentalCost };
-  }
+  const currentPage = req.query.page ? parseFloat(req.query.page) : 1;
+  const operationQueryKey = Object.keys(req.query)[0];
   return Centers
     .findAndCountAll({
       where: {
-        ...searchQuery,
+        [operationQueryKey]: {
+          [Op.like]: `%${req.query[operationQueryKey]}%`,
+        }
       },
       limit,
       offset,
@@ -31,9 +25,14 @@ const search = (req, res) => {
       if (centers.rows.length < 1) {
         return res.status(404).send({ error: 'no centers found' });
       }
-      return res.status(200).send({ message: 'Success', centers: centers.rows, pages: Math.ceil(centers.count / limit) });
+      return res.status(200).send({
+        message: 'Success',
+        centers: centers.rows,
+        pages: Math.ceil(centers.count / limit),
+        currentPage,
+      });
     })
-    .catch(() => res.status(500).send({ error: 'oops, an error occured' }));
+    .catch(err => sendErrors(err, res, true));
 };
 
 export default search;

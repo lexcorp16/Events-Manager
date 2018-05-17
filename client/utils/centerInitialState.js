@@ -8,18 +8,18 @@ const initialState = () => {
     centerToBeModified: [],
     rentalCostAndFacilities: {
       facilities: [],
-      rentalCost: '',
+      rentalCost: undefined,
     },
     oneCenter: {
       aCenter: {},
       message: '',
     },
     primaryCenterDetails: {
-      name: '',
-      type: '',
-      capacity: '',
-      address: '',
-      mobileNumber: '',
+      name: undefined,
+      type: undefined,
+      capacity: undefined,
+      address: undefined,
+      mobileNumber: undefined,
     },
     errorMessage: '',
     imageUpload: {

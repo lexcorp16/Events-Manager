@@ -7,6 +7,7 @@ const alphaNumeric = (inputtxt) => {
 };
 
 const checkInvalidModifyCenterDetails = (req) => {
+  console.log(req);
   const errorMessage = [];
   const modifiedParams = [];
   let isNull;

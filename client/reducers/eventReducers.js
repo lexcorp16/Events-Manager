@@ -18,7 +18,7 @@ const reducer = (state = initialState(), action) => {
     case 'ADD_EVENT_RESOLVED': {
       return {
         ...state,
-        state: {
+        status: {
           ...state.status,
           adding: false,
           added: true,
@@ -59,7 +59,7 @@ const reducer = (state = initialState(), action) => {
       return {
         ...state,
         events: action.payload,
-        state: {
+        status: {
           ...state.status,
           fetchingEvents: false,
           adding: false,
@@ -164,7 +164,6 @@ const reducer = (state = initialState(), action) => {
     case 'MODIFY_EVENT_REJECTED': {
       return {
         ...state,
-        eventObject: [],
         errorMessage: action.payload.error,
         status: {
           ...state.status,

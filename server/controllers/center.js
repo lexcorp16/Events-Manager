@@ -107,8 +107,9 @@ class Center {
  * @returns {array} res.
  */
   static getAllCenters(req, res) {
-    const limit = req.query.limit || 3;
+    const limit = req.query.limit || 6;
     const offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
+    const currentPage = req.query.page ? parseFloat(req.query.page) : 1;
     if (requestIsASearch(req)) {
       return searchCenters(req, res);
     }
@@ -121,7 +122,12 @@ class Center {
         if (centers.rows.length < 1) {
           return res.status(404).send({ error: 'no centers found' });
         }
-        return res.status(200).send({ message: 'Success', centers: centers.rows, pages: Math.ceil(centers.count / limit) });
+        return res.status(200).send({
+          message: 'Success',
+          centers: centers.rows,
+          pages: Math.ceil(centers.count / limit),
+          currentPage,
+        });
       })
       .catch(error => sendError(error, res, true));
   }

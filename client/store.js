@@ -11,11 +11,9 @@ const reducer = combineReducers({
   eventReducer,
 });
 
-let middleware;
+let middleware = applyMiddleware(thunk, logger);
 if (process.env.NODE_ENV === 'production') {
   middleware = applyMiddleware(thunk);
-} else {
-  middleware = applyMiddleware(thunk, logger);
 }
 
 export default createStore(reducer, middleware);

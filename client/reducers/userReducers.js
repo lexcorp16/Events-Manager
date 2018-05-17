@@ -58,16 +58,6 @@ export default function reducer(state = initialState() || {
   }
 }, action) {
   switch (action.type) {
-    case 'USER_IS_NOT_AUTHENTICATED': {
-      return {
-        ...state,
-        unauthenticatedErrorMessage: action.payload,
-        status: {
-          ...state.status,
-          unauthenticatedAttempt: true,
-        }
-      };
-    }
     case 'CREATE_USER': {
       return {
         ...state,
