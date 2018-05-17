@@ -81,7 +81,7 @@ class AllCenterPage extends Component {
           <h3 className="section-header">All Centers</h3>
         </div>
         { (fetchingCenters) &&
-        <div className="loaderSection text-center" style={{ marginRight: '550px' }}>
+        <div>
           <LargeLoadingIcon />
         </div>
         }
@@ -99,7 +99,7 @@ class AllCenterPage extends Component {
             ))}
           </div>
           {(pages !== 1 && centers.length !== 0) &&
-          <div className="pagination-navs text-center">
+          <div className="text-center">
             <PaginationLinks
               fetchPage={this.fetchMoreCenters}
               currentPage={currentPage}

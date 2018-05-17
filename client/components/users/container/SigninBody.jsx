@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { userLogin, clearError } from '../../../actions/userActions';
 import { LoadingIcon } from '../../utils/LoaderComponents';
 import isValidDetails from '../../../validations/signin.validate';
 import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
+import isAuthenticated from '../../../helpers/isAuthenticated';
 /**
 * @Center, class containing all methods that
 * handle center related api endpoint
@@ -24,7 +25,17 @@ class SigninBody extends Component {
     this.getSignInDetails = this.getSignInDetails.bind(this);
     this.signin = this.signin.bind(this);
   }
-
+  /**
+ *
+ *
+ * @memberof SigninBody
+ * @returns {html} dom object model
+ */
+  componentWillMount() {
+    if (isAuthenticated()) {
+      browserHistory.push('/events');
+    }
+  }
   /**
  *
  *

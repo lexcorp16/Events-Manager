@@ -66,7 +66,6 @@ class ModifyEventPage extends Component {
  */
   getEventDetails(event) {
     this.setState({ [event.target.name]: event.target.value });
-    console.log(this.state);
   }
   /**
  *
@@ -95,7 +94,7 @@ class ModifyEventPage extends Component {
     return (
       <div className="modify-event-form">
         {this.props.center.status.fetchingCenters ?
-          <div className="loaderSection" style={{ marginRight: '600px' }}>
+          <div className="text-center">
             <LargeLoadingIcon />
           </div> :
           <div className="container form-section">
@@ -108,6 +107,7 @@ class ModifyEventPage extends Component {
                 <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" defaultValue={this.props.event.eventObject[0].name} />
                 <label htmlFor="type-of-event">Type of event</label>
                 <select className="form-control" name="type" onChange={this.getEventDetails} defaultValue={this.props.event.eventObject[0].type}>
+                  <option >select option</option>
                   <option value="Birthday">Birthday</option>
                   <option value="Club">Club</option>
                   <option value="Seminar">Seminar</option>
@@ -122,6 +122,7 @@ class ModifyEventPage extends Component {
                 </div>
                 <label htmlFor="preferred-center">Preferred center</label>
                 <select className="form-control" onChange={this.getEventDetails} name="center">
+                  <option>select option</option>
                   {this.props.center.allCenters.centers.map(center =>
                   (
                     <CenterList center={center} key={center.id} />

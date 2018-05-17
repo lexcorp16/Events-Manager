@@ -55,7 +55,7 @@ class CenterPage extends Component {
     return (
       <div className="container one-center">
         {this.props.center.status.fetchingACenter || !this.props.center.oneCenter.aCenter ?
-          <div className="text-center load-user-icon" style={{ marginRight: '500px' }}>
+          <div className="text-center">
             <LargeLoadingIcon />
           </div> :
           <ACenter

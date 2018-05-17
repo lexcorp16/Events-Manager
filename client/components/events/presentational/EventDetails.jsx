@@ -10,10 +10,10 @@ const EventDetails = props =>
       <div className="modal-content event-details-modal">
         {(props.eventDetails) &&
         <div className="eventDetails">
-          <div className="modal-header">
-            <h4 className="modal-title text-center event-name">{props.eventDetails.name}</h4>
-            <button type="button" className="close" data-dismiss="modal">&times;</button>
+          <div className="d-flex justify-content-center" style={{ marginBottom: '20px' }}>
+            <h4 className="modal-title">{props.eventDetails.name}</h4>
           </div>
+          <button type="button" className="close" data-dismiss="modal">&times;</button>
           <div className="eventDetails text-center">
             <p><b>Date:</b> {moment(props.eventDetails.date).format('DD MMMM YYYY')}</p>
             <p><b>Type:</b> {props.eventDetails.type}</p>
@@ -22,7 +22,7 @@ const EventDetails = props =>
         {props.eventDetails.center === null ?
           <div className="text-center">
             <p style={{ fontFamily: 'Open Sans, sans-serif' }}>There is currently no venue for this event</p>
-            <button className="btn btn-nav btn-default btn-add" id={props.eventDetails.id} onClick={props.navigateToModificationPage}>
+            <button className="btn btn-nav btn-default btn-add" data-dismiss="modal" id={props.eventDetails.id} onClick={props.navigateToModificationPage}>
               ADD CENTER
             </button>
           </div> :
@@ -34,10 +34,12 @@ const EventDetails = props =>
               </div> :
               <div className="venueDetails text-center">
                 <p><b>Name:</b>  {props.venueDetails.name}</p>
-                <p><b>Type:</b>  {props.venueDetails.type}</p>
                 <p><b>Rental cost:</b>  {props.venueDetails.rentalCost}</p>
                 <p><b>Capacity:</b>  {props.venueDetails.capacity}</p>
                 <p><b>Address:</b>{props.venueDetails.address}</p>
+                <button className="btn btn-block" id={props.venueDetails.id} data-dismiss="modal" style={{ color: '#C51162' }} onClick={props.navigateToCenterPage}>
+                  SEE MORE INFO
+                </button>
               </div>
               }
           </div>
@@ -60,7 +62,9 @@ EventDetails.propTypes = {
     rentalCost: PropTypes.string,
     imageUrl: PropTypes.string,
     address: PropTypes.string,
-    facilities: PropTypes.arrayOf(PropTypes.string)
+    facilities: PropTypes.arrayOf(PropTypes.string),
+    id: PropTypes.string,
   }),
   navigateToModificationPage: PropTypes.func.isRequired,
+  navigateToCenterPage: PropTypes.func.isRequired,
 };

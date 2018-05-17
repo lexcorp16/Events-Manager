@@ -26,7 +26,7 @@ const SpinnerProgressBar = () =>
 
 const LargeLoadingIcon = () =>
   (
-    <div className="custom-loader2 text-center" style={{ color: '#F50057' }}>
+    <div className="custom-loader2 d-flex justify-content-center" style={{ color: '#F50057' }}>
       <div className="lds-ring2"><div /><div /><div /><div /></div>
     </div>
   );

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import '../../../public/signin.scss';
 import { userSignup, clearError } from '../../../actions/userActions';
 import isValidDetails from '../../../validations/signup.validate';
 import { LoadingIcon, } from '../../utils/LoaderComponents';
 import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
+import isAuthenticated from '../../../helpers/isAuthenticated';
 /**
  *
  *
@@ -30,6 +31,18 @@ class SignupBody extends Component {
     };
     this.getSignUpDetails = this.getSignUpDetails.bind(this);
     this.signup = this.signup.bind(this);
+  }
+
+  /**
+ *
+ *
+ * @memberof SigninBody
+ * @returns {html} dom object model
+ */
+  componentWillMount() {
+    if (isAuthenticated()) {
+      browserHistory.push('/events');
+    }
   }
   /**
   *

@@ -139,7 +139,7 @@ class SearchPage extends Component {
           </div>
           }
           {fetchingCenters ?
-            <div className="loaderSection text-center" style={{ marginRight: '550px' }}>
+            <div className="text-center">
               <LargeLoadingIcon />
             </div> :
             <div>
@@ -156,7 +156,7 @@ class SearchPage extends Component {
               </div>}
             </div>}
           {(pages !== 1 && searchResults.length !== 0 && !fetchingCenters) &&
-            <div className="pagination-navs text-center">
+            <div className="text-center">
               <PaginationLinks
                 fetchPage={this.fetchMoreCenters}
                 currentPage={currentPage}

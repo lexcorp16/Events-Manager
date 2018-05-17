@@ -219,6 +219,16 @@ export default (state = initialState(), action) => {
       };
     }
 
+    case 'MODIFY_CENTER_REJECTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          modifying: false,
+        }
+      };
+    }
+
     case 'IMAGE_CHANGE_PROMPT': {
       return {
         ...state,

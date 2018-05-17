@@ -2,7 +2,7 @@ import axios from 'axios';
 import firebase from 'firebase';
 import 'babel-polyfill';
 import { browserHistory } from 'react-router';
-import { centerModifiedPrompter, modifyCenterRejectedPrompter, actionRejectedPrompter } from '../utils/alerts.sweetalert';
+import { centerModifiedPrompter, actionRejectedPrompter } from '../utils/alerts.sweetalert';
 import { displayUploadedImage } from '../utils/mescill.utils';
 import generateCenterUrl from '../helpers/generateCenterUrl';
 
@@ -173,7 +173,7 @@ const modifyCenter = (detailsToBeModified, centerToBeModified) =>
       })
       .catch((err) => {
         dispatch({ type: 'MODIFY_CENTER_REJECTED', payload: err.response.data });
-        modifyCenterRejectedPrompter(err.response.data.error);
+        actionRejectedPrompter(err.response.data.error);
       });
   };
 

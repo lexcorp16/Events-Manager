@@ -377,12 +377,11 @@ a:hover {
   }
 
   .footer {
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     font-family: 'Open Sans', sans-serif;
-    height: 50px;
+    height: 30px;
     color: white;
     text-align: center;
     border-top: 1px solid #BDBDBD;
@@ -410,6 +409,7 @@ a:hover {
 .smallnavsearch {
   width: 80%;
 }
+
 
 .load-user-icon {
   margin-top: 200px;
@@ -745,8 +745,6 @@ video {
 
 .pagination-navs {
   margin-top: 50px;
-  margin-left: 42%;
-  margin-right: 45%;
 }
 
 .add-event-link-btn-section {
@@ -828,6 +826,7 @@ input:checked + .slider:before {
 
 .section-header {
   margin-top: 50px;
+  font-family : 'Open-sans', sans-serif;
 }
 
 .btn-logout {
@@ -835,10 +834,6 @@ input:checked + .slider:before {
   background-color: #F50057;
 }
 
-.section-header {
-  font-family : 'Open-sans', sans-serif;
-
-}
 .action-buttons {
   margin-left: 30px;
 }
@@ -847,8 +842,14 @@ input:checked + .slider:before {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.close {
+  margin-top: -40px;
+  margin-right: 10px;
+}
+
 .edit-btn {
   background-color: #C51162;
+  border: 1px solid #C51162;
   color: white;
   width: 60px;
   font-size: 0.6em;
@@ -907,6 +908,7 @@ input:checked + .slider:before {
 
 .modify-btn {
   background-color: #F50057;
+  border: 1px solid #F50057;
   color: white;
   width: 20px;
   font-size: 0.6em;
@@ -1024,10 +1026,6 @@ input:checked + .slider:before {
       width: 300px;
       margin-left: -30px;
     }
-    .testimony-info {
-      padding-left: 30px;
-      padding-right: 30px;
-    }
     .upcoming-events-section, .all-centers  {
       padding-left: 10px;
       padding-right: 10px;
@@ -1044,6 +1042,11 @@ input:checked + .slider:before {
     .view-centers-btn {
       background-color: #C51162;
       color: white
+    }
+    .navbar {
+      font-family: 'Open Sans', sans-serif;
+      box-shadow: none;
+      height: 60px;
     }
     .join-us-btn {
       background-color: #F50057;
@@ -1067,6 +1070,11 @@ input:checked + .slider:before {
     .all-centers-card {
       width: 350px;
       margin-left: -55px;
+    }
+    .navbar {
+      font-family: 'Open Sans', sans-serif;
+      box-shadow: none;
+      height: 60px;
     }
     .section-header {
       margin-left: 40px;
@@ -1130,6 +1138,11 @@ input:checked + .slider:before {
   .img-center {
     padding-left: 30px;
     padding-right: 30px;
+  }
+  .navbar {
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: none;
+    height: 60px;
   }
   .white-text {
     font-size: 2.1em;

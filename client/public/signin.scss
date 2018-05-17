@@ -93,12 +93,6 @@ label {
   border-color: #F50057 transparent transparent transparent;
 }
 
-.loaderSection {
-  z-index: 999;
-  margin-top: 200px;
-  margin-left: -25%;
-}
-
 .lds-ring div {
   box-sizing: border-box;
   display: block;
@@ -113,9 +107,8 @@ label {
 }
 
 .custom-loader2 {
-  margin-left: 85%;
-  margin-top: -50px;
-  margin-right: 15px;
+  margin-top: 100px;
+  margin-left: -70px;
 }
 
 .custom-loader {

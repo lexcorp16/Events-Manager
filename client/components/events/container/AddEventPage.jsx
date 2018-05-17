@@ -80,7 +80,7 @@ class AddEventPage extends Component {
     return (
       <div className="add-event-form">
         {this.props.center.status.fetchingCenters ?
-          <div className="loaderSection" style={{ marginRight: '550px' }}>
+          <div className="text-center">
             <LargeLoadingIcon />
           </div> :
           <div className="container form-section">
@@ -93,6 +93,7 @@ class AddEventPage extends Component {
                 <input onChange={this.getEventDetails} type="text" name="name" className="form-control first-name" />
                 <label htmlFor="type-of-event">Type of event</label>
                 <select className="form-control" name="type" onChange={this.getEventDetails}>
+                  <option>select type</option>
                   <option value="Birthday">Birthday</option>
                   <option value="Club">Club</option>
                   <option value="Seminar">Seminar</option>

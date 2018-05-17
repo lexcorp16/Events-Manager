@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { deleteEventPrompter, addEventPrompter, modifyEventPrompter, actionRejectedPrompter } from '../utils/alerts.sweetalert';
+import { deleteEventPrompter, addEventPrompter, modifyEventPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
 
 const addEvent = eventDetails =>
   (dispatch) => {
@@ -99,10 +99,11 @@ const cancelUserEvent = eventId =>
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
     })
       .then((res) => {
-        browserHistory.push('/center');
+        toastPrompter('Event successfuly cancelled and notification sent');
         dispatch({ type: 'CANCEL_USER_EVENT_RESOLVED', payload: res.data, eventId });
       })
       .catch((err) => {
+        actionRejectedPrompter(err.response.data.error);
         dispatch({ type: 'CANCEL_USER_EVENT_REJECTED', payload: err.response.data });
       });
   };

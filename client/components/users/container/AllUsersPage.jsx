@@ -57,7 +57,7 @@ class AllUsersPage extends Component {
           <SpinnerProgressBar />
         </div>}
         {this.props.user.status.fetchingAllUsers && !this.props.user.allusers ?
-          <div className="text-center load-user-icon">
+          <div className="text-center">
             <LargeLoadingIcon />
           </div> :
           <UsersPage

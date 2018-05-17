@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import placeholder from '../../../public/images/coference2.jpg';
 import { SpinnerProgressBar } from '../../utils/LoaderComponents';
 import isAdmin from '../../../helpers/isAdmin';
+import isAuthenticated from '../../../helpers/isAuthenticated';
 
 const OneCenterPage = props =>
   (
@@ -12,22 +13,27 @@ const OneCenterPage = props =>
       <div className="col-md-8">
         <img className="img-fluid img-oneCenter" src={props.center.imageUrl !== null ? props.center.imageUrl : placeholder} alt="" style={{ width: '700px', height: '500px' }} />
       </div>
-      <div className="col-md-4 nav-center">
-        <h3 className="my-3 text-center center-name">{props.center.name}</h3>
-        <p className="text-center"><b><i className="fa fa-home" style={{ fontSize: '1.4em', color: 'green' }} /></b>{props.center.address}</p>
-        <h3 className="my-3 text-center">{props.center.capacity} seats</h3>
-        <div className="btn-group btn-group-sm center-btn-group" style={{ paddingLeft: '30px', paddingRight: '30px' }}>
+      <div className="col-md-4 nav-center text-center">
+        <p className="my-3 center-name">{props.center.name}</p>
+        <b>Address</b>
+        <p>{props.center.address}</p>
+        <b>Capacity</b>
+        <p>{props.center.capacity} seats</p>
+        <b>Rental Cost</b>
+        <p>{props.center.rentalCost} naira</p>
+        <div className="btn-group btn-group-sm d-flex justify-content-center" style={{ paddingLeft: '30px', paddingRight: '30px' }}>
           <button type="button" className="btn btn-facilities" data-toggle="modal" data-target="#myModal">Facilities</button>
           <button type="button" className="btn btn-booked-dates" data-toggle="modal" data-target="#myModal1">booked dates</button>
         </div>
+        {(!isAuthenticated() || !isAdmin()) &&
         <div className="book-event-btn-section">
           <Link to="/addevent"><button type="button" className="btn btn-default btn-block btn-book">Book Center Now</button></Link>
-        </div>
+        </div>}
       </div>
       <div className="modal fade" id="myModal">
         <div className="modal-dialog modal-sm">
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="modal-header d-flex justify-content-center">
               <h4 className="modal-title text-center">Facilities</h4>
             </div>
             <div className="modal-body">
@@ -57,7 +63,7 @@ const OneCenterPage = props =>
       <div className="modal fade" id="myModal1">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
-            <div className="modal-header text-center">
+            <div className="modal-header d-flex justify-content-center">
               <h4 className="modal-title text-center">Booked Dates</h4>
             </div>
             <div className="modal-body">
@@ -103,6 +109,7 @@ const propTypes = {
     imageUrl: PropTypes.string,
     capacity: PropTypes.string,
     venueOfEvent: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    rentalCost: PropTypes.string,
   }).isRequired,
 };
 

@@ -123,7 +123,7 @@ class Navbar extends Component {
             </ul>
           </div>
           <div className="navbar-collapse d-none d-lg-block nav justify-content-end">
-            <ul className="navbar-nav nav justify-content-end">
+            <ul className="nav d-flex justify-content-center">
               {(!authenticated) &&
               <li className="nav-item">
                 <Link className="nav-link" to="/signup">sign up</Link>

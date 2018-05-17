@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import EventCard from '../presentational/EventCard';
 import { EmptyEventList } from '../../utils/emptyComponents';
 import { fetchEvents, promptDelete, deleteEvent, promptModify } from '../../../actions/eventActions';
-import { getACenter } from '../../../actions/centerActions';
+import { getACenter, promptSeeCenter, getAllCenters } from '../../../actions/centerActions';
 import { LargeLoadingIcon } from '../../utils/LoaderComponents';
 import ComponentsHoc from '../../HOC/AuthPagesHoc';
 import EventDetailsModal from '../presentational/EventDetails';
@@ -31,6 +31,7 @@ class UserEvents extends Component {
     this.modifyPrompt = this.modifyPrompt.bind(this);
     this.fetchEventCenterDetails = this.fetchEventCenterDetails.bind(this);
     this.fetchMoreEvents = this.fetchMoreEvents.bind(this);
+    this.navigateToCenterPage = this.navigateToCenterPage.bind(this);
   }
   /**
  *
@@ -50,6 +51,9 @@ class UserEvents extends Component {
   fetchEventCenterDetails(eventDetails) {
     if (eventDetails.center !== null) {
       this.props.dispatch(getACenter(eventDetails.center, true));
+    }
+    if (eventDetails.center === null) {
+      this.props.dispatch(getAllCenters({ limit: 1 }));
     }
     this.props.event.oneEventDetail = eventDetails;
   }
@@ -91,6 +95,18 @@ class UserEvents extends Component {
  *
  * @param {any} event
  * @memberof UserEvents
+ * @returns {object} dispatches actions
+ */
+  navigateToCenterPage(event) {
+    const { id } = event.target;
+    const { dispatch } = this.props;
+    dispatch(promptSeeCenter(id));
+  }
+  /**
+ *
+ *
+ * @param {any} event
+ * @memberof UserEvents
  * @returns {object} state after action dispatched
  */
   modifyPrompt(event) {
@@ -111,7 +127,7 @@ class UserEvents extends Component {
     return (
       <div className="all-centers container" style={{ marginTop: '80px' }} >
         {this.props.event.status.fetchingEvents ?
-          <div className="loaderSection container">
+          <div className="container" style={{ marginTop: '200px' }}>
             <LargeLoadingIcon />
           </div> :
           <div>
@@ -132,7 +148,7 @@ class UserEvents extends Component {
               </div>
             </div>
             {(pages !== 1 && userEvents.length !== 0) &&
-            <div className="pagination-navs text-center">
+            <div className="text-center">
               <PaginationLinks
                 fetchPage={this.fetchMoreEvents}
                 currentPage={currentPage}
@@ -145,6 +161,7 @@ class UserEvents extends Component {
                 eventDetails={oneEventDetail}
                 venueDetails={this.props.center.oneCenter.center}
                 navigateToModificationPage={this.modifyPrompt}
+                navigateToCenterPage={this.navigateToCenterPage}
               />
             </div>}
           </div>}

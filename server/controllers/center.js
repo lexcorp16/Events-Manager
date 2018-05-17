@@ -83,9 +83,6 @@ class Center {
         if (!center) {
           return res.status(404).send({ error: 'center not found!' });
         }
-        if (center && center.user !== req.decoded.userId) {
-          return res.status(403).send({ error: 'You cannot modify a center added by another user' });
-        }
         center.updateAttributes({
           name: req.body.name || center.name,
           type: req.body.type || center.type,

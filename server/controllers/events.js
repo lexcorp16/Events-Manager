@@ -151,7 +151,7 @@ class Event {
               from: 'efosaeventsmanager@evt.com',
               to: user.email,
               subject: 'Notice Of cancellation of event',
-              text: 'This Is to Inform You that For some reasons ,Your event has been canceled!',
+              text: `This Is to Inform You that For some reasons ,Your event has been canceled! \n Please log on here https://efosa-events-manager.herokuapp.com to events manager to get another venue for your event`,
             };
             return mailSender(mailOptions, res);
           })
