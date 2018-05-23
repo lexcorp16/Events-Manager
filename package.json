@@ -27,6 +27,7 @@
   "homepage": "https://github.com/Efosaok/Events-Manager#readme",
   "dependencies": {
     "axios": "^0.17.1",
+    "babel-cli": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
