@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 
 import { modifyEvent, promptModify } from '../../../actions/eventActions';
 import { getAllCenters } from '../../../actions/centerActions';
@@ -40,11 +41,23 @@ class ModifyEventPage extends Component {
  * @memberof ModifyEventPage
  * @returns {object} new state after object dispatched
  */
-  componentWillMount() {
+  componentDidMount() {
     if (localStorage.getItem('eventObject')) {
       this.props.dispatch(promptModify(this.props.event.eventObject[0].id));
     }
     this.props.dispatch(getAllCenters({ limit: 100 }));
+  }
+  /**
+ *
+ *
+ * @param {nextProps} nextProps most recent props received from redux store;
+ * @memberof ModifyEventPage
+ * @returns {function} browserhistory redirect function
+ */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.event.status.eventIsModified) {
+      browserHistory.push('/');
+    }
   }
   /**
  *

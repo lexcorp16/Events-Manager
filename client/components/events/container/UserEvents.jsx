@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import EventCard from '../presentational/EventCard';
 import { EmptyEventList } from '../../utils/emptyComponents';
 import { fetchEvents, promptDelete, deleteEvent, promptModify } from '../../../actions/eventActions';
@@ -38,7 +38,7 @@ class UserEvents extends Component {
  * @memberof UserEvents
  * @returns {object} state after action dispatched
  */
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchEvents());
   }
   /**
@@ -101,6 +101,7 @@ class UserEvents extends Component {
     const { id } = event.target;
     const { dispatch } = this.props;
     dispatch(promptSeeCenter(id));
+    browserHistory.push('/center');
   }
   /**
  *
@@ -113,6 +114,7 @@ class UserEvents extends Component {
     event.preventDefault();
     const { id } = event.target;
     this.props.dispatch(promptModify(id));
+    browserHistory.push('/modifyevent');
   }
   /**
  *

@@ -11,7 +11,6 @@ import DisplayHoc from '../../HOC/ModifyCenterPageHoc';
 
 import
 {
-  modificationPrompt,
   imageChangePrompt,
   pauseUpload,
   uploadImageAndGetUrl,
@@ -49,18 +48,7 @@ class ModifyCenterPage extends Component {
     this.pauseImageUpload = this.pauseImageUpload.bind(this);
     this.modifyCenter = this.modifyCenter.bind(this);
   }
-  /**
- *
- *
- * @memberof ModifyCenterPage
- * @returns {object} state after action dispatched
- */
-  componentWillMount() {
-    if (!this.props.center.centerToBeModified[0]) {
-      return browserHistory.push('/');
-    }
-    this.props.dispatch(modificationPrompt(this.props.center.centerToBeModified[0].id));
-  }
+
   /**
  *
  *
@@ -70,6 +58,18 @@ class ModifyCenterPage extends Component {
   componentDidMount() {
     prefillCheckbox(this.props.center.centerToBeModified[0].facilities);
     imageToDisplay(this.props.center.centerToBeModified[0].imageUrl);
+  }
+  /**
+ *
+ *
+ * @param {any} nextProps recent props received from redux store
+ * @memberof ModifyCenterPage
+ * @returns {function} browserHistory function that redirects to allcenters page
+ */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.center.status.modified) {
+      browserHistory.push('/centers');
+    }
   }
   /**
  *

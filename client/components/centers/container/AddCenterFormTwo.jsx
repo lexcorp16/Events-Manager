@@ -95,6 +95,7 @@ class AddCenterFormTwo extends Component {
     this.props.dispatch(getRentalCostAndFacilities({
       ...this.state,
     }));
+    browserHistory.push('/addcenterthree');
   }
   /**
  *

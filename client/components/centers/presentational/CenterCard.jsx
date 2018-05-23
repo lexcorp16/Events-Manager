@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import isAdmin from '../../../helpers/isAdmin';
 import placeholderImage from '../../../public/images/default-placeholder.png';
 
-const CenterCard = (props =>
+const CenterCard = props =>
   (
     <div className="acenter col-lg-4 col-sm-12 col-xs-12 col-md-6 center-card">
       <div className="card all-centers-card" style={{ marginTop: '30px' }} id={props.center.id}>
@@ -23,8 +23,7 @@ const CenterCard = (props =>
         </div>
       </div>
     </div>
-  )
-);
+  );
 
 const propTypes = {
   center: PropTypes.shape({

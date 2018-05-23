@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 
 import { getPrimaryCenterDetails } from '../../../actions/centerActions';
 import { checkInvalidPrimaryCenterDetails } from '../../../validations/addcenter.validate';
@@ -68,6 +69,7 @@ class AddCenterFormOne extends Component {
     this.props.dispatch(getPrimaryCenterDetails({
       ...this.state,
     }));
+    browserHistory.push('/addcentertwo');
   }
   /**
  *

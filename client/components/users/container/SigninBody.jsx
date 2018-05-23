@@ -7,6 +7,7 @@ import { LoadingIcon } from '../../utils/LoaderComponents';
 import isValidDetails from '../../../validations/signin.validate';
 import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
 import isAuthenticated from '../../../helpers/isAuthenticated';
+import isAdmin from '../../../helpers/isAdmin';
 /**
 * @Center, class containing all methods that
 * handle center related api endpoint
@@ -36,6 +37,22 @@ class SigninBody extends Component {
       browserHistory.push('/events');
     }
   }
+  /**
+ *
+ *
+ * @param {any} nextProps
+ * @returns {function} browserhistory function that redirects to another component
+ * @memberof SigninBody
+ */
+  componentWillReceiveProps(nextProps) {
+    if (isAdmin() && nextProps.user.status.authenticated) {
+      return browserHistory.push('/centers');
+    }
+    if (!isAdmin() && nextProps.user.status.authenticated) {
+      return browserHistory.push('/');
+    }
+  }
+
   /**
  *
  *
@@ -137,11 +154,7 @@ const mapStateToProps = (state =>
 export default connect(mapStateToProps, mapDispatchToProps)(SigninBody);
 const propTypes = {
   user: PropTypes.shape({
-    status: PropTypes.shape({
-      unauthenticatedAttempt: PropTypes.bool,
-      error: PropTypes.bool,
-      fetching: PropTypes.bool,
-    }),
+    status: PropTypes.objectOf(PropTypes.bool),
     unauthenticatedErrorMessage: PropTypes.string,
     errorMessage: PropTypes.string,
   }).isRequired,

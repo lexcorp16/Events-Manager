@@ -53,6 +53,7 @@ class Navbar extends Component {
   logOut(event) {
     event.preventDefault();
     this.props.dispatch(logOut());
+    browserHistory.push('/signin');
   }
   /**
  *

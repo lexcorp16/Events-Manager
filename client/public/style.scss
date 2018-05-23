@@ -825,6 +825,10 @@ input:checked + .slider:before {
   margin-top: 50px;
 }
 
+.btn {
+  cursor: pointer;
+}
+
 .section-header {
   margin-top: 50px;
   font-family : 'Open-sans', sans-serif;

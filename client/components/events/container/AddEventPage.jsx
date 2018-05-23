@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 
 import { addEvent } from '../../../actions/eventActions';
 import { getAllCenters } from '../../../actions/centerActions';
@@ -39,8 +40,20 @@ class AddEventPage extends Component {
  * @memberof AddEventPage
  * @returns {object} state of the app
  */
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(getAllCenters({ limit: 100 }));
+  }
+  /**
+ *
+ *
+ * @param {any} nextProps most recent props received from store
+ * @memberof AddEventPage
+ * @returns {function} browserhistory redirect function
+ */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.event.status.added) {
+      browserHistory.push('/');
+    }
   }
   /**
  *

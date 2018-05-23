@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken';
-
 const modifyArrayOfUsersByUpgradeChange = (value, arr) => {
   arr.forEach((index) => {
     if (index.id === value) {
@@ -19,9 +17,6 @@ const initialState = () => {
   if (localStorage.getItem('x-access-token')) {
     return {
       token: localStorage.getItem('x-access-token'),
-      firstname: jwt.decode(localStorage.getItem('x-access-token')).firstname,
-      lastname: jwt.decode(localStorage.getItem('x-access-token')).lastname,
-      errorMessage: '',
       unauthenticatedErrorMessage: '',
       status: {
         unauthenticatedAttempt: false,
@@ -45,10 +40,7 @@ const initialState = () => {
  */
 export default function reducer(state = initialState() || {
   token: '',
-  errorMessage: '',
   unauthenticatedErrorMessage: '',
-  firstname: '',
-  lastname: '',
   status: {
     fetching: false,
     fetched: false,

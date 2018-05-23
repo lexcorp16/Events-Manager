@@ -1,7 +1,6 @@
-import axios from 'axios';
 import firebase from 'firebase';
 import 'babel-polyfill';
-import { browserHistory } from 'react-router';
+import instance from '../utils/axios';
 import { centerModifiedPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
 import { displayUploadedImage } from '../utils/mescill.utils';
 import generateCenterUrl from '../helpers/generateCenterUrl';
@@ -27,7 +26,7 @@ const getAllCenters = centerQueries =>
       const generatedUrl = generateCenterUrl(centerQueries);
       url = generatedUrl.substring(0, generatedUrl.length - 1);
     }
-    axios.get(url)
+    return instance.get(url)
       .then((res) => {
         dispatch({ type: 'FETCH_CENTERS_RESOLVED', payload: res.data });
       })
@@ -43,12 +42,9 @@ const getACenter = (centerId, centerOnly) =>
     if (centerOnly) {
       url = `/api/v1/centers/${centerId}?centeronly=true`;
     }
-    axios.get(url)
+    return instance.get(url)
       .then((res) => {
         dispatch({ type: 'FETCH_A_CENTER_RESOLVED', payload: res.data });
-        if (!centerOnly) {
-          browserHistory.push('/center');
-        }
       })
       .catch((err) => {
         dispatch({ type: 'FETCH_A_CENTER_REJECTED', payload: err.response.data });
@@ -58,13 +54,12 @@ const getACenter = (centerId, centerOnly) =>
 const promptSeeCenter = centerId =>
   (dispatch) => {
     dispatch({ type: 'PROMPT_SEE_A_CENTER', centerId });
-    browserHistory.push('/center');
   };
 
 const addCenter = centerData =>
   (dispatch) => {
     dispatch({ type: 'ADDING_CENTER' });
-    axios({
+    return instance({
       method: 'POST',
       url: '/api/v1/centers',
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
@@ -73,7 +68,6 @@ const addCenter = centerData =>
       .then((res) => {
         toastPrompter('Center Succesfully added');
         dispatch({ type: 'ADD_CENTER_RESOLVED', payload: res.data });
-        browserHistory.push('/');
       })
       .catch((err) => {
         dispatch({ type: 'ADD_CENTER_REJECTED', payload: err.response.data });
@@ -89,13 +83,11 @@ const clearErrors = () =>
 const getRentalCostAndFacilities = costAndFacilities =>
   (dispatch) => {
     dispatch({ type: 'ADD_RENTAL_COST_AND_FACILITIES', payload: costAndFacilities });
-    browserHistory.push('/addcenterthree');
   };
 
 const getPrimaryCenterDetails = centerDetails =>
   (dispatch) => {
     dispatch({ type: 'ADD_PRIMARY_CENTER_DETAILS', payload: centerDetails });
-    browserHistory.push('/addcentertwo');
   };
 
 const uploadImageAndGetUrl = imageFile =>
@@ -155,13 +147,12 @@ const cancelUpload = task => (task.currentTask.cancel());
 const modificationPrompt = centerToBeModified =>
   (dispatch) => {
     dispatch({ type: 'MODIFICATION_PROMPT', centerId: centerToBeModified });
-    browserHistory.push('/modifycenter');
   };
 
 const modifyCenter = (detailsToBeModified, centerToBeModified) =>
   (dispatch) => {
     dispatch({ type: 'MODIFYING_CENTER' });
-    axios({
+    return instance({
       method: 'PUT',
       url: `/api/v1/centers/${centerToBeModified}`,
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
@@ -170,7 +161,6 @@ const modifyCenter = (detailsToBeModified, centerToBeModified) =>
       .then((res) => {
         dispatch({ type: 'MODIFY_CENTER_RESOLVED', payload: res.data });
         centerModifiedPrompter();
-        browserHistory.push('/centers');
       })
       .catch((err) => {
         dispatch({ type: 'MODIFY_CENTER_REJECTED', payload: err.response.data });

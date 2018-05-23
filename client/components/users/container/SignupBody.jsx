@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import '../../../public/signin.scss';
+import isAdmin from '../../../helpers/isAdmin';
 import { userSignup, clearError } from '../../../actions/userActions';
 import isValidDetails from '../../../validations/signup.validate';
 import { LoadingIcon, } from '../../utils/LoaderComponents';
@@ -42,6 +43,22 @@ class SignupBody extends Component {
   componentWillMount() {
     if (isAuthenticated()) {
       browserHistory.push('/events');
+    }
+  }
+
+  /**
+ *
+ *
+ * @param {any} nextProps
+ * @returns {function} browserhistory function that redirects to another component
+ * @memberof SignupBody
+ */
+  componentWillReceiveProps(nextProps) {
+    if (isAdmin() && nextProps.user.status.authenticated) {
+      return browserHistory.push('/centers');
+    }
+    if (!isAdmin() && nextProps.user.status.authenticated) {
+      return browserHistory.push('/');
     }
   }
   /**
@@ -150,11 +167,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(SignupBody);
 
 const propTypes = {
   user: PropTypes.shape({
-    status: PropTypes.shape({
-      unauthenticatedAttempt: PropTypes.bool,
-      error: PropTypes.bool,
-      fetching: PropTypes.bool,
-    }),
+    status: PropTypes.objectOf(PropTypes.bool),
     unauthenticatedErrorMessage: PropTypes.string,
     errorMessage: PropTypes.string,
   }).isRequired,

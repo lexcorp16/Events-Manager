@@ -46,6 +46,18 @@ class AddCenterFormThree extends Component {
   /**
  *
  *
+ * @param {any} nextProps recent props received from redux store
+ * @memberof AddCenterFormThree
+ * @returns {function} browserhistory function that redirects to home page
+ */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.center.status.addedCenter) {
+      browserHistory.push('/centers');
+    }
+  }
+  /**
+ *
+ *
  * @memberof AddCenterFormThree
  * @returns {object} state after component is dispatched
  */

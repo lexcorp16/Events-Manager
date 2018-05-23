@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import CenterCard from '../presentational/CenterCard';
 import { getAllCenters, modificationPrompt, promptSeeCenter } from '../../../actions/centerActions';
 import { LargeLoadingIcon } from '../../utils/LoaderComponents';
@@ -29,19 +30,8 @@ class AllCenterPage extends Component {
  * @memberof CenterPage
  * @returns {object} state after action dispatched
  */
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(getAllCenters());
-  }
-  /**
- *
- * @param {any} event
- * @memberof CenterPage
- * @returns {object} state after object dispatched
- */
-  promptModifyCenter(event) {
-    event.preventDefault();
-    const { id } = event.target;
-    this.props.dispatch(modificationPrompt(id));
   }
   /**
  *
@@ -54,6 +44,19 @@ class AllCenterPage extends Component {
     event.preventDefault();
     const { id } = event.target;
     this.props.dispatch(promptSeeCenter(id));
+    browserHistory.push('/center');
+  }
+  /**
+ *
+ * @param {any} event
+ * @memberof CenterPage
+ * @returns {object} state after object dispatched
+ */
+  promptModifyCenter(event) {
+    event.preventDefault();
+    const { id } = event.target;
+    this.props.dispatch(modificationPrompt(id));
+    browserHistory.push('/modifycenter');
   }
   /**
  *

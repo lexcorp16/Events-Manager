@@ -140,6 +140,7 @@ const reducer = (state = initialState(), action) => {
           ...state.status,
           error: false,
           modifyingEvent: true,
+          eventIsModified: false,
         }
       };
     }

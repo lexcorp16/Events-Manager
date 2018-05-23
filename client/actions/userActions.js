@@ -1,24 +1,17 @@
 import axios from 'axios';
-import { browserHistory } from 'react-router';
-import jwt from 'jsonwebtoken';
+import instance from '../utils/axios';
 import { signinPrompter, signupPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
-import isAdmin from '../helpers/isAdmin';
 
 axios.defaults.withCredentials = true;
 
 const userSignup = userDetails =>
   (dispatch) => {
     dispatch({ type: 'CREATE_USER' });
-    axios.post('/api/v1/users', userDetails)
+    return instance.post('/api/v1/users', userDetails)
       .then((res) => {
         localStorage.setItem('x-access-token', res.data.token);
         dispatch({ type: 'CREATE_USER_RESOLVED', payload: res.data });
         signupPrompter();
-        if (jwt.decode(localStorage.getItem('x-access-token')).role !== 'User') {
-          browserHistory.push('/centers');
-        } else {
-          browserHistory.push('/');
-        }
       })
       .catch((err) => {
         dispatch({ type: 'CREATE_USER_REJECTED', payload: err.response.data });
@@ -29,16 +22,11 @@ const userSignup = userDetails =>
 const userLogin = loginDetails =>
   (dispatch) => {
     dispatch({ type: 'LOGIN_USER' });
-    axios.post('/api/v1/users/signin', loginDetails)
+    return instance.post('/api/v1/users/signin', loginDetails)
       .then((res) => {
         localStorage.setItem('x-access-token', res.data.token);
-        dispatch({ type: 'LOGIN_RESOLVED', payload: res.data, ...jwt.decode(localStorage.getItem('x-access-token')) });
+        dispatch({ type: 'LOGIN_RESOLVED', payload: res.data });
         signinPrompter();
-        if (isAdmin()) {
-          browserHistory.push('/centers');
-        } else {
-          browserHistory.push('/');
-        }
       })
       .catch((err) => {
         dispatch({ type: 'LOGIN_REJECTED', payload: err.response.data });
@@ -58,13 +46,12 @@ const logOut = () =>
     localStorage.removeItem('centerToBeModified');
     localStorage.removeItem('eventObject');
     dispatch({ type: 'USER_LOGOUT' });
-    browserHistory.push('/signin');
   };
 
 const getAllUsers = () =>
   (dispatch) => {
     dispatch({ type: 'FETCHING_ALL_USERS' });
-    axios({
+    return instance({
       method: 'GET',
       url: '/api/v1/users',
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
@@ -80,7 +67,7 @@ const getAllUsers = () =>
 const assignUserRole = userId =>
   (dispatch) => {
     dispatch({ type: 'ASSIGNING_USER_NEW_ROLE' });
-    axios({
+    return instance({
       url: `/api/v1/users/${userId}`,
       method: 'PUT',
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },

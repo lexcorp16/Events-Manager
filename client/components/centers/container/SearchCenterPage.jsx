@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import CenterCard from '../presentational/CenterCard';
 import { getAllCenters, modificationPrompt, promptSeeCenter } from '../../../actions/centerActions';
 import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
@@ -55,6 +56,7 @@ class SearchPage extends Component {
     event.preventDefault();
     const { id } = event.target;
     this.props.dispatch(modificationPrompt(id));
+    browserHistory.push('/modifycenter');
   }
   /**
  *
@@ -98,6 +100,7 @@ class SearchPage extends Component {
     event.preventDefault();
     const { id } = event.target;
     this.props.dispatch(promptSeeCenter(id));
+    browserHistory.push('/center');
   }
   /**
  *

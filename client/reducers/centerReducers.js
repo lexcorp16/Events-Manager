@@ -17,6 +17,7 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           addingCenter: true,
+          addedCenter: false,
         }
       };
     }
@@ -27,6 +28,7 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           addingCenter: false,
+          addedCenter: true,
         }
       };
     }
@@ -38,6 +40,7 @@ export default (state = initialState(), action) => {
           ...state.status,
           addingCenter: false,
           error: true,
+          addedCenter: false,
         }
       };
     }
@@ -225,6 +228,7 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           modifying: true,
+          modified: false,
         }
       };
     }
@@ -237,6 +241,7 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           modifying: false,
+          modified: true,
         }
       };
     }
@@ -247,6 +252,7 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           modifying: false,
+          modified: false,
         }
       };
     }

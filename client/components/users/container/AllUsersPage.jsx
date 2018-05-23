@@ -28,7 +28,7 @@ class AllUsersPage extends Component {
  * @memberof UsersStatusPage
  * @returns {object} a function that dispatches an action.
  */
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(getAllUsers());
   }
   /**

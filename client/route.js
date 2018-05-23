@@ -29,7 +29,7 @@ const Router = (
     <Route path="addcentertwo" component={AddCenterPageTwoForm} />
     <Route path="addcenterthree" component={addCenterPageThreeForm} />
     <Route path="addevent" component={AddEventPage} />
-    <Route path="modifycenter" component={ModifyCenterPage} />
+    <Route path="modifycenter" exact component={ModifyCenterPage} />
     <Route path="centers" component={AllCentersPage} />
     <Route path="center" component={CenterInfoPage} />
     <Route path="users" component={AllUsersPage} />

@@ -1,11 +1,10 @@
-import axios from 'axios';
-import { browserHistory } from 'react-router';
+import instance from '../utils/axios';
 import { deleteEventPrompter, addEventPrompter, modifyEventPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
 
 const addEvent = eventDetails =>
   (dispatch) => {
     dispatch({ type: 'ADD_EVENT' });
-    axios({
+    return instance({
       method: 'POST',
       url: '/api/v1/events',
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
@@ -14,7 +13,6 @@ const addEvent = eventDetails =>
       .then((res) => {
         dispatch({ type: 'ADD_EVENT_RESOLVED', payload: res.data });
         addEventPrompter();
-        browserHistory.push('/');
       })
       .catch((err) => {
         dispatch({ type: 'ADD_EVENT_REJECTED', payload: err.response.data });
@@ -29,7 +27,7 @@ const fetchEvents = id =>
       urlLink = `/api/v1/events/user?page=${id}`;
     }
     dispatch({ type: 'FETCH_EVENTS' });
-    axios({
+    return instance({
       method: 'GET',
       url: urlLink,
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
@@ -50,7 +48,7 @@ const promptDelete = () => dispatch => dispatch({ type: 'DELETE_EVENT_PROMPT' })
 const deleteEvent = eventId =>
   (dispatch) => {
     dispatch({ type: 'DELETING_EVENT' });
-    axios({
+    return instance({
       method: 'DELETE',
       url: `/api/v1/events/${eventId}`,
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
@@ -67,13 +65,12 @@ const deleteEvent = eventId =>
 const promptModify = event =>
   (dispatch) => {
     dispatch({ type: 'MODIFY_EVENT_PROMPT', eventId: event });
-    browserHistory.push('/modifyevent');
   };
 
 const modifyEvent = (eventdetails, eventId) =>
   (dispatch) => {
     dispatch({ type: 'MODIFYING_EVENT' });
-    axios({
+    return instance({
       method: 'PUT',
       url: `/api/v1/events/${eventId}`,
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },
@@ -81,7 +78,6 @@ const modifyEvent = (eventdetails, eventId) =>
     })
       .then((res) => {
         modifyEventPrompter();
-        browserHistory.push('/');
         dispatch({ type: 'MODIFY_EVENT_RESOLVED', payload: res.data, eventId });
       })
       .catch((err) => {
@@ -93,7 +89,7 @@ const modifyEvent = (eventdetails, eventId) =>
 const cancelUserEvent = eventId =>
   (dispatch) => {
     dispatch({ type: 'CANCELLING_USER_EVENT' });
-    axios({
+    return instance({
       method: 'POST',
       url: `api/v1/events/${eventId}`,
       headers: { 'x-access-token': localStorage.getItem('x-access-token') },

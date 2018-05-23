@@ -30,7 +30,7 @@ class CenterPage extends Component {
  * @memberof CenterPage
  * @returns {function} action dispatcher
  */
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(getACenter(localStorage.getItem('center-to-get')));
   }
   /**
