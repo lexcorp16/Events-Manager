@@ -1,6 +1,6 @@
 import axios from 'axios';
 import instance from '../utils/axios';
-import { signinPrompter, signupPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
+import { actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
 
 axios.defaults.withCredentials = true;
 
@@ -11,7 +11,7 @@ const userSignup = userDetails =>
       .then((res) => {
         localStorage.setItem('x-access-token', res.data.token);
         dispatch({ type: 'CREATE_USER_RESOLVED', payload: res.data });
-        signupPrompter();
+        toastPrompter('Welcome to Events Manager');
       })
       .catch((err) => {
         dispatch({ type: 'CREATE_USER_REJECTED', payload: err.response.data });
@@ -26,7 +26,7 @@ const userLogin = loginDetails =>
       .then((res) => {
         localStorage.setItem('x-access-token', res.data.token);
         dispatch({ type: 'LOGIN_RESOLVED', payload: res.data });
-        signinPrompter();
+        toastPrompter('You have signed in successfully');
       })
       .catch((err) => {
         dispatch({ type: 'LOGIN_REJECTED', payload: err.response.data });

@@ -1,20 +1,13 @@
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import browserHistory from './client/tests/__mocks__/browserHistory';
+import firebase from 'firebase-mock';
 
 import 'hammerjs';
 
 const $ = require('jquery');
-
-global.newBrowserHistory = browserHistory;
-global.localStorage = {
-  setItem: () => {},
-  clearItem: () => {},
-  getItem: () => {},
-  removeItem: () => {}
-},
+global.placeholderImage = 'lkjhgvjbnkmlknjbh';
+global.firebase = firebase;
 global.$ = $;
 $.prototype.modal = () => {};
-
 
 configure({ adapter: new Adapter() });

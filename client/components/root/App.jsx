@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Navbar from '../utils/Navbar';
-import '../../public/style.scss';
 
-const App = props =>
+export const App = props =>
   (
     <div>
       <Navbar />

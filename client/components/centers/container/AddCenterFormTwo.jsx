@@ -14,7 +14,7 @@ import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
  * @class AddCenterFormTwo
  * @extends {Component}
  */
-class AddCenterFormTwo extends Component {
+export class AddCenterFormTwo extends Component {
 /**
  * Creates an instance of AddCenterFormTwo.
  * @param {any} props
@@ -112,10 +112,6 @@ class AddCenterFormTwo extends Component {
             <div className="form-header">
               <p className="text-center header-form" style={{ marginTop: `${3}%` }} >Select Facilities And Rentalcost</p>
             </div>
-            { (this.props.user.status.error) &&
-            <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{ marginTop: `${1}%`, height: `${50}px`, background: 'none' }}>
-              <div className="text-center"><strong>An error has occurred</strong></div>
-            </div>}
             <form className="form form-group container" style={{ marginTop: `${60}px` }}>
               <div className="row facilities-checklist " style={{ marginBottom: `${30}px` }}>
                 <div className="col" style={{ marginBottom: '20px' }}>
@@ -204,11 +200,6 @@ const propTypes = {
     status: PropTypes.shape({
       error: PropTypes.bool,
       addedPrimaryCenterDetails: PropTypes.bool,
-    }),
-  }).isRequired,
-  user: PropTypes.shape({
-    status: PropTypes.shape({
-      error: PropTypes.bool,
     }),
   }).isRequired,
   dispatch: PropTypes.func.isRequired,

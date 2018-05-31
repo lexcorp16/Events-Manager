@@ -21,7 +21,7 @@ import
 import defaultImage from '../../../public/images/default-placeholder.png';
 
 /** Class representing a centerpage. */
-class ModifyCenterPage extends Component {
+export class ModifyCenterPage extends Component {
   /**
      * Initiate Props
      * @param {number} props - The x value.

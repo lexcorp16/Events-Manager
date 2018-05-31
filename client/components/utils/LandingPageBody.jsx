@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import '../../public/style.scss';
 import demoImage from '../../public/images/wedding3.jpg';
 import correspondent1 from '../../public/images/correspondent1.jpg';
 import correspondent2 from '../../public/images/correspondent2.jpg';
 import ComponentsHoc from '../HOC/UnauthenticatedPagesHoc';
 import Footer from './Footer';
 
-const LandingPageBody = () =>
+export const LandingPageBody = () =>
   (
     <div>
       <div id="home" className="view jarallax hm-black-slight" data-jarallax='{"speed": 0.2}' max-height="device-height" style={{ marginTop: '0%', color: 'black', fontFamily: 'Open Sans, sans-serif' }}>

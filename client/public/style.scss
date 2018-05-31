@@ -1,5 +1,160 @@
 $widthact : 1300px;
 
+.signup-page, .signin-page, .add-event-form {
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+}
+
+.signup-page, .signin-page {
+  margin-top: 150px;
+}
+
+.button-container {
+  margin-bottom : 50px;
+}
+
+.form-section {
+  width: 500px;
+  margin-top: 100px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.form-control {
+  border-radius: 0px;
+  border: none;
+  border-bottom: 1px solid #F50057;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 15px;
+}
+
+.password-signin {
+  margin-bottom: 5px;
+}
+
+.auth-pages {
+  width: 100%;
+}
+
+.form-header {
+  color: #F50057;
+  font-weight: bold;
+  margin-top: 10%;
+  font-size: 1.4em;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+
+.form-container {
+  margin-top: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+}
+
+.usericon {
+  margin-bottom: 40px;
+  margin-top: -20px;
+}
+
+.btn-submit {
+  font-family: 'Open Sans', sans-serif;
+  border-radius : 25px;
+  width: 65%;
+  background-color: #F50057;
+  color: white;
+  font-weight: bold;
+}
+
+label {
+  margin-bottom : 0px;
+  color: #BDBDBD;
+  font-weight: bold;
+}
+
+.alert {
+  height: 50px;
+  border-bottom: 0px;
+  background-color:black;
+  margin-top: -20px;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+}
+
+.lds-ring2 div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  margin: 2px;
+  border: 2px solid #F50057;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #F50057 transparent transparent transparent;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin: 2px;
+  border: 2px solid #F50057;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #F50057 transparent transparent transparent;
+}
+
+.custom-loader2 {
+  margin-top: 100px;
+  margin-left: -70px;
+}
+
+.custom-loader {
+  margin-left: 85%;
+  margin-top: -50px;
+  margin-right: 15px;
+}
+
+.lds-ring2 div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring2 div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring2 div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 575.98px) { 
+  .form-section {
+    width: 360px;
+  }
+  .signin-page, .signup-page {
+    margin-top: 20px;
+  }
+ }
 .header-form {
   margin-top: 50px;
 }

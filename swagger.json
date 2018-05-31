@@ -1,18 +1,14 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
-    "title": "Events Manager Api",
-    "description": "An Events Manager Api",
-    "termsOfService": "http://swagger.io/terms/",
-    "contact": {
-      "name": "Events Manager"
-    }
+    "version": "1.0",
+    "title": "events manager api",
+    "description": "A collection of endpoints for my events manager api"
   },
-  "host": "localhost:1234",
-  "basePath": "/api",
+  "host": "events-manager-efosa.herokuapp.com",
+  "basePath": "/api/v1",
   "schemes": [
-    "http"
+    "https"
   ],
   "consumes": [
     "application/json"
@@ -21,166 +17,858 @@
     "application/json"
   ],
   "paths": {
-    "/api": {
-      "get": {
-        "description": "A simple welcome message in json",
-        "operationId": "welcome",
+    "/users": {
+      "post": {
+        "description": "Signup api endpoint",
+        "summary": "Signup",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "UsersPost",
         "produces": [
           "application/json"
         ],
-        "responses": {
-          "200": {
-            "description": "a simple welcome response",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/usersignin"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/users": {
-      "post": {
-        "description": "Returns a token and message or just an error message",
-        "operationId": "signUpuser",
-        "produces": [
-          "application/json"
+        "consumes": [
+          "application/x-www-form-urlencoded"
         ],
         "parameters": [
           {
             "name": "firstname",
-            "in": "body",
-            "description": "firstname of user who wants to signup",
+            "in": "formData",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "lastname",
-            "in": "body",
-            "description": "lastname of user who wants to signup",
+            "in": "formData",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "email",
-            "in": "body",
-            "description": "email of user who wants to signup",
+            "in": "formData",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "password",
-            "in": "body",
-            "description": "passord of user who wants to signup",
+            "in": "formData",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "confirmpassword",
-            "in": "body",
-            "description": "repetition of passord of user who wants to signup",
+            "in": "formData",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
           }
         ],
         "responses": {
-          "201": {
-            "description": "a success response if no error is found containing jwt token",
-            "schema": {
-              "type": "application/json",
-              "$ref": "#/definitions/Pet"
-            }
-          },
-          "400": {
-            "description": "client side error",
-            "schema": {
-              "$ref": "#/definitions/ErrorModel"
-            }
-          },
-          "409": {
-            "description": "conflict error",
-            "schema": {
-              "$ref": "#/definitions/ErrorModel"
-            }
+          "200": {
+            "description": ""
           }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/users",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              "body": "firstname=Efosa&lastname=Okpugie&email=efosaokpugie@yahoo.com&password=swampious&confirmpassword=swampious"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Signup",
+            "x-testDescription": "Signup api endpoint"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/users/signin": {
+      "post": {
+        "description": "Sign in api endpoint",
+        "summary": "User login",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "UsersSigninPost",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/users/signin",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              "body": "email=efosaokpugie@gmail.com&password=swampious"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "User login",
+            "x-testDescription": "Sign in api endpoint"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291": {
+      "get": {
+        "description": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query.",
+        "summary": "Get centers",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "Centers383ef4e7Eec146f7Ab0292c9c4974291Get2",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "rentalCost",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "capacity",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "GET",
+              "uri": "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291?page=1&offset=1&limit=10&name=Rogaros&type=Seminar&rentalCost=23000&capacity=340000"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Get centers1",
+            "x-testDescription": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query."
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
+      "put": {
+        "description": "for modifying a center",
+        "summary": "Edit Center",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "Centers383ef4e7Eec146f7Ab0292c9c4974291Put",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "address",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "PUT",
+              "uri": "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
+              },
+              "body": "name=Very Great center&address="
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Edit Center",
+            "x-testDescription": "for modifying a center"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/events/": {
+      "post": {
+        "description": "api endpoint to add an event",
+        "summary": "Create Event",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "EventsPost",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "type",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "center",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "date",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/events/",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmOWM1ZmQ4Mi01Y2MzLTQ2YWUtYWFhYS1hM2U3OTJmZWQ1Y2IiLCJpYXQiOjE1MjQ2NTUxODksImV4cCI6MTUyNTAxNTE4OX0.N1pfQnMY8ZAUHHJZyKCFucymfeBBgb0l79J5jy-sr44"
+              },
+              "body": "name=Eventful Party&type=birthday&center=383ef4e7-eec1-46f7-ab02-92c9c4974291&date=2018-05-20"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Create Event",
+            "x-testDescription": "api endpoint to add an event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/events/82945436-b25a-42df-80cc-94ce93271537": {
+      "put": {
+        "description": "api endpoint to modify an event",
+        "summary": "Edit Event",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "Events82945436B25a42df80cc94ce93271537Put",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "date",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "PUT",
+              "uri": "/events/82945436-b25a-42df-80cc-94ce93271537",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
+              },
+              "body": "name=Dope Event&date=2018-07-03"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Edit Event",
+            "x-testDescription": "api endpoint to modify an event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/events/user": {
+      "get": {
+        "description": "api endpoint to get a users event",
+        "summary": "Get Users",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "EventsUserGet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "GET",
+              "uri": "/events/user",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Get Users",
+            "x-testDescription": "api endpoint to get a users event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/users/f9c5fd82-5cc3-46ae-aaaa-a3e792fed5cb": {
+      "put": {
+        "description": "api endpoint to make user become admin\n\nThis endpoint requires the authorization of a SuperAdmin.",
+        "summary": "Upgrade/Downgrade User",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "UsersF9c5fd825cc346aeAaaaA3e792fed5cbPut",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "PUT",
+              "uri": "/users/f9c5fd82-5cc3-46ae-aaaa-a3e792fed5cb",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Upgrade/Downgrade User",
+            "x-testDescription": "api endpoint to make user become admin\n\nThis endpoint requires the authorization of a SuperAdmin."
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2": {
+      "post": {
+        "description": "api endpoint to cancel user Event",
+        "summary": "Cancel user Event",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "Events7f9d48f6941640f68d426587b7e303e2Post",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Cancel user Event",
+            "x-testDescription": "api endpoint to cancel user Event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
         }
       },
       "delete": {
-        "description": "deletes a single pet based on the ID supplied",
-        "operationId": "deletePet",
+        "description": "api endpoint to delete an event",
+        "summary": "Delete Event",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "Events7f9d48f6941640f68d426587b7e303e2Delete",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of pet to delete",
+            "name": "x-access-token",
+            "in": "header",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "description": ""
           }
         ],
         "responses": {
-          "204": {
-            "description": "pet deleted"
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "DELETE",
+              "uri": "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmOWM1ZmQ4Mi01Y2MzLTQ2YWUtYWFhYS1hM2U3OTJmZWQ1Y2IiLCJpYXQiOjE1MjQ2NTUxODksImV4cCI6MTUyNTAxNTE4OX0.N1pfQnMY8ZAUHHJZyKCFucymfeBBgb0l79J5jy-sr44"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Delete Event",
+            "x-testDescription": "api endpoint to delete an event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/centers/": {
+      "post": {
+        "description": "",
+        "summary": "Create Center",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "CentersPost",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
           },
-          "default": {
-            "description": "unexpected error",
-            "schema": {
-              "$ref": "#/definitions/ErrorModel"
-            }
+          {
+            "name": "type",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "capacity",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "rentalCost",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "address",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "facilities",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
           }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "Pet": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/NewPet"
-        },
-        {
-          "required": [
-            "id"
-          ],
-          "properties": {
-            "id": {
-              "type": "integer",
-              "format": "int64"
-            }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
           }
-        }
-      ]
-    },
-    "NewPet": {
-      "type": "object",
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
         },
-        "tag": {
-          "type": "string"
-        }
-      }
-    },
-    "ErrorModel": {
-      "type": "object",
-      "required": [
-        "code",
-        "message"
-      ],
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "message": {
-          "type": "string"
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/centers/",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              "body": "name=Amity&type=Multipurpose Hall&capacity=23000&rentalCost=12000000&address=1, AMinu street, Mende maryland, Lagos.&facilities=Lounge"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Create Center",
+            "x-testDescription": ""
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
         }
       }
     }

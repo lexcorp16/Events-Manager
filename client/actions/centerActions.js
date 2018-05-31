@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import 'babel-polyfill';
 import instance from '../utils/axios';
-import { centerModifiedPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
+import { actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
 import { displayUploadedImage } from '../utils/mescill.utils';
 import generateCenterUrl from '../helpers/generateCenterUrl';
 
@@ -160,7 +160,7 @@ const modifyCenter = (detailsToBeModified, centerToBeModified) =>
     })
       .then((res) => {
         dispatch({ type: 'MODIFY_CENTER_RESOLVED', payload: res.data });
-        centerModifiedPrompter();
+        toastPrompter('Center has been modified successfully');
       })
       .catch((err) => {
         dispatch({ type: 'MODIFY_CENTER_REJECTED', payload: err.response.data });
@@ -171,11 +171,6 @@ const modifyCenter = (detailsToBeModified, centerToBeModified) =>
 const imageChangePrompt = () =>
   (dispatch) => {
     dispatch({ type: 'IMAGE_CHANGE_PROMPT' });
-  };
-
-const deleteCenterPrompt = () =>
-  (dispatch) => {
-    dispatch({ type: 'DELETE_CENTER_PROMPT' });
   };
 
 export {
@@ -190,7 +185,6 @@ export {
   cancelUpload,
   modificationPrompt,
   imageChangePrompt,
-  deleteCenterPrompt,
   modifyCenter,
   getACenter,
   promptSeeCenter,

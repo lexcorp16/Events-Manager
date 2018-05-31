@@ -12,7 +12,7 @@ import PaginationLinks from '../../utils/PaginationLinks';
  * @class CenterPage
  * @extends {Component}
  */
-class AllCenterPage extends Component {
+export class AllCenterPage extends Component {
 /**
  * Creates an instance of CenterPage.
  * @param {any} props

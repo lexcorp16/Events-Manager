@@ -1,3 +1,5 @@
+import userInitialState from '../utils/userInitialState';
+
 const modifyArrayOfUsersByUpgradeChange = (value, arr) => {
   arr.forEach((index) => {
     if (index.id === value) {
@@ -13,24 +15,6 @@ const modifyArrayOfUsersByUpgradeChange = (value, arr) => {
   return arr;
 };
 
-const initialState = () => {
-  if (localStorage.getItem('x-access-token')) {
-    return {
-      token: localStorage.getItem('x-access-token'),
-      unauthenticatedErrorMessage: '',
-      status: {
-        unauthenticatedAttempt: false,
-        authenticated: true,
-        fetching: false,
-        fetched: true,
-        error: false,
-        userRoleIschanged: false,
-        fetchingAllUsers: true,
-      }
-    };
-  }
-  return undefined;
-};
 /**
  *
  * @export es6 module export
@@ -38,7 +22,7 @@ const initialState = () => {
  * @param {any} action
  * @returns {object} new state of app
  */
-export default function reducer(state = initialState() || {
+export default function userReducers(state = userInitialState() || {
   token: '',
   unauthenticatedErrorMessage: '',
   status: {
@@ -193,18 +177,6 @@ export default function reducer(state = initialState() || {
     case 'USER_LOGOUT': {
       return {
         ...state,
-        errorMessage: undefined,
-        token: undefined,
-        firstname: undefined,
-        lastname: undefined,
-        status: {
-          ...state.status,
-          fetching: false,
-          error: false,
-          authenticated: false,
-          unauthenticatedAttempt: false,
-          fetched: false,
-        }
       };
     }
     case 'CLEAR_ERROR': {

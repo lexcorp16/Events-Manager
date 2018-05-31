@@ -12,7 +12,7 @@ import isAdmin from '../../../helpers/isAdmin';
 * @Center, class containing all methods that
 * handle center related api endpoint
 */
-class SigninBody extends Component {
+export class SigninBody extends Component {
   /**
  * Creates an instance of SigninBody.
  * @memberof SigninBody

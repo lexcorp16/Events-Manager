@@ -1,4 +1,4 @@
-const initialState = () => {
+const eventInitialState = () => {
   const state = {
     events: {
       userEvents: [],
@@ -39,4 +39,4 @@ const initialState = () => {
   return state;
 };
 
-export default initialState;
+export default eventInitialState;

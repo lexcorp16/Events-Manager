@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import '../../../public/signin.scss';
 import isAdmin from '../../../helpers/isAdmin';
 import { userSignup, clearError } from '../../../actions/userActions';
 import isValidDetails from '../../../validations/signup.validate';
@@ -15,7 +14,7 @@ import isAuthenticated from '../../../helpers/isAuthenticated';
  * @class SignupBody
  * @extends {Component}
  */
-class SignupBody extends Component {
+export class SignupBody extends Component {
 /**
  * Creates an instance of SignupBody.
  * @param {any} props

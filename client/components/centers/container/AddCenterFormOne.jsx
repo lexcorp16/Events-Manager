@@ -13,7 +13,7 @@ import ComponentsHoc from '../../HOC/AuthPagesHoc';
  * @class AddCenterFormOne
  * @extends {Component}
  */
-class AddCenterFormOne extends Component {
+export class AddCenterFormOne extends Component {
 /**
  * Creates an instance of AddCenterFormOne.
  * @param {any} props

@@ -7,6 +7,7 @@ const AuthPagesHoc = WrappedComponent =>
   (
     (props) => {
       if (!isAuthenticated()) {
+        console.log(isAuthenticated);
         actionRejectedPrompter('You have to sign in first');
         return <SigninPage />;
       }

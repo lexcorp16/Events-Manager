@@ -2,15 +2,12 @@ import moxios from 'moxios';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import expect from 'expect';
-import userMockData from './__mocks__/userMockData';
-import instance from '../utils/axios';
-import { getAllUsers, assignUserRole, clearError } from '../actions/userActions';
+import userMockData from '../__mocks__/userMockData';
+import instance from '../../utils/axios';
+import { getAllUsers, assignUserRole, clearError } from '../../actions/userActions';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
-global.window = {};
-window.localStorage = global.localStorage;
 
 describe('async user based actions', () => {
   beforeEach(() => moxios.install(instance));

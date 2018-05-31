@@ -1,6 +1,6 @@
-import initialState from '../utils/centerInitialState';
+import centerInitialState from '../utils/centerInitialState';
 
-const assignNullValueToCancelledEvent = (value, arr) => {
+const removeCancelledEventFromVenueList = (value, arr) => {
   arr.forEach((index) => {
     if (index.id === value) {
       arr.splice(arr.indexOf(index), 1);
@@ -9,8 +9,29 @@ const assignNullValueToCancelledEvent = (value, arr) => {
   return arr;
 };
 
-export default (state = initialState(), action) => {
+export default (state = centerInitialState(), action) => {
   switch (action.type) {
+    case 'ADD_PRIMARY_CENTER_DETAILS': {
+      return {
+        ...state,
+        primaryCenterDetails: action.payload,
+        status: {
+          ...state.status,
+          addedPrimaryCenterDetails: true,
+        }
+      };
+    }
+    case 'ADD_RENTAL_COST_AND_FACILITIES': {
+      return {
+        ...state,
+        rentalCostAndFacilities: action.payload,
+        status: {
+          ...state.status,
+          addedCosts: true,
+          addedFacilities: true,
+        }
+      };
+    }
     case 'ADDING_CENTER': {
       return {
         ...state,
@@ -52,8 +73,8 @@ export default (state = initialState(), action) => {
         status: {
           ...state.status,
           uploadingImage: true,
-          uploadImagePaused: false,
           uploadImageCancelled: false,
+          uploadImagePaused: false,
           uploadedImage: false,
         },
       };
@@ -63,10 +84,10 @@ export default (state = initialState(), action) => {
         ...state,
         status: {
           ...state.status,
+          uploadImageCancelled: true,
           uploadingImage: false,
           uploadImagePaused: false,
           uploadedImage: false,
-          uploadImageCancelled: true,
         },
       };
     }
@@ -76,11 +97,47 @@ export default (state = initialState(), action) => {
         imageUpload: action.payload,
         status: {
           ...state.status,
-          uploadingImage: false,
-          uploadingImageCancelled: false,
           uploadImagePaused: true,
+          uploadingImage: false,
+          uploadImageCancelled: false,
           uploadedImage: false,
         },
+      };
+    }
+    case 'UPLOAD_CENTER_IMAGE_RESOLVED': {
+      return {
+        ...state,
+        imageUpload: action.payload,
+        status: {
+          ...state.status,
+          uploadedImage: true,
+          uploadingImage: false,
+          uploadImageCancelled: false,
+          uploadImagePaused: false,
+        },
+      };
+    }
+    case 'UPLOAD_CENTER_IMAGE_REJECTED': {
+      return {
+        ...state,
+        errorMessage: action.payload.error,
+        status: {
+          ...state.status,
+          uploadingImage: false,
+          uploadedImage: false,
+          error: true,
+        },
+      };
+    }
+    case 'PROMPT_SEE_A_CENTER': {
+      localStorage.setItem('center-to-get', action.centerId);
+      return {
+        ...state,
+        centerToGet: action.centerId,
+        status: {
+          ...state.status,
+          getACenterPrompted: true,
+        }
       };
     }
     case 'FETCHING_A_CENTER': {
@@ -116,52 +173,6 @@ export default (state = initialState(), action) => {
           error: true,
           fetchingACenter: false,
         },
-      };
-    }
-    case 'UPLOAD_CENTER_IMAGE_RESOLVED': {
-      return {
-        ...state,
-        imageUpload: action.payload,
-        status: {
-          ...state.status,
-          uploadingImage: false,
-          uploadedImage: true,
-          uploadImageCancelled: false,
-          uploadImagePaused: false,
-        },
-      };
-    }
-    case 'UPLOAD_CENTER_IMAGE_REJECTED': {
-      return {
-        ...state,
-        errorMessage: action.payload.error,
-        status: {
-          ...state.status,
-          uploadingImage: false,
-          uploadedImage: false,
-          error: true,
-        },
-      };
-    }
-    case 'ADD_PRIMARY_CENTER_DETAILS': {
-      return {
-        ...state,
-        primaryCenterDetails: action.payload,
-        status: {
-          ...state.status,
-          addedPrimaryCenterDetails: true,
-        }
-      };
-    }
-    case 'ADD_RENTAL_COST_AND_FACILITIES': {
-      return {
-        ...state,
-        rentalCostAndFacilities: action.payload,
-        status: {
-          ...state.status,
-          addedCosts: true,
-          addedFacilities: true,
-        }
       };
     }
     case 'FETCH_CENTERS': {
@@ -267,16 +278,6 @@ export default (state = initialState(), action) => {
       };
     }
 
-    case 'DELETE_CENTER_PROMPT': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          deletecenterPrompted: true,
-        }
-      };
-    }
-
     case 'CANCELLING_USER_EVENT': {
       return {
         ...state,
@@ -297,7 +298,7 @@ export default (state = initialState(), action) => {
           ...state.oneCenter,
           aCenter: {
             ...state.oneCenter.aCenter,
-            venueOfEvent: assignNullValueToCancelledEvent(action.eventId, venueOfEvent),
+            venueOfEvent: removeCancelledEventFromVenueList(action.eventId, venueOfEvent),
           }
         },
         status: {
@@ -322,22 +323,8 @@ export default (state = initialState(), action) => {
     }
 
     case 'USER_LOGOUT': {
-      localStorage.removeItem('centerToBeModified');
-      localStorage.removeItem('center-to-get');
-      return {
-        ...initialState(),
-      };
-    }
-
-    case 'PROMPT_SEE_A_CENTER': {
-      localStorage.setItem('center-to-get', action.centerId);
       return {
         ...state,
-        centerToGet: action.centerId,
-        status: {
-          ...state.status,
-          getACenterPrompted: true,
-        }
       };
     }
 

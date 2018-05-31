@@ -17,7 +17,7 @@ import ModifyEventPageHoc from '../../HOC/ModifyEventPageHoc';
  * @class ModifyEventPage
  * @extends {Component}
  */
-class ModifyEventPage extends Component {
+export class ModifyEventPage extends Component {
 /**
  * Creates an instance of AddEventPage.
  * @param {any} props
@@ -189,7 +189,6 @@ const propTypes = {
   }).isRequired,
   event: PropTypes.shape({
     status: PropTypes.objectOf(PropTypes.bool),
-    errorMessage: PropTypes.string,
     eventObject: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
   }).isRequired,
   dispatch: PropTypes.func.isRequired,

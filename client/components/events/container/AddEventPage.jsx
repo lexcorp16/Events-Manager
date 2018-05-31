@@ -16,7 +16,7 @@ import ComponentsHoc from '../../HOC/AuthPagesHoc';
  * @class AddEventPage
  * @extends {Component}
  */
-class AddEventPage extends Component {
+export class AddEventPage extends Component {
 /**
  * Creates an instance of AddEventPage.
  * @param {any} props
@@ -175,8 +175,6 @@ const propTypes = {
   }).isRequired,
   event: PropTypes.shape({
     status: PropTypes.objectOf(PropTypes.bool),
-    errorMessage: PropTypes.string,
-    eventObject: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };

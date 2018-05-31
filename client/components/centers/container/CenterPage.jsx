@@ -14,7 +14,7 @@ import FetchACenterHoc from '../../HOC/FetchACenterHoc';
  * @extends {Component}
  *
  */
-class CenterPage extends Component {
+export class CenterPage extends Component {
 /**
  * Creates an instance of CenterPage.
  * @param {any} props
@@ -32,6 +32,15 @@ class CenterPage extends Component {
  */
   componentDidMount() {
     this.props.dispatch(getACenter(localStorage.getItem('center-to-get')));
+  }
+  /**
+ *
+ *
+ * @memberof CenterPage
+ * @returns {null} localstorage utem removal
+ */
+  componentWillUnmount() {
+    localStorage.removeItem('center-to-get');
   }
   /**
  *
@@ -54,7 +63,8 @@ class CenterPage extends Component {
   render() {
     return (
       <div className="container one-center">
-        {this.props.center.status.fetchingACenter || !this.props.center.oneCenter.aCenter ?
+        {this.props.center.status.fetchingACenter ||
+        !this.props.center.oneCenter.aCenter ?
           <div className="text-center">
             <LargeLoadingIcon />
           </div> :
@@ -95,11 +105,6 @@ const propTypes = {
       })
     }),
     status: PropTypes.objectOf(PropTypes.bool),
-    allCenters: PropTypes.shape({
-      centers: PropTypes.arrayOf(PropTypes.shape({
-        isAvailable: PropTypes.bool,
-      }))
-    })
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };

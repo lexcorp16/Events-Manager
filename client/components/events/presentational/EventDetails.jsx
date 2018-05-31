@@ -50,9 +50,6 @@ const EventDetails = props =>
 
 export default EventDetails;
 
-EventDetails.defaulProps = {
-  eventDetails: PropTypes.object,
-};
 EventDetails.propTypes = {
   eventDetails: PropTypes.objectOf(PropTypes.string).isRequired,
   venueDetails: PropTypes.shape({ /* eslint-disable-line */

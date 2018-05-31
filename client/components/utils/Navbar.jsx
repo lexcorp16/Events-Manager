@@ -14,7 +14,7 @@ import { logOut } from '../../actions/userActions';
  * @class Navbar
  * @extends {Component}
  */
-class Navbar extends Component {
+export class Navbar extends Component {
   /**
    *
    *

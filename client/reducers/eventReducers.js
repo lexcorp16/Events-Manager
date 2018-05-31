@@ -1,6 +1,6 @@
-import initialState from '../utils/eventInitialState';
+import eventInitialState from '../utils/eventInitialState';
 
-const reducer = (state = initialState(), action) => {
+const eventReducer = (state = eventInitialState(), action) => {
   switch (action.type) {
     case 'ADD_EVENT': {
       return {
@@ -48,8 +48,6 @@ const reducer = (state = initialState(), action) => {
         status: {
           ...state.status,
           fetchingEvents: true,
-          adding: true,
-          added: false,
           error: false,
         }
       };
@@ -62,8 +60,6 @@ const reducer = (state = initialState(), action) => {
         status: {
           ...state.status,
           fetchingEvents: false,
-          adding: false,
-          added: true,
           error: false,
         }
       };
@@ -75,19 +71,7 @@ const reducer = (state = initialState(), action) => {
         status: {
           ...state.status,
           fetchingEvents: false,
-          adding: false,
-          added: false,
           error: true,
-        }
-      };
-    }
-
-    case 'DELETING_EVENT': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          error: false,
         }
       };
     }
@@ -114,6 +98,18 @@ const reducer = (state = initialState(), action) => {
           error: false,
           deleteEventPrompted: false,
           eventIsDeleted: true,
+        }
+      };
+    }
+
+    case 'DELETE_EVENT_REJECTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          error: true,
+          deleteEventPrompted: false,
+          eventIsDeleted: false,
         }
       };
     }
@@ -175,9 +171,8 @@ const reducer = (state = initialState(), action) => {
     }
 
     case 'USER_LOGOUT': {
-      localStorage.removeItem('eventObject');
       return {
-        ...initialState(),
+        ...state,
       };
     }
     case 'CLEAR_ERROR': {
@@ -198,4 +193,4 @@ const reducer = (state = initialState(), action) => {
   }
 };
 
-export default reducer;
+export default eventReducer;

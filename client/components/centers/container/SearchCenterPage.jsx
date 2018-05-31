@@ -14,7 +14,7 @@ import PaginationLinks from '../../utils/PaginationLinks';
  * @class SearchPage
  * @extends {Component}
  */
-class SearchPage extends Component {
+export class SearchCenterPage extends Component {
 /**
  * Creates an instance of SearchPage.
  * @param {any} props
@@ -187,9 +187,9 @@ const mapDispatchToProps = dispatch =>
     dispatch: (actionObject => dispatch(actionObject)),
   });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchCenterPage);
 
-SearchPage.propTypes = {
+SearchCenterPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   center: PropTypes.shape({
     allCenters: PropTypes.shape({

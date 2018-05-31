@@ -1,5 +1,5 @@
 import instance from '../utils/axios';
-import { deleteEventPrompter, addEventPrompter, modifyEventPrompter, actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
+import { actionRejectedPrompter, toastPrompter } from '../utils/alerts.sweetalert';
 
 const addEvent = eventDetails =>
   (dispatch) => {
@@ -12,7 +12,7 @@ const addEvent = eventDetails =>
     })
       .then((res) => {
         dispatch({ type: 'ADD_EVENT_RESOLVED', payload: res.data });
-        addEventPrompter();
+        toastPrompter('Event successfully created');
       })
       .catch((err) => {
         dispatch({ type: 'ADD_EVENT_REJECTED', payload: err.response.data });
@@ -55,10 +55,10 @@ const deleteEvent = eventId =>
     })
       .then((res) => {
         dispatch({ type: 'DELETE_EVENT_RESOLVED', payload: res.data, eventId });
-        deleteEventPrompter();
+        toastPrompter('Event successfully deleted');
       })
       .catch((err) => {
-        dispatch({ type: 'DELETE_EVENTS_REJECTED', payload: err.response.data });
+        dispatch({ type: 'DELETE_EVENT_REJECTED', payload: err.response.data });
       });
   };
 
@@ -77,7 +77,7 @@ const modifyEvent = (eventdetails, eventId) =>
       data: eventdetails,
     })
       .then((res) => {
-        modifyEventPrompter();
+        toastPrompter('Event successfully modified');
         dispatch({ type: 'MODIFY_EVENT_RESOLVED', payload: res.data, eventId });
       })
       .catch((err) => {

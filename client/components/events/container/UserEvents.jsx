@@ -19,7 +19,7 @@ import PaginationLinks from '../../utils/PaginationLinks';
  * @class UserEvents
  * @extends {Component}
  */
-class UserEvents extends Component {
+export class UserEvents extends Component {
 /**
  * Creates an instance of UserEvents.
  * @param {any} props

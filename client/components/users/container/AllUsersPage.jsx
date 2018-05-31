@@ -12,7 +12,7 @@ import AccessGrantPageHoc from '../../HOC/AccessGrantPageHoc';
  * @extends {Component}
  * @returns {object} html dom object
  */
-class AllUsersPage extends Component {
+export class AllUsersPage extends Component {
 /**
  * Creates an instance of AllUsersPage.
  * @param {any} props
