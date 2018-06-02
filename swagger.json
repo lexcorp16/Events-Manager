@@ -22,7 +22,7 @@
         "description": "Signup api endpoint",
         "summary": "Signup",
         "tags": [
-          "Misc"
+          "Authentication endpoints"
         ],
         "operationId": "UsersPost",
         "produces": [
@@ -76,8 +76,45 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": ""
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Signup"
+            },
+            "examples": {
+              "application/json": {
+                "message": "You have successfully signed up",
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjIxOSwiZXhwIjoxNTI4MjkyMjE5fQ.Gqyl4B3yRT0uCfxHN1by4ixSLmHNP6YizywGWXuk2X8"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Signup1"
+            },
+            "examples": {
+              "application/json": {
+                "error": [
+                  "firstname field is required",
+                  "lastname field is required",
+                  "email field is required",
+                  "password field is required",
+                  "confirmpassword field is required"
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Signup2"
+            },
+            "examples": {
+              "application/json": {
+                "error": "Another user with this email already exists"
+              }
+            }
           }
         },
         "security": [],
@@ -93,11 +130,26 @@
             },
             "expectedResponse": {
               "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
+              "x-bodyMatchMode": "RAW",
               "x-arrayOrderedMatching": false,
               "x-arrayCheckCount": false,
               "x-matchResponseSchema": true,
-              "headers": {}
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "267",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 09:36:59 GMT",
+                "etag": "W/\"10b-4S1XdNjyN4PYNitzTe3MfJ69F3k\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"You have successfully signed up\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjIxOSwiZXhwIjoxNTI4MjkyMjE5fQ.Gqyl4B3yRT0uCfxHN1by4ixSLmHNP6YizywGWXuk2X8\"}"
             },
             "x-testShouldPass": true,
             "x-testEnabled": true,
@@ -118,7 +170,7 @@
         "description": "Sign in api endpoint",
         "summary": "User login",
         "tags": [
-          "Misc"
+          "Authentication endpoints"
         ],
         "operationId": "UsersSigninPost",
         "produces": [
@@ -152,7 +204,27 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            },
+            "examples": {
+              "application/json": {
+                "message": "You have successfully logged in",
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjcwMCwiZXhwIjoxNTI4MjkyNzAwfQ.k7Zt2kWLuX5pQW30MiVh5NBH9kaEgXitYvlMtTcEz9w"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/UserLogin4"
+            },
+            "examples": {
+              "application/json": {
+                "error": "Invalid email or password"
+              }
+            }
           }
         },
         "security": [],
@@ -168,11 +240,26 @@
             },
             "expectedResponse": {
               "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
+              "x-bodyMatchMode": "RAW",
               "x-arrayOrderedMatching": false,
               "x-arrayCheckCount": false,
               "x-matchResponseSchema": true,
-              "headers": {}
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "267",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 09:45:00 GMT",
+                "etag": "W/\"10b-jtMQEjNi/q+W5bKCU1vgHN+P4LU\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"You have successfully logged in\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjcwMCwiZXhwIjoxNTI4MjkyNzAwfQ.k7Zt2kWLuX5pQW30MiVh5NBH9kaEgXitYvlMtTcEz9w\"}"
             },
             "x-testShouldPass": true,
             "x-testEnabled": true,
@@ -193,7 +280,7 @@
         "description": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query.",
         "summary": "Get centers",
         "tags": [
-          "Misc"
+          "Center Related endpoints"
         ],
         "operationId": "Centers383ef4e7Eec146f7Ab0292c9c4974291Get2",
         "produces": [
@@ -277,7 +364,7 @@
             },
             "x-testShouldPass": true,
             "x-testEnabled": true,
-            "x-testName": "Get centers1",
+            "x-testName": "Get centers",
             "x-testDescription": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query."
           }
         ],
@@ -292,7 +379,7 @@
         "description": "for modifying a center",
         "summary": "Edit Center",
         "tags": [
-          "Misc"
+          "Center Related endpoints"
         ],
         "operationId": "Centers383ef4e7Eec146f7Ab0292c9c4974291Put",
         "produces": [
@@ -333,35 +420,154 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EditCenter7"
+            },
+            "examples": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/EditCenter"
+            },
+            "examples": {
+              "application/json": {
+                "error": "You are not authorized to perform this action"
+              }
+            }
           }
         },
         "security": [],
-        "x-unitTests": [
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/centers/": {
+      "post": {
+        "description": "",
+        "summary": "Create Center",
+        "tags": [
+          "Center Related endpoints"
+        ],
+        "operationId": "CentersPost",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
           {
-            "request": {
-              "method": "PUT",
-              "uri": "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291",
-              "headers": {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
-              },
-              "body": "name=Very Great center&address="
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "Edit Center",
-            "x-testDescription": "for modifying a center"
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "type",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "capacity",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "mobileNumber",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "address",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "rentalCost",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "facilities",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
           }
         ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateCenter13"
+            },
+            "examples": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/CreateCenter"
+            },
+            "examples": {
+              "application/json": {
+                "error": [
+                  "name is required",
+                  "type is required",
+                  "capacity is required",
+                  "mobileNumber is required",
+                  "address is required",
+                  "rentalCost is required",
+                  "Please specify facilities"
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/CreateCenter15"
+            },
+            "examples": {
+              "application/json": {
+                "error": "this name has been taken, Please choose another name"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [],
         "x-operation-settings": {
           "CollectParameters": false,
           "AllowDynamicQueryParameters": false,
@@ -375,7 +581,7 @@
         "description": "api endpoint to add an event",
         "summary": "Create Event",
         "tags": [
-          "Misc"
+          "Event Related endpoints"
         ],
         "operationId": "EventsPost",
         "produces": [
@@ -429,8 +635,59 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": ""
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateEvent19"
+            },
+            "examples": {
+              "application/json": {
+                "message": "Event successfully added",
+                "newEvent": {
+                  "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+                  "name": "Eventful Party",
+                  "type": "birthday",
+                  "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+                  "date": "2018-08-22T00:00:00Z",
+                  "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+                  "updatedAt": "2018-06-02T10:12:05.131Z",
+                  "createdAt": "2018-06-02T10:12:05.131Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/CreateEvent"
+            },
+            "examples": {
+              "application/json": {
+                "error": "You have to login First"
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "schema": {
+              "$ref": "#/definitions/CreateEvent"
+            },
+            "examples": {
+              "application/json": {
+                "error": "The date chosen is past, please choose another date"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/CreateEvent"
+            },
+            "examples": {
+              "application/json": {
+                "error": "Another event is slated for the chosen center,Please choose another date or center"
+              }
+            }
           }
         },
         "security": [],
@@ -447,11 +704,26 @@
             },
             "expectedResponse": {
               "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
+              "x-bodyMatchMode": "RAW",
               "x-arrayOrderedMatching": false,
               "x-arrayCheckCount": false,
               "x-matchResponseSchema": true,
-              "headers": {}
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "343",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 10:12:05 GMT",
+                "etag": "W/\"157-/JQimtR0HH3eO9Kvuxb0725rcpA\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"Event successfully added\",\"newEvent\":{\"id\":\"b3541ea9-d908-4096-bf5d-445cdbcc5bbb\",\"name\":\"Eventful Party\",\"type\":\"birthday\",\"center\":\"25565a23-3c01-48e7-bbc8-17c41dfa003f\",\"date\":\"2018-08-22T00:00:00Z\",\"user\":\"c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0\",\"updatedAt\":\"2018-06-02T10:12:05.131Z\",\"createdAt\":\"2018-06-02T10:12:05.131Z\"}}"
             },
             "x-testShouldPass": true,
             "x-testEnabled": true,
@@ -467,14 +739,14 @@
         }
       }
     },
-    "/events/82945436-b25a-42df-80cc-94ce93271537": {
+    "/events/b3541ea9-d908-4096-bf5d-445cdbcc5bb9": {
       "put": {
         "description": "api endpoint to modify an event",
         "summary": "Edit Event",
         "tags": [
-          "Misc"
+          "Event Related endpoints"
         ],
-        "operationId": "Events82945436B25a42df80cc94ce93271537Put",
+        "operationId": "EventsB3541ea9D9084096Bf5d445cdbcc5bb9Put",
         "produces": [
           "application/json"
         ],
@@ -513,7 +785,36 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EditEvent22"
+            },
+            "examples": {
+              "application/json": {
+                "message": "successfully modified",
+                "modifiedEvent": {
+                  "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+                  "name": "Dope Event",
+                  "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+                  "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+                  "type": "birthday",
+                  "date": "2018-07-03T00:00:00Z",
+                  "createdAt": "2018-06-02T10:12:05.131Z",
+                  "updatedAt": "2018-06-02T10:14:20.969Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/EditEvent"
+            },
+            "examples": {
+              "application/json": {
+                "error": "Invalid id supplied"
+              }
+            }
           }
         },
         "security": [],
@@ -521,25 +822,129 @@
           {
             "request": {
               "method": "PUT",
-              "uri": "/events/82945436-b25a-42df-80cc-94ce93271537",
+              "uri": "/events/b3541ea9-d908-4096-bf5d-445cdbcc5bb9",
               "headers": {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8"
               },
               "body": "name=Dope Event&date=2018-07-03"
             },
             "expectedResponse": {
               "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
+              "x-bodyMatchMode": "RAW",
               "x-arrayOrderedMatching": false,
               "x-arrayCheckCount": false,
               "x-matchResponseSchema": true,
-              "headers": {}
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "341",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 10:14:20 GMT",
+                "etag": "W/\"155-WUTnqQp1GT8iRgJCE5mRcI/UHio\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"successfully modified\",\"modifiedEvent\":{\"id\":\"b3541ea9-d908-4096-bf5d-445cdbcc5bbb\",\"name\":\"Dope Event\",\"center\":\"25565a23-3c01-48e7-bbc8-17c41dfa003f\",\"user\":\"c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0\",\"type\":\"birthday\",\"date\":\"2018-07-03T00:00:00Z\",\"createdAt\":\"2018-06-02T10:12:05.131Z\",\"updatedAt\":\"2018-06-02T10:14:20.969Z\"}}"
             },
             "x-testShouldPass": true,
             "x-testEnabled": true,
             "x-testName": "Edit Event",
             "x-testDescription": "api endpoint to modify an event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
+      "delete": {
+        "description": "api endpoint to delete an event",
+        "summary": "Delete Event",
+        "tags": [
+          "Event Related endpoints"
+        ],
+        "operationId": "EventsB3541ea9D9084096Bf5d445cdbcc5bb9Delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeleteEvent"
+            },
+            "examples": {
+              "application/json": {
+                "message": "Event successfully deleted"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/DeleteEvent25"
+            },
+            "examples": {
+              "application/json": {
+                "error": "event not found"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "DELETE",
+              "uri": "/events/b3541ea9-d908-4096-bf5d-445cdbcc5bb9",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "40",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 11:50:29 GMT",
+                "etag": "W/\"28-72xE7j8ibm8aIx5oavVBM6IZV90\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"Event successfully deleted\"}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Delete Event",
+            "x-testDescription": "api endpoint to delete an event"
           }
         ],
         "x-operation-settings": {
@@ -555,9 +960,9 @@
         "description": "api endpoint to get a users event",
         "summary": "Get Users",
         "tags": [
-          "Misc"
+          "SuperAdmin related endpoints"
         ],
-        "operationId": "EventsUserGet",
+        "operationId": "EventsUserGet2",
         "produces": [
           "application/json"
         ],
@@ -607,12 +1012,92 @@
         }
       }
     },
+    "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2": {
+      "post": {
+        "description": "api endpoint to cancel user Event",
+        "summary": "Cancel user Event",
+        "tags": [
+          "Event Related endpoints"
+        ],
+        "operationId": "Events7f9d48f6941640f68d426587b7e303e2Post",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CancelUserEvent"
+            },
+            "examples": {
+              "application/json": {
+                "message": "Event canceled and notification sent"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "50",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 12:30:07 GMT",
+                "etag": "W/\"32-w9pOkHp4F4/U86hYR7fwhH89/bI\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"Event canceled and notification sent\"}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Cancel user Event",
+            "x-testDescription": "api endpoint to cancel user Event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
     "/users/f9c5fd82-5cc3-46ae-aaaa-a3e792fed5cb": {
       "put": {
         "description": "api endpoint to make user become admin\n\nThis endpoint requires the authorization of a SuperAdmin.",
         "summary": "Upgrade/Downgrade User",
         "tags": [
-          "Misc"
+          "SuperAdmin related endpoints"
         ],
         "operationId": "UsersF9c5fd825cc346aeAaaaA3e792fed5cbPut",
         "produces": [
@@ -663,214 +1148,1008 @@
           "IsMultiContentStreaming": false
         }
       }
-    },
-    "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2": {
-      "post": {
-        "description": "api endpoint to cancel user Event",
-        "summary": "Cancel user Event",
-        "tags": [
-          "Misc"
-        ],
-        "operationId": "Events7f9d48f6941640f68d426587b7e303e2Post",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "x-access-token",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": ""
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
+    }
+  },
+  "definitions": {
+    "Signup": {
+      "title": "Signup",
+      "example": {
+        "message": "You have successfully signed up",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjIxOSwiZXhwIjoxNTI4MjkyMjE5fQ.Gqyl4B3yRT0uCfxHN1by4ixSLmHNP6YizywGWXuk2X8"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "You have successfully signed up",
+          "type": "string"
         },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "POST",
-              "uri": "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2",
-              "headers": {
-                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
-              }
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "Cancel user Event",
-            "x-testDescription": "api endpoint to cancel user Event"
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
+        "token": {
+          "description": "",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjIxOSwiZXhwIjoxNTI4MjkyMjE5fQ.Gqyl4B3yRT0uCfxHN1by4ixSLmHNP6YizywGWXuk2X8",
+          "type": "string"
         }
       },
-      "delete": {
-        "description": "api endpoint to delete an event",
-        "summary": "Delete Event",
-        "tags": [
-          "Misc"
-        ],
-        "operationId": "Events7f9d48f6941640f68d426587b7e303e2Delete",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "x-access-token",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": ""
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "DELETE",
-              "uri": "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2",
-              "headers": {
-                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmOWM1ZmQ4Mi01Y2MzLTQ2YWUtYWFhYS1hM2U3OTJmZWQ1Y2IiLCJpYXQiOjE1MjQ2NTUxODksImV4cCI6MTUyNTAxNTE4OX0.N1pfQnMY8ZAUHHJZyKCFucymfeBBgb0l79J5jy-sr44"
-              }
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "Delete Event",
-            "x-testDescription": "api endpoint to delete an event"
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      }
+      "required": [
+        "message",
+        "token"
+      ]
     },
-    "/centers/": {
-      "post": {
-        "description": "",
-        "summary": "Create Center",
-        "tags": [
-          "Misc"
-        ],
-        "operationId": "CentersPost",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
-        "parameters": [
-          {
-            "name": "name",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "type",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "capacity",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "rentalCost",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "address",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "facilities",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
+    "Signup1": {
+      "title": "Signup1",
+      "example": {
+        "error": [
+          "firstname field is required",
+          "lastname field is required",
+          "email field is required",
+          "password field is required",
+          "confirmpassword field is required"
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": [
+            "firstname field is required",
+            "lastname field is required",
+            "email field is required",
+            "password field is required",
+            "confirmpassword field is required"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
           }
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "Signup2": {
+      "title": "Signup2",
+      "example": {
+        "error": "Another user with this email already exists"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "Another user with this email already exists",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "UserLogin": {
+      "title": "User login",
+      "example": {
+        "message": "You have successfully logged in",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjcwMCwiZXhwIjoxNTI4MjkyNzAwfQ.k7Zt2kWLuX5pQW30MiVh5NBH9kaEgXitYvlMtTcEz9w"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "You have successfully logged in",
+          "type": "string"
+        },
+        "token": {
+          "description": "",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjcwMCwiZXhwIjoxNTI4MjkyNzAwfQ.k7Zt2kWLuX5pQW30MiVh5NBH9kaEgXitYvlMtTcEz9w",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "token"
+      ]
+    },
+    "UserLogin4": {
+      "title": "User login4",
+      "example": {
+        "error": "Invalid email or password"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "Invalid email or password",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "UserLogin5": {
+      "title": "User login5",
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": [
+            "email field is required"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "EditCenter": {
+      "title": "Edit Center",
+      "example": {
+        "error": "You are not authorized to perform this action"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "You are not authorized to perform this action",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "EditCenter7": {
+      "title": "Edit Center7",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "You have successfully modified the center",
+          "type": "string"
+        },
+        "center": {
+          "$ref": "#/definitions/Center"
+        }
+      },
+      "required": [
+        "message",
+        "center"
+      ]
+    },
+    "Center": {
+      "title": "Center",
+      "example": {
+        "id": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "name": "Very Great center",
+        "type": "Multipurpose Hall",
+        "address": "1, Aminu, Mende",
+        "capacity": "23000",
+        "rentalCost": "23000000000",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "facilities": [
+          "swimming-pool",
+          "lounge"
         ],
-        "responses": {
-          "200": {
-            "description": ""
+        "mobileNumber": "08035272406",
+        "imageUrl": null,
+        "isAvailable": true,
+        "createdAt": "2018-06-02T10:06:21.918Z",
+        "updatedAt": "2018-06-02T11:57:25.216Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Very Great center",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "Multipurpose Hall",
+          "type": "string"
+        },
+        "address": {
+          "description": "",
+          "example": "1, Aminu, Mende",
+          "type": "string"
+        },
+        "capacity": {
+          "description": "",
+          "example": "23000",
+          "type": "string"
+        },
+        "rentalCost": {
+          "description": "",
+          "example": "23000000000",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "facilities": {
+          "description": "",
+          "example": [
+            "swimming-pool",
+            "lounge"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         },
-        "security": [],
-        "x-unitTests": [
+        "mobileNumber": {
+          "description": "",
+          "example": "08035272406",
+          "type": "string"
+        },
+        "imageUrl": {
+          "description": "",
+          "type": "string"
+        },
+        "isAvailable": {
+          "description": "",
+          "example": true,
+          "type": "boolean"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:06:21 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 11:57:25 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "address",
+        "capacity",
+        "rentalCost",
+        "user",
+        "facilities",
+        "mobileNumber",
+        "imageUrl",
+        "isAvailable",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "GetCenter": {
+      "title": "Get center",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Success",
+          "type": "string"
+        },
+        "aCenter": {
+          "$ref": "#/definitions/ACenter"
+        }
+      },
+      "required": [
+        "message",
+        "aCenter"
+      ]
+    },
+    "ACenter": {
+      "title": "ACenter",
+      "example": {
+        "id": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "name": "Amity",
+        "type": "Multipurpose Hall",
+        "address": "1, Aminu, Mende",
+        "capacity": "23000",
+        "rentalCost": "23000000000",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "facilities": [
+          "swimming-pool",
+          "lounge"
+        ],
+        "mobileNumber": "08035272406",
+        "imageUrl": null,
+        "isAvailable": true,
+        "createdAt": "2018-06-02T10:06:21.918Z",
+        "updatedAt": "2018-06-02T10:06:21.918Z",
+        "venueOfEvent": [
           {
-            "request": {
-              "method": "POST",
-              "uri": "/centers/",
-              "headers": {
-                "Content-Type": "application/x-www-form-urlencoded"
-              },
-              "body": "name=Amity&type=Multipurpose Hall&capacity=23000&rentalCost=12000000&address=1, AMinu street, Mende maryland, Lagos.&facilities=Lounge"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "Create Center",
-            "x-testDescription": ""
+            "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+            "name": "Eventful Party",
+            "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+            "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+            "type": "birthday",
+            "date": "2018-06-20T00:00:00Z",
+            "createdAt": "2018-06-02T10:09:44.635Z",
+            "updatedAt": "2018-06-02T10:09:44.635Z"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Amity",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "Multipurpose Hall",
+          "type": "string"
+        },
+        "address": {
+          "description": "",
+          "example": "1, Aminu, Mende",
+          "type": "string"
+        },
+        "capacity": {
+          "description": "",
+          "example": "23000",
+          "type": "string"
+        },
+        "rentalCost": {
+          "description": "",
+          "example": "23000000000",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "facilities": {
+          "description": "",
+          "example": [
+            "swimming-pool",
+            "lounge"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mobileNumber": {
+          "description": "",
+          "example": "08035272406",
+          "type": "string"
+        },
+        "imageUrl": {
+          "description": "",
+          "type": "string"
+        },
+        "isAvailable": {
+          "description": "",
+          "example": true,
+          "type": "boolean"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:06:21 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:06:21 AM",
+          "type": "string"
+        },
+        "venueOfEvent": {
+          "description": "",
+          "example": [
+            {
+              "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+              "name": "Eventful Party",
+              "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+              "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+              "type": "birthday",
+              "date": "2018-06-20T00:00:00Z",
+              "createdAt": "2018-06-02T10:09:44.635Z",
+              "updatedAt": "2018-06-02T10:09:44.635Z"
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VenueOfEvent"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "address",
+        "capacity",
+        "rentalCost",
+        "user",
+        "facilities",
+        "mobileNumber",
+        "imageUrl",
+        "isAvailable",
+        "createdAt",
+        "updatedAt",
+        "venueOfEvent"
+      ]
+    },
+    "VenueOfEvent": {
+      "title": "VenueOfEvent",
+      "example": {
+        "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+        "name": "Eventful Party",
+        "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "type": "birthday",
+        "date": "2018-06-20T00:00:00Z",
+        "createdAt": "2018-06-02T10:09:44.635Z",
+        "updatedAt": "2018-06-02T10:09:44.635Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Eventful Party",
+          "type": "string"
+        },
+        "center": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "birthday",
+          "type": "string"
+        },
+        "date": {
+          "description": "",
+          "example": "6/20/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:09:44 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:09:44 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "center",
+        "user",
+        "type",
+        "date",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CreateCenter": {
+      "title": "Create Center",
+      "example": {
+        "error": [
+          "name is required",
+          "type is required",
+          "capacity is required",
+          "mobileNumber is required",
+          "address is required",
+          "rentalCost is required",
+          "Please specify facilities"
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": [
+            "name is required",
+            "type is required",
+            "capacity is required",
+            "mobileNumber is required",
+            "address is required",
+            "rentalCost is required",
+            "Please specify facilities"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "CreateCenter13": {
+      "title": "Create Center13",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "You have successfully added a center",
+          "type": "string"
+        },
+        "center": {
+          "$ref": "#/definitions/Center"
+        }
+      },
+      "required": [
+        "message",
+        "center"
+      ]
+    },
+    "CreateCenter15": {
+      "title": "Create Center15",
+      "example": {
+        "error": "this name has been taken, Please choose another name"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "this name has been taken, Please choose another name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "CreateEvent": {
+      "title": "Create Event",
+      "example": {
+        "error": "You have to login First"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "The date chosen is past, please choose another date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "CreateEvent19": {
+      "title": "Create Event19",
+      "example": {
+        "message": "Event successfully added",
+        "newEvent": {
+          "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+          "name": "Eventful Party",
+          "type": "birthday",
+          "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "date": "2018-08-22T00:00:00Z",
+          "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "updatedAt": "2018-06-02T10:12:05.131Z",
+          "createdAt": "2018-06-02T10:12:05.131Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Event successfully added",
+          "type": "string"
+        },
+        "newEvent": {
+          "$ref": "#/definitions/NewEvent"
+        }
+      },
+      "required": [
+        "message",
+        "newEvent"
+      ]
+    },
+    "NewEvent": {
+      "title": "NewEvent",
+      "example": {
+        "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+        "name": "Eventful Party",
+        "type": "birthday",
+        "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "date": "2018-08-22T00:00:00Z",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "updatedAt": "2018-06-02T10:12:05.131Z",
+        "createdAt": "2018-06-02T10:12:05.131Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Eventful Party",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "birthday",
+          "type": "string"
+        },
+        "center": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "date": {
+          "description": "",
+          "example": "8/22/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:12:05 AM",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:12:05 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "center",
+        "date",
+        "user",
+        "updatedAt",
+        "createdAt"
+      ]
+    },
+    "EditEvent": {
+      "title": "Edit Event",
+      "example": {
+        "error": "Invalid id supplied"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "Invalid id supplied",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "EditEvent22": {
+      "title": "Edit Event22",
+      "example": {
+        "message": "successfully modified",
+        "modifiedEvent": {
+          "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+          "name": "Dope Event",
+          "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "birthday",
+          "date": "2018-07-03T00:00:00Z",
+          "createdAt": "2018-06-02T10:12:05.131Z",
+          "updatedAt": "2018-06-02T10:14:20.969Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "successfully modified",
+          "type": "string"
+        },
+        "modifiedEvent": {
+          "$ref": "#/definitions/ModifiedEvent"
+        }
+      },
+      "required": [
+        "message",
+        "modifiedEvent"
+      ]
+    },
+    "ModifiedEvent": {
+      "title": "ModifiedEvent",
+      "example": {
+        "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+        "name": "Dope Event",
+        "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "type": "birthday",
+        "date": "2018-07-03T00:00:00Z",
+        "createdAt": "2018-06-02T10:12:05.131Z",
+        "updatedAt": "2018-06-02T10:14:20.969Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Dope Event",
+          "type": "string"
+        },
+        "center": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "birthday",
+          "type": "string"
+        },
+        "date": {
+          "description": "",
+          "example": "7/3/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:12:05 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:14:20 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "center",
+        "user",
+        "type",
+        "date",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DeleteEvent": {
+      "title": "Delete Event",
+      "example": {
+        "message": "Event successfully deleted"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Event successfully deleted",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message"
+      ]
+    },
+    "DeleteEvent25": {
+      "title": "Delete Event25",
+      "example": {
+        "error": "event not found"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "event not found",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "GetAUserEvents": {
+      "title": "Get a User Events",
+      "example": {
+        "message": "Success",
+        "userEvents": [
+          {
+            "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+            "name": "Eventful Party",
+            "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+            "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+            "type": "birthday",
+            "date": "2018-06-20T00:00:00Z",
+            "createdAt": "2018-06-02T10:09:44.635Z",
+            "updatedAt": "2018-06-02T10:09:44.635Z"
           }
         ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
+        "pages": 1,
+        "currentPage": 1
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Success",
+          "type": "string"
+        },
+        "userEvents": {
+          "description": "",
+          "example": [
+            {
+              "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+              "name": "Eventful Party",
+              "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+              "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+              "type": "birthday",
+              "date": "2018-06-20T00:00:00Z",
+              "createdAt": "2018-06-02T10:09:44.635Z",
+              "updatedAt": "2018-06-02T10:09:44.635Z"
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserEvent"
+          }
+        },
+        "pages": {
+          "description": "",
+          "example": 1,
+          "type": "integer",
+          "format": "int32"
+        },
+        "currentPage": {
+          "description": "",
+          "example": 1,
+          "type": "integer",
+          "format": "int32"
         }
-      }
+      },
+      "required": [
+        "message",
+        "userEvents",
+        "pages",
+        "currentPage"
+      ]
+    },
+    "UserEvent": {
+      "title": "UserEvent",
+      "example": {
+        "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+        "name": "Eventful Party",
+        "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "type": "birthday",
+        "date": "2018-06-20T00:00:00Z",
+        "createdAt": "2018-06-02T10:09:44.635Z",
+        "updatedAt": "2018-06-02T10:09:44.635Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Eventful Party",
+          "type": "string"
+        },
+        "center": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "birthday",
+          "type": "string"
+        },
+        "date": {
+          "description": "",
+          "example": "6/20/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:09:44 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:09:44 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "center",
+        "user",
+        "type",
+        "date",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "GetAUserEvents28": {
+      "title": "Get a User Events28",
+      "example": {
+        "error": "No events found for this User"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "No events found for this User",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "CancelUserEvent": {
+      "title": "Cancel user Event",
+      "example": {
+        "message": "Event canceled and notification sent"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Event canceled and notification sent",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message"
+      ]
     }
   }
 }
