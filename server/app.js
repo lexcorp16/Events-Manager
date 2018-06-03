@@ -1,4 +1,3 @@
-// require all dependencies
 import dotenv from 'dotenv';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -8,24 +7,16 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import path from 'path';
-import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from '../swagger.json';
 import centerRoutes from './routes/centers';
 import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
 import webpackConfig from '../webpack.config';
-import webpackConfigProduction from '../webpack.config.prod';
 
 dotenv.config();
 
 // Set up the express app
 const app = express();
-// setting up swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-let compiler = webpack(webpackConfig);
-if (process.NODE_ENV === 'production') {
-  compiler = webpack(webpackConfigProduction);
-}
+const compiler = webpack(webpackConfig);
 
 // Log requests to the console.
 app.use(logger('dev'));

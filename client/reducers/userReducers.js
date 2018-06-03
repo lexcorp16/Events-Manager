@@ -177,6 +177,10 @@ export default function userReducers(state = userInitialState() || {
     case 'USER_LOGOUT': {
       return {
         ...state,
+        status: {
+          ...state.status,
+          authenticated: false,
+        }
       };
     }
     case 'CLEAR_ERROR': {

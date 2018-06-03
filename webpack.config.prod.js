@@ -1,30 +1,40 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
     'webpack-hot-middleware/client',
     path.join(__dirname, './client/index.js')
   ],
-  node: {
-    fs: 'empty',
-  },
   output: {
-    path: path.join(__dirname, 'client'),
+    path: path.join(__dirname, 'client/dist'),
     filename: 'client/bundle.js',
     publicPath: '/',
   },
+  devtool: 'source-map',
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './client/index.html')
+    }),
     new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      sourceMap: true,
-      comments: false,
       compress: {
         warnings: false,
-        drop_console: true,
+        screw_ie8: true,
+        conditionals: true,
+        unused: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        if_return: true,
+        join_vars: true
+      },
+      output: {
+        comments: false
       }
     }),
     new webpack.DefinePlugin({
@@ -36,7 +46,7 @@ module.exports = {
         STORAGE_BUCKET: JSON.stringify(process.env.STORAGE_BUCKET),
         MESSAGING_SENDER_ID: JSON.stringify(process.env.MESSAGING_SENDER_ID),
         BASE_URL: JSON.stringify(process.env.BASE_URL),
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        NODE_ENV: JSON.stringify('production'),
       }
     }),
   ],
@@ -85,5 +95,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'client'),
     historyApiFallback: true,
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
 };

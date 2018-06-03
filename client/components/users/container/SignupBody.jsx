@@ -91,7 +91,7 @@ export class SignupBody extends Component {
   signup(event) {
     event.preventDefault();
     const validationErrors = isValidDetails(this.state);
-    if (!isValidDetails(Array.isArray(validationErrors))) {
+    if ((Array.isArray(validationErrors))) {
       return actionRejectedPrompter(validationErrors);
     }
     this.props.dispatch(userSignup({

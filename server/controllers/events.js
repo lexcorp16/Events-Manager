@@ -19,31 +19,20 @@ class Event {
     const {
       name,
       type,
-      date,
+      startDate,
+      endDate,
       center,
     } = req.body;
-    Events
-      .findOne({
-        where: {
-          date: new Date(date).toISOString(),
-          center
-        }
+    return Events
+      .create({
+        name,
+        type,
+        center,
+        startDate: new Date(startDate).toISOString(),
+        endDate: new Date(endDate).toISOString(),
+        user: req.decoded.userId,
       })
-      .then((event) => {
-        if (event) {
-          return res.status(409).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
-        }
-        return Events
-          .create({
-            name,
-            type,
-            center,
-            date: new Date(date).toISOString(),
-            user: req.decoded.userId,
-          })
-          .then(newEvent => res.status(201).send({ message: 'Event successfully added', newEvent }))
-          .catch(error => sendError(error, res, false));
-      })
+      .then(newEvent => res.status(201).send({ message: 'Event successfully added', newEvent }))
       .catch(error => sendError(error, res, false));
   }
   /**
@@ -54,30 +43,19 @@ class Event {
  */
   static modifyEvent(req, res) {
     const { center } = req.body;
-    Events.findOne({
-      where: {
-        date: new Date(req.body.date).toISOString(),
-        center,
-      }
-    })
-      .then((event) => {
-        if (event && event.id !== req.params.eventId) {
-          return res.status(409).send({ error: 'Another event is slated for the chosen center,Please choose another date or center' });
+    Events.findById(req.params.eventId)
+      .then((modifiedEvent) => {
+        if (!modifiedEvent) {
+          return res.status(404).send({ error: 'No event found' });
         }
-        Events.findById(req.params.eventId)
-          .then((modifiedEvent) => {
-            if (!modifiedEvent) {
-              return res.status(404).send({ error: 'No event found' });
-            }
-            modifiedEvent.updateAttributes({
-              name: req.body.name || modifiedEvent.name,
-              type: req.body.type || modifiedEvent.type,
-              date: new Date(req.body.date).toISOString() || modifiedEvent.date,
-              center: center || modifiedEvent.center,
-            });
-            return res.status(200).send({ message: 'successfully modified', modifiedEvent });
-          })
-          .catch(error => sendError(error, res, false));
+        modifiedEvent.updateAttributes({
+          name: req.body.name || modifiedEvent.name,
+          type: req.body.type || modifiedEvent.type,
+          startDate: new Date(req.body.startDate).toISOString() || modifiedEvent.startDate,
+          endDate: new Date(req.body.startDate).toISOString() || modifiedEvent.endDate,
+          center: center || modifiedEvent.center,
+        });
+        return res.status(200).send({ message: 'successfully modified', modifiedEvent });
       })
       .catch(error => sendError(error, res, false));
   }
@@ -151,7 +129,7 @@ class Event {
               from: 'efosaeventsmanager@evt.com',
               to: user.email,
               subject: 'Notice Of cancellation of event',
-              text: `This Is to Inform You that For some reasons ,Your event has been canceled! \n Please log on here https://efosa-events-manager.herokuapp.com to events manager to get another venue for your event`,
+              text: 'This Is to Inform You that For some reasons ,Your event has been canceled! \n Please log on here https://efosa-events-manager.herokuapp.com to events manager to get another venue for your event',
             };
             return mailSender(mailOptions, res);
           })

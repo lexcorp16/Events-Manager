@@ -8,6 +8,8 @@ const checkInvalidModifyEventDetails = (req) => {
     type,
     center,
     date,
+    startDate,
+    endDate,
   } = req;
   [name, type, center, date].forEach((input) => {
     if (input) {
@@ -33,13 +35,24 @@ const checkInvalidModifyEventDetails = (req) => {
       errorMessage.push('type fields cannot be digits or alphanumeric characters');
     }
   }
-  if (date) {
-    if (date.trim() !== '' && validator.isBefore(date)) {
-      errorMessage.push('The date chosen is past, please choose another date');
+  if (startDate) {
+    if (startDate.trim() !== '' && validator.isBefore(startDate)) {
+      errorMessage.push('The commencement date chosen is past, please choose another date');
     }
-    if (validator.toDate(date) === null) {
+    if (validator.toDate(startDate) === null) {
       errorMessage.push('invalid date');
     }
+  }
+  if (endDate) {
+    if (endDate.trim() !== '' && validator.isBefore(endDate)) {
+      errorMessage.push('The end date chosen is past, please choose another date');
+    }
+    if (validator.toDate(endDate) === null) {
+      errorMessage.push('invalid date');
+    }
+  }
+  if (startDate > endDate) {
+    errorMessage.push('The commencement date should come before the end date');
   }
   if (errorMessage.length !== 0) {
     return errorMessage;

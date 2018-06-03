@@ -172,7 +172,7 @@ const eventReducer = (state = eventInitialState(), action) => {
 
     case 'USER_LOGOUT': {
       return {
-        ...state,
+        ...eventInitialState(),
       };
     }
     case 'CLEAR_ERROR': {

@@ -12,11 +12,11 @@
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
     "start:dev": "nodemon ./server/app --exec babel-node ./server/app",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "build": "babel ./server/ ./client/ -d ./dist",
+    "build": "rimraf dist/ && babel ./server --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files && rimraf ./client/dist && webpack --config ./webpack.config.prod.js",
     "start": "npm run build && node ./dist/app.js",
     "start:react": "nodemon ./client/server.js --exec babel-node ./client/server.js",
     "sendmail": "babel-node ./server/helpers/mailer.js",
-    "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.js",
+    "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.prod.js",
     "jest": "jest client/tests/ --watch --coverage --collectCoverageFrom=client/**/*.{js,jsx}"
   },
   "repository": {
@@ -30,17 +30,18 @@
   },
   "homepage": "https://github.com/Efosaok/Events-Manager#readme",
   "dependencies": {
+    "axios": "^0.17.1",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-dead-code-elimination": "^2.2.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.24.1",
-    "axios": "^0.17.1",
-    "babel-cli": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
@@ -54,6 +55,7 @@
     "firebase": "^4.10.1",
     "fs": "0.0.1-security",
     "history": "^4.7.2",
+    "html-webpack-plugin": "^3.2.0",
     "image-loader": "0.0.1",
     "image-webpack-loader": "^3.4.2",
     "jsonwebtoken": "^8.1.0",
@@ -77,6 +79,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
     "sequelize": "^4.35.2",
     "shortid": "^2.2.8",
@@ -134,7 +137,10 @@
   "jest": {
     "verbose": true,
     "collectCoverage": true,
-    "moduleNameMapper": { "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js", "\\.(css|less)$": "<rootDir>/assetsTransformer.js" },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
+      "\\.(css|less)$": "<rootDir>/assetsTransformer.js"
+    },
     "setupFiles": [
       "<rootDir>/setup.js",
       "jest-localstorage-mock"

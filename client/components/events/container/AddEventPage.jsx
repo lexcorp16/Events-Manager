@@ -28,7 +28,8 @@ export class AddEventPage extends Component {
       name: undefined,
       type: undefined,
       center: undefined,
-      date: undefined,
+      startDate: undefined,
+      endDate: undefined,
     };
 
     this.getEventDetails = this.getEventDetails.bind(this);
@@ -115,9 +116,13 @@ export class AddEventPage extends Component {
                   <option value="Coporate">Coporate</option>
                   <option value="Party">Party</option>
                 </select>
-                <label htmlFor="date">Date of event</label>
+                <label htmlFor="date">Start Date</label>
                 <div className="year">
-                  <input type="date" id="date" name="date" className="form-control" onChange={this.getEventDetails} />
+                  <input type="date" id="date" name="startDate" className="form-control" onChange={this.getEventDetails} />
+                </div>
+                <label htmlFor="date">End Date</label>
+                <div className="year">
+                  <input type="date" id="date" name="endDate" className="form-control" onChange={this.getEventDetails} />
                 </div>
                 <label htmlFor="preferred-center">Preferred center</label>
                 <select className="form-control" onChange={this.getEventDetails} name="center">

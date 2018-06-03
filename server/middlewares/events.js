@@ -6,14 +6,16 @@ const checkInvalidAddEventDetails = (req, res, next) => {
     name,
     type,
     center,
-    date,
+    startDate,
+    endDate,
   } = req.body;
-  const eventDetails = [name, type, center, date];
+  const eventDetails = [name, type, center, startDate, endDate];
   const matchingDetails = {
     0: 'name',
     1: 'type',
     2: 'center',
-    3: 'date',
+    3: 'startDate',
+    4: 'endDate',
   };
   for (let counter = -1; counter < eventDetails.length - 1;) {
     counter += 1;
@@ -36,13 +38,24 @@ const checkInvalidAddEventDetails = (req, res, next) => {
       errorMessage.push('type field cannot be digits or alphanumeric characters');
     }
   }
-  if (date) {
-    if (date.trim() !== '' && validator.isBefore(date)) {
-      return res.status(406).send({ error: 'The date chosen is past, please choose another date' });
+  if (startDate) {
+    if (startDate.trim() !== '' && validator.isBefore(startDate)) {
+      errorMessage.push('The commencement date chosen is past, please choose another date');
     }
-    if (validator.toDate(date) === null) {
+    if (validator.toDate(startDate) === null) {
       errorMessage.push('invalid date');
     }
+  }
+  if (endDate) {
+    if (endDate.trim() !== '' && validator.isBefore(endDate)) {
+      errorMessage.push('The end date chosen is past, please choose another date');
+    }
+    if (validator.toDate(endDate) === null) {
+      errorMessage.push('invalid date');
+    }
+  }
+  if (startDate > endDate) {
+    errorMessage.push('The commencement date should come before the end date');
   }
   if (errorMessage.length !== 0) {
     return res.status(400).send({ error: errorMessage });

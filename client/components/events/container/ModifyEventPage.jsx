@@ -29,7 +29,8 @@ export class ModifyEventPage extends Component {
       name: undefined,
       type: undefined,
       center: undefined,
-      date: this.props.event.eventObject[0].date.slice(0, 10),
+      startDate: this.props.event.eventObject[0].startDate.slice(0, 10),
+      endDate: this.props.event.eventObject[0].startDate.slice(0, 10),
     };
 
     this.getEventDetails = this.getEventDetails.bind(this);

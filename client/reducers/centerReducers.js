@@ -324,7 +324,7 @@ export default (state = centerInitialState(), action) => {
 
     case 'USER_LOGOUT': {
       return {
-        ...state,
+        ...centerInitialState(),
       };
     }
 
