@@ -55,7 +55,7 @@ const OneCenterPage = props =>
               </table>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-default btn-close-f" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -82,14 +82,14 @@ const OneCenterPage = props =>
                         <td key={event.id}>{event.name}</td>
                         <td className="date">{moment(event.date).format('DD MMMM YYYY')}</td>
                         {(isAdmin()) &&
-                        <td><button className="btn btn-outline-danger" onClick={props.cancelEvent} id={event.id}>cancel</button></td>}
+                        <td><button className="btn btn-outline-danger btn-cancel" onClick={props.cancelEvent} id={event.id}>cancel</button></td>}
                       </tr>))
                   }
                 </tbody>
               </table>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-default btn-close-b" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

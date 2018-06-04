@@ -8,7 +8,7 @@ const UsersPage = props =>
         <thead className="justify-content-center">
           <tr>
             <th scope="col" >Full Name</th>
-            <th scope="col">Date Registered</th>
+            <th scope="col">Email</th>
             <th scope="col">Role</th>
             <th scope="col">Action</th>
           </tr>

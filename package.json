@@ -17,11 +17,12 @@
     "start:react": "nodemon ./client/server.js --exec babel-node ./client/server.js",
     "sendmail": "babel-node ./server/helpers/mailer.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.prod.js",
-    "jest": "jest client/tests/ --watch --coverage --collectCoverageFrom=client/**/*.{js,jsx}"
+    "jest": "jest client/tests/ --watch --coverage --collectCoverageFrom=client/**/*.{js,jsx}",
+    "e2e": "export NODE_ENV=test&&sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && nightwatch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Efosaok/Events-Manager.git"
+    "url": "git+https://github.comstar/Efosaok/Events-Manager.git"
   },
   "author": "Efosa Okpugie",
   "license": "ISC",
@@ -45,6 +46,7 @@
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
+    "chromedriver": "^2.38.3",
     "cors": "^2.8.4",
     "coveralls": "^3.0.0",
     "css-loader": "^0.28.7",

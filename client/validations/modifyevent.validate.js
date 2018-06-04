@@ -7,17 +7,16 @@ const checkInvalidModifyEventDetails = (req) => {
     name,
     type,
     center,
-    date,
     startDate,
     endDate,
   } = req;
-  [name, type, center, date].forEach((input) => {
+  [name, type, center, startDate, endDate].forEach((input) => {
     if (input) {
       modifiedParams.push(input);
     }
   });
-  if (!date) {
-    errorMessage.push('Please specify date first');
+  if (!startDate || !endDate) {
+    errorMessage.push('Please specify both the start and end dates of the event');
   }
   if (name) {
     if (name.trim() === '') {

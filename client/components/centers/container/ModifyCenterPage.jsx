@@ -274,7 +274,7 @@ export class ModifyCenterPage extends Component {
               <div className="edit-form col-lg-8" style={{ marginTop: '5px' }}>
                 <form className="form form-group container edit-label">
                   <label htmlFor="name">Name</label>
-                  <input defaultValue={this.props.center.centerToBeModified[0].name} onChange={this.getCenterDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
+                  <input defaultValue={this.props.center.centerToBeModified[0].name} onChange={this.getCenterDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name name" />
                   <label htmlFor="type">Type</label>
                   <select className="form-control" name="type" onChange={this.getCenterDetails} defaultValue={this.props.center.centerToBeModified[0].type}>
                     <option value="">select type</option>

@@ -10,7 +10,7 @@ const EmptyEventList = () =>
       </div>
       <h5 className="text-center" style={{ color: 'grey', marginTop: '50px', fontFamily: 'Open Sans, sans-serif' }}>OOPS, YOU HAVE NO EVENTS, ADD ONE NOW</h5>
       <div className="button-container text-center">
-        <Link to="/addevent"><button className="btn btn-default" style={{ color: 'color: #F50057' }}>ADD EVENT</button></Link>
+        <Link to="/addevent"><button className="btn btn-default btn-add-event-e" style={{ color: 'color: #F50057' }}>ADD EVENT</button></Link>
       </div>
     </div>
   );

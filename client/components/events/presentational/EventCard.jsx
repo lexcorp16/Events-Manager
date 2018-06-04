@@ -15,9 +15,9 @@ const EventCard = props =>
           <div className="card-body">
             <h4 className="card-title text-center">{props.eventObject.name}</h4>
             <div className="btn-group text-center d-flex justify-content-center">
-              <button onClick={props.modifyPrompt} className="btn btn-outline-info edit-btn" name="eventId" id={props.eventObject.id}>Modify</button>
+              <button onClick={props.modifyPrompt} className="btn btn-outline-info edit-btn mod-btn" name="eventId" id={props.eventObject.id}>Modify</button>
               <button name="eventId" className="btn btn-outline-danger modify-btn" onClick={props.deletePrompt} id={props.eventObject.id}>Delete</button>
-              <button data-target="#eventDetails" data-toggle="modal" className="btn btn-outline-info edit-btn" name="eventId" id={props.eventObject.center} onClick={() => props.fetchCenterDetails(props.eventObject)}>Details</button>
+              <button data-target="#eventDetails" data-toggle="modal" className="btn btn-outline-info edit-btn detail-btn" name="eventId" id={props.eventObject.center} onClick={() => props.fetchCenterDetails(props.eventObject)}>Details</button>
             </div>
           </div>
         </div>

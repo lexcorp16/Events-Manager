@@ -118,11 +118,11 @@ export class SearchCenterPage extends Component {
         <form className="form-search container">
           <div className="radio-section text-center">
             <div className="form-check form-check-inline">
-              <input className="form-check-input" type="radio" id="inlineRadio1" value="name" name="searchQueryType" onClick={this.getSearchValues} />
+              <input className="form-check-input radio-name" type="radio" id="inlineRadio1" value="name" name="searchQueryType" onClick={this.getSearchValues} />
               <label className="form-check-label" htmlFor="inlineRadio1">search by name</label>
             </div>
             <div className="form-check form-check-inline">
-              <input className="form-check-input" type="radio" id="inlineRadio2" value="rentalCost" name="searchQueryType" onClick={this.getSearchValues} />
+              <input className="form-check-input radio-cost" type="radio" id="inlineRadio2" value="rentalCost" name="searchQueryType" onClick={this.getSearchValues} />
               <label className="form-check-label label-2" htmlFor="inlineRadio2">search by rental cost</label>
             </div>
           </div>
@@ -167,7 +167,7 @@ export class SearchCenterPage extends Component {
               />
             </div>}
           {(!fetchingCenters && searchResults.length === 0 && error) &&
-            <div className="text-center" style={{ marginTop: '120px' }}>
+            <div className="text-center no-results" style={{ marginTop: '120px' }}>
               <h2> Your Search Returned No results</h2>
             </div>
           }

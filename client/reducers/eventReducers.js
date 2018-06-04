@@ -61,6 +61,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           ...state.status,
           fetchingEvents: false,
           error: false,
+          added: false,
         }
       };
     }
@@ -146,7 +147,6 @@ const eventReducer = (state = eventInitialState(), action) => {
       localStorage.removeItem('allUserEvents');
       return {
         ...state,
-        eventObject: [],
         status: {
           ...state.status,
           error: false,

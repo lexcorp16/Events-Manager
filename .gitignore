@@ -6,3 +6,4 @@ server/db/migrations
 coverage
 dist
 npm-debug.log
+bin

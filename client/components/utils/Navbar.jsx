@@ -108,7 +108,7 @@ export class Navbar extends Component {
             <ul className="nav d-flex justify-content-center">
               <form className="form-inline my-4 my-lg-0 large-search" style={{ width: '350px' }}>
                 <input
-                  className="form-control mr-sm-2"
+                  className="form-control mr-sm-2 search-lg"
                   type="text"
                   placeholder="Search"
                   name="name"
@@ -117,7 +117,7 @@ export class Navbar extends Component {
                   border: 'none', borderBottom: '1px solid #F50057', borderRadius: '0px', width: '250px', fontFamily: 'Open Sans, sans-serif',
                   }}
                 />
-                <button className="btn btn-search my-2 my-sm-0" type="submit" style={{ border: 'none' }} onClick={this.search}>
+                <button className="btn btn-search my-2 my-sm-0 btn-search-lg" type="submit" style={{ border: 'none' }} onClick={this.search}>
                   <span className="fa fa-search" style={{ color: '#F50057' }} />
                 </button>
               </form>
@@ -127,31 +127,31 @@ export class Navbar extends Component {
             <ul className="nav d-flex justify-content-center">
               {(!authenticated) &&
               <li className="nav-item">
-                <Link className="nav-link" to="/signup">sign up</Link>
+                <Link className="nav-link sign-up-lk" to="/signup">sign up</Link>
               </li>}
               {(!authenticated) &&
               <li className="nav-item">
-                <Link className="nav-link" to="/signin">sign in</Link>
+                <Link className="nav-link sign-in-lk" to="/signin">sign in</Link>
               </li>}
               {(authenticated && isAdmin()) &&
               <li>
-                <Link className="nav-link auth-nav-links" to="/addcenterone">ADD CENTER</Link>
+                <Link className="nav-link auth-nav-links add-center-nav" to="/addcenterone">ADD CENTER</Link>
               </li>}
               {(authenticated) &&
               <li>
-                <Link className="nav-link auth-nav-links" to="/centers">CENTERS</Link>
+                <Link className="nav-link auth-nav-links centers-nav" to="/centers">CENTERS</Link>
               </li>}
               {(authenticated) &&
               <li>
-                <Link className="nav-link auth-nav-links" to="/addevent">ADD EVENT</Link>
+                <Link className="nav-link auth-nav-links add-event-nav" to="/addevent">ADD EVENT</Link>
               </li>}
               {(authenticated) &&
               <li>
-                <Link className="nav-link auth-nav-links" to="/">YOUR EVENTS</Link>
+                <Link className="nav-link auth-nav-links events-link" to="/">YOUR EVENTS</Link>
               </li>}
               {(authenticated && isSuperAdmin()) &&
               <li>
-                <Link className="nav-link auth-nav-links" to="/users">GRANT ACCESS</Link>
+                <Link className="nav-link auth-nav-links grant-users-nav" to="/users">GRANT ACCESS</Link>
               </li>}
               {(authenticated) &&
               <li>

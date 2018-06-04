@@ -10,9 +10,9 @@ const ModifyEventPageHoc = WrappedComponent =>
       if (!isAuthenticated()) {
         return <SignInPage />;
       }
-      if (!props.event.eventObject[0]) {
-        return <UserEventsPage />;
-      }
+      // if (!props.event.eventObject[0]) {
+      //   return <UserEventsPage />;
+      // }
       return <WrappedComponent {...props} />;
     }
   );
