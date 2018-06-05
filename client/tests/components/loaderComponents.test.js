@@ -12,7 +12,5 @@ describe('unauthenticated HOC', () => {
   it('mounts centercard component', () => {
     expect(firstWrapper.exists()).toBe(true);
     expect(secondWrapper.exists()).toBe(true);
-    expect(thirdWrapper.exists()).toBe(true);
-    expect(fourthWrapper.exists()).toBe(true);
   });
 });

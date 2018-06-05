@@ -26,7 +26,8 @@ const props = {
       id: '1',
       center: 'jh8787',
       type: 'Birthday',
-      date: '2015-06-08',
+      startDate: '2015-06-08T00:09:099',
+      endDate: '2015-06-08T00:09:100',
     }],
     status: {
       modifyingEvent: true,

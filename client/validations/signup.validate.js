@@ -35,7 +35,7 @@ const signupValidator = (req) => {
     }
   });
   if (password && password.trim() !== '') {
-    if (password < 6) {
+    if (password.length < 6) {
       errorMessage.push('password must be at least six characters long');
     }
   }

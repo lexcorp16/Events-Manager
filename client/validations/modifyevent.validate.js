@@ -7,18 +7,14 @@ const checkInvalidModifyEventDetails = (req) => {
     name,
     type,
     center,
-    date,
     startDate,
     endDate,
   } = req;
-  [name, type, center, date].forEach((input) => {
+  [name, type, center, startDate, endDate].forEach((input) => {
     if (input) {
       modifiedParams.push(input);
     }
   });
-  if (!date) {
-    errorMessage.push('Please specify date first');
-  }
   if (name) {
     if (name.trim() === '') {
       errorMessage.push('name field cannot be empty');

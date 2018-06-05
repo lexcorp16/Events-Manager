@@ -1,11 +1,3 @@
-const imageToDisplay = (image) => {
-  if (image !== null) {
-    document.getElementById('centerimage').setAttribute('src', image);
-    return true;
-  }
-  return false;
-};
-
 const displayUploadedImage = (imageUrl) => {
   if (imageUrl) {
     document.getElementById('centerimage').setAttribute('src', imageUrl);
@@ -18,7 +10,6 @@ const randomColor = () => {
 };
 
 export {
-  imageToDisplay,
   displayUploadedImage,
   randomColor,
 };

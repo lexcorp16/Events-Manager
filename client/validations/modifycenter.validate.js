@@ -7,7 +7,6 @@ const alphaNumeric = (inputtxt) => {
 };
 
 const checkInvalidModifyCenterDetails = (req) => {
-  console.log(req);
   const errorMessage = [];
   const modifiedParams = [];
   let isNull;
@@ -25,7 +24,7 @@ const checkInvalidModifyCenterDetails = (req) => {
   });
   modifiedParams.forEach((value) => {
     if (value !== undefined) {
-      if (value.trim() < 1) {
+      if (value.trim().length < 1) {
         isNull = true;
       }
     }

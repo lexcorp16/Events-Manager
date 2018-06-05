@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import prefillCheckbox from '../../../utils/checkboxprefill';
-import { imageToDisplay } from '../../../utils/mescill.utils';
 import { UploadProgressBar, LoadingIcon, } from '../../utils/LoaderComponents';
 import isValidModifyCenterDetails from '../../../validations/modifycenter.validate';
 import { actionRejectedPrompter, actionRejectedPrompterTimer } from '../../../utils/alerts.sweetalert';
@@ -57,7 +56,6 @@ export class ModifyCenterPage extends Component {
  */
   componentDidMount() {
     prefillCheckbox(this.props.center.centerToBeModified[0].facilities);
-    imageToDisplay(this.props.center.centerToBeModified[0].imageUrl);
   }
   /**
  *
@@ -211,12 +209,15 @@ export class ModifyCenterPage extends Component {
  * @memberof ModifyCenterPage
  */
   render() {
+    const { imageUrl } = this.props.center.centerToBeModified[0];
     return (
       <div>
         <div className="container modify-center">
           <div style={{ border: 'none', backgroundColor: 'white' }} className="modify-container">
             <div className="form-header">
-              <h3 className="text-center" style={{ color: '#BDBDBD', marginBottom: '20px', marginTop: '20px' }}>Edit {this.props.center.centerToBeModified[0].name}</h3>
+              <h3 className="text-center" style={{ color: '#BDBDBD', marginBottom: '20px', marginTop: '20px' }}>Edit
+                {this.props.center.centerToBeModified[0].name}
+              </h3>
             </div>
             <div className="row">
               <div className="center-image-section col-lg-4 container">
@@ -226,7 +227,7 @@ export class ModifyCenterPage extends Component {
                     className="center-image img-fluid rounded img-center"
                     alt="center"
                     id="centerimage"
-                    src={defaultImage}
+                    src={imageUrl !== null ? imageUrl : defaultImage}
                     style={{ height: '300px' }}
                   />}
                 { (this.props.center.status.uploadingImage ||
@@ -274,7 +275,7 @@ export class ModifyCenterPage extends Component {
               <div className="edit-form col-lg-8" style={{ marginTop: '5px' }}>
                 <form className="form form-group container edit-label">
                   <label htmlFor="name">Name</label>
-                  <input defaultValue={this.props.center.centerToBeModified[0].name} onChange={this.getCenterDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" />
+                  <input defaultValue={this.props.center.centerToBeModified[0].name} onChange={this.getCenterDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name name" />
                   <label htmlFor="type">Type</label>
                   <select className="form-control" name="type" onChange={this.getCenterDetails} defaultValue={this.props.center.centerToBeModified[0].type}>
                     <option value="">select type</option>

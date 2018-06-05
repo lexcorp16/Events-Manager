@@ -180,7 +180,6 @@ describe('tests for event reducers', () => {
         type: 'MODIFY_EVENT_RESOLVED',
       })).toEqual({
         ...alternateInitialState,
-        eventObject: [],
         status: {
           ...alternateInitialState.status,
           eventIsModified: true,
