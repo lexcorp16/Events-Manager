@@ -7,19 +7,30 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
 import centerRoutes from './routes/centers';
 import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
 import webpackConfig from '../webpack.config';
+import webpackConfigProd from '../webpack.config.prod';
+import swaggerDocument from '../swagger.json';
 
 dotenv.config();
 
 // Set up the express app
 const app = express();
-const compiler = webpack(webpackConfig);
+let compiler;
+if (process.env.NODE_ENV === 'development') {
+  compiler = webpack(webpackConfig);
+} else {
+  compiler = webpack(webpackConfigProd);
+}
 
 // Log requests to the console.
 app.use(logger('dev'));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(cors({ credentials: true, origin: true }));

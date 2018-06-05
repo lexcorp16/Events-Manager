@@ -12,7 +12,7 @@
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
     "start:dev": "nodemon ./server/app --exec babel-node ./server/app",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "build": "rimraf dist/ && babel ./server --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files && rimraf ./client/dist && webpack --config ./webpack.config.prod.js",
+    "build": "babel ./server/ -d ./dist ./client/ -d ./dist",
     "start": "npm run build && node ./dist/app.js",
     "start:react": "nodemon ./client/server.js --exec babel-node ./client/server.js",
     "sendmail": "babel-node ./server/helpers/mailer.js",
