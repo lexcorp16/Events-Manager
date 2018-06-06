@@ -28,6 +28,9 @@ const checkInvalidAddEventDetails = (req) => {
       }
     }
   }
+  if (!startDate || !endDate) {
+    errorMessage.push('Please specify both the start and end dates of the event');
+  }
   if (name) {
     if (name.trim() !== '' && Number.isInteger(parseFloat(name))) {
       errorMessage.push('name field cannot be digits or alphanumeric characters');

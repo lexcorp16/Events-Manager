@@ -17,7 +17,7 @@ const CenterCard = props =>
               {(isAdmin()) &&
               <button className="btn modify-btn center-btn" onClick={props.promptModifyCenter} id={props.center.id}>EDIT</button>
               }
-              <button className="btn edit-btn center-btn" onClick={props.promptSeeCenter} id={props.center.id}>DETAILS</button>
+              <button className="btn edit-btn center-btn detail-btn" onClick={props.promptSeeCenter} id={props.center.id}>DETAILS</button>
             </div>
           </div>
         </div>

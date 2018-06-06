@@ -89,7 +89,7 @@ export class AddCenterFormOne extends Component {
             </div>
             <form className="form form-group container">
               <label htmlFor="name">Name</label>
-              <input onChange={this.getCenterDetails} type="text" name="name" className="form-control first-name" id="Name" defaultValue={primaryCenterDetails.name ? primaryCenterDetails.name : null} />
+              <input onChange={this.getCenterDetails} type="text" name="name" className="form-control first-name name" id="Name" defaultValue={primaryCenterDetails.name ? primaryCenterDetails.name : null} />
               <label htmlFor="type">Type</label>
               <select className="form-control" name="type" onChange={this.getCenterDetails} id="type" defaultValue={primaryCenterDetails.type ? primaryCenterDetails.type : null}>
                 <option>select type</option>
@@ -108,7 +108,7 @@ export class AddCenterFormOne extends Component {
               <label htmlFor="mobile">Contact mobileNumber</label>
               <input onChange={this.getCenterDetails} type="number" name="mobileNumber" placeholder="mobileNumber" className="form-control first-name" maxLength="11" defaultValue={primaryCenterDetails.mobileNumber ? primaryCenterDetails.mobileNumber : null} />
               <br />
-              <div className="text-center"><button className="btn" onClick={this.addCenterDetails} ><i className="fa fa-chevron-right" style={{ fontSize: `${1.7}em`, color: '#F50057' }} /></button></div>
+              <div className="text-center"><button className="btn btn-add" onClick={this.addCenterDetails} ><i className="fa fa-chevron-right" style={{ fontSize: `${1.7}em`, color: '#F50057' }} /></button></div>
             </form>
           </div>
         </div>

@@ -124,13 +124,13 @@ export class SignupBody extends Component {
                 <label htmlFor="firstname">firstname</label>
                 <input onChange={this.getSignUpDetails} type="text" name="firstname" className="form-control first-name" />
                 <label htmlFor="lastname">lastname</label>
-                <input onChange={this.getSignUpDetails} type="text" name="lastname" className="form-control" />
+                <input onChange={this.getSignUpDetails} type="text" name="lastname" className="form-control last-name" />
                 <label htmlFor="email">email</label>
-                <input onChange={this.getSignUpDetails} type="text" name="email" placeholder="example@gmail.com" className="form-control" />
+                <input onChange={this.getSignUpDetails} type="text" name="email" placeholder="example@gmail.com" className="form-control email" />
                 <label htmlFor="password">password</label>
-                <input onChange={this.getSignUpDetails} type="password" name="password" className="form-control" />
+                <input onChange={this.getSignUpDetails} type="password" name="password" className="form-control password" />
                 <label htmlFor="confirmpassword">retype password</label>
-                <input onChange={this.getSignUpDetails} type="password" name="confirmpassword" placeholder="retype password" className="form-control" />
+                <input onChange={this.getSignUpDetails} type="password" name="confirmpassword" placeholder="retype password" className="form-control confirm-password" />
                 <div className="text-center btn-padder">
                   <button className="btn btn-submit btn-outline" type="submit" onClick={this.signup}><span className="text-center">Sign Up</span></button>
                 </div>

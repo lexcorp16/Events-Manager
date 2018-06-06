@@ -157,7 +157,7 @@ export class UserEvents extends Component {
                 ))}
               </div>
             </div>
-            {(pages !== 1 && userEvents.length !== 0) &&
+            {(pages > 1 && userEvents.length !== 0) &&
             <div className="text-center">
               <PaginationLinks
                 fetchPage={this.fetchMoreEvents}
@@ -176,7 +176,7 @@ export class UserEvents extends Component {
             </div>}
           </div>}
         {(!this.props.event.status.fetchingEvents && this.props.userEvents.length === 0) &&
-          <div>
+          <div className="no-events">
             <EmptyEventList />
           </div>
         }

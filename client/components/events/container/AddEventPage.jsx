@@ -98,13 +98,13 @@ export class AddEventPage extends Component {
             <LargeLoadingIcon />
           </div> :
           <div className="container form-section">
-            <div className="form-container container" style={{ marginTop: `${2}%`, height: `${540}px`, border: 'none' }}>
+            <div className="form-container container" style={{ marginTop: `${2}%`, height: `${620}px`, border: 'none' }}>
               <div className="form-header">
                 <h3 className="text-center header-form" style={{ marginTop: `${5}%` }} >Add Event</h3>
               </div>
               <form className="form form-group">
                 <label htmlFor="name-of-event">Name of event</label>
-                <input onChange={this.getEventDetails} type="text" name="name" className="form-control first-name" />
+                <input onChange={this.getEventDetails} type="text" name="name" className="form-control first-name name" />
                 <label htmlFor="type-of-event">Type of event</label>
                 <select className="form-control" name="type" onChange={this.getEventDetails}>
                   <option>select type</option>

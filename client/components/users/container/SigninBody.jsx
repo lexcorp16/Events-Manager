@@ -116,7 +116,7 @@ export class SigninBody extends Component {
               <div className="usericon text-center">
                 <div><i className="fa fa-user-circle" style={{ fontSize: `${8}em`, paddingTop: `${10}px` }} /></div>
               </div>
-              <input onChange={this.getSignInDetails} type="text" name="email" placeholder="email" className="form-control" />
+              <input onChange={this.getSignInDetails} type="text" name="email" placeholder="email" className="form-control email" />
               <br />
               <input onChange={this.getSignInDetails} type="password" name="password" placeholder="password" className="form-control password-signin" />
               <br />

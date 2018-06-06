@@ -2,7 +2,10 @@
 node_modules
 templates
 server/db/migrations
+server/db/seeders
 .nyc_output
 coverage
 dist
 npm-debug.log
+bin
+reports

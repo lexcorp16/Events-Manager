@@ -15,6 +15,9 @@ const checkInvalidModifyEventDetails = (req) => {
       modifiedParams.push(input);
     }
   });
+  if (!startDate || !endDate) {
+    errorMessage.push('Please specify both the start and end dates of the event');
+  }
   if (name) {
     if (name.trim() === '') {
       errorMessage.push('name field cannot be empty');

@@ -61,6 +61,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           ...state.status,
           fetchingEvents: false,
           error: false,
+          added: false,
         }
       };
     }

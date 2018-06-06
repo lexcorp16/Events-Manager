@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Efosaok/Events-Manager.git"
+    "url": "git+https://github.comstar/Efosaok/Events-Manager.git"
   },
   "author": "Efosa Okpugie",
   "license": "ISC",
@@ -45,6 +45,7 @@
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
+    "chromedriver": "^2.38.3",
     "cors": "^2.8.4",
     "coveralls": "^3.0.0",
     "css-loader": "^0.28.7",

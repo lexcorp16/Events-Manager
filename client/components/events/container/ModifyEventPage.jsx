@@ -112,13 +112,13 @@ export class ModifyEventPage extends Component {
             <LargeLoadingIcon />
           </div> :
           <div className="container form-section">
-            <div className="form-container container" style={{ height: `${550}px`, border: 'none' }}>
+            <div className="form-container container" style={{ height: `${640}px`, border: 'none' }}>
               <div className="form-header">
                 <p className="text-center header-form" style={{ fontSize: `${1.5}em` }} >Modify Event</p>
               </div>
               <form className="form form-group">
                 <label htmlFor="name-of-event">Name of event</label>
-                <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name" defaultValue={this.props.event.eventObject[0].name} />
+                <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name name" defaultValue={this.props.event.eventObject[0].name} />
                 <label htmlFor="type-of-event">Type of event</label>
                 <select className="form-control" name="type" onChange={this.getEventDetails} defaultValue={this.props.event.eventObject[0].type}>
                   <option >select option</option>
@@ -130,9 +130,13 @@ export class ModifyEventPage extends Component {
                   <option value="Coporate">Coporate</option>
                   <option value="Party">Party</option>
                 </select>
-                <label htmlFor="date">Date of event</label>
+                <label htmlFor="date">start date</label>
                 <div className="year">
-                  <input type="date" id="date" name="date" className="form-control" onChange={this.getEventDetails} />
+                  <input type="date" id="startdate" name="startDate" className="form-control" onChange={this.getEventDetails} />
+                </div>
+                <label htmlFor="date">end date</label>
+                <div className="year">
+                  <input type="date" id="enddate" name="endDate" className="form-control" onChange={this.getEventDetails} />
                 </div>
                 <label htmlFor="preferred-center">Preferred center</label>
                 <select className="form-control" onChange={this.getEventDetails} name="center">
