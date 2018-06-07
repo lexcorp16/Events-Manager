@@ -10,10 +10,11 @@
   "scripts": {
     "localtest": "export NODE_ENV=test&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/tests.js --compilers js:babel-core/register --timeout 25000 --exit",
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
-    "start:dev": "nodemon ./server/app --exec babel-node ./server/app",
+    "start:dev": "export NODE_ENV=development&&nodemon ./server/app --exec babel-node ./server/app",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./server/ -d ./dist ./client/ -d ./dist",
     "start": "npm run build && node ./dist/app.js",
+    "start:local:prod": "export NODE_ENV=production&&npm run build && node ./dist/app.js",
     "start:react": "nodemon ./client/server.js --exec babel-node ./client/server.js",
     "sendmail": "babel-node ./server/helpers/mailer.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.prod.js",

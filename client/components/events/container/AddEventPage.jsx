@@ -126,6 +126,7 @@ export class AddEventPage extends Component {
                 </div>
                 <label htmlFor="preferred-center">Preferred center</label>
                 <select className="form-control" onChange={this.getEventDetails} name="center">
+                  <option>select option</option>
                   {this.props.center.allCenters.centers.map(center =>
                     (
                       <CenterList center={center} key={center.id} />

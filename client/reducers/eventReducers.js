@@ -126,6 +126,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           ...state.status,
           error: false,
           modifyEventPrompted: true,
+          eventIsModified: false,
         }
       };
     }

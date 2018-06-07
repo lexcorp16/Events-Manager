@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import logo from '../../../public/images/coference2.jpg';
 import { randomColor } from '../../../utils/mescill.utils';
-// import EventDetails from './EventDetails';
 
 const EventCard = props =>
   (
     <div>
-      <div className="acenter col-lg-4 col-sm-12 col-xs-12 col-md-6 center-card" style={{ paddingRight: '30px' }}>
-        <div className="card all-centers-card" style={{ marginTop: '30px' }}>
+      <div className="acenter col-lg-3 col-sm-12 col-xs-12 col-md-6 center-card" style={{ paddingRight: '30px' }}>
+        <div className="card all-centers-card event-card" style={{ marginTop: '30px' }}>
           <div className="card-img-top img-fluid" src={logo} alt="Card" style={{ height: '200px', backgroundColor: randomColor(), width: '100%', }} />
-          <p className="card-text all-centers-text">{moment(props.eventObject.date).format('DD MMMM YYYY')}</p>
+          <p className="card-text all-centers-text">{moment(props.eventObject.startDate).format('DD MMM YYYY')}</p>
           <div className="card-body">
             <h4 className="card-title text-center">{props.eventObject.name}</h4>
             <div className="btn-group text-center d-flex justify-content-center">
@@ -22,12 +21,6 @@ const EventCard = props =>
           </div>
         </div>
       </div>
-      {/* <div className="modal fade bd-example-modal-sm" id="myModal" tabIndex="-1" role="dialog">
-        <EventDetails
-          eventDetails={props.eventObject}
-          navigateToModificationPage={props.goToModificationPage}
-        />
-      </div> */}
     </div>
   );
 
@@ -38,6 +31,7 @@ const propTypes = {
     name: PropTypes.string,
     id: PropTypes.string,
     date: PropTypes.string,
+    startDate: PropTypes.string,
     center: PropTypes.string,
   }).isRequired,
   deletePrompt: PropTypes.func.isRequired,

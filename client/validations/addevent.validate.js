@@ -42,7 +42,7 @@ const checkInvalidAddEventDetails = (req) => {
     }
   }
   if (startDate) {
-    if (startDate.trim() !== '' && validator.isBefore(startDate)) {
+    if (startDate.trim() !== '' && validator.isBefore(startDate) && new Date(startDate).toISOString().slice(0, 10) !== new Date().toISOString().slice(0, 10)) {
       errorMessage.push('The commencement date chosen is past, please choose another date');
     }
     if (validator.toDate(startDate) === null) {
@@ -50,7 +50,7 @@ const checkInvalidAddEventDetails = (req) => {
     }
   }
   if (endDate) {
-    if (endDate.trim() !== '' && validator.isBefore(endDate)) {
+    if (endDate.trim() !== '' && validator.isBefore(endDate) && new Date(endDate).toISOString().slice(0, 10) !== new Date().toISOString().slice(0, 10)) {
       errorMessage.push('The end date chosen is past, please choose another date');
     }
     if (validator.toDate(endDate) === null) {

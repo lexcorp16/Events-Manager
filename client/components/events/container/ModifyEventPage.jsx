@@ -8,6 +8,7 @@ import { getAllCenters } from '../../../actions/centerActions';
 import CenterList from '../presentational/CenterList';
 import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
 import { LoadingIcon, LargeLoadingIcon } from '../../utils/LoaderComponents';
+import { prefillVenue } from '../../../utils/mescill.utils';
 import isValidModificationDetails from '../../../validations/modifyevent.validate';
 import ModifyEventPageHoc from '../../HOC/ModifyEventPageHoc';
 
@@ -105,6 +106,7 @@ export class ModifyEventPage extends Component {
  * @memberof ModifyEventPage
  */
   render() {
+    const { startDate, endDate, center } = this.props.event.eventObject[0];
     return (
       <div className="modify-event-form">
         {this.props.center.status.fetchingCenters ?
@@ -132,18 +134,18 @@ export class ModifyEventPage extends Component {
                 </select>
                 <label htmlFor="date">start date</label>
                 <div className="year">
-                  <input type="date" id="startdate" name="startDate" className="form-control" onChange={this.getEventDetails} />
+                  <input type="date" id="startdate" name="startDate" className="form-control" onChange={this.getEventDetails} defaultValue={startDate.slice(0, 10)} />
                 </div>
                 <label htmlFor="date">end date</label>
                 <div className="year">
-                  <input type="date" id="enddate" name="endDate" className="form-control" onChange={this.getEventDetails} />
+                  <input type="date" id="enddate" name="endDate" className="form-control" onChange={this.getEventDetails} defaultValue={endDate.slice(0, 10)} />
                 </div>
                 <label htmlFor="preferred-center">Preferred center</label>
-                <select className="form-control" onChange={this.getEventDetails} name="center">
+                <select className="form-control" onChange={this.getEventDetails} name="center" defaultValue={prefillVenue(center, this.props.center.allCenters.centers)} >
                   <option>select option</option>
-                  {this.props.center.allCenters.centers.map(center =>
+                  {this.props.center.allCenters.centers.map(aCenter =>
                   (
-                    <CenterList center={center} key={center.id} />
+                    <CenterList center={aCenter} key={aCenter.id} />
                   ))}
                 </select>
                 <br />

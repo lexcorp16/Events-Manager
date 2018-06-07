@@ -310,7 +310,7 @@ label {
 }
 
 .event-details-modal {
-  height: 420px;
+  height: 480px;
 }
 .events-header-name {
   padding-bottom: 10px;
@@ -1381,3 +1381,7 @@ input:checked + .slider:before {
     margin-top: 5px;
   }
  }
+
+.event-card {
+  width: 300px;
+}

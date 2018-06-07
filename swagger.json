@@ -275,99 +275,29 @@
         }
       }
     },
-    "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291": {
+    "/centers/<centerId>": {
       "get": {
-        "description": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query.",
-        "summary": "Get centers",
+        "description": "api endpoint to get a center.\nThis endpoint by default also fetches the event slated for a center, To turn this off, simply set the query parameter centeronly to true.\n\napi/v1/centers/<centerid>?centeronly=true",
+        "summary": "Get center",
         "tags": [
           "Center Related endpoints"
         ],
-        "operationId": "Centers383ef4e7Eec146f7Ab0292c9c4974291Get2",
+        "operationId": "CentersCenterIdGet",
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "page",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "rentalCost",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          },
-          {
-            "name": "capacity",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetCenter"
+            },
+            "examples": {}
           }
         },
         "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "GET",
-              "uri": "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291?page=1&offset=1&limit=10&name=Rogaros&type=Seminar&rentalCost=23000&capacity=340000"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "Get centers",
-            "x-testDescription": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query."
-          }
-        ],
+        "x-unitTests": [],
         "x-operation-settings": {
           "CollectParameters": false,
           "AllowDynamicQueryParameters": false,
@@ -381,7 +311,7 @@
         "tags": [
           "Center Related endpoints"
         ],
-        "operationId": "Centers383ef4e7Eec146f7Ab0292c9c4974291Put",
+        "operationId": "CentersCenterIdPut",
         "produces": [
           "application/json"
         ],
@@ -391,13 +321,6 @@
         "parameters": [
           {
             "name": "name",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "address",
             "in": "formData",
             "required": true,
             "type": "string",
@@ -576,6 +499,107 @@
         }
       }
     },
+    "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291": {
+      "get": {
+        "description": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query.",
+        "summary": "Get centers",
+        "tags": [
+          "Center Related endpoints"
+        ],
+        "operationId": "Centers383ef4e7Eec146f7Ab0292c9c4974291Get",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "rentalCost",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "capacity",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "GET",
+              "uri": "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291?page=1&offset=1&limit=10&name=Rogaros&type=Seminar&rentalCost=23000&capacity=340000"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Get centers",
+            "x-testDescription": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query."
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
     "/events/": {
       "post": {
         "description": "api endpoint to add an event",
@@ -739,35 +763,18 @@
         }
       }
     },
-    "/events/b3541ea9-d908-4096-bf5d-445cdbcc5bb9": {
-      "put": {
+    "/<eventId>": {
+      "get": {
         "description": "api endpoint to modify an event",
         "summary": "Edit Event",
         "tags": [
           "Event Related endpoints"
         ],
-        "operationId": "EventsB3541ea9D9084096Bf5d445cdbcc5bb9Put",
+        "operationId": "EventIdGet",
         "produces": [
           "application/json"
         ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
         "parameters": [
-          {
-            "name": "name",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "date",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
           {
             "name": "x-access-token",
             "in": "header",
@@ -821,13 +828,12 @@
         "x-unitTests": [
           {
             "request": {
-              "method": "PUT",
-              "uri": "/events/b3541ea9-d908-4096-bf5d-445cdbcc5bb9",
+              "method": "GET",
+              "uri": "/<eventId>",
               "headers": {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8"
-              },
-              "body": "name=Dope Event&date=2018-07-03"
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8",
+                "Content-Type": "application/x-www-form-urlencoded"
+              }
             },
             "expectedResponse": {
               "x-allowExtraHeaders": true,
@@ -864,6 +870,86 @@
           "AllowDynamicFormParameters": false,
           "IsMultiContentStreaming": false
         }
+      }
+    },
+    "/events/<eventId>": {
+      "post": {
+        "description": "api endpoint to cancel user Event",
+        "summary": "Cancel user Event",
+        "tags": [
+          "Event Related endpoints"
+        ],
+        "operationId": "EventsEventIdPost",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CancelUserEvent"
+            },
+            "examples": {
+              "application/json": {
+                "message": "Event canceled and notification sent"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/events/<eventId>",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "50",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 12:30:07 GMT",
+                "etag": "W/\"32-w9pOkHp4F4/U86hYR7fwhH89/bI\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"Event canceled and notification sent\"}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Cancel user Event",
+            "x-testDescription": "api endpoint to cancel user Event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
       },
       "delete": {
         "description": "api endpoint to delete an event",
@@ -871,7 +957,7 @@
         "tags": [
           "Event Related endpoints"
         ],
-        "operationId": "EventsB3541ea9D9084096Bf5d445cdbcc5bb9Delete",
+        "operationId": "EventsEventIdDelete",
         "produces": [
           "application/json"
         ],
@@ -913,7 +999,7 @@
           {
             "request": {
               "method": "DELETE",
-              "uri": "/events/b3541ea9-d908-4096-bf5d-445cdbcc5bb9",
+              "uri": "/events/<eventId>",
               "headers": {
                 "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8"
               }
@@ -1012,94 +1098,14 @@
         }
       }
     },
-    "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2": {
-      "post": {
-        "description": "api endpoint to cancel user Event",
-        "summary": "Cancel user Event",
-        "tags": [
-          "Event Related endpoints"
-        ],
-        "operationId": "Events7f9d48f6941640f68d426587b7e303e2Post",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "x-access-token",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": ""
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/CancelUserEvent"
-            },
-            "examples": {
-              "application/json": {
-                "message": "Event canceled and notification sent"
-              }
-            }
-          }
-        },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "POST",
-              "uri": "/events/7f9d48f6-9416-40f6-8d42-6587b7e303e2",
-              "headers": {
-                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
-              }
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "RAW",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {
-                "access-control-allow-credentials": "true",
-                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
-                "access-control-allow-origin": "*",
-                "connection": "keep-alive",
-                "content-length": "50",
-                "content-type": "application/json; charset=utf-8",
-                "date": "Sat, 02 Jun 2018 12:30:07 GMT",
-                "etag": "W/\"32-w9pOkHp4F4/U86hYR7fwhH89/bI\"",
-                "server": "Cowboy",
-                "vary": "Origin",
-                "via": "1.1 vegur",
-                "x-powered-by": "Express"
-              },
-              "body": "{\"message\":\"Event canceled and notification sent\"}"
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "Cancel user Event",
-            "x-testDescription": "api endpoint to cancel user Event"
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      }
-    },
-    "/users/f9c5fd82-5cc3-46ae-aaaa-a3e792fed5cb": {
+    "/users/<userId>": {
       "put": {
         "description": "api endpoint to make user become admin\n\nThis endpoint requires the authorization of a SuperAdmin.",
         "summary": "Upgrade/Downgrade User",
         "tags": [
           "SuperAdmin related endpoints"
         ],
-        "operationId": "UsersF9c5fd825cc346aeAaaaA3e792fed5cbPut",
+        "operationId": "UsersUserIdPut",
         "produces": [
           "application/json"
         ],
@@ -1122,7 +1128,7 @@
           {
             "request": {
               "method": "PUT",
-              "uri": "/users/f9c5fd82-5cc3-46ae-aaaa-a3e792fed5cb",
+              "uri": "/users/<userId>",
               "headers": {
                 "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
               }

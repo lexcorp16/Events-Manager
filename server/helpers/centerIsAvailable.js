@@ -8,19 +8,35 @@ const centerIsAvailable = (req, res, next) => {
   Events.findOne({
     where: {
       center: req.body.center,
-      $or: {
-        startDate: {
-          $between: [new Date(endDate).toISOString(), new Date(startDate).toISOString()],
+      [Op.or]: [
+        {
+          $and: [
+            {
+              startDate: {
+                [Op.lte]: new Date(startDate).toISOString()
+              }
+            },
+            {
+              endDate: { [Op.gte]: new Date(startDate).toISOString() }
+            }
+          ]
         },
-        endDate: {
-          $between: [new Date(endDate).toISOString(), new Date(startDate).toISOString()],
+        {
+          $and: [
+            {
+              startDate: { [Op.lte]: new Date(endDate).toISOString() }
+            },
+            { endDate: { [Op.gte]: new Date(endDate).toISOString() } }
+          ]
         }
-      },
+      ]
     }
   })
     .then((event) => {
       if (event) {
-        return res.status(409).send({ error: 'Another Event is slated for  this center' });
+        if (event.id !== req.params.eventId) {
+          return res.status(409).send({ error: 'Another Event is slated for  this center during the specified dates, please choose another date or center' });
+        }
       }
       next();
     });

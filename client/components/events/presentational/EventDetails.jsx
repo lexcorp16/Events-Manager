@@ -15,7 +15,8 @@ const EventDetails = props =>
           </div>
           <button type="button" className="close" data-dismiss="modal">&times;</button>
           <div className="eventDetails text-center">
-            <p><b>Date:</b> {moment(props.eventDetails.date).format('DD MMMM YYYY')}</p>
+            <p><b>startDate:</b> {moment(props.eventDetails.startDate).format('DD MMMM YYYY')}</p>
+            <p><b>endDate:</b> {moment(props.eventDetails.endDate).format('DD MMMM YYYY')}</p>
             <p><b>Type:</b> {props.eventDetails.type}</p>
           </div>
         </div>}
