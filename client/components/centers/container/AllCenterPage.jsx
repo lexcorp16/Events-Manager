@@ -3,9 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import CenterCard from '../presentational/CenterCard';
-import { getAllCenters, modificationPrompt, promptSeeCenter } from '../../../actions/centerActions';
 import { LargeLoadingIcon } from '../../utils/LoaderComponents';
 import PaginationLinks from '../../utils/PaginationLinks';
+import {
+  getAllCenters,
+  modificationPrompt,
+  promptSeeCenter
+} from '../../../actions/centerActions';
 /**
  *
  *
@@ -89,7 +93,10 @@ export class AllCenterPage extends Component {
         </div>
         }
         {(this.props.center.allCenters && !fetchingCenters) &&
-        <div className="catalogs" id="descriptions container allcenters-section">
+        <div
+          className="catalogs"
+          id="descriptions container allcenters-section"
+        >
           <div className="row">
             {this.props.center.allCenters.centers.map(center =>
             (
@@ -101,7 +108,7 @@ export class AllCenterPage extends Component {
               />
             ))}
           </div>
-          {(pages !== 1 && centers.length !== 0) &&
+          {(pages > 1 && centers.length !== 0) &&
           <div className="text-center">
             <PaginationLinks
               fetchPage={this.fetchMoreCenters}

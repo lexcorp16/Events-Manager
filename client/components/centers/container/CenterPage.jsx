@@ -5,7 +5,7 @@ import ACenter from '../presentational/OneCenterPage';
 import { cancelUserEvent } from '../../../actions/eventActions';
 import { getACenter } from '../../../actions/centerActions';
 import { LargeLoadingIcon } from '../../utils/LoaderComponents';
-import FetchACenterHoc from '../../HOC/FetchACenterHoc';
+import FetchACenter from '../../HOC/FetchACenter';
 
 /**
  *
@@ -91,7 +91,10 @@ const mapStateToProps = (state =>
   })
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(FetchACenterHoc(CenterPage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FetchACenter(CenterPage));
 
 const propTypes = {
   center: PropTypes.shape({

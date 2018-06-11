@@ -1,10 +1,10 @@
 import React from 'react';
 import isAuthenticated from '../../helpers/isAuthenticated';
-import SigninPage from '../users/container/SigninBody';
+import SigninPage from '../users/container/SigninPage';
 import isSuperAdmin from '../../helpers/isSuperAdmin';
 import AllCentersPage from '../centers/container/AllCenterPage';
 
-const AccessGrantPageHoc = WrapperComponent =>
+const AccessGrantPage = WrapperComponent =>
   (
     (props) => {
       if (!isAuthenticated()) {
@@ -17,4 +17,4 @@ const AccessGrantPageHoc = WrapperComponent =>
     }
   );
 
-export default AccessGrantPageHoc;
+export default AccessGrantPage;

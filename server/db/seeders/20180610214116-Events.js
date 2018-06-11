@@ -13,7 +13,6 @@ module.exports = {
       updatedAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),
     }], {});
-    // skdksld
   },
   down: (queryInterface) => {
     return queryInterface.bulkDelete('Events', null, {});

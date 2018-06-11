@@ -12,7 +12,6 @@ const randomColor = () => {
 const prefillVenue = (id, arr) => {
   const centerObject = arr.filter(object => object.id === id);
   if (centerObject.length > 0) {
-    console.log(centerObject[0].name);
     return centerObject[0].name;
   }
 };

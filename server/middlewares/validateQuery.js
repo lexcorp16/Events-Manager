@@ -1,5 +1,12 @@
 import validator from 'validator';
 
+/**
+ * Validates get all centers query parameters
+ * @param {object} req request object from express/body-parser
+ * @param {object} res response object from express
+ * @param {function} next express next middleware function
+ * @returns {object} response object in json
+ */
 const validateQuery = (req, res, next) => {
   const errorMessage = [];
   Object.keys(req.query).forEach((key) => {

@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 
 import { getPrimaryCenterDetails } from '../../../actions/centerActions';
-import { checkInvalidPrimaryCenterDetails } from '../../../validations/addcenter.validate';
+import { checkInvalidPrimaryCenterDetails } from
+  '../../../validations/addcenter.validate';
 import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
-import ComponentsHoc from '../../HOC/AuthPagesHoc';
+import AuthPages from '../../HOC/AuthPages';
 /**
  *
  *
@@ -33,7 +34,8 @@ export class AddCenterFormOne extends Component {
   }
   /**
  *
- *
+ * checks if data is already in store, if so,
+ * set state to the data
  * @memberof AddCenterFormOne
  * @returns {object} state if user is unauthenticated,
  */
@@ -45,7 +47,8 @@ export class AddCenterFormOne extends Component {
 
   /**
  *
- *
+ * get input values from element and
+ * set the corresponding state key to their value
  * @param {any} event
  * @memberof AddCenterFormOne
  * @returns {string} sets the value of apps state from forms
@@ -55,8 +58,8 @@ export class AddCenterFormOne extends Component {
   }
   /**
  *
- *
- * @param {any} event
+ * saves data in redux store
+ * @param {object} event element event object
  * @memberof AddCenterFormOne
  * @returns {object} dispatches an action
  */
@@ -83,15 +86,37 @@ export class AddCenterFormOne extends Component {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${10}%` }}>
         <div className="container form-section">
-          <div className="sign-in-container form-container form-add-center-one" style={{ border: 'none' }}>
+          <div
+            className="sign-in-container form-container form-add-center-one"
+            style={{ border: 'none' }}
+          >
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%` }} >Primary Details Of Your Center</p>
+              <p
+                className="text-center header-form"
+                style={{ marginTop: `${3}%` }}
+              >Primary Details Of Your Center
+              </p>
             </div>
             <form className="form form-group container">
               <label htmlFor="name">Name</label>
-              <input onChange={this.getCenterDetails} type="text" name="name" className="form-control first-name name" id="Name" defaultValue={primaryCenterDetails.name ? primaryCenterDetails.name : null} />
+              <input
+                onChange={this.getCenterDetails}
+                type="text"
+                name="name"
+                className="form-control first-name name"
+                id="Name"
+                defaultValue={primaryCenterDetails.name ?
+                  primaryCenterDetails.name : null}
+              />
               <label htmlFor="type">Type</label>
-              <select className="form-control" name="type" onChange={this.getCenterDetails} id="type" defaultValue={primaryCenterDetails.type ? primaryCenterDetails.type : null}>
+              <select
+                className="form-control"
+                name="type"
+                onChange={this.getCenterDetails}
+                id="type"
+                defaultValue={primaryCenterDetails.type ?
+                primaryCenterDetails.type : null}
+              >
                 <option>select type</option>
                 <option value="Club">Club</option>
                 <option value="Seminar">Seminar</option>
@@ -102,13 +127,48 @@ export class AddCenterFormOne extends Component {
                 <option value="Multipurpose Hall">Multipurpose hall</option>
               </select>
               <label htmlFor="capacity">Capacity</label>
-              <input type="number" className="form-control" onChange={this.getCenterDetails} name="capacity" placeholder="capacity in numbers e.g 1000000" defaultValue={primaryCenterDetails.capacity ? primaryCenterDetails.capacity : null} />
+              <input
+                type="number"
+                className="form-control"
+                onChange={this.getCenterDetails}
+                name="capacity"
+                placeholder="capacity in numbers e.g 1000000"
+                defaultValue={primaryCenterDetails.capacity ?
+                primaryCenterDetails.capacity : null}
+              />
               <label htmlFor="address">Address</label>
-              <input onChange={this.getCenterDetails} type="text" name="address" placeholder="Address" className="form-control first-name" defaultValue={primaryCenterDetails.address ? primaryCenterDetails.address : null} />
+              <input
+                onChange={this.getCenterDetails}
+                type="text"
+                name="address"
+                placeholder="Address"
+                className="form-control first-name"
+                defaultValue={primaryCenterDetails.address ?
+                primaryCenterDetails.address : null}
+              />
               <label htmlFor="mobile">Contact mobileNumber</label>
-              <input onChange={this.getCenterDetails} type="number" name="mobileNumber" placeholder="mobileNumber" className="form-control first-name" maxLength="11" defaultValue={primaryCenterDetails.mobileNumber ? primaryCenterDetails.mobileNumber : null} />
+              <input
+                onChange={this.getCenterDetails}
+                type="number"
+                name="mobileNumber"
+                placeholder="mobileNumber"
+                className="form-control first-name"
+                maxLength="11"
+                defaultValue={primaryCenterDetails.mobileNumber ?
+                primaryCenterDetails.mobileNumber : null}
+              />
               <br />
-              <div className="text-center"><button className="btn btn-add" onClick={this.addCenterDetails} ><i className="fa fa-chevron-right" style={{ fontSize: `${1.7}em`, color: '#F50057' }} /></button></div>
+              <div className="text-center">
+                <button
+                  className="btn btn-add"
+                  onClick={this.addCenterDetails}
+                >
+                  <i
+                    className="fa fa-chevron-right"
+                    style={{ fontSize: `${1.7}em`, color: '#F50057' }}
+                  />
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -130,7 +190,10 @@ const mapStateToProps = (state =>
   })
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComponentsHoc(AddCenterFormOne));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AuthPages(AddCenterFormOne));
 
 const propTypes = {
   dispatch: PropTypes.func.isRequired,

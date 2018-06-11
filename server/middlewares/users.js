@@ -1,5 +1,9 @@
 import validator from 'validator';
-
+/**
+ * validates email
+ * @param {string} mail email to be validated
+ * @returns {boolean} boolean value indicating parameter is valid or not
+ */
 const isValidEmail = (mail) => {
   if (/^\w+([.-]?\w+)*@\w+([ .-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
     return true;
@@ -7,6 +11,13 @@ const isValidEmail = (mail) => {
   return false;
 };
 
+/**
+ * Validates signup details
+ * @param {object} req request object from express/body-parser
+ * @param {object} res response object from express
+ * @param {function} next express next middleware function
+ * @returns {object} response object in json
+ */
 const checkInvalidUserDetails = (req, res, next) => {
   const {
     firstname,
@@ -61,6 +72,13 @@ const checkInvalidUserDetails = (req, res, next) => {
   next();
 };
 
+/**
+ * Validates signin details
+ * @param {object} req request object from express/body-parser
+ * @param {object} res response object from express
+ * @param {function} next express next middleware function
+ * @returns {object} response object in json
+ */
 const checkInvalidUserSignIn = (req, res, next) => {
   const errorMessage = [];
   if (!req.body.email) {
@@ -90,6 +108,13 @@ const checkInvalidUserSignIn = (req, res, next) => {
   next();
 };
 
+/**
+ * Validates userId parameter
+ * @param {object} req request object from express/body-parser
+ * @param {object} res response object from express
+ * @param {function} next express next middleware function
+ * @returns {object} response object in json
+ */
 const checkInvalidParams = (req, res, next) => {
   if (!validator.isUUID(req.params.userId, 4)) {
     return res.status(400).send({ error: 'Invalid id parsed' });

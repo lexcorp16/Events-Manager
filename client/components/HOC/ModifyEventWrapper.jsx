@@ -1,23 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isAuthenticated from '../../helpers/isAuthenticated';
-import SignInPage from '../users/container/SigninBody';
-import UserEventsPage from '../events/container/UserEvents';
+import SignInPage from '../users/container/SigninPage';
 
-const ModifyEventPageHoc = WrappedComponent =>
+const ModifyEventPage = WrappedComponent =>
   (
     (props) => {
       if (!isAuthenticated()) {
         return <SignInPage />;
       }
-      // if (!props.event.eventObject[0]) {
-      //   return <UserEventsPage />;
-      // }
       return <WrappedComponent {...props} />;
     }
   );
 
-export default ModifyEventPageHoc;
+export default ModifyEventPage;
 
 const propTypes = {
   event: PropTypes.shape({
@@ -25,4 +21,4 @@ const propTypes = {
   }).isRequired,
 };
 
-ModifyEventPageHoc.propTypes = propTypes;
+ModifyEventPage.propTypes = propTypes;

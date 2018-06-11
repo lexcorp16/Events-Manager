@@ -1,9 +1,9 @@
 import React from 'react';
 import isAuthenticated from '../../helpers/isAuthenticated';
-import SigninPage from '../users/container/SigninBody';
+import SigninPage from '../users/container/SigninPage';
 import { actionRejectedPrompter } from '../../utils/alerts.sweetalert';
 
-const AuthPagesHoc = WrappedComponent =>
+const AuthPages = WrappedComponent =>
   (
     (props) => {
       if (!isAuthenticated()) {
@@ -14,4 +14,4 @@ const AuthPagesHoc = WrappedComponent =>
     }
   );
 
-export default AuthPagesHoc;
+export default AuthPages;

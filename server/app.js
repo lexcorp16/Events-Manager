@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import webpack from 'webpack';
+import winston from 'winston';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import path from 'path';
@@ -71,7 +72,7 @@ app.set('port', process.env.PORT || 3000);
 
 // fire up server to listen on ap particular port
 app.listen(app.get('port'), () => {
-  console.log(`api running on port ${app.get('port')}`);
+  winston.log(`api running on port ${app.get('port')}`);
 });
 
 export default app;

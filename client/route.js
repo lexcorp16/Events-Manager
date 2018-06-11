@@ -2,13 +2,16 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from './components/root/App';
-import AddCenterPageOneForm from './components/centers/container/AddCenterFormOne';
-import AddCenterPageTwoForm from './components/centers/container/AddCenterFormTwo';
-import addCenterPageThreeForm from './components/centers/container/AddCenterFormThree';
-import SignupPage from './components/users/container/SignupBody';
+import AddCenterPageOneForm from
+  './components/centers/container/AddCenterFormOne';
+import AddCenterPageTwoForm from
+  './components/centers/container/AddCenterFormTwo';
+import addCenterPageThreeForm from
+  './components/centers/container/AddCenterFormThree';
+import SignupPage from './components/users/container/SignupPage';
 import LandingPage from './components/utils/LandingPageBody';
-import SigninPage from './components/users/container/SigninBody';
-import AllCentersPage from './components/centers/container/AllCenterPage';
+import SigninPage from './components/users/container/SigninPage';
+import AllCenterPage from './components/centers/container/AllCenterPage';
 import AddEventPage from './components/events/container/AddEventPage';
 import CenterInfoPage from './components/centers/container/CenterPage';
 import UserEventsPage from './components/events/container/UserEvents';
@@ -30,7 +33,7 @@ const Router = (
     <Route path="addcenterthree" component={addCenterPageThreeForm} />
     <Route path="addevent" component={AddEventPage} />
     <Route path="modifycenter" exact component={ModifyCenterPage} />
-    <Route path="centers" component={AllCentersPage} />
+    <Route path="centers" component={AllCenterPage} />
     <Route path="center" component={CenterInfoPage} />
     <Route path="users" component={AllUsersPage} />
     <Route path="search" component={SearchPage} />

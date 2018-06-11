@@ -23,11 +23,6 @@ const checkInvalidPrimaryCenterDetails = (req) => {
     4: 'address',
   };
   const centerDetails = [name, type, capacity, mobileNumber, address];
-  // centerDetails.forEach((input) => {
-  //   if (!input) {
-  //     errorMessage += 'Please fill in all fields \n';
-  //   }
-  // });
   for (let counter = -1; counter < centerDetails.length - 1;) {
     counter += 1;
     if (centerDetails[counter] === undefined) {

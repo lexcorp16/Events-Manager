@@ -4,8 +4,9 @@ import { browserHistory, Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { getRentalCostAndFacilities } from '../../../actions/centerActions';
 import prefillCheckBox from '../../../utils/checkboxprefill';
-import ComponentsHoc from '../../HOC/AuthPagesHoc';
-import { checkInvalidRentalCostAndFacilities } from '../../../validations/addcenter.validate';
+import AuthPages from '../../HOC/AuthPages';
+import { checkInvalidRentalCostAndFacilities } from
+  '../../../validations/addcenter.validate';
 import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
 
 /**
@@ -74,7 +75,10 @@ export class AddCenterFormTwo extends Component {
  */
   addFacilities(event) {
     if (this.state.facilities.includes(event.target.value)) {
-      this.state.facilities.splice(this.state.facilities.indexOf(event.target.value), 1);
+      this.state.facilities.splice(
+        this.state.facilities.indexOf(event.target.value),
+        1
+      );
     } else {
       this.state.facilities.push(event.target.value);
     }
@@ -82,7 +86,7 @@ export class AddCenterFormTwo extends Component {
   /**
  *
  *
- * @param {any} event
+ * @param {object} event element event object
  * @memberof AddCenterFormTwo
  * @returns {object} state after an action is called
  */
@@ -108,63 +112,194 @@ export class AddCenterFormTwo extends Component {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${10}%` }}>
         <div className="container form-section">
-          <div className="sign-in-container form-container sign-in-container" style={{ marginTop: `${5}%`, border: 'none' }}>
+          <div
+            className="sign-in-container form-container sign-in-container"
+            style={{ marginTop: `${5}%`, border: 'none' }}
+          >
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%` }} >Select Facilities And Rentalcost</p>
+              <p
+                className="text-center header-form"
+                style={{ marginTop: `${3}%` }}
+              >
+              Select Facilities And Rentalcost
+              </p>
             </div>
-            <form className="form form-group container" style={{ marginTop: `${60}px` }}>
-              <div className="row facilities-checklist " style={{ marginBottom: `${30}px` }}>
+            <form
+              className="form form-group container"
+              style={{ marginTop: `${60}px` }}
+            >
+              <div
+                className="row facilities-checklist "
+                style={{ marginBottom: `${30}px` }}
+              >
                 <div className="col" style={{ marginBottom: '20px' }}>
-                  <input id="parking lot" type="checkbox" value="parking lot" name="parkinglot" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
-                  <label style={{ display: 'block' }} htmlFor="parkingLot">Parking-lot</label>
+                  <input
+                    id="parking lot"
+                    type="checkbox"
+                    value="parking lot"
+                    name="parkinglot"
+                    style={{ height: `${25}px`, width: `${25}px` }}
+                    onClick={this.addFacilities}
+                  />
+                  <label
+                    style={{ display: 'block' }}
+                    htmlFor="parkingLot"
+                  >Parking-lot
+                  </label>
                 </div>
                 <div className="col">
-                  <input id="projector" type="checkbox" value="projector" name="projector" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
-                  <label style={{ display: 'block' }} htmlFor="projector">Projector(s)</label>
+                  <input
+                    id="projector"
+                    type="checkbox"
+                    value="projector"
+                    name="projector"
+                    style={{ height: `${25}px`, width: `${25}px` }}
+                    onClick={this.addFacilities}
+                  />
+                  <label
+                    style={{ display: 'block' }}
+                    htmlFor="projector"
+                  >Projector(s)
+                  </label>
                 </div>
                 <div className="col">
-                  <input id="swimming-pool" type="checkbox" value="swimming-pool" name="swimming-pool" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
-                  <label style={{ display: 'block' }} htmlFor="swimming-pool">Swimming-pool</label>
+                  <input
+                    id="swimming-pool"
+                    type="checkbox"
+                    value="swimming-pool"
+                    name="swimming-pool"
+                    style={{ height: `${25}px`, width: `${25}px` }}
+                    onClick={this.addFacilities}
+                  />
+                  <label
+                    style={{ display: 'block' }}
+                    htmlFor="swimming-pool"
+                  >Swimming-pool
+                  </label>
                 </div>
                 <div className="col">
-                  <input id="lounge" type="checkbox" value="lounge" name="lounge" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
-                  <label style={{ display: 'block' }} htmlFor="lounge">Lounge</label>
+                  <input
+                    id="lounge"
+                    type="checkbox"
+                    value="lounge"
+                    name="lounge"
+                    style={{ height: `${25}px`, width: `${25}px` }}
+                    onClick={this.addFacilities}
+                  />
+                  <label
+                    style={{ display: 'block' }}
+                    htmlFor="lounge"
+                  >
+                  Lounge
+                  </label>
                 </div>
                 <div className="col">
-                  <input id="changing room" type="checkbox" value="changing room" name="changingroom" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
-                  <label style={{ display: 'block' }} htmlFor="changingroom">Changing-room</label>
+                  <input
+                    id="changing room"
+                    type="checkbox"
+                    value="changing room"
+                    name="changingroom"
+                    style={{ height: `${25}px`, width: `${25}px` }}
+                    onClick={this.addFacilities}
+                  />
+                  <label
+                    style={{ display: 'block' }}
+                    htmlFor="changingroom"
+                  >Changing-room
+                  </label>
                 </div>
                 <div className="col">
-                  <input id="Barbecue section" type="checkbox" value="Barbecue section" name="barbecuesection" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
-                  <label style={{ display: 'block' }} htmlFor="barbecue">Parking-lot</label>
+                  <input
+                    id="Barbecue section"
+                    type="checkbox"
+                    value="Barbecue section"
+                    name="barbecuesection"
+                    style={{ height: `${25}px`, width: `${25}px` }}
+                    onClick={this.addFacilities}
+                  />
+                  <label
+                    style={{ display: 'block' }}
+                    htmlFor="barbecue"
+                  >Parking-lot
+                  </label>
                 </div>
                 <div className="col">
-                  <input id="Rest room" type="checkbox" value="Rest room" name="restroom" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
-                  <label style={{ display: 'block' }} htmlFor="restroom">Rest room</label>
+                  <input
+                    id="Rest room"
+                    type="checkbox"
+                    value="Rest room"
+                    name="restroom"
+                    style={{ height: `${25}px`, width: `${25}px` }}
+                    onClick={this.addFacilities}
+                  />
+                  <label
+                    style={{ display: 'block' }}
+                    htmlFor="restroom"
+                  >Rest room
+                  </label>
                 </div>
                 <div className="col">
-                  <input id="Photo gallery" type="checkbox" value="Photo gallery" name="photogallery" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
-                  <label style={{ display: 'block' }} htmlFor="photogallery">Photo gallery</label>
+                  <input
+                    id="Photo gallery"
+                    type="checkbox"
+                    value="Photo gallery"
+                    name="photogallery"
+                    style={{ height: `${25}px`, width: `${25}px` }}
+                    onClick={this.addFacilities}
+                  />
+                  <label
+                    style={{ display: 'block' }}
+                    htmlFor="photogallery"
+                  >Photo gallery
+                  </label>
                 </div>
                 <div className="col">
-                  <input id="Catering Area" type="checkbox" value="Catering Area" name="catering-area" style={{ height: `${25}px`, width: `${25}px` }} onClick={this.addFacilities} />
-                  <label style={{ display: 'block' }} htmlFor="photogallery">Catering Area</label>
+                  <input
+                    id="Catering Area"
+                    type="checkbox"
+                    value="Catering Area"
+                    name="catering-area"
+                    style={{ height: `${25}px`, width: `${25}px` }}
+                    onClick={this.addFacilities}
+                  />
+                  <label
+                    style={{ display: 'block' }}
+                    htmlFor="photogallery"
+                  >Catering Area
+                  </label>
                 </div>
               </div>
               <label htmlFor="rentalcost">rental Cost</label>
-              <input id="rentalCost" name="rentalCost" type="number" placeholder="Amount e.g 300000 in Naira" className="form-control" onChange={this.getRentalCost} defaultValue={rentalCost !== '' ? rentalCost : ''} />
+              <input
+                id="rentalCost"
+                name="rentalCost"
+                type="number"
+                placeholder="Amount e.g 300000 in Naira"
+                className="form-control"
+                onChange={this.getRentalCost}
+                defaultValue={rentalCost !== '' ? rentalCost : ''}
+              />
               <br />
               <div className="row left-right-btns container">
                 <div className="col">
                   <Link to="/addcenterone">
                     <button className="btn">
-                      <i className="fa fa-chevron-left" style={{ fontSize: `${1.7}em`, color: '#F50057' }} />
+                      <i
+                        className="fa fa-chevron-left"
+                        style={{ fontSize: `${1.7}em`, color: '#F50057' }}
+                      />
                     </button>
                   </Link>
                 </div>
                 <div className="col-xs-9 d-flex justify-content-end">
-                  <button className="btn" onClick={this.addFacilitiesAndRentalCost} >
-                    <i className="fa fa-chevron-right" style={{ fontSize: `${1.7}em`, color: '#F50057' }} />
+                  <button
+                    className="btn"
+                    onClick={this.addFacilitiesAndRentalCost}
+                  >
+                    <i
+                      className="fa fa-chevron-right"
+                      style={{ fontSize: `${1.7}em`, color: '#F50057' }}
+                    />
                   </button>
                 </div>
               </div>
@@ -176,20 +311,21 @@ export class AddCenterFormTwo extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch =>
+const mapDispatchToProps = dispatch =>
   ({
     dispatch: (actionObject => dispatch(actionObject))
-  })
-);
+  });
 
-const mapStateToProps = (state =>
+const mapStateToProps = state =>
   ({
     user: state.userReducer,
     center: state.centerReducer,
-  })
-);
+  });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComponentsHoc(AddCenterFormTwo));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AuthPages(AddCenterFormTwo));
 
 const propTypes = {
   center: PropTypes.shape({

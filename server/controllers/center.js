@@ -18,7 +18,7 @@ class Center {
  * Add a center
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {object} res.
+ * @returns {object} response in json.
  */
   static addCenter(req, res) {
     const {
@@ -43,14 +43,17 @@ class Center {
         rentalCost,
         user: req.decoded.userId,
       })
-      .then(center => res.status(201).send({ message: 'You have successfully added a center', center }))
+      .then(center => res.status(201).send({
+        message: 'You have successfully added a center',
+        center
+      }))
       .catch(error => sendError(error, res, true));
   }
   /**
  * modify a center
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {object} res.
+ * @returns {object} response in json.
  */
   static modifyCenter(req, res) {
     if (Object.keys(req.body).length < 1) {
@@ -64,12 +67,18 @@ class Center {
             center.updateAttributes({
               isAvailable: false
             });
-            return res.status(200).send({ message: 'Successfully changed center status to false', center });
+            return res.status(200).send({
+              message: 'Successfully changed center status to false',
+              center
+            });
           }
           center.updateAttributes({
             isAvailable: true
           });
-          return res.status(200).send({ message: 'Successfully changed availability status to true', center });
+          return res.status(200).send({
+            message: 'Successfully changed availability status to true',
+            center
+          });
         })
         .catch(error => sendError(error, res, true));
     }
@@ -93,7 +102,10 @@ class Center {
           rentalCost: req.body.rentalCost || center.rentalCost,
           capacity: parseFloat(req.body.capacity) || center.capacity,
         });
-        return res.status(200).send({ message: 'You have successfully modified the center', center });
+        return res.status(200).send({
+          message: 'You have successfully modified the center',
+          center
+        });
       })
       .catch(error => sendError(error, res, true));
   }
@@ -101,7 +113,7 @@ class Center {
  * Get all Centers
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {array} res.
+ * @returns {array} response in json.
  */
   static getAllCenters(req, res) {
     const limit = req.query.limit || 6;
@@ -160,7 +172,10 @@ class Center {
             as: 'venueOfEvent',
           }]
         })
-          .then(aCenter => res.status(200).send({ message: 'Success', aCenter }))
+          .then(aCenter => res.status(200).send({
+            message: 'Success',
+            aCenter
+          }))
           .catch(error => res.status(500).send({ error: error.message }));
       })
       .catch(() => res.status(500).send({ error: 'oops, an error occured' }));

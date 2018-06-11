@@ -1,5 +1,10 @@
 import validator from 'validator';
 
+/**
+ * checks if string is alphanumeric
+ * @param {string} inputtxt string to be validated
+ * @returns {boolean} value indicating if parameter is alphanumeric or not
+ */
 const alphaNumeric = (inputtxt) => {
   const letterNumber = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
   if (inputtxt.match(letterNumber)) {
@@ -7,7 +12,13 @@ const alphaNumeric = (inputtxt) => {
   }
   return false;
 };
-
+/**
+ * Validates Create Center Data
+ * @param {object} req request object from express/body-parser
+ * @param {object} res response object from express
+ * @param {function} next express next middleware function
+ * @returns {object} response object in json
+ */
 const checkInvalidAddCenterDetails = (req, res, next) => {
   const errorMessage = [];
   const {
@@ -26,12 +37,9 @@ const checkInvalidAddCenterDetails = (req, res, next) => {
     4: 'address',
     5: 'rentalCost',
   };
-  const centerDetails = [name, type, capacity, mobileNumber, address, rentalCost];
-  // centerDetails.forEach((input) => {
-  //   if (!input) {
-  //     errorMessage += 'Please fill in all fields \n';
-  //   }
-  // });
+  const centerDetails = [
+    name, type, capacity, mobileNumber, address, rentalCost
+  ];
   for (let counter = -1; counter < centerDetails.length - 1;) {
     counter += 1;
     if (centerDetails[counter] === undefined) {
@@ -72,6 +80,13 @@ const checkInvalidAddCenterDetails = (req, res, next) => {
   next();
 };
 
+/**
+ * Validates Modify Center Data
+ * @param {object} req request object from express/body-parser
+ * @param {object} res response object from express
+ * @param {function} next express next middleware function
+ * @returns {object} response object in json
+ */
 const checkInvalidModifyCenterDetails = (req, res, next) => {
   const errorMessage = [];
   const modifiedParams = [];
@@ -123,6 +138,13 @@ const checkInvalidModifyCenterDetails = (req, res, next) => {
   next();
 };
 
+/**
+ * Validates centerId parameter
+ * @param {object} req request object from express/body-parser
+ * @param {object} res response object from express
+ * @param {function} next express next middleware function
+ * @returns {object} response object in json
+ */
 const checkInvalidCenterParams = (req, res, next) => {
   if (!validator.isUUID(req.params.centerId, 4)) {
     return res.status(400).send({ error: 'Invalid id supplied' });

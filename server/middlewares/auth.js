@@ -1,7 +1,13 @@
 import jwt from 'jsonwebtoken';
 
 const secret = process.env.SECRET;
-
+/**
+ * Authentication middleware
+ * @param {object} req request object from express/body-parser
+ * @param {object} res response object from express
+ * @param {function} next express next middleware function
+ * @returns {object} response object in json
+ */
 const verifyToken = (req, res, next) => {
   const token = req.headers.auth || req.headers['x-access-token'];
   if (token) {

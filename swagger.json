@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0",
-    "title": "events manager api",
+    "title": "Events Manager Api",
     "description": "A collection of endpoints for my events manager api"
   },
   "host": "events-manager-efosa.herokuapp.com",
@@ -371,7 +371,186 @@
         }
       }
     },
-    "/centers/": {
+    "/centers": {
+      "get": {
+        "description": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query.",
+        "summary": "Get centers",
+        "tags": [
+          "Center Related endpoints"
+        ],
+        "operationId": "CentersGet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetCenters"
+            },
+            "examples": {
+              "application/json": {
+                "message": "Success",
+                "centers": [
+                  {
+                    "id": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+                    "name": "Rogaros",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-06-11T12:12:28.542Z"
+                  },
+                  {
+                    "id": "271b2312-5dca-40a9-b11d-cd6aae69f8e5",
+                    "name": "Old Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  },
+                  {
+                    "id": "dbaf958d-2d3e-4e2d-b28d-2cd898f535ed",
+                    "name": "Miscell Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fweddin1.jpg?alt=media&token=f7adba4a-b386-46fd-b19e-30c092bf38d3",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  },
+                  {
+                    "id": "9f22c6ac-e68c-47d0-89b3-14f049e4aee5",
+                    "name": "Greatest Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  },
+                  {
+                    "id": "ea278f44-a90f-44a4-921b-55709d73bfa3",
+                    "name": "Nicest Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  },
+                  {
+                    "id": "7ddd6bae-bedc-4ce5-b53e-e71cef0c19b7",
+                    "name": "Lovely Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  }
+                ],
+                "pages": 2,
+                "currentPage": 1
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "GET",
+              "uri": "/centers"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "3293",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Tue, 12 Jun 2018 12:08:53 GMT",
+                "etag": "W/\"cdd-Njrs/t+uElg9N2nJRHgb03GtZRE\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"Success\",\"centers\":[{\"id\":\"99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee\",\"name\":\"Rogaros\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-06-11T12:12:28.542Z\"},{\"id\":\"271b2312-5dca-40a9-b11d-cd6aae69f8e5\",\"name\":\"Old Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"},{\"id\":\"dbaf958d-2d3e-4e2d-b28d-2cd898f535ed\",\"name\":\"Miscell Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fweddin1.jpg?alt=media&token=f7adba4a-b386-46fd-b19e-30c092bf38d3\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"},{\"id\":\"9f22c6ac-e68c-47d0-89b3-14f049e4aee5\",\"name\":\"Greatest Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"},{\"id\":\"ea278f44-a90f-44a4-921b-55709d73bfa3\",\"name\":\"Nicest Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"},{\"id\":\"7ddd6bae-bedc-4ce5-b53e-e71cef0c19b7\",\"name\":\"Lovely Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"}],\"pages\":2,\"currentPage\":1}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Get centers",
+            "x-testDescription": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query."
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
       "post": {
         "description": "",
         "summary": "Create Center",
@@ -408,7 +587,7 @@
             "description": ""
           },
           {
-            "name": "mobileNumber",
+            "name": "rentalCost",
             "in": "formData",
             "required": true,
             "type": "string",
@@ -422,7 +601,7 @@
             "description": ""
           },
           {
-            "name": "rentalCost",
+            "name": "mobileNumber",
             "in": "formData",
             "required": true,
             "type": "string",
@@ -499,107 +678,6 @@
         }
       }
     },
-    "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291": {
-      "get": {
-        "description": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query.",
-        "summary": "Get centers",
-        "tags": [
-          "Center Related endpoints"
-        ],
-        "operationId": "Centers383ef4e7Eec146f7Ab0292c9c4974291Get",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "page",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "rentalCost",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          },
-          {
-            "name": "capacity",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "GET",
-              "uri": "/centers/383ef4e7-eec1-46f7-ab02-92c9c4974291?page=1&offset=1&limit=10&name=Rogaros&type=Seminar&rentalCost=23000&capacity=340000"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "Get centers",
-            "x-testDescription": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query."
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      }
-    },
     "/events/": {
       "post": {
         "description": "api endpoint to add an event",
@@ -637,7 +715,14 @@
             "description": ""
           },
           {
-            "name": "date",
+            "name": "startDate",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "endDate",
             "in": "formData",
             "required": true,
             "type": "string",
@@ -662,7 +747,7 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/CreateEvent19"
+              "$ref": "#/definitions/CreateEvent21"
             },
             "examples": {
               "application/json": {
@@ -722,9 +807,9 @@
               "uri": "/events/",
               "headers": {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmOWM1ZmQ4Mi01Y2MzLTQ2YWUtYWFhYS1hM2U3OTJmZWQ1Y2IiLCJpYXQiOjE1MjQ2NTUxODksImV4cCI6MTUyNTAxNTE4OX0.N1pfQnMY8ZAUHHJZyKCFucymfeBBgb0l79J5jy-sr44"
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMjBjYzA1Zi0xMDgyLTQ2ZWYtYTYzOS05YTQwMmViNTcwNmEiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzk4Mjk2NSwiZXhwIjoxNTI4MDE4OTY1fQ.N0U6bBkgnxEOKPi01UXlzbY8CdGdOun1Pe5n6HDRWPE"
               },
-              "body": "name=Eventful Party&type=birthday&center=383ef4e7-eec1-46f7-ab02-92c9c4974291&date=2018-05-20"
+              "body": "name=Eventful Party&type=birthday&center=5571a6ac-c1dd-4a9e-bae5-f3a417ec2d4a&startDate=2018-09-10&endDate=2018-09-15"
             },
             "expectedResponse": {
               "x-allowExtraHeaders": true,
@@ -763,18 +848,42 @@
         }
       }
     },
-    "/<eventId>": {
-      "get": {
+    "/events/<eventId>": {
+      "put": {
         "description": "api endpoint to modify an event",
         "summary": "Edit Event",
         "tags": [
           "Event Related endpoints"
         ],
-        "operationId": "EventIdGet",
+        "operationId": "EventsEventIdPut",
         "produces": [
           "application/json"
         ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
         "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "startDate",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "endDate",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
           {
             "name": "x-access-token",
             "in": "header",
@@ -794,7 +903,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/EditEvent22"
+              "$ref": "#/definitions/EditEvent24"
             },
             "examples": {
               "application/json": {
@@ -828,12 +937,13 @@
         "x-unitTests": [
           {
             "request": {
-              "method": "GET",
-              "uri": "/<eventId>",
+              "method": "PUT",
+              "uri": "/events/<eventId>",
               "headers": {
-                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8",
-                "Content-Type": "application/x-www-form-urlencoded"
-              }
+                "Content-Type": "application/x-www-form-urlencoded",
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8"
+              },
+              "body": "name=Dope Event&startDate=2018-07-03&endDate=2018-07-05"
             },
             "expectedResponse": {
               "x-allowExtraHeaders": true,
@@ -870,9 +980,7 @@
           "AllowDynamicFormParameters": false,
           "IsMultiContentStreaming": false
         }
-      }
-    },
-    "/events/<eventId>": {
+      },
       "post": {
         "description": "api endpoint to cancel user Event",
         "summary": "Cancel user Event",
@@ -985,7 +1093,7 @@
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/DeleteEvent25"
+              "$ref": "#/definitions/DeleteEvent27"
             },
             "examples": {
               "application/json": {
@@ -1730,6 +1838,377 @@
         "error"
       ]
     },
+    "GetCenters": {
+      "title": "Get centers",
+      "example": {
+        "message": "Success",
+        "centers": [
+          {
+            "id": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+            "name": "Rogaros",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-06-11T12:12:28.542Z"
+          },
+          {
+            "id": "271b2312-5dca-40a9-b11d-cd6aae69f8e5",
+            "name": "Old Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          },
+          {
+            "id": "dbaf958d-2d3e-4e2d-b28d-2cd898f535ed",
+            "name": "Miscell Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fweddin1.jpg?alt=media&token=f7adba4a-b386-46fd-b19e-30c092bf38d3",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          },
+          {
+            "id": "9f22c6ac-e68c-47d0-89b3-14f049e4aee5",
+            "name": "Greatest Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          },
+          {
+            "id": "ea278f44-a90f-44a4-921b-55709d73bfa3",
+            "name": "Nicest Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          },
+          {
+            "id": "7ddd6bae-bedc-4ce5-b53e-e71cef0c19b7",
+            "name": "Lovely Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          }
+        ],
+        "pages": 2,
+        "currentPage": 1
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Success",
+          "type": "string"
+        },
+        "centers": {
+          "description": "",
+          "example": [
+            {
+              "id": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+              "name": "Rogaros",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-06-11T12:12:28.542Z"
+            },
+            {
+              "id": "271b2312-5dca-40a9-b11d-cd6aae69f8e5",
+              "name": "Old Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            },
+            {
+              "id": "dbaf958d-2d3e-4e2d-b28d-2cd898f535ed",
+              "name": "Miscell Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fweddin1.jpg?alt=media&token=f7adba4a-b386-46fd-b19e-30c092bf38d3",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            },
+            {
+              "id": "9f22c6ac-e68c-47d0-89b3-14f049e4aee5",
+              "name": "Greatest Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            },
+            {
+              "id": "ea278f44-a90f-44a4-921b-55709d73bfa3",
+              "name": "Nicest Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            },
+            {
+              "id": "7ddd6bae-bedc-4ce5-b53e-e71cef0c19b7",
+              "name": "Lovely Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Center17"
+          }
+        },
+        "pages": {
+          "description": "",
+          "example": 2,
+          "type": "integer",
+          "format": "int32"
+        },
+        "currentPage": {
+          "description": "",
+          "example": 1,
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "message",
+        "centers",
+        "pages",
+        "currentPage"
+      ]
+    },
+    "Center17": {
+      "title": "Center17",
+      "example": {
+        "id": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+        "name": "Rogaros",
+        "type": "Multipurpose Hall",
+        "address": "23, Andela street",
+        "capacity": "30000000",
+        "rentalCost": "230000",
+        "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+        "facilities": [
+          "swimming-pool",
+          "lounge"
+        ],
+        "mobileNumber": "08035271406",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+        "isAvailable": true,
+        "createdAt": "2018-08-20T00:00:00Z",
+        "updatedAt": "2018-06-11T12:12:28.542Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Rogaros",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "Multipurpose Hall",
+          "type": "string"
+        },
+        "address": {
+          "description": "",
+          "example": "23, Andela street",
+          "type": "string"
+        },
+        "capacity": {
+          "description": "",
+          "example": "30000000",
+          "type": "string"
+        },
+        "rentalCost": {
+          "description": "",
+          "example": "230000",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+          "type": "string"
+        },
+        "facilities": {
+          "description": "",
+          "example": [
+            "swimming-pool",
+            "lounge"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mobileNumber": {
+          "description": "",
+          "example": "08035271406",
+          "type": "string"
+        },
+        "imageUrl": {
+          "description": "",
+          "example": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+          "type": "string"
+        },
+        "isAvailable": {
+          "description": "",
+          "example": true,
+          "type": "boolean"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "8/20/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/11/2018 12:12:28 PM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "address",
+        "capacity",
+        "rentalCost",
+        "user",
+        "facilities",
+        "mobileNumber",
+        "imageUrl",
+        "isAvailable",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
     "CreateEvent": {
       "title": "Create Event",
       "example": {
@@ -1747,8 +2226,8 @@
         "error"
       ]
     },
-    "CreateEvent19": {
-      "title": "Create Event19",
+    "CreateEvent21": {
+      "title": "Create Event21",
       "example": {
         "message": "Event successfully added",
         "newEvent": {
@@ -1861,8 +2340,8 @@
         "error"
       ]
     },
-    "EditEvent22": {
-      "title": "Edit Event22",
+    "EditEvent24": {
+      "title": "Edit Event24",
       "example": {
         "message": "successfully modified",
         "modifiedEvent": {
@@ -1975,8 +2454,8 @@
         "message"
       ]
     },
-    "DeleteEvent25": {
-      "title": "Delete Event25",
+    "DeleteEvent27": {
+      "title": "Delete Event27",
       "example": {
         "error": "event not found"
       },
@@ -2123,8 +2602,8 @@
         "updatedAt"
       ]
     },
-    "GetAUserEvents28": {
-      "title": "Get a User Events28",
+    "GetAUserEvents30": {
+      "title": "Get a User Events30",
       "example": {
         "error": "No events found for this User"
       },

@@ -10,10 +10,10 @@ const { Events, Users } = models;
 */
 class Event {
 /**
- * Addan event
+ * Creates an event
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {object} res.
+ * @returns {object} response in json.
  */
   static addEvent(req, res) {
     const {
@@ -32,14 +32,17 @@ class Event {
         endDate: new Date(endDate).toISOString(),
         user: req.decoded.userId,
       })
-      .then(newEvent => res.status(201).send({ message: 'Event successfully added', newEvent }))
+      .then(newEvent => res.status(201).send({
+        message: 'Event successfully added',
+        newEvent
+      }))
       .catch(error => sendError(error, res, false));
   }
   /**
- * modify an event
- * @param {object} req The request body of the request.
+ * modifies an event
+ * @param {object} req The request object from express/body-parser
  * @param {object} res The response body.
- * @returns {object} res.
+ * @returns {object} response in json.
  */
   static modifyEvent(req, res) {
     const { center } = req.body;
@@ -57,7 +60,10 @@ class Event {
           modifiedEvent.endDate,
           center: center || modifiedEvent.center,
         });
-        return res.status(200).send({ message: 'successfully modified', modifiedEvent });
+        return res.status(200).send({
+          message: 'successfully modified',
+          modifiedEvent
+        });
       })
       .catch(error => sendError(error, res, false));
   }
@@ -65,7 +71,7 @@ class Event {
  * delete an event
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {object} res.
+ * @returns {object} response in json.
  */
   static deleteEvent(req, res) {
     Events.findById(req.params.eventId)
@@ -74,10 +80,14 @@ class Event {
           return res.status(404).send({ error: 'event not found' });
         }
         if (event && event.user !== req.decoded.userId) {
-          return res.status(403).send({ error: 'You cannot delete an event added by another user' });
+          return res.status(403).send({
+            error: 'You cannot delete an event added by another user'
+          });
         }
         event.destroy()
-          .then(() => res.status(200).send({ message: 'Event successfully deleted' }))
+          .then(() => res.status(200).send({
+            message: 'Event successfully deleted'
+          }))
           .catch(error => sendError(error, res, false));
       })
       .catch(error => sendError(error, res, false));
@@ -86,7 +96,7 @@ class Event {
  * get User Events
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {object} res.
+ * @returns {object} response in json.
  */
   static getUserEvents(req, res) {
     const limit = req.query.limit || 6;
@@ -103,7 +113,9 @@ class Event {
     })
       .then((userEvents) => {
         if (userEvents.rows.length === 0) {
-          return res.status(404).send({ error: 'No events found for this User' });
+          return res.status(404).send({
+            error: 'No events found for this User'
+          });
         }
         return res.status(200).send({
           message: 'Success',
@@ -115,10 +127,10 @@ class Event {
       .catch(error => sendError(error, res, false));
   }
   /**
- * get User Events
+ * Cancels User Events
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {object} res.
+ * @returns {object} response in json.
  */
   static cancelUserEvent(req, res) {
     Events.findById(req.params.eventId)
@@ -132,7 +144,10 @@ class Event {
               from: 'efosaeventsmanager@evt.com',
               to: user.email,
               subject: 'Notice Of cancellation of event',
-              text: 'This Is to Inform You that For some reasons ,Your event has been canceled! \n Please log on here https://efosa-events-manager.herokuapp.com to events manager to get another venue for your event',
+              text: ` This Is to Inform You that For some reasons,Your event
+              has been canceled! \n Please log on here
+              https://efosa-events-manager.herokuapp.com to
+              events manager to get another venue for your event `,
             };
             return mailSender(mailOptions, res);
           })

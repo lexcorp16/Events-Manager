@@ -2,19 +2,17 @@
 
 This software is an open-source project, Contributions are very much welcome,
 
-When contributing to this repository, please first discuss the change you wish to make via Pull requests
-
-
+Please raise a pull requests in order to enable reviews for changes you made.
 
 ## Coding Style
 
 For your pull request to be merged it is important you adhere to the airbnb javascript style guide,
 
-the eslintr.json file has been configured with the appropriate rules for this project so
+the [eslintrc.json](https://github.com/Efosaok/Events-Manager/blob/chore/%23157195802/write-api-documentation/.eslintrc.json) file has been configured with the appropriate rules for this project so
 
 do well to use the appropriate linter for your editor
 
-do not push development-related files, e.g .env,migration directopries.
+do not push development-related files, e.g .env,migration directories.
 
 ## Unit Tests
 

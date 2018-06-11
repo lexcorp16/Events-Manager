@@ -10,7 +10,7 @@ import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
 import { LoadingIcon, LargeLoadingIcon } from '../../utils/LoaderComponents';
 import { prefillVenue } from '../../../utils/mescill.utils';
 import isValidModificationDetails from '../../../validations/modifyevent.validate';
-import ModifyEventPageHoc from '../../HOC/ModifyEventPageHoc';
+import ModifyEventWrapper from '../../HOC/ModifyEventWrapper';
 
 /**
  *
@@ -19,11 +19,11 @@ import ModifyEventPageHoc from '../../HOC/ModifyEventPageHoc';
  * @extends {Component}
  */
 export class ModifyEventPage extends Component {
-/**
- * Creates an instance of AddEventPage.
- * @param {any} props
- * @memberof ModifyEventPage
- */
+  /**
+   * Creates an instance of AddEventPage.
+   * @param {any} props
+   * @memberof ModifyEventPage
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -31,18 +31,18 @@ export class ModifyEventPage extends Component {
       type: undefined,
       center: undefined,
       startDate: this.props.event.eventObject[0].startDate.slice(0, 10),
-      endDate: this.props.event.eventObject[0].startDate.slice(0, 10),
+      endDate: this.props.event.eventObject[0].startDate.slice(0, 10)
     };
 
     this.getEventDetails = this.getEventDetails.bind(this);
     this.modifyEvent = this.modifyEvent.bind(this);
   }
   /**
- *
- *
- * @memberof ModifyEventPage
- * @returns {object} new state after object dispatched
- */
+   *
+   *
+   * @memberof ModifyEventPage
+   * @returns {object} new state after object dispatched
+   */
   componentDidMount() {
     if (localStorage.getItem('eventObject')) {
       this.props.dispatch(promptModify(this.props.event.eventObject[0].id));
@@ -50,23 +50,23 @@ export class ModifyEventPage extends Component {
     this.props.dispatch(getAllCenters({ limit: 100 }));
   }
   /**
- *
- *
- * @param {nextProps} nextProps most recent props received from redux store;
- * @memberof ModifyEventPage
- * @returns {function} browserhistory redirect function
- */
+   *
+   *
+   * @param {nextProps} nextProps most recent props received from redux store;
+   * @memberof ModifyEventPage
+   * @returns {function} browserhistory redirect function
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.event.status.eventIsModified) {
       browserHistory.push('/');
     }
   }
   /**
- *
- *
- * @memberof ModifyEventPage
- * @returns {null} removes redundant items from localStorage
- */
+   *
+   *
+   * @memberof ModifyEventPage
+   * @returns {null} removes redundant items from localStorage
+   */
   componentWillUnmount() {
     localStorage.removeItem('eventObject');
     localStorage.removeItem('allUserEvents');
@@ -83,47 +83,71 @@ export class ModifyEventPage extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
   /**
- *
- *
- * @param {any} event
- * @memberof ModifyEventPage
- * @returns {object} state of app after addingEvent
- */
+   *
+   *
+   * @param {any} event
+   * @memberof ModifyEventPage
+   * @returns {object} state of app after addingEvent
+   */
   modifyEvent(event) {
     event.preventDefault();
     const validationErrors = isValidModificationDetails(this.state);
     if (Array.isArray(validationErrors)) {
       return actionRejectedPrompter(validationErrors);
     }
-    this.props.dispatch(modifyEvent({
-      ...this.state,
-    }, this.props.event.eventObject[0].id));
+    this.props.dispatch(modifyEvent(
+      {
+        ...this.state
+      },
+      this.props.event.eventObject[0].id
+    ));
   }
   /**
- *
- *
- * @returns {object} dicument obbject model for browser rendering
- * @memberof ModifyEventPage
- */
+   *
+   *
+   * @returns {object} dicument obbject model for browser rendering
+   * @memberof ModifyEventPage
+   */
   render() {
     const { startDate, endDate, center } = this.props.event.eventObject[0];
     return (
       <div className="modify-event-form">
-        {this.props.center.status.fetchingCenters ?
+        {this.props.center.status.fetchingCenters ? (
           <div className="text-center">
             <LargeLoadingIcon />
-          </div> :
+          </div>
+        ) : (
           <div className="container form-section">
-            <div className="form-container container" style={{ height: `${640}px`, border: 'none' }}>
+            <div
+              className="form-container container"
+              style={{ height: `${640}px`, border: 'none' }}
+            >
               <div className="form-header">
-                <p className="text-center header-form" style={{ fontSize: `${1.5}em` }} >Modify Event</p>
+                <p
+                  className="text-center header-form"
+                  style={{ fontSize: `${1.5}em` }}
+                >
+                  Modify Event
+                </p>
               </div>
               <form className="form form-group">
                 <label htmlFor="name-of-event">Name of event</label>
-                <input onChange={this.getEventDetails} type="text" name="name" placeholder="Name of Event" className="form-control first-name name" defaultValue={this.props.event.eventObject[0].name} />
+                <input
+                  onChange={this.getEventDetails}
+                  type="text"
+                  name="name"
+                  placeholder="Name of Event"
+                  className="form-control first-name name"
+                  defaultValue={this.props.event.eventObject[0].name}
+                />
                 <label htmlFor="type-of-event">Type of event</label>
-                <select className="form-control" name="type" onChange={this.getEventDetails} defaultValue={this.props.event.eventObject[0].type}>
-                  <option >select option</option>
+                <select
+                  className="form-control"
+                  name="type"
+                  onChange={this.getEventDetails}
+                  defaultValue={this.props.event.eventObject[0].type}
+                >
+                  <option>select option</option>
                   <option value="Birthday">Birthday</option>
                   <option value="Club">Club</option>
                   <option value="Seminar">Seminar</option>
@@ -134,51 +158,81 @@ export class ModifyEventPage extends Component {
                 </select>
                 <label htmlFor="date">start date</label>
                 <div className="year">
-                  <input type="date" id="startdate" name="startDate" className="form-control" onChange={this.getEventDetails} defaultValue={startDate.slice(0, 10)} />
+                  <input
+                    type="date"
+                    id="startdate"
+                    name="startDate"
+                    className="form-control"
+                    onChange={this.getEventDetails}
+                    defaultValue={startDate.slice(0, 10)}
+                  />
                 </div>
                 <label htmlFor="date">end date</label>
                 <div className="year">
-                  <input type="date" id="enddate" name="endDate" className="form-control" onChange={this.getEventDetails} defaultValue={endDate.slice(0, 10)} />
+                  <input
+                    type="date"
+                    id="enddate"
+                    name="endDate"
+                    className="form-control"
+                    onChange={this.getEventDetails}
+                    defaultValue={endDate.slice(0, 10)}
+                  />
                 </div>
                 <label htmlFor="preferred-center">Preferred center</label>
-                <select className="form-control" onChange={this.getEventDetails} name="center" defaultValue={prefillVenue(center, this.props.center.allCenters.centers)} >
+                <select
+                  className="form-control"
+                  onChange={this.getEventDetails}
+                  name="center"
+                  defaultValue={prefillVenue(
+                    center,
+                    this.props.center.allCenters.centers
+                  )}
+                >
                   <option>select option</option>
-                  {this.props.center.allCenters.centers.map(aCenter =>
-                  (
+                  {this.props.center.allCenters.centers.map(aCenter => (
                     <CenterList center={aCenter} key={aCenter.id} />
                   ))}
                 </select>
                 <br />
                 <div className="text-center">
-                  <button className="btn btn-modify btn-submit booked" onClick={this.modifyEvent}>Modify Event</button>
-                  {(this.props.event.status.modifyingEvent) &&
-                  <div className="animated fadeIn" style={{ marginTop: '-70px' }}>
-                    <LoadingIcon />
-                  </div>}
+                  <button
+                    className="btn btn-modify btn-submit booked"
+                    onClick={this.modifyEvent}
+                  >
+                    Modify Event
+                  </button>
+                  {this.props.event.status.modifyingEvent && (
+                    <div
+                      className="animated fadeIn"
+                      style={{ marginTop: '-70px' }}
+                    >
+                      <LoadingIcon />
+                    </div>
+                  )}
                 </div>
               </form>
             </div>
-          </div>}
+          </div>
+        )}
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch =>
-  ({
-    dispatch: (actionObject => dispatch(actionObject))
-  })
-);
+const mapDispatchToProps = dispatch => ({
+  dispatch: actionObject => dispatch(actionObject)
+});
 
-const mapStateToProps = (state =>
-  ({
-    event: state.eventReducer,
-    center: state.centerReducer,
-    user: state.userReducer,
-  })
-);
+const mapStateToProps = state => ({
+  event: state.eventReducer,
+  center: state.centerReducer,
+  user: state.userReducer
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModifyEventPageHoc(ModifyEventPage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModifyEventWrapper(ModifyEventPage));
 
 const propTypes = {
   center: PropTypes.shape({
@@ -189,16 +243,16 @@ const propTypes = {
         mobileNumber: PropTypes.string,
         type: PropTypes.string,
         rentalCost: PropTypes.string,
-        imageUrl: PropTypes.string,
-      })),
+        imageUrl: PropTypes.string
+      }))
     }),
-    status: PropTypes.objectOf(PropTypes.bool),
+    status: PropTypes.objectOf(PropTypes.bool)
   }).isRequired,
   event: PropTypes.shape({
     status: PropTypes.objectOf(PropTypes.bool),
-    eventObject: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    eventObject: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
   }).isRequired,
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 ModifyEventPage.propTypes = propTypes;

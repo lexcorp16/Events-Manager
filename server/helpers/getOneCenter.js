@@ -1,7 +1,13 @@
 import models from '../db/models';
 
 const { Centers } = models;
-
+/**
+ * Fetches a center without the
+ * associated events.
+ * @param {req} req request object
+ * @param {res} res response object
+ * @returns {object} object in json
+ */
 const getOneCenter = (req, res) =>
   Centers.findById(req.params.centerId)
     .then((center) => {

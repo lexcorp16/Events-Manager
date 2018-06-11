@@ -2,7 +2,14 @@ import { Op } from 'sequelize';
 import models from '../db/models';
 
 const { Events } = models;
-
+/**
+ * middleware that checks
+ * if a center is available before booking event
+ * @param {object} req req object
+ * @param {object} res response object
+ * @param {func} next express next middleware function
+ * @returns {object} response body in json
+ */
 const centerIsAvailable = (req, res, next) => {
   const { startDate, endDate } = req.body;
   Events.findOne({
@@ -35,7 +42,10 @@ const centerIsAvailable = (req, res, next) => {
     .then((event) => {
       if (event) {
         if (event.id !== req.params.eventId) {
-          return res.status(409).send({ error: 'Another Event is slated for  this center during the specified dates, please choose another date or center' });
+          return res.status(409).send({
+            error:
+            'The chosen center is not available, choose another date or center'
+          });
         }
       }
       next();

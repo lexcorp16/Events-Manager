@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Navbar from '../utils/Navbar';
-import '../../public/style.scss';
+import Footer from '../utils/Footer';
+import '../../scss/style.scss';
 
 export const App = props =>
   (
@@ -10,6 +11,7 @@ export const App = props =>
       <div className="auth-pages">
         {props.children}
       </div>
+      <Footer />
     </div>
   );
 

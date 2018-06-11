@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 require('dotenv').config();
 
 module.exports = {
@@ -8,18 +9,21 @@ module.exports = {
     path.join(__dirname, './client/index.js')
   ],
   node: {
-    fs: 'empty',
+    fs: 'empty'
   },
   output: {
     path: path.join(__dirname, 'client'),
     filename: 'client/bundle.js',
-    publicPath: '/',
+    publicPath: '/'
   },
   devtool: 'cheap-eval-source-map',
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin({
+      filename: 'client/style.css'
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         API_KEY: JSON.stringify(process.env.API_KEY),
@@ -29,57 +33,57 @@ module.exports = {
         STORAGE_BUCKET: JSON.stringify(process.env.STORAGE_BUCKET),
         MESSAGING_SENDER_ID: JSON.stringify(process.env.MESSAGING_SENDER_ID),
         BASE_URL: JSON.stringify(process.env.BASE_URL),
-        NODE_EN: JSON.stringify('development'),
+        NODE_ENV: JSON.stringify('development')
       }
-    }),
+    })
   ],
   module: {
-    loaders: [{
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
-    }, {
-      test: /\.(scss|css)$/,
-      loaders: ['style-loader', 'css-loader', 'sass-loader']
-    }, {
-      test: /\.(jpe?g|png|gif|svg|ico)$/i,
-      include: [
-        path.join(__dirname, 'client'),
-        path.join(__dirname, 'server/shared')
-      ],
-      use: [
-        {
-          loader: 'file-loader',
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: {
+          loader: 'babel-loader',
           options: {
-            name: '[name].[ext]',
-          },
+            presets: ['es2015', 'react', 'stage-0']
+          }
         },
-        {
-          loader: 'image-webpack-loader',
-          query: {
-            optipng: {
-              optimizationLevel: 7,
-            },
-            mozjpeg: {
-              progressive: true,
-            },
-            gifsicle: {
-              interlaced: false,
-            },
-            pngquant: {
-              quality: '75-90',
-              speed: 3,
-            },
-          },
-        },
-      ],
-    }]
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'sass-loader',
+              query: {
+                sourceMap: false
+              }
+            }
+          ]
+        }))
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpg|gif|woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'file-loader'
+          }
+        ]
+      }
+    ]
   },
   devServer: {
     contentBase: path.join(__dirname, 'client'),
     historyApiFallback: true
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
-  },
+    extensions: ['.js', '.jsx']
+  }
 };

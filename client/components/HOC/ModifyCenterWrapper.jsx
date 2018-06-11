@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isAuthenticated from '../../helpers/isAuthenticated';
-import SignInPage from '../users/container/SigninBody';
+import SignInPage from '../users/container/SigninPage';
 import AllCenterPage from '../centers/container/AllCenterPage';
 
-const ModifyCenterPageHoc = WrappedComponent =>
+const ModifyCenterWrapper = WrappedComponent =>
   (
     (props) => {
       if (!isAuthenticated()) {
@@ -17,7 +17,7 @@ const ModifyCenterPageHoc = WrappedComponent =>
     }
   );
 
-export default ModifyCenterPageHoc;
+export default ModifyCenterWrapper;
 
 const propTypes = {
   center: PropTypes.shape({
@@ -36,4 +36,4 @@ const propTypes = {
   })
 };
 
-ModifyCenterPageHoc.propTypes = propTypes;
+ModifyCenterWrapper.propTypes = propTypes;

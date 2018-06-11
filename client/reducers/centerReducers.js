@@ -17,7 +17,7 @@ export default (state = centerInitialState(), action) => {
         primaryCenterDetails: action.payload,
         status: {
           ...state.status,
-          addedPrimaryCenterDetails: true,
+          addedPrimaryCenterDetails: true
         }
       };
     }
@@ -28,7 +28,7 @@ export default (state = centerInitialState(), action) => {
         status: {
           ...state.status,
           addedCosts: true,
-          addedFacilities: true,
+          addedFacilities: true
         }
       };
     }
@@ -38,7 +38,7 @@ export default (state = centerInitialState(), action) => {
         status: {
           ...state.status,
           addingCenter: true,
-          addedCenter: false,
+          addedCenter: false
         }
       };
     }
@@ -49,7 +49,7 @@ export default (state = centerInitialState(), action) => {
         status: {
           ...state.status,
           addingCenter: false,
-          addedCenter: true,
+          addedCenter: true
         }
       };
     }
@@ -61,7 +61,7 @@ export default (state = centerInitialState(), action) => {
           ...state.status,
           addingCenter: false,
           error: true,
-          addedCenter: false,
+          addedCenter: false
         }
       };
     }
@@ -75,8 +75,8 @@ export default (state = centerInitialState(), action) => {
           uploadingImage: true,
           uploadImageCancelled: false,
           uploadImagePaused: false,
-          uploadedImage: false,
-        },
+          uploadedImage: false
+        }
       };
     }
     case 'UPLOADING_CENTER_IMAGE_CANCELLED': {
@@ -87,8 +87,8 @@ export default (state = centerInitialState(), action) => {
           uploadImageCancelled: true,
           uploadingImage: false,
           uploadImagePaused: false,
-          uploadedImage: false,
-        },
+          uploadedImage: false
+        }
       };
     }
     case 'UPLOADING_CENTER_IMAGE_PAUSED': {
@@ -100,8 +100,8 @@ export default (state = centerInitialState(), action) => {
           uploadImagePaused: true,
           uploadingImage: false,
           uploadImageCancelled: false,
-          uploadedImage: false,
-        },
+          uploadedImage: false
+        }
       };
     }
     case 'UPLOAD_CENTER_IMAGE_RESOLVED': {
@@ -113,8 +113,8 @@ export default (state = centerInitialState(), action) => {
           uploadedImage: true,
           uploadingImage: false,
           uploadImageCancelled: false,
-          uploadImagePaused: false,
-        },
+          uploadImagePaused: false
+        }
       };
     }
     case 'UPLOAD_CENTER_IMAGE_REJECTED': {
@@ -125,8 +125,8 @@ export default (state = centerInitialState(), action) => {
           ...state.status,
           uploadingImage: false,
           uploadedImage: false,
-          error: true,
-        },
+          error: true
+        }
       };
     }
     case 'PROMPT_SEE_A_CENTER': {
@@ -136,7 +136,7 @@ export default (state = centerInitialState(), action) => {
         centerToGet: action.centerId,
         status: {
           ...state.status,
-          getACenterPrompted: true,
+          getACenterPrompted: true
         }
       };
     }
@@ -144,13 +144,13 @@ export default (state = centerInitialState(), action) => {
       return {
         ...state,
         oneCenter: {
-          aCenter: {},
+          aCenter: {}
         },
         status: {
           ...state.status,
           fetching: true,
-          fetchingACenter: true,
-        },
+          fetchingACenter: true
+        }
       };
     }
     case 'FETCH_A_CENTER_RESOLVED': {
@@ -160,8 +160,8 @@ export default (state = centerInitialState(), action) => {
         status: {
           ...state.status,
           fetched: true,
-          fetchingACenter: false,
-        },
+          fetchingACenter: false
+        }
       };
     }
     case 'FETCH_A_CENTER_REJECTED': {
@@ -171,8 +171,8 @@ export default (state = centerInitialState(), action) => {
         status: {
           ...state.status,
           error: true,
-          fetchingACenter: false,
-        },
+          fetchingACenter: false
+        }
       };
     }
     case 'FETCH_CENTERS': {
@@ -183,7 +183,7 @@ export default (state = centerInitialState(), action) => {
           fetching: true,
           fetchingCenters: true,
           fetched: false,
-          error: false,
+          error: false
         }
       };
     }
@@ -197,7 +197,7 @@ export default (state = centerInitialState(), action) => {
           fetching: false,
           fetchingCenters: false,
           fetched: true,
-          error: false,
+          error: false
         }
       };
     }
@@ -206,14 +206,14 @@ export default (state = centerInitialState(), action) => {
       return {
         ...state,
         allCenters: {
-          centers: [],
+          centers: []
         },
         status: {
           ...state.status,
           fetching: false,
           fetchingCenters: false,
           fetched: false,
-          error: true,
+          error: true
         }
       };
     }
@@ -221,14 +221,20 @@ export default (state = centerInitialState(), action) => {
     case 'MODIFICATION_PROMPT': {
       const newCenterObject = state.allCenters.centers.filter(center =>
         center.id === action.centerId);
-      localStorage.setItem('centerToBeModified', JSON.stringify(newCenterObject));
-      localStorage.setItem('allCenters', JSON.stringify(state.allCenters.centers));
+      localStorage.setItem(
+        'centerToBeModified',
+        JSON.stringify(newCenterObject)
+      );
+      localStorage.setItem(
+        'allCenters',
+        JSON.stringify(state.allCenters.centers)
+      );
       return {
         ...state,
         centerToBeModified: newCenterObject,
         status: {
           ...state.status,
-          modificationPrompted: true,
+          modificationPrompted: true
         }
       };
     }
@@ -239,7 +245,7 @@ export default (state = centerInitialState(), action) => {
         status: {
           ...state.status,
           modifying: true,
-          modified: false,
+          modified: false
         }
       };
     }
@@ -252,7 +258,7 @@ export default (state = centerInitialState(), action) => {
         status: {
           ...state.status,
           modifying: false,
-          modified: true,
+          modified: true
         }
       };
     }
@@ -263,7 +269,7 @@ export default (state = centerInitialState(), action) => {
         status: {
           ...state.status,
           modifying: false,
-          modified: false,
+          modified: false
         }
       };
     }
@@ -273,7 +279,7 @@ export default (state = centerInitialState(), action) => {
         ...state,
         status: {
           ...state.status,
-          changeImagePrompted: true,
+          changeImagePrompted: true
         }
       };
     }
@@ -285,7 +291,7 @@ export default (state = centerInitialState(), action) => {
           ...state.status,
           error: false,
           cancellingEvent: true,
-          eventCancelled: false,
+          eventCancelled: false
         }
       };
     }
@@ -298,14 +304,17 @@ export default (state = centerInitialState(), action) => {
           ...state.oneCenter,
           aCenter: {
             ...state.oneCenter.aCenter,
-            venueOfEvent: removeCancelledEventFromVenueList(action.eventId, venueOfEvent),
+            venueOfEvent: removeCancelledEventFromVenueList(
+              action.eventId,
+              venueOfEvent
+            )
           }
         },
         status: {
           ...state.status,
           error: false,
           cancellingEvent: false,
-          eventCancelled: true,
+          eventCancelled: true
         }
       };
     }
@@ -317,14 +326,14 @@ export default (state = centerInitialState(), action) => {
           ...state.status,
           error: true,
           cancellingEvent: false,
-          eventCancelled: false,
+          eventCancelled: false
         }
       };
     }
 
     case 'USER_LOGOUT': {
       return {
-        ...centerInitialState(),
+        ...centerInitialState()
       };
     }
 

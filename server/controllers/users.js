@@ -19,7 +19,7 @@ class User {
  * SignUp a User
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {object} res.
+ * @returns {object} response in json.
  * signs up new user
  */
   static signup(req, res) {
@@ -48,7 +48,10 @@ class User {
           const token = jwt.sign(userDetails, secret, {
             expiresIn: '100h', // expires in 1 hours
           });
-          return res.status(201).send({ message: 'You have successfully signed up', token });
+          return res.status(201).send({
+            message: 'You have successfully signed up',
+            token
+          });
         })
         .catch(error => sendError(error, res, false));
     });
@@ -57,7 +60,7 @@ class User {
  * SignIn a User
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {object} res.
+ * @returns {object} response in json.
  * signs in new user
  */
   static signin(req, res) {
@@ -84,7 +87,9 @@ class User {
             const token = jwt.sign(userDetails, secret, {
               expiresIn: '100h', // expires in 1 hours
             });
-            return res.status(200).send({ message: 'You have successfully logged in', token });
+            return res.status(200).send({
+              message: 'You have successfully logged in', token
+            });
           }
           return res.status(400).send({ error: 'Invalid email or password' });
         });
@@ -93,9 +98,9 @@ class User {
   }
   /**
  * Make A User an Admin
- * @param {object} req The request body of the request.
- * @param {object} res The response body.
- * @returns {object} res.
+ * @param {object} req The request body.
+ * @param {object} res The response object.
+ * @returns {object} response in json.
  */
   static upgradeUserToAdmin(req, res) {
     Users.findById(req.params.userId)
@@ -104,12 +109,16 @@ class User {
           user.updateAttributes({
             role: 'User',
           });
-          return res.status(202).send({ message: 'Admin User successfully downgraded' });
+          return res.status(202).send({
+            message: 'Admin User successfully downgraded'
+          });
         }
         user.updateAttributes({
           role: 'Admin',
         });
-        return res.status(202).send({ message: 'Ordinary User successfully upgraded' });
+        return res.status(202).send({
+          message: 'Ordinary User successfully upgraded'
+        });
       })
       .catch(error => sendError(error, res, false));
   }
@@ -117,8 +126,8 @@ class User {
  *
  *
  * @static
- * @param {any} req
- * @param {any} res
+ * @param {object} req The request object
+ * @param {object} res The response object
  * @memberof User
  * @returns {object} response in json.
  */

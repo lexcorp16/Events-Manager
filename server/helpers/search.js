@@ -4,7 +4,12 @@ import sendErrors from '../helpers/sendError';
 
 const { Op } = Sequelize;
 const { Centers } = models;
-
+/**
+ * performs search actions
+ * @param {req} req request object from express/body-parser
+ * @param {res} res response object from express
+ * @returns {object} response in json
+ */
 const search = (req, res) => {
   const limit = req.query.limit || 6;
   const offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;

@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 import PropTypes from 'prop-types';
-import { uploadImageAndGetUrl, addCenter, pauseUpload, resumeUpload, cancelUpload, clearErrors } from '../../../actions/centerActions';
+import {
+  uploadImageAndGetUrl,
+  addCenter, pauseUpload,
+  resumeUpload,
+  cancelUpload,
+  clearErrors
+} from '../../../actions/centerActions';
 import defaultImage from '../../../public/images/default-placeholder.png';
 import { UploadProgressBar, LoadingIcon } from '../../utils/LoaderComponents';
 import { actionRejectedPrompterTimer } from '../../../utils/alerts.sweetalert';
-import ComponentsHoc from '../../HOC/AuthPagesHoc';
+import AuthPages from '../../HOC/AuthPages';
 /**
  *
  *
@@ -39,7 +45,8 @@ export class AddCenterFormThree extends Component {
  * @returns {null} dispatches sctions when component is mounting
  */
   componentWillMount() {
-    if (!this.props.center.status.addedCosts || !this.props.center.status.addedFacilities) {
+    if (!this.props.center.status.addedCosts ||
+      !this.props.center.status.addedFacilities) {
       browserHistory.push('/addcentertwo');
     }
   }
@@ -67,7 +74,7 @@ export class AddCenterFormThree extends Component {
   /**
    *
    *
-   * @param {any} event
+   * @param {object} event
    * @memberof addCenterFormThree
    * @returns {array} Array of fileList
    */
@@ -77,14 +84,15 @@ export class AddCenterFormThree extends Component {
   /**
  *
  *
- * @param {any} event
+ * @param {object} event
  * @memberof addCenterFormThree
  * @returns {object} state after uploadingImage
  */
   uploadImage(event) {
     event.preventDefault();
+    const prompterMessage = 'Please choose a file before attempting to upload';
     if (!this.state.imageFile) {
-      return actionRejectedPrompterTimer('Please choose a file before attempting to upload');
+      return actionRejectedPrompterTimer(prompterMessage);
     }
     this.props.dispatch(uploadImageAndGetUrl({
       ...this.state,
@@ -92,8 +100,8 @@ export class AddCenterFormThree extends Component {
   }
   /**
    *
-   *
-   * @param {any} event
+   * pause image upload
+   * @param {object} event
    * @memberof addCenterFormThree
    * @returns {object} state after pausing image upload
    */
@@ -104,7 +112,7 @@ export class AddCenterFormThree extends Component {
   }
   /**
  *
- *
+ * resumes image upload
  * @memberof AddCenterFormThree
  * @returns {object} state after resuming image upload
  */
@@ -115,8 +123,8 @@ export class AddCenterFormThree extends Component {
   }
   /**
  *
- *
- * @param {any} event
+ * cancels image upload
+ * @param {object} event
  * @memberof AddCenterFormThree
  * @returns {object} state after image upload is cancelled
  */
@@ -128,8 +136,8 @@ export class AddCenterFormThree extends Component {
   }
   /**
  *
- *
- * @param {any} event
+ * calls addcenter action
+ * @param {object} event
  * @memberof AddCenterFormThree
  * @returns {object} state after adding center
  */
@@ -145,7 +153,7 @@ export class AddCenterFormThree extends Component {
   /**
  *
  *
- *
+ * renders component
  * @memberof AddCenterFormThree
  * @returns {object} html object rendered in browser
  */
@@ -153,12 +161,24 @@ export class AddCenterFormThree extends Component {
     return (
       <div className="add-center-form-one" style={{ marginTop: `${10}%` }}>
         <div className="container form-section">
-          <div className="sign-in-container form-container form-add-center-one" style={{ marginTop: `${5}%`, border: 'none' }}>
+          <div
+            className="sign-in-container form-container form-add-center-one"
+            style={{ marginTop: `${5}%`, border: 'none' }}
+          >
             <div className="form-header">
-              <p className="text-center header-form" style={{ marginTop: `${3}%`, fontSize: `${1.1}em` }} >Upload Center Image</p>
+              <p
+                className="text-center header-form"
+                style={{ marginTop: `${3}%`, fontSize: `${1.1}em` }}
+              >Upload Center Image
+              </p>
             </div>
             <div className="img-center-a container">
-              <img alt="default" src={defaultImage} style={{ width: '100%', height: '285px' }} id="centerimage" />
+              <img
+                alt="default"
+                src={defaultImage}
+                style={{ width: '100%', height: '285px' }}
+                id="centerimage"
+              />
             </div>
             { (this.props.center.status.uploadingImage ||
             this.props.center.status.uploadImagePaused) &&
@@ -169,11 +189,23 @@ export class AddCenterFormThree extends Component {
             <div className="upload-options-section row">
               { (this.props.center.status.uploadingImage) &&
               <div className="col">
-                <div className="fa fa-pause" onClick={this.pauseImageUpload} role="button" tabIndex={0} onKeyDown={this.handleKeyDown} />
+                <div
+                  className="fa fa-pause"
+                  onClick={this.pauseImageUpload}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={this.handleKeyDown}
+                />
               </div>}
               { (this.props.center.status.uploadImagePaused) &&
                 <div className="col">
-                  <div className="fa fa-play" onClick={this.resumeImageUpload} role="button" tabIndex={0} onKeyDown={this.handleKeyDown} />
+                  <div
+                    className="fa fa-play"
+                    onClick={this.resumeImageUpload}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={this.handleKeyDown}
+                  />
                 </div>}
               { (this.props.center.status.uploadingImage) &&
                 <div className="col">
@@ -185,8 +217,12 @@ export class AddCenterFormThree extends Component {
                   </button>
                 </div>}
             </div>
-            <form className="form form-group container form-upload" style={{ marginTop: `${20}px` }} >
-              {(!this.props.center.status.uploadedImage || !this.props.center.status.uploadingImage)
+            <form
+              className="form form-group container form-upload"
+              style={{ marginTop: `${20}px` }}
+            >
+              {(!this.props.center.status.uploadedImage ||
+              !this.props.center.status.uploadingImage)
                &&
                <div className="section-upload">
                  <label htmlFor="imageFile" className="file-label">
@@ -203,20 +239,36 @@ export class AddCenterFormThree extends Component {
               {(!this.props.center.status.uploadedImage ||
               this.state.imageFile) &&
               <div className="text-center">
-                <button className="btn btn-default upload-btn" onClick={this.uploadImage} >upload</button>
+                <button
+                  className="btn btn-default upload-btn"
+                  onClick={this.uploadImage}
+                >
+                upload
+                </button>
               </div>}
               {(this.props.center.status.uploadedImage) &&
                 <div className="text-center">
-                  <button className="btn btn-default btn-addcenter" onClick={this.addCenter} >FINISH</button>
+                  <button
+                    className="btn btn-default btn-addcenter"
+                    onClick={this.addCenter}
+                  >
+                  FINISH
+                  </button>
                   {(this.props.center.status.addingCenter) &&
-                  <div className="loadingSection" style={{ marginLeft: '-10px' }}>
+                  <div
+                    className="loadingSection"
+                    style={{ marginLeft: '-10px' }}
+                  >
                     <LoadingIcon />
                   </div>}
                 </div>}
               <div className="btn-back-section">
                 <Link to="/addcentertwo">
                   <button className="btn">
-                    <i className="fa fa-chevron-left" style={{ fontSize: `${1.7}em`, color: '#F50057' }} />
+                    <i
+                      className="fa fa-chevron-left"
+                      style={{ fontSize: `${1.7}em`, color: '#F50057' }}
+                    />
                   </button>
                 </Link>
               </div>
@@ -241,7 +293,10 @@ const mapStateToProps = (state =>
   })
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComponentsHoc(AddCenterFormThree));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AuthPages(AddCenterFormThree));
 
 const propTypes = {
   center: PropTypes.shape({

@@ -2,7 +2,7 @@ import React from 'react';
 import isAuthenticated from '../../helpers/isAuthenticated';
 import AllEventsPage from '../events/container/UserEvents';
 
-const UnauthenticatedPagesHoc = WrappedComponent =>
+const UnauthenticatedPages = WrappedComponent =>
   (
     (props) => {
       if (isAuthenticated()) {
@@ -12,4 +12,4 @@ const UnauthenticatedPagesHoc = WrappedComponent =>
     }
   );
 
-export default UnauthenticatedPagesHoc;
+export default UnauthenticatedPages;

@@ -2,7 +2,12 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
+/**
+ * handles mailing service
+ * @param {object} mailOptions object containing mailing credentials
+ * @param {object} res response object
+ * @returns {object} object in json
+ */
 export default (mailOptions, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',

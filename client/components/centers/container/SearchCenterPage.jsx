@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import CenterCard from '../presentational/CenterCard';
-import { getAllCenters, modificationPrompt, promptSeeCenter } from '../../../actions/centerActions';
 import { actionRejectedPrompter } from '../../../utils/alerts.sweetalert';
 import { LargeLoadingIcon } from '../../utils/LoaderComponents';
 import PaginationLinks from '../../utils/PaginationLinks';
-
+import {
+  getAllCenters,
+  modificationPrompt,
+  promptSeeCenter
+} from '../../../actions/centerActions';
 /**
- *
  *
  * @class SearchPage
  * @extends {Component}
@@ -68,7 +70,10 @@ export class SearchCenterPage extends Component {
   fetchMoreCenters(event) {
     const { id } = event.target;
     const { searchQueryValue, searchQueryType } = this.state;
-    this.props.dispatch(getAllCenters({ [searchQueryType]: searchQueryValue, page: id }));
+    this.props.dispatch(getAllCenters({
+      [searchQueryType]: searchQueryValue,
+      page: id
+    }));
   }
   /**
  *
@@ -118,24 +123,62 @@ export class SearchCenterPage extends Component {
         <form className="form-search container">
           <div className="radio-section text-center">
             <div className="form-check form-check-inline">
-              <input className="form-check-input radio-name" type="radio" id="inlineRadio1" value="name" name="searchQueryType" onClick={this.getSearchValues} />
-              <label className="form-check-label" htmlFor="inlineRadio1">search by name</label>
+              <input
+                className="form-check-input radio-name"
+                type="radio"
+                id="inlineRadio1"
+                value="name"
+                name="searchQueryType"
+                onClick={this.getSearchValues}
+              />
+              <label
+                className="form-check-label"
+                htmlFor="inlineRadio1"
+              >search by name
+              </label>
             </div>
             <div className="form-check form-check-inline">
-              <input className="form-check-input radio-cost" type="radio" id="inlineRadio2" value="rentalCost" name="searchQueryType" onClick={this.getSearchValues} />
-              <label className="form-check-label label-2" htmlFor="inlineRadio2">search by rental cost</label>
+              <input
+                className="form-check-input radio-cost"
+                type="radio"
+                id="inlineRadio2"
+                value="rentalCost"
+                name="searchQueryType"
+                onClick={this.getSearchValues}
+              />
+              <label
+                className="form-check-label label-2"
+                htmlFor="inlineRadio2"
+              >search by rental cost
+              </label>
             </div>
           </div>
           <div className="row">
             <div className="form-group col-lg-9 col-sm-12 col-xs-12 col-md-9">
-              <input type="text" className="form-control input-search form-search-l" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Search Centers" name="searchQueryValue" onChange={this.getSearchValues} />
+              <input
+                type="text"
+                className="form-control input-search form-search-l"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Search Centers"
+                name="searchQueryValue"
+                onChange={this.getSearchValues}
+              />
             </div>
             <div className="col-lg-3 col-md-3">
-              <button type="submit" className="btn mb-2 btn-search-l" onClick={this.search}>SEARCH</button>
+              <button
+                type="submit"
+                className="btn mb-2 btn-search-l"
+                onClick={this.search}
+              >SEARCH
+              </button>
             </div>
           </div>
         </form>
-        <div className="search-results-div container-fluid" style={{ marginLeft: '20px' }}>
+        <div
+          className="search-results-div container-fluid"
+          style={{ marginLeft: '20px' }}
+        >
           {(searchResults.length !== 0 && !fetchingCenters) &&
           <div>
             <h3 className="text-center search-header">SEARCH RESULTS</h3>
@@ -167,7 +210,10 @@ export class SearchCenterPage extends Component {
               />
             </div>}
           {(!fetchingCenters && searchResults.length === 0 && error) &&
-            <div className="text-center no-results" style={{ marginTop: '120px' }}>
+            <div
+              className="text-center no-results"
+              style={{ marginTop: '120px' }}
+            >
               <h2> Your Search Returned No results</h2>
             </div>
           }

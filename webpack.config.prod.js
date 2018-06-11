@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -17,6 +18,9 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin({
+      filename: 'client/style.css'
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './client/index.html')
     }),
@@ -51,46 +55,46 @@ module.exports = {
     }),
   ],
   module: {
-    loaders: [{
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
-    }, {
-      test: /\.(scss|css)$/,
-      loaders: ['style-loader', 'css-loader', 'sass-loader']
-    }, {
-      test: /\.(jpe?g|png|gif|svg|ico)$/i,
-      include: [
-        path.join(__dirname, 'client'),
-        path.join(__dirname, 'server/shared')
-      ],
-      use: [
-        {
-          loader: 'file-loader',
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: {
+          loader: 'babel-loader',
           options: {
-            name: '[name].[ext]',
-          },
+            presets: ['es2015', 'react', 'stage-0']
+          }
         },
-        {
-          loader: 'image-webpack-loader',
-          query: {
-            optipng: {
-              optimizationLevel: 7,
-            },
-            mozjpeg: {
-              progressive: true,
-            },
-            gifsicle: {
-              interlaced: false,
-            },
-            pngquant: {
-              quality: '75-90',
-              speed: 3,
-            },
-          },
-        },
-      ],
-    }]
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'sass-loader',
+              query: {
+                sourceMap: false
+              }
+            }
+          ]
+        }))
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpg|gif|woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'file-loader'
+          }
+        ]
+      }
+    ]
   },
   devServer: {
     contentBase: path.join(__dirname, 'client'),

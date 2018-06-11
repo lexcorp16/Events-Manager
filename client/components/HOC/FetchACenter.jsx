@@ -1,7 +1,7 @@
 import React from 'react';
 import AllCentersPage from '../centers/container/AllCenterPage';
 
-const FetchACenterHoc = WrappedComponent =>
+const FetchACenter = WrappedComponent =>
   (
     (props) => {
       if (!localStorage.getItem('center-to-get')) {
@@ -11,4 +11,4 @@ const FetchACenterHoc = WrappedComponent =>
     }
   );
 
-export default FetchACenterHoc;
+export default FetchACenter;
