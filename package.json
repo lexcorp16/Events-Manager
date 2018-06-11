@@ -11,7 +11,7 @@
     "test:dev": "export NODE_ENV=test&&sequelize db:migrate:undo:all&&sequelize db:migrate&&sequelize db:seed:all&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/index.js --compilers js:babel-core/register --timeout 25000 --exit",
     "seed:dev": "sequelize db:seed:all",
     "unseed:dev": "sequelize db:seed:undo:all",
-    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
+    "test": "sequelize db:migrate:undo:all&&sequelize db:migrate&&sequelize db:seed:all&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/index.js --compilers js:babel-core/register --timeout 25000 --exit",
     "start:dev": "export NODE_ENV=development&&nodemon ./server/app --exec babel-node ./server/app",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./server/ -d ./dist ./client/ -d ./dist",
