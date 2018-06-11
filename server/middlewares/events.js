@@ -31,6 +31,11 @@ const checkInvalidAddEventDetails = (req, res, next) => {
   if (!startDate || !endDate) {
     errorMessage.push('Please specify the dates of the event');
   }
+  if (center) {
+    if (!validator.isUUID(center, 4)) {
+      errorMessage.push('invalid center selected');
+    }
+  }
   if (name) {
     if (name.trim() !== '' && Number.isInteger(parseFloat(name))) {
       errorMessage.push('name field cannot be digits or alphanumeric characters');
@@ -43,7 +48,7 @@ const checkInvalidAddEventDetails = (req, res, next) => {
   }
   if (startDate) {
     if (startDate.trim() !== '' && validator.isBefore(startDate) && new Date(startDate).toISOString().slice(0, 10) !== new Date().toISOString().slice(0, 10)) {
-      errorMessage.push('The commencement date chosen is past, please choose another date');
+      return res.status(406).send({ error: 'The start date chosen is past, please choose another date' });
     }
     if (validator.toDate(startDate) === null) {
       errorMessage.push('invalid date');
@@ -51,7 +56,7 @@ const checkInvalidAddEventDetails = (req, res, next) => {
   }
   if (endDate) {
     if (endDate.trim() !== '' && validator.isBefore(endDate) && new Date(endDate).toISOString().slice(0, 10) !== new Date().toISOString().slice(0, 10)) {
-      errorMessage.push('The end date chosen is past, please choose another date');
+      return res.status(406).send({ error: 'The end date chosen is past, please choose another date' });
     }
     if (validator.toDate(endDate) === null) {
       errorMessage.push('invalid date');
@@ -84,6 +89,11 @@ const checkInvalidModifyEventDetails = (req, res, next) => {
   if (!startDate || !endDate) {
     errorMessage.push('Please specify the dates of the event');
   }
+  if (center) {
+    if (!validator.isUUID(center, 4)) {
+      errorMessage.push('invalid center selected');
+    }
+  }
   if (name) {
     if (name.trim() === '') {
       errorMessage.push('name field cannot be empty');
@@ -109,12 +119,15 @@ const checkInvalidModifyEventDetails = (req, res, next) => {
     }
   }
   if (endDate) {
-    if (endDate.trim() !== '' && validator.isBefore(startDate) && new Date(endDate).toISOString().slice(0, 10) !== new Date().toISOString().slice(0, 10)) {
+    if (endDate.trim() !== '' && validator.isBefore(endDate) && new Date(endDate).toISOString().slice(0, 10) !== new Date().toISOString().slice(0, 10)) {
       return res.status(406).send({ error: 'The end date chosen is past, please choose another date' });
     }
     if (validator.toDate(startDate) === null) {
       errorMessage.push('invalid end date');
     }
+  }
+  if (startDate > endDate) {
+    errorMessage.push('The commencement date should come before the end date');
   }
   if (errorMessage.length !== 0) {
     return res.status(400).send({ error: errorMessage });

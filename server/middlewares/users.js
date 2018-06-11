@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 const isValidEmail = (mail) => {
   if (/^\w+([.-]?\w+)*@\w+([ .-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
     return true;
@@ -88,7 +90,15 @@ const checkInvalidUserSignIn = (req, res, next) => {
   next();
 };
 
+const checkInvalidParams = (req, res, next) => {
+  if (!validator.isUUID(req.params.userId, 4)) {
+    return res.status(400).send({ error: 'Invalid id parsed' });
+  }
+  next();
+};
+
 export default {
   checkInvalidUserDetails,
   checkInvalidUserSignIn,
+  checkInvalidParams,
 };

@@ -8,7 +8,9 @@
     "npm": "6.1.0"
   },
   "scripts": {
-    "localtest": "export NODE_ENV=test&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/tests.js --compilers js:babel-core/register --timeout 25000 --exit",
+    "test:dev": "export NODE_ENV=test&&sequelize db:migrate:undo:all&&sequelize db:migrate&&sequelize db:seed:all&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/index.js --compilers js:babel-core/register --timeout 25000 --exit",
+    "seed:dev": "sequelize db:seed:all",
+    "unseed:dev": "sequelize db:seed:undo:all",
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 250000 ./server/test/tests.js --compilers js:babel-core/register --exit",
     "start:dev": "export NODE_ENV=development&&nodemon ./server/app --exec babel-node ./server/app",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -16,9 +18,9 @@
     "start": "npm run build && node ./dist/app.js",
     "start:local:prod": "export NODE_ENV=production&&npm run build && node ./dist/app.js",
     "start:react": "nodemon ./client/server.js --exec babel-node ./client/server.js",
-    "sendmail": "babel-node ./server/helpers/mailer.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.prod.js",
-    "jest": "jest client/tests/ --watch --coverage --collectCoverageFrom=client/**/*.{js,jsx} --forceExit"
+    "jest": "jest client/tests/ --watch --coverage --collectCoverageFrom=client/**/*.{js,jsx} --forceExit",
+    "e2e": "export NODE_ENV=test&&sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && nightwatch"
   },
   "repository": {
     "type": "git",
@@ -46,6 +48,7 @@
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
+    "expect": "^22.4.3",
     "chromedriver": "^2.38.3",
     "cors": "^2.8.4",
     "coveralls": "^3.0.0",
@@ -117,7 +120,6 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
-    "expect": "^22.4.3",
     "fetch-mock": "^6.4.2",
     "firebase-mock": "^2.2.4",
     "hammerjs": "^2.0.8",

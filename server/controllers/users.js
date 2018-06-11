@@ -2,8 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import Sequelize from 'sequelize';
 import models from '../db/models';
-import createSuperAdmin from '../helpers/admin';
-import sendError from '../helpers/errorSender';
+import sendError from '../helpers/sendError';
 
 const { Op } = Sequelize;
 
@@ -29,10 +28,6 @@ class User {
       lastname,
     } = req.body;
     const email = req.body.email.toLowerCase();
-    // creates a User,generate a token and hash the password
-    if (email === process.env.ADMIN_EMAIL) {
-      return createSuperAdmin(req, res);
-    }
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
         return res.status(500).send({ error: err.message });
@@ -125,30 +120,12 @@ class User {
  * @param {any} req
  * @param {any} res
  * @memberof User
- * @returns {object} response in json
- */
-  static fetchAUser(req, res) {
-    return Users.findById(req.decoded.userId)
-      .then((user) => {
-        if (!user) {
-          return res.status(404).send({ error: 'user not found' });
-        }
-        return res.status(200).send({ message: 'User successfully fetched', user });
-      })
-      .catch(err => sendError(err, res, false));
-  }
-  /**
- *
- *
- * @static
- * @param {any} req
- * @param {any} res
- * @memberof User
  * @returns {object} response in json.
  */
   static getAllUsers(req, res) {
     const limit = req.query.limit || 10;
-    const offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
+    const offset = req.query.page ?
+      (parseFloat(req.query.page) - 1) * limit : 0;
     return Users.findAndCountAll({
       where: {
         id: {

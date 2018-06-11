@@ -1,6 +1,6 @@
 import models from '../db/models';
 import mailSender from '../helpers/mailer';
-import sendError from '../helpers/errorSender';
+import sendError from '../helpers/sendError';
 
 const { Events, Users } = models;
 
@@ -46,13 +46,15 @@ class Event {
     Events.findById(req.params.eventId)
       .then((modifiedEvent) => {
         if (!modifiedEvent) {
-          return res.status(404).send({ error: 'No event found' });
+          return res.status(404).send({ error: 'event not found' });
         }
         modifiedEvent.updateAttributes({
           name: req.body.name || modifiedEvent.name,
           type: req.body.type || modifiedEvent.type,
-          startDate: new Date(req.body.startDate).toISOString() || modifiedEvent.startDate,
-          endDate: new Date(req.body.startDate).toISOString() || modifiedEvent.endDate,
+          startDate: new Date(req.body.startDate).toISOString() ||
+          modifiedEvent.startDate,
+          endDate: new Date(req.body.startDate).toISOString() ||
+          modifiedEvent.endDate,
           center: center || modifiedEvent.center,
         });
         return res.status(200).send({ message: 'successfully modified', modifiedEvent });
@@ -88,7 +90,8 @@ class Event {
  */
   static getUserEvents(req, res) {
     const limit = req.query.limit || 6;
-    const offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
+    const offset = req.query.page ?
+      (parseFloat(req.query.page) - 1) * limit : 0;
     const currentPage = req.query.page ? parseFloat(req.query.page) : 1;
     Events.findAndCountAll({
       where: {

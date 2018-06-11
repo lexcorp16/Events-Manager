@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import models from '../db/models';
-import sendErrors from '../helpers/errorSender';
+import sendErrors from '../helpers/sendError';
 
 const { Op } = Sequelize;
 const { Centers } = models;

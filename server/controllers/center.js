@@ -1,8 +1,8 @@
 import models from '../db/models';
-import sendError from '../helpers/errorSender';
-import requestIsASearch from '../helpers/filterQueries';
+import sendError from '../helpers/sendError';
+import requestIsASearch from '../helpers/requestIsASearch';
 import searchCenters from '../helpers/search';
-import getOnlyACenter from '../helpers/getOnlyACenter';
+import getOneCenter from '../helpers/getOneCenter';
 
 const {
   Centers,
@@ -105,7 +105,8 @@ class Center {
  */
   static getAllCenters(req, res) {
     const limit = req.query.limit || 6;
-    const offset = req.query.page ? (parseFloat(req.query.page) - 1) * limit : 0;
+    const offset = req.query.page ?
+      (parseFloat(req.query.page) - 1) * limit : 0;
     const currentPage = req.query.page ? parseFloat(req.query.page) : 1;
     if (requestIsASearch(req)) {
       return searchCenters(req, res);
@@ -129,15 +130,16 @@ class Center {
       .catch(error => sendError(error, res, true));
   }
   /**
- * Get A Centers
+ * Get A Center, this fetches a center along with
+ * the associated events of the centers.
  * @param {object} req The request body of the request.
  * @param {object} res The response body.
- * @returns {array} res.
+ * @returns {json} json response.
  */
   static getACenter(req, res) {
     // this fetches just the center with out the events of the center
     if (req.query.centeronly === 'true') {
-      return getOnlyACenter(req, res);
+      return getOneCenter(req, res);
     }
     return Centers
       .findOne({
@@ -147,7 +149,7 @@ class Center {
       })
       .then((center) => {
         if (!center) {
-          return res.status(400).send({ error: 'No center found' });
+          return res.status(404).send({ error: 'No center found' });
         }
         Centers.findOne({
           where: {
