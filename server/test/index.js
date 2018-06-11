@@ -1,0 +1,15 @@
+import './middlewares/center';
+import './middlewares/auth';
+import './middlewares/events';
+import './middlewares/validateQuery';
+import './middlewares/user';
+import './helpers/requestIsASearch';
+import './helpers/userIsAdmin';
+import './helpers/getOneCenter';
+import './helpers/userIsSuperAdmin';
+import './controllers/users';
+import './controllers/centers';
+import './controllers/events';
+import './models/center';
+import './models/events';
+import './models/users';
