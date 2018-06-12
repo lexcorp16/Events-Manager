@@ -4,7 +4,7 @@ import SigninPage from '../users/container/SigninPage';
 import isSuperAdmin from '../../helpers/isSuperAdmin';
 import AllCentersPage from '../centers/container/AllCenterPage';
 
-const AccessGrantPage = WrapperComponent =>
+const AccessGrant = WrapperComponent =>
   (
     (props) => {
       if (!isAuthenticated()) {
@@ -17,4 +17,4 @@ const AccessGrantPage = WrapperComponent =>
     }
   );
 
-export default AccessGrantPage;
+export default AccessGrant;

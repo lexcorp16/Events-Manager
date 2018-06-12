@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isAuthenticated from '../../helpers/isAuthenticated';
 import SignInPage from '../users/container/SigninPage';
 
-const ModifyEventPage = WrappedComponent =>
+const ModifyEventWrapper = WrappedComponent =>
   (
     (props) => {
       if (!isAuthenticated()) {
@@ -21,4 +21,4 @@ const propTypes = {
   }).isRequired,
 };
 
-ModifyEventPage.propTypes = propTypes;
+ModifyEventWrapper.propTypes = propTypes;
