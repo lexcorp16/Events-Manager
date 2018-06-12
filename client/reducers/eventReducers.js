@@ -1,5 +1,11 @@
 import eventInitialState from '../utils/eventInitialState';
-
+/**
+ * event based reducers
+ * @param {object} state current state of app
+ * @param {object} action contatining type and data
+ * @returns {object} new state
+ *
+ */
 const eventReducer = (state = eventInitialState(), action) => {
   switch (action.type) {
     case 'ADD_EVENT': {
@@ -10,7 +16,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           adding: true,
           added: false,
           error: false,
-          creatingEvent: true,
+          creatingEvent: true
         }
       };
     }
@@ -23,7 +29,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           adding: false,
           added: true,
           error: false,
-          creatingEvent: false,
+          creatingEvent: false
         }
       };
     }
@@ -37,7 +43,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           adding: false,
           added: false,
           error: true,
-          creatingEvent: false,
+          creatingEvent: false
         }
       };
     }
@@ -48,7 +54,7 @@ const eventReducer = (state = eventInitialState(), action) => {
         status: {
           ...state.status,
           fetchingEvents: true,
-          error: false,
+          error: false
         }
       };
     }
@@ -61,7 +67,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           ...state.status,
           fetchingEvents: false,
           error: false,
-          added: false,
+          added: false
         }
       };
     }
@@ -72,7 +78,7 @@ const eventReducer = (state = eventInitialState(), action) => {
         status: {
           ...state.status,
           fetchingEvents: false,
-          error: true,
+          error: true
         }
       };
     }
@@ -83,7 +89,7 @@ const eventReducer = (state = eventInitialState(), action) => {
         status: {
           ...state.status,
           error: false,
-          deleteEventPrompted: true,
+          deleteEventPrompted: true
         }
       };
     }
@@ -92,13 +98,14 @@ const eventReducer = (state = eventInitialState(), action) => {
       return {
         ...state,
         events: {
-          userEvents: state.events.userEvents.filter(event => event.id !== action.eventId),
+          userEvents: state.events.userEvents.filter(event =>
+            event.id !== action.eventId)
         },
         status: {
           ...state.status,
           error: false,
           deleteEventPrompted: false,
-          eventIsDeleted: true,
+          eventIsDeleted: true
         }
       };
     }
@@ -110,15 +117,19 @@ const eventReducer = (state = eventInitialState(), action) => {
           ...state.status,
           error: true,
           deleteEventPrompted: false,
-          eventIsDeleted: false,
+          eventIsDeleted: false
         }
       };
     }
 
     case 'MODIFY_EVENT_PROMPT': {
-      const newEventObject = state.events.userEvents.filter(event => event.id === action.eventId);
+      const newEventObject = state.events.userEvents.filter(event =>
+        event.id === action.eventId);
       localStorage.setItem('eventObject', JSON.stringify(newEventObject));
-      localStorage.setItem('allUserEvents', JSON.stringify(state.events.userEvents));
+      localStorage.setItem(
+        'allUserEvents',
+        JSON.stringify(state.events.userEvents)
+      );
       return {
         ...state,
         eventObject: newEventObject,
@@ -126,7 +137,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           ...state.status,
           error: false,
           modifyEventPrompted: true,
-          eventIsModified: false,
+          eventIsModified: false
         }
       };
     }
@@ -138,7 +149,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           ...state.status,
           error: false,
           modifyingEvent: true,
-          eventIsModified: false,
+          eventIsModified: false
         }
       };
     }
@@ -154,7 +165,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           modifyEventPrompted: false,
           eventIsDeleted: false,
           eventIsModified: true,
-          modifyingEvent: false,
+          modifyingEvent: false
         }
       };
     }
@@ -166,14 +177,14 @@ const eventReducer = (state = eventInitialState(), action) => {
         status: {
           ...state.status,
           error: true,
-          modifyingEvent: false,
+          modifyingEvent: false
         }
       };
     }
 
     case 'USER_LOGOUT': {
       return {
-        ...eventInitialState(),
+        ...eventInitialState()
       };
     }
     case 'CLEAR_ERROR': {
@@ -183,7 +194,7 @@ const eventReducer = (state = eventInitialState(), action) => {
           ...state.status,
           adding: false,
           added: false,
-          error: false,
+          error: false
         }
       };
     }

@@ -1,5 +1,10 @@
 import userInitialState from '../utils/userInitialState';
-
+/**
+ * modifies array by change in role key of object
+ * @param {string} value Admin or User
+ * @param {arr} arr array of users
+ * @returns {array} modified Array
+ */
 const modifyArrayOfUsersByUpgradeChange = (value, arr) => {
   arr.forEach((index) => {
     if (index.id === value) {
@@ -22,17 +27,20 @@ const modifyArrayOfUsersByUpgradeChange = (value, arr) => {
  * @param {any} action
  * @returns {object} new state of app
  */
-export default function userReducers(state = userInitialState() || {
-  token: '',
-  unauthenticatedErrorMessage: '',
-  status: {
-    fetching: false,
-    fetched: false,
-    error: false,
-    authenticated: false,
-    unauthenticatedAttempt: false,
-  }
-}, action) {
+export default function userReducers(
+  state = userInitialState() || {
+    token: '',
+    unauthenticatedErrorMessage: '',
+    status: {
+      fetching: false,
+      fetched: false,
+      error: false,
+      authenticated: false,
+      unauthenticatedAttempt: false
+    }
+  },
+  action
+) {
   switch (action.type) {
     case 'CREATE_USER': {
       return {
@@ -42,7 +50,7 @@ export default function userReducers(state = userInitialState() || {
           fetching: true,
           fetched: false,
           error: false,
-          authenticated: false,
+          authenticated: false
         }
       };
     }
@@ -55,7 +63,7 @@ export default function userReducers(state = userInitialState() || {
           fetching: false,
           fetched: true,
           authenticated: true,
-          error: false,
+          error: false
         }
       };
     }
@@ -67,7 +75,7 @@ export default function userReducers(state = userInitialState() || {
           ...state.status,
           fetching: false,
           error: true,
-          authenticated: false,
+          authenticated: false
         }
       };
     }
@@ -79,7 +87,7 @@ export default function userReducers(state = userInitialState() || {
           fetching: true,
           fetched: false,
           error: false,
-          authenticated: false,
+          authenticated: false
         }
       };
     }
@@ -92,7 +100,7 @@ export default function userReducers(state = userInitialState() || {
           fetching: false,
           fetched: true,
           authenticated: true,
-          unauthenticatedAttempt: false,
+          unauthenticatedAttempt: false
         }
       };
     }
@@ -105,7 +113,7 @@ export default function userReducers(state = userInitialState() || {
           fetching: false,
           error: true,
           authenticated: false,
-          unauthenticatedAttempt: false,
+          unauthenticatedAttempt: false
         }
       };
     }
@@ -114,7 +122,7 @@ export default function userReducers(state = userInitialState() || {
         ...state,
         status: {
           ...state.status,
-          fetchingAllUsers: true,
+          fetchingAllUsers: true
         }
       };
     }
@@ -124,7 +132,7 @@ export default function userReducers(state = userInitialState() || {
         allusers: action.payload,
         status: {
           ...state.status,
-          fetchingAllUsers: false,
+          fetchingAllUsers: false
         }
       };
     }
@@ -135,7 +143,7 @@ export default function userReducers(state = userInitialState() || {
         status: {
           ...state.status,
           fetchingAllUsers: false,
-          error: true,
+          error: true
         }
       };
     }
@@ -145,7 +153,7 @@ export default function userReducers(state = userInitialState() || {
         status: {
           ...state.status,
           assigning: true,
-          error: false,
+          error: false
         }
       };
     }
@@ -154,13 +162,16 @@ export default function userReducers(state = userInitialState() || {
         ...state,
         allusers: {
           ...state.allusers,
-          users: modifyArrayOfUsersByUpgradeChange(action.userId, state.allusers.users)
+          users: modifyArrayOfUsersByUpgradeChange(
+            action.userId,
+            state.allusers.users
+          )
         },
         status: {
           ...state.status,
           assigning: false,
           error: false,
-          userRoleIschanged: true,
+          userRoleIschanged: true
         }
       };
     }
@@ -170,7 +181,7 @@ export default function userReducers(state = userInitialState() || {
         status: {
           ...state.status,
           assigning: false,
-          error: true,
+          error: true
         }
       };
     }
@@ -179,7 +190,7 @@ export default function userReducers(state = userInitialState() || {
         ...state,
         status: {
           ...state.status,
-          authenticated: false,
+          authenticated: false
         }
       };
     }
@@ -191,7 +202,7 @@ export default function userReducers(state = userInitialState() || {
           adding: false,
           added: false,
           error: false,
-          unauthenticatedAttempt: false,
+          unauthenticatedAttempt: false
         }
       };
     }

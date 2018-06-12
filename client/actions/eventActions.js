@@ -3,7 +3,12 @@ import {
   actionRejectedPrompter,
   toastPrompter
 } from '../utils/alerts.sweetalert';
-
+/**
+ * creates event action by making axios call to api
+ * @param {object} eventDetails details to be sent
+ * @returns {object} parses response from api to reducers.
+ *
+ */
 const addEvent = eventDetails => (dispatch) => {
   dispatch({ type: 'ADD_EVENT' });
   return instance({
@@ -21,7 +26,12 @@ const addEvent = eventDetails => (dispatch) => {
       actionRejectedPrompter(err.response.data.error);
     });
 };
-
+/**
+ * fetch user events action by making axios call to api
+ * @param {string} id page query to be fetched
+ * @returns {object} parses response from api to reducers.
+ *
+ */
 const fetchEvents = id => (dispatch) => {
   let urlLink = '/api/v1/events/user';
   if (id) {
@@ -45,7 +55,12 @@ const clearError = () => dispatch => dispatch({ type: 'CLEAR_ERROR' });
 
 const promptDelete = () => dispatch =>
   dispatch({ type: 'DELETE_EVENT_PROMPT' });
-
+/**
+ * delete Event action by making axios call to api
+ * @param {string} eventId UUID string of event to be deleted
+ * @returns {object} parses response from api to reducers.
+ *
+ */
 const deleteEvent = eventId => (dispatch) => {
   dispatch({ type: 'DELETING_EVENT' });
   return instance({
@@ -61,11 +76,22 @@ const deleteEvent = eventId => (dispatch) => {
       dispatch({ type: 'DELETE_EVENT_REJECTED', payload: err.response.data });
     });
 };
-
+/**
+ * saves event to be modified to store
+ * @param {string} event UUID string of center to be modified
+ * @returns {object} parses response from api to reducers.
+ *
+ */
 const promptModify = event => (dispatch) => {
   dispatch({ type: 'MODIFY_EVENT_PROMPT', eventId: event });
 };
-
+/**
+ * modify an event action by making axios call to api
+ * @param {object} eventdetails details to be modified
+ * @param {string} eventId UUID string of center to be modified
+ * @returns {object} parses response from api to reducers.
+ *
+ */
 const modifyEvent = (eventdetails, eventId) => (dispatch) => {
   dispatch({ type: 'MODIFYING_EVENT' });
   return instance({
@@ -83,7 +109,12 @@ const modifyEvent = (eventdetails, eventId) => (dispatch) => {
       actionRejectedPrompter(err.response.data.error);
     });
 };
-
+/**
+ * modifyCenter action by making axios call to api
+ * @param {string} eventId UUID string of event to be modified
+ * @returns {object} parses response from api to reducers.
+ *
+ */
 const cancelUserEvent = eventId => (dispatch) => {
   dispatch({ type: 'CANCELLING_USER_EVENT' });
   return instance({

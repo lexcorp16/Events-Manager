@@ -19,6 +19,12 @@ const config = {
 
 firebase.initializeApp(config);
 
+/**
+ * dispatch a fetch all center action using axios
+ * @param {object} centerQueries object of search or pagination
+ * key and value parameters
+ * @returns {any} parses response from api call to reducers.
+ */
 const getAllCenters = centerQueries => (dispatch) => {
   dispatch({ type: 'FETCH_CENTERS' });
   let url;
@@ -38,6 +44,13 @@ const getAllCenters = centerQueries => (dispatch) => {
     });
 };
 
+/**
+ * dispatch a fetch a center action with axios api call
+ * @param {string} centerId UUID string of center to be fetched
+ * @param {boolean} centerOnly value indicating whether to fetch
+ * with associated events
+ * @returns {any} parses response from api call to reducers.
+ */
 const getACenter = (centerId, centerOnly) => (dispatch) => {
   dispatch({ type: 'FETCHING_A_CENTER' });
   let url = `/api/v1/centers/${centerId}`;
@@ -53,11 +66,19 @@ const getACenter = (centerId, centerOnly) => (dispatch) => {
       dispatch({ type: 'FETCH_A_CENTER_REJECTED', payload: err.response.data });
     });
 };
-
+/**
+ * dispatch a prompt to see a center
+ * @param {string} centerId UUID string of center to be seen
+ * @returns {function} dispatch function to parse id to Reducers
+ */
 const promptSeeCenter = centerId => (dispatch) => {
   dispatch({ type: 'PROMPT_SEE_A_CENTER', centerId });
 };
-
+/**
+ * dispatch an add center action to by an api call
+ * @param {object} centerData object containing center details
+ * @returns {any} parses response to reducers
+ */
 const addCenter = centerData => (dispatch) => {
   dispatch({ type: 'ADDING_CENTER' });
   return instance({
@@ -75,7 +96,11 @@ const addCenter = centerData => (dispatch) => {
       actionRejectedPrompter(err.response.data.error);
     });
 };
-
+/**
+ * dispatch a clearError action
+ * @returns {object} data for reducers to work with.
+ *
+ */
 const clearErrors = () => (dispatch) => {
   dispatch({ type: 'CLEAR_ERROR' });
 };
@@ -86,7 +111,12 @@ const getRentalCostAndFacilities = costAndFacilities => (dispatch) => {
     payload: costAndFacilities
   });
 };
-
+/**
+ * Saves Primary Center Details to redux store
+ * @param {object} centerDetails key-value pairs of
+ * primary center details.
+ * @returns {object} contains type and payload of data to work on
+ */
 const getPrimaryCenterDetails = centerDetails => (dispatch) => {
   dispatch({ type: 'ADD_PRIMARY_CENTER_DETAILS', payload: centerDetails });
 };
@@ -165,7 +195,13 @@ const cancelUpload = task => task.currentTask.cancel();
 const modificationPrompt = centerToBeModified => (dispatch) => {
   dispatch({ type: 'MODIFICATION_PROMPT', centerId: centerToBeModified });
 };
-
+/**
+ * modifyCenter action by making axios call to api
+ * @param {object} detailsToBeModified details to be modified
+ * @param {string} centerToBeModified UUID string of center to be modified
+ * @returns {object} parses response from api to reducers.
+ *
+ */
 const modifyCenter = (detailsToBeModified, centerToBeModified) => (dispatch) => {
   dispatch({ type: 'MODIFYING_CENTER' });
   return instance({

@@ -6,7 +6,11 @@ import {
 } from '../utils/alerts.sweetalert';
 
 axios.defaults.withCredentials = true;
-
+/**
+ * sign up user action
+ * @param {object} userDetails data to be sent to api
+ * @returns {object} parses data to reducers
+ */
 const userSignup = userDetails => (dispatch) => {
   dispatch({ type: 'CREATE_USER' });
   return instance
@@ -21,7 +25,12 @@ const userSignup = userDetails => (dispatch) => {
       actionRejectedPrompter(err.response.data.error);
     });
 };
-
+/**
+ * sign in action by making axios call to api
+ * @param {object} loginDetails details to signin
+ * @returns {object} parses response from api to reducers.
+ *
+ */
 const userLogin = loginDetails => (dispatch) => {
   dispatch({ type: 'LOGIN_USER' });
   return instance
@@ -48,7 +57,11 @@ const logOut = () => (dispatch) => {
   localStorage.removeItem('eventObject');
   dispatch({ type: 'USER_LOGOUT' });
 };
-
+/**
+ * fetches all Users by making api call
+ * @returns {object} parses data received to reducers
+ *
+ */
 const getAllUsers = () => (dispatch) => {
   dispatch({ type: 'FETCHING_ALL_USERS' });
   return instance({
@@ -66,7 +79,12 @@ const getAllUsers = () => (dispatch) => {
       });
     });
 };
-
+/**
+ * assign user role action by making axios call to api
+ * @param {string} userId UUID string of center to be modified
+ * @returns {object} parses response from api to reducers.
+ *
+ */
 const assignUserRole = userId => (dispatch) => {
   dispatch({ type: 'ASSIGNING_USER_NEW_ROLE' });
   return instance({

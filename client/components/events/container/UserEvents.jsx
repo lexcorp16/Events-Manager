@@ -7,7 +7,7 @@ import EventCard from '../presentational/EventCard';
 import { EmptyEventList } from '../../utils/emptyComponents';
 import { LargeLoadingIcon } from '../../utils/LoaderComponents';
 import AuthPages from '../../HOC/AuthPages';
-import EventDetailsModal from '../presentational/EventDetails';
+import EventDetails from '../presentational/EventDetails';
 import {
   fetchEvents,
   promptDelete,
@@ -199,7 +199,7 @@ export class UserEvents extends Component {
                 id="eventDetails"
                 style={{ fontSize: 'Open Sans, sans-serif' }}
               >
-                <EventDetailsModal
+                <EventDetails
                   eventDetails={oneEventDetail}
                   venueDetails={this.props.center.oneCenter.center}
                   navigateToModificationPage={this.modifyPrompt}

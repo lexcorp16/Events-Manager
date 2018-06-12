@@ -1,5 +1,10 @@
 import centerInitialState from '../utils/centerInitialState';
-
+/**
+ * remove an object from an array if parsed id is in the object
+ * @param {any} value item to remove associated object
+ * @param {array} arr array to check value from
+ * @returns {array} modified array
+ */
 const removeCancelledEventFromVenueList = (value, arr) => {
   arr.forEach((index) => {
     if (index.id === value) {
@@ -8,7 +13,13 @@ const removeCancelledEventFromVenueList = (value, arr) => {
   });
   return arr;
 };
-
+/**
+ * center based reducers
+ * @param {object} state current state of app
+ * @param {object} action contatining type and data
+ * @returns {object} new state
+ *
+ */
 export default (state = centerInitialState(), action) => {
   switch (action.type) {
     case 'ADD_PRIMARY_CENTER_DETAILS': {
