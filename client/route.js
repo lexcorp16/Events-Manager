@@ -9,22 +9,22 @@ import AddCenterPageTwoForm from
 import addCenterPageThreeForm from
   './components/centers/container/AddCenterFormThree';
 import SignupPage from './components/users/container/SignupPage';
-import LandingPage from './components/utils/LandingPageBody';
+import LandingPageBody from './components/utils/LandingPageBody';
 import SigninPage from './components/users/container/SigninPage';
 import AllCenterPage from './components/centers/container/AllCenterPage';
 import AddEventPage from './components/events/container/AddEventPage';
-import CenterInfoPage from './components/centers/container/CenterPage';
-import UserEventsPage from './components/events/container/UserEvents';
+import CenterPage from './components/centers/container/CenterPage';
+import UserEvents from './components/events/container/UserEvents';
 import ModifyCenterPage from './components/centers/container/ModifyCenterPage';
 import ModifyEventPage from './components/events/container/ModifyEventPage';
 import AllUsersPage from './components/users/container/AllUsersPage';
-import SearchPage from './components/centers/container/SearchCenterPage';
+import SearchCenterPage from './components/centers/container/SearchCenterPage';
 import PageNotFound from './components/utils/PageNotFound';
 
 const Router = (
   <Route path="/" component={App}>
-    <IndexRoute component={LandingPage} />
-    <Route path="events" component={UserEventsPage} />
+    <IndexRoute component={LandingPageBody} />
+    <Route path="events" component={UserEvents} />
     <Route path="signup" component={SignupPage} />
     <Route path="signin" component={SigninPage} />
     <Route path="modifyevent" component={ModifyEventPage} />
@@ -34,9 +34,9 @@ const Router = (
     <Route path="addevent" component={AddEventPage} />
     <Route path="modifycenter" exact component={ModifyCenterPage} />
     <Route path="centers" component={AllCenterPage} />
-    <Route path="center" component={CenterInfoPage} />
+    <Route path="center" component={CenterPage} />
     <Route path="users" component={AllUsersPage} />
-    <Route path="search" component={SearchPage} />
+    <Route path="search" component={SearchCenterPage} />
     <Route path="*" component={PageNotFound} />
   </Route>
 );
