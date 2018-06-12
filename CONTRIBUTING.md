@@ -8,7 +8,7 @@ Please raise a pull requests in order to enable reviews for changes you made.
 
 For your pull request to be merged it is important you adhere to the airbnb javascript style guide,
 
-the [eslintrc.json](https://github.com/Efosaok/Events-Manager/blob/chore/%23157195802/write-api-documentation/.eslintrc.json) file has been configured with the appropriate rules for this project so
+the [eslintrc.json](/.eslintrc.json) file has been configured with the appropriate rules for this project so
 
 do well to use the appropriate linter for your editor
 

@@ -113,6 +113,7 @@ $ npm run jest       //frontend tests
 ## [](#limitations)Limitations
 
 The limitation currently existing in the app are as defined below.
+
 **NB**: _contributions are welcome, please see the [contibuting.md]() file on how to contribute_
 
 -   Password reset: The application provides no means of resetting the password of an account.
@@ -122,7 +123,7 @@ The limitation currently existing in the app are as defined below.
 
 ## [](#how-to-contribute)How to Contribute
 
-Please see the [contributing.md]() file on instructions about how to contribute to this project.
+Please see the [contributing.md](/CONTRIBUTING.md) file on instructions about how to contribute to this project.
 
 ## [](#api-endpoints)API Endpoints
 
