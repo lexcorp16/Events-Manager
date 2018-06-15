@@ -1,24 +1,46 @@
 const webpack = require('webpack');
 const path = require('path');
-require('dotenv').config();
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
     'webpack-hot-middleware/client',
     path.join(__dirname, './client/index.js')
   ],
-  node: {
-    fs: 'empty',
-  },
   output: {
-    path: path.join(__dirname, 'client'),
+    path: path.join(__dirname, 'client/dist'),
     filename: 'client/bundle.js',
     publicPath: '/',
   },
+  devtool: 'source-map',
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin({
+      filename: 'client/style.css'
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './client/index.html')
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        screw_ie8: true,
+        conditionals: true,
+        unused: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        if_return: true,
+        join_vars: true
+      },
+      output: {
+        comments: false
+      }
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         API_KEY: JSON.stringify(process.env.API_KEY),
@@ -28,53 +50,57 @@ module.exports = {
         STORAGE_BUCKET: JSON.stringify(process.env.STORAGE_BUCKET),
         MESSAGING_SENDER_ID: JSON.stringify(process.env.MESSAGING_SENDER_ID),
         BASE_URL: JSON.stringify(process.env.BASE_URL),
+        NODE_ENV: JSON.stringify('production'),
       }
     }),
   ],
   module: {
-    loaders: [{
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
-    }, {
-      test: /\.(scss|css)$/,
-      loaders: ['style-loader', 'css-loader', 'sass-loader']
-    }, {
-      test: /\.(jpe?g|png|gif|svg|ico)$/i,
-      include: [
-        path.join(__dirname, 'client'),
-        path.join(__dirname, 'server/shared')
-      ],
-      use: [
-        {
-          loader: 'file-loader',
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: {
+          loader: 'babel-loader',
           options: {
-            name: '[name].[ext]',
-          },
+            presets: ['es2015', 'react', 'stage-0']
+          }
         },
-        {
-          loader: 'image-webpack-loader',
-          query: {
-            optipng: {
-              optimizationLevel: 7,
-            },
-            mozjpeg: {
-              progressive: true,
-            },
-            gifsicle: {
-              interlaced: false,
-            },
-            pngquant: {
-              quality: '75-90',
-              speed: 3,
-            },
-          },
-        },
-      ],
-    }]
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'sass-loader',
+              query: {
+                sourceMap: false
+              }
+            }
+          ]
+        }))
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpg|gif|woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'file-loader'
+          }
+        ]
+      }
+    ]
   },
   devServer: {
     contentBase: path.join(__dirname, 'client'),
-    historyApiFallback: true
-  }
+    historyApiFallback: true,
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };

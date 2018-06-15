@@ -23,7 +23,6 @@ module.exports = {
       address: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
       user: {
         type: Sequelize.UUID,
@@ -46,7 +45,6 @@ module.exports = {
       mobileNumber: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
       imageUrl: {
         type: Sequelize.STRING,

@@ -1,6 +1,12 @@
-import initialState from '../utils/eventInitialState';
-
-const reducer = (state = initialState(), action) => {
+import eventInitialState from '../utils/eventInitialState';
+/**
+ * event based reducers
+ * @param {object} state current state of app
+ * @param {object} action contatining type and data
+ * @returns {object} new state
+ *
+ */
+const eventReducer = (state = eventInitialState(), action) => {
   switch (action.type) {
     case 'ADD_EVENT': {
       return {
@@ -10,6 +16,7 @@ const reducer = (state = initialState(), action) => {
           adding: true,
           added: false,
           error: false,
+          creatingEvent: true
         }
       };
     }
@@ -17,11 +24,12 @@ const reducer = (state = initialState(), action) => {
     case 'ADD_EVENT_RESOLVED': {
       return {
         ...state,
-        state: {
+        status: {
           ...state.status,
           adding: false,
           added: true,
           error: false,
+          creatingEvent: false
         }
       };
     }
@@ -35,6 +43,7 @@ const reducer = (state = initialState(), action) => {
           adding: false,
           added: false,
           error: true,
+          creatingEvent: false
         }
       };
     }
@@ -44,9 +53,8 @@ const reducer = (state = initialState(), action) => {
         ...state,
         status: {
           ...state.status,
-          adding: true,
-          added: false,
-          error: false,
+          fetchingEvents: true,
+          error: false
         }
       };
     }
@@ -55,11 +63,11 @@ const reducer = (state = initialState(), action) => {
       return {
         ...state,
         events: action.payload,
-        state: {
+        status: {
           ...state.status,
-          adding: false,
-          added: true,
+          fetchingEvents: false,
           error: false,
+          added: false
         }
       };
     }
@@ -69,19 +77,8 @@ const reducer = (state = initialState(), action) => {
         ...state,
         status: {
           ...state.status,
-          adding: false,
-          added: false,
-          error: true,
-        }
-      };
-    }
-
-    case 'DELETING_EVENT': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          error: false,
+          fetchingEvents: false,
+          error: true
         }
       };
     }
@@ -92,7 +89,7 @@ const reducer = (state = initialState(), action) => {
         status: {
           ...state.status,
           error: false,
-          deleteEventPrompted: true,
+          deleteEventPrompted: true
         }
       };
     }
@@ -101,21 +98,38 @@ const reducer = (state = initialState(), action) => {
       return {
         ...state,
         events: {
-          userEvents: state.events.userEvents.filter(event => event.id !== action.eventId),
+          userEvents: state.events.userEvents.filter(event =>
+            event.id !== action.eventId)
         },
         status: {
           ...state.status,
           error: false,
           deleteEventPrompted: false,
-          eventIsDeleted: true,
+          eventIsDeleted: true
+        }
+      };
+    }
+
+    case 'DELETE_EVENT_REJECTED': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          error: true,
+          deleteEventPrompted: false,
+          eventIsDeleted: false
         }
       };
     }
 
     case 'MODIFY_EVENT_PROMPT': {
-      const newEventObject = state.events.userEvents.filter(event => event.id === action.eventId);
+      const newEventObject = state.events.userEvents.filter(event =>
+        event.id === action.eventId);
       localStorage.setItem('eventObject', JSON.stringify(newEventObject));
-      localStorage.setItem('allUserEvents', JSON.stringify(state.events.userEvents));
+      localStorage.setItem(
+        'allUserEvents',
+        JSON.stringify(state.events.userEvents)
+      );
       return {
         ...state,
         eventObject: newEventObject,
@@ -123,6 +137,19 @@ const reducer = (state = initialState(), action) => {
           ...state.status,
           error: false,
           modifyEventPrompted: true,
+          eventIsModified: false
+        }
+      };
+    }
+
+    case 'MODIFYING_EVENT': {
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          error: false,
+          modifyingEvent: true,
+          eventIsModified: false
         }
       };
     }
@@ -132,13 +159,13 @@ const reducer = (state = initialState(), action) => {
       localStorage.removeItem('allUserEvents');
       return {
         ...state,
-        eventObject: [],
         status: {
           ...state.status,
           error: false,
           modifyEventPrompted: false,
           eventIsDeleted: false,
           eventIsModified: true,
+          modifyingEvent: false
         }
       };
     }
@@ -146,15 +173,20 @@ const reducer = (state = initialState(), action) => {
     case 'MODIFY_EVENT_REJECTED': {
       return {
         ...state,
-        eventObject: [],
         errorMessage: action.payload.error,
         status: {
           ...state.status,
           error: true,
+          modifyingEvent: false
         }
       };
     }
 
+    case 'USER_LOGOUT': {
+      return {
+        ...eventInitialState()
+      };
+    }
     case 'CLEAR_ERROR': {
       return {
         ...state,
@@ -162,43 +194,7 @@ const reducer = (state = initialState(), action) => {
           ...state.status,
           adding: false,
           added: false,
-          error: false,
-        }
-      };
-    }
-
-    case 'CANCELLING_USER_EVENT': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          error: false,
-          cancellingEvent: true,
-          eventCancelled: false,
-        }
-      };
-    }
-
-    case 'CANCEL_USER_EVENT_ACCEPTED': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          error: false,
-          cancellingEvent: false,
-          eventCancelled: true,
-        }
-      };
-    }
-
-    case 'CANCEL_USER_EVENT_REJECTED': {
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          error: true,
-          cancellingEvent: false,
-          eventCancelled: false,
+          error: false
         }
       };
     }
@@ -209,4 +205,4 @@ const reducer = (state = initialState(), action) => {
   }
 };
 
-export default reducer;
+export default eventReducer;

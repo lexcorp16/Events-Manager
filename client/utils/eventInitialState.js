@@ -1,10 +1,13 @@
-const initialState = () => {
+const eventInitialState = () => {
   const state = {
     events: {
       userEvents: [],
       message: '',
     },
-    eventObject: [],
+    oneEventDetail: {
+      name: ''
+    },
+    eventObject: {},
     errorMessage: '',
     status: {
       adding: false,
@@ -16,8 +19,10 @@ const initialState = () => {
       eventIsModified: false,
       cancellingEvent: false,
       eventCancelled: false,
+      fetchingEvents: false,
     }
   };
+
   if (localStorage.getItem('eventObject')) {
     return {
       ...state,
@@ -35,4 +40,4 @@ const initialState = () => {
   return state;
 };
 
-export default initialState;
+export default eventInitialState;

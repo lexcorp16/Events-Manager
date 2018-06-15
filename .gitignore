@@ -5,4 +5,8 @@ server/db/migrations
 .nyc_output
 coverage
 dist
-npm-debug.log
+npm-debug.log.**
+bin
+reports
+.DS_Store
+bin

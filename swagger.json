@@ -1,0 +1,2640 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Events Manager Api",
+    "description": "A collection of endpoints for my events manager api"
+  },
+  "host": "events-manager-efosa.herokuapp.com",
+  "basePath": "/api/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "description": "Signup api endpoint",
+        "summary": "Signup",
+        "tags": [
+          "Authentication endpoints"
+        ],
+        "operationId": "UsersPost",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "firstname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "lastname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "confirmpassword",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Signup"
+            },
+            "examples": {
+              "application/json": {
+                "message": "You have successfully signed up",
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjIxOSwiZXhwIjoxNTI4MjkyMjE5fQ.Gqyl4B3yRT0uCfxHN1by4ixSLmHNP6YizywGWXuk2X8"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Signup1"
+            },
+            "examples": {
+              "application/json": {
+                "error": [
+                  "firstname field is required",
+                  "lastname field is required",
+                  "email field is required",
+                  "password field is required",
+                  "confirmpassword field is required"
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Signup2"
+            },
+            "examples": {
+              "application/json": {
+                "error": "Another user with this email already exists"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/users",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              "body": "firstname=Efosa&lastname=Okpugie&email=efosaokpugie@yahoo.com&password=swampious&confirmpassword=swampious"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "267",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 09:36:59 GMT",
+                "etag": "W/\"10b-4S1XdNjyN4PYNitzTe3MfJ69F3k\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"You have successfully signed up\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjIxOSwiZXhwIjoxNTI4MjkyMjE5fQ.Gqyl4B3yRT0uCfxHN1by4ixSLmHNP6YizywGWXuk2X8\"}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Signup",
+            "x-testDescription": "Signup api endpoint"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/users/signin": {
+      "post": {
+        "description": "Sign in api endpoint",
+        "summary": "User login",
+        "tags": [
+          "Authentication endpoints"
+        ],
+        "operationId": "UsersSigninPost",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            },
+            "examples": {
+              "application/json": {
+                "message": "You have successfully logged in",
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjcwMCwiZXhwIjoxNTI4MjkyNzAwfQ.k7Zt2kWLuX5pQW30MiVh5NBH9kaEgXitYvlMtTcEz9w"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/UserLogin4"
+            },
+            "examples": {
+              "application/json": {
+                "error": "Invalid email or password"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/users/signin",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              "body": "email=efosaokpugie@gmail.com&password=swampious"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "267",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 09:45:00 GMT",
+                "etag": "W/\"10b-jtMQEjNi/q+W5bKCU1vgHN+P4LU\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"You have successfully logged in\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjcwMCwiZXhwIjoxNTI4MjkyNzAwfQ.k7Zt2kWLuX5pQW30MiVh5NBH9kaEgXitYvlMtTcEz9w\"}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "User login",
+            "x-testDescription": "Sign in api endpoint"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/centers/<centerId>": {
+      "get": {
+        "description": "api endpoint to get a center.\nThis endpoint by default also fetches the event slated for a center, To turn this off, simply set the query parameter centeronly to true.\n\napi/v1/centers/<centerid>?centeronly=true",
+        "summary": "Get center",
+        "tags": [
+          "Center Related endpoints"
+        ],
+        "operationId": "CentersCenterIdGet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetCenter"
+            },
+            "examples": {}
+          }
+        },
+        "security": [],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
+      "put": {
+        "description": "for modifying a center",
+        "summary": "Edit Center",
+        "tags": [
+          "Center Related endpoints"
+        ],
+        "operationId": "CentersCenterIdPut",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EditCenter7"
+            },
+            "examples": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/EditCenter"
+            },
+            "examples": {
+              "application/json": {
+                "error": "You are not authorized to perform this action"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/centers": {
+      "get": {
+        "description": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query.",
+        "summary": "Get centers",
+        "tags": [
+          "Center Related endpoints"
+        ],
+        "operationId": "CentersGet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetCenters"
+            },
+            "examples": {
+              "application/json": {
+                "message": "Success",
+                "centers": [
+                  {
+                    "id": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+                    "name": "Rogaros",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-06-11T12:12:28.542Z"
+                  },
+                  {
+                    "id": "271b2312-5dca-40a9-b11d-cd6aae69f8e5",
+                    "name": "Old Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  },
+                  {
+                    "id": "dbaf958d-2d3e-4e2d-b28d-2cd898f535ed",
+                    "name": "Miscell Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fweddin1.jpg?alt=media&token=f7adba4a-b386-46fd-b19e-30c092bf38d3",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  },
+                  {
+                    "id": "9f22c6ac-e68c-47d0-89b3-14f049e4aee5",
+                    "name": "Greatest Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  },
+                  {
+                    "id": "ea278f44-a90f-44a4-921b-55709d73bfa3",
+                    "name": "Nicest Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  },
+                  {
+                    "id": "7ddd6bae-bedc-4ce5-b53e-e71cef0c19b7",
+                    "name": "Lovely Center",
+                    "type": "Multipurpose Hall",
+                    "address": "23, Andela street",
+                    "capacity": "30000000",
+                    "rentalCost": "230000",
+                    "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+                    "facilities": [
+                      "swimming-pool",
+                      "lounge"
+                    ],
+                    "mobileNumber": "08035271406",
+                    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+                    "isAvailable": true,
+                    "createdAt": "2018-08-20T00:00:00Z",
+                    "updatedAt": "2018-08-20T00:00:00Z"
+                  }
+                ],
+                "pages": 2,
+                "currentPage": 1
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "GET",
+              "uri": "/centers"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "3293",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Tue, 12 Jun 2018 12:08:53 GMT",
+                "etag": "W/\"cdd-Njrs/t+uElg9N2nJRHgb03GtZRE\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"Success\",\"centers\":[{\"id\":\"99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee\",\"name\":\"Rogaros\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-06-11T12:12:28.542Z\"},{\"id\":\"271b2312-5dca-40a9-b11d-cd6aae69f8e5\",\"name\":\"Old Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"},{\"id\":\"dbaf958d-2d3e-4e2d-b28d-2cd898f535ed\",\"name\":\"Miscell Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fweddin1.jpg?alt=media&token=f7adba4a-b386-46fd-b19e-30c092bf38d3\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"},{\"id\":\"9f22c6ac-e68c-47d0-89b3-14f049e4aee5\",\"name\":\"Greatest Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"},{\"id\":\"ea278f44-a90f-44a4-921b-55709d73bfa3\",\"name\":\"Nicest Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"},{\"id\":\"7ddd6bae-bedc-4ce5-b53e-e71cef0c19b7\",\"name\":\"Lovely Center\",\"type\":\"Multipurpose Hall\",\"address\":\"23, Andela street\",\"capacity\":\"30000000\",\"rentalCost\":\"230000\",\"user\":\"df7204e8-3402-437d-a6ff-88ce0bf4e3c8\",\"facilities\":[\"swimming-pool\",\"lounge\"],\"mobileNumber\":\"08035271406\",\"imageUrl\":\"https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd\",\"isAvailable\":true,\"createdAt\":\"2018-08-20T00:00:00Z\",\"updatedAt\":\"2018-08-20T00:00:00Z\"}],\"pages\":2,\"currentPage\":1}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Get centers",
+            "x-testDescription": "This endpoint fetches all centers\n\nThe page query indicates the page to be fetched, the default limit for a valid page is 6.\n\nThe offset query indicates the index of item to fetch from, default value is set to 0.\n\nThe limit query indicates how many centers to be fetched, default value is set ton 6.\n\nThe capacity, rentalCost, type and name queries makes it possible to search for centers using them as search queries, note that they cannot be combined, the first key would be used as the search query."
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
+      "post": {
+        "description": "",
+        "summary": "Create Center",
+        "tags": [
+          "Center Related endpoints"
+        ],
+        "operationId": "CentersPost",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "type",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "capacity",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "rentalCost",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "address",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "mobileNumber",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "facilities",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateCenter13"
+            },
+            "examples": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/CreateCenter"
+            },
+            "examples": {
+              "application/json": {
+                "error": [
+                  "name is required",
+                  "type is required",
+                  "capacity is required",
+                  "mobileNumber is required",
+                  "address is required",
+                  "rentalCost is required",
+                  "Please specify facilities"
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/CreateCenter15"
+            },
+            "examples": {
+              "application/json": {
+                "error": "this name has been taken, Please choose another name"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/events/": {
+      "post": {
+        "description": "api endpoint to add an event",
+        "summary": "Create Event",
+        "tags": [
+          "Event Related endpoints"
+        ],
+        "operationId": "EventsPost",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "type",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "center",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "startDate",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "endDate",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateEvent21"
+            },
+            "examples": {
+              "application/json": {
+                "message": "Event successfully added",
+                "newEvent": {
+                  "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+                  "name": "Eventful Party",
+                  "type": "birthday",
+                  "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+                  "date": "2018-08-22T00:00:00Z",
+                  "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+                  "updatedAt": "2018-06-02T10:12:05.131Z",
+                  "createdAt": "2018-06-02T10:12:05.131Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/CreateEvent"
+            },
+            "examples": {
+              "application/json": {
+                "error": "You have to login First"
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "schema": {
+              "$ref": "#/definitions/CreateEvent"
+            },
+            "examples": {
+              "application/json": {
+                "error": "The date chosen is past, please choose another date"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/CreateEvent"
+            },
+            "examples": {
+              "application/json": {
+                "error": "Another event is slated for the chosen center,Please choose another date or center"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/events/",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMjBjYzA1Zi0xMDgyLTQ2ZWYtYTYzOS05YTQwMmViNTcwNmEiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzk4Mjk2NSwiZXhwIjoxNTI4MDE4OTY1fQ.N0U6bBkgnxEOKPi01UXlzbY8CdGdOun1Pe5n6HDRWPE"
+              },
+              "body": "name=Eventful Party&type=birthday&center=5571a6ac-c1dd-4a9e-bae5-f3a417ec2d4a&startDate=2018-09-10&endDate=2018-09-15"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "343",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 10:12:05 GMT",
+                "etag": "W/\"157-/JQimtR0HH3eO9Kvuxb0725rcpA\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"Event successfully added\",\"newEvent\":{\"id\":\"b3541ea9-d908-4096-bf5d-445cdbcc5bbb\",\"name\":\"Eventful Party\",\"type\":\"birthday\",\"center\":\"25565a23-3c01-48e7-bbc8-17c41dfa003f\",\"date\":\"2018-08-22T00:00:00Z\",\"user\":\"c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0\",\"updatedAt\":\"2018-06-02T10:12:05.131Z\",\"createdAt\":\"2018-06-02T10:12:05.131Z\"}}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Create Event",
+            "x-testDescription": "api endpoint to add an event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/events/<eventId>": {
+      "put": {
+        "description": "api endpoint to modify an event",
+        "summary": "Edit Event",
+        "tags": [
+          "Event Related endpoints"
+        ],
+        "operationId": "EventsEventIdPut",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "startDate",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "endDate",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EditEvent24"
+            },
+            "examples": {
+              "application/json": {
+                "message": "successfully modified",
+                "modifiedEvent": {
+                  "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+                  "name": "Dope Event",
+                  "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+                  "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+                  "type": "birthday",
+                  "date": "2018-07-03T00:00:00Z",
+                  "createdAt": "2018-06-02T10:12:05.131Z",
+                  "updatedAt": "2018-06-02T10:14:20.969Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/EditEvent"
+            },
+            "examples": {
+              "application/json": {
+                "error": "Invalid id supplied"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "PUT",
+              "uri": "/events/<eventId>",
+              "headers": {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8"
+              },
+              "body": "name=Dope Event&startDate=2018-07-03&endDate=2018-07-05"
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "341",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 10:14:20 GMT",
+                "etag": "W/\"155-WUTnqQp1GT8iRgJCE5mRcI/UHio\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"successfully modified\",\"modifiedEvent\":{\"id\":\"b3541ea9-d908-4096-bf5d-445cdbcc5bbb\",\"name\":\"Dope Event\",\"center\":\"25565a23-3c01-48e7-bbc8-17c41dfa003f\",\"user\":\"c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0\",\"type\":\"birthday\",\"date\":\"2018-07-03T00:00:00Z\",\"createdAt\":\"2018-06-02T10:12:05.131Z\",\"updatedAt\":\"2018-06-02T10:14:20.969Z\"}}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Edit Event",
+            "x-testDescription": "api endpoint to modify an event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
+      "post": {
+        "description": "api endpoint to cancel user Event",
+        "summary": "Cancel user Event",
+        "tags": [
+          "Event Related endpoints"
+        ],
+        "operationId": "EventsEventIdPost",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CancelUserEvent"
+            },
+            "examples": {
+              "application/json": {
+                "message": "Event canceled and notification sent"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "POST",
+              "uri": "/events/<eventId>",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "50",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 12:30:07 GMT",
+                "etag": "W/\"32-w9pOkHp4F4/U86hYR7fwhH89/bI\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"Event canceled and notification sent\"}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Cancel user Event",
+            "x-testDescription": "api endpoint to cancel user Event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      },
+      "delete": {
+        "description": "api endpoint to delete an event",
+        "summary": "Delete Event",
+        "tags": [
+          "Event Related endpoints"
+        ],
+        "operationId": "EventsEventIdDelete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeleteEvent"
+            },
+            "examples": {
+              "application/json": {
+                "message": "Event successfully deleted"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/DeleteEvent27"
+            },
+            "examples": {
+              "application/json": {
+                "error": "event not found"
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "DELETE",
+              "uri": "/events/<eventId>",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMmY4NGUyNC05OTlkLTQ1YzktYWM3Zi1kM2I1YjVlMGRkZjAiLCJyb2xlIjoiU3VwZXJBZG1pbiIsImlhdCI6MTUyNzkzMjk2NiwiZXhwIjoxNTI4MjkyOTY2fQ.IAXR9pvKxDSR3Yc4u4-yu9JVJaQz3e8o43cbEUMATK8"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "RAW",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "access-control-allow-methods": "PUT, GET, POST, DELETE, OPTIONS",
+                "access-control-allow-origin": "*",
+                "connection": "keep-alive",
+                "content-length": "40",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Sat, 02 Jun 2018 11:50:29 GMT",
+                "etag": "W/\"28-72xE7j8ibm8aIx5oavVBM6IZV90\"",
+                "server": "Cowboy",
+                "vary": "Origin",
+                "via": "1.1 vegur",
+                "x-powered-by": "Express"
+              },
+              "body": "{\"message\":\"Event successfully deleted\"}"
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Delete Event",
+            "x-testDescription": "api endpoint to delete an event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/events/user": {
+      "get": {
+        "description": "api endpoint to get a users event",
+        "summary": "Get Users",
+        "tags": [
+          "SuperAdmin related endpoints"
+        ],
+        "operationId": "EventsUserGet2",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "GET",
+              "uri": "/events/user",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Get Users",
+            "x-testDescription": "api endpoint to get a users event"
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/users/<userId>": {
+      "put": {
+        "description": "api endpoint to make user become admin\n\nThis endpoint requires the authorization of a SuperAdmin.",
+        "summary": "Upgrade/Downgrade User",
+        "tags": [
+          "SuperAdmin related endpoints"
+        ],
+        "operationId": "UsersUserIdPut",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-unitTests": [
+          {
+            "request": {
+              "method": "PUT",
+              "uri": "/users/<userId>",
+              "headers": {
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmQ4YjFlZi0wYTA5LTRhNTEtODI4Mi1iN2MzYzk4MmE2NDkiLCJpYXQiOjE1MjQ2NTIxMzksImV4cCI6MTUyNTAxMjEzOX0.Qgf2UVw0C-esameQlpqO8lb91BE73V_zNBLp9-NtLKE"
+              }
+            },
+            "expectedResponse": {
+              "x-allowExtraHeaders": true,
+              "x-bodyMatchMode": "NONE",
+              "x-arrayOrderedMatching": false,
+              "x-arrayCheckCount": false,
+              "x-matchResponseSchema": true,
+              "headers": {}
+            },
+            "x-testShouldPass": true,
+            "x-testEnabled": true,
+            "x-testName": "Upgrade/Downgrade User",
+            "x-testDescription": "api endpoint to make user become admin\n\nThis endpoint requires the authorization of a SuperAdmin."
+          }
+        ],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Signup": {
+      "title": "Signup",
+      "example": {
+        "message": "You have successfully signed up",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjIxOSwiZXhwIjoxNTI4MjkyMjE5fQ.Gqyl4B3yRT0uCfxHN1by4ixSLmHNP6YizywGWXuk2X8"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "You have successfully signed up",
+          "type": "string"
+        },
+        "token": {
+          "description": "",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjIxOSwiZXhwIjoxNTI4MjkyMjE5fQ.Gqyl4B3yRT0uCfxHN1by4ixSLmHNP6YizywGWXuk2X8",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "token"
+      ]
+    },
+    "Signup1": {
+      "title": "Signup1",
+      "example": {
+        "error": [
+          "firstname field is required",
+          "lastname field is required",
+          "email field is required",
+          "password field is required",
+          "confirmpassword field is required"
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": [
+            "firstname field is required",
+            "lastname field is required",
+            "email field is required",
+            "password field is required",
+            "confirmpassword field is required"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "Signup2": {
+      "title": "Signup2",
+      "example": {
+        "error": "Another user with this email already exists"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "Another user with this email already exists",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "UserLogin": {
+      "title": "User login",
+      "example": {
+        "message": "You have successfully logged in",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjcwMCwiZXhwIjoxNTI4MjkyNzAwfQ.k7Zt2kWLuX5pQW30MiVh5NBH9kaEgXitYvlMtTcEz9w"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "You have successfully logged in",
+          "type": "string"
+        },
+        "token": {
+          "description": "",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTViY2M1MC1mMDY5LTQ0ZTgtOTY5MC0wZDBiNDJiNzkyMDIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTUyNzkzMjcwMCwiZXhwIjoxNTI4MjkyNzAwfQ.k7Zt2kWLuX5pQW30MiVh5NBH9kaEgXitYvlMtTcEz9w",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "token"
+      ]
+    },
+    "UserLogin4": {
+      "title": "User login4",
+      "example": {
+        "error": "Invalid email or password"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "Invalid email or password",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "UserLogin5": {
+      "title": "User login5",
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": [
+            "email field is required"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "EditCenter": {
+      "title": "Edit Center",
+      "example": {
+        "error": "You are not authorized to perform this action"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "You are not authorized to perform this action",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "EditCenter7": {
+      "title": "Edit Center7",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "You have successfully modified the center",
+          "type": "string"
+        },
+        "center": {
+          "$ref": "#/definitions/Center"
+        }
+      },
+      "required": [
+        "message",
+        "center"
+      ]
+    },
+    "Center": {
+      "title": "Center",
+      "example": {
+        "id": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "name": "Very Great center",
+        "type": "Multipurpose Hall",
+        "address": "1, Aminu, Mende",
+        "capacity": "23000",
+        "rentalCost": "23000000000",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "facilities": [
+          "swimming-pool",
+          "lounge"
+        ],
+        "mobileNumber": "08035272406",
+        "imageUrl": null,
+        "isAvailable": true,
+        "createdAt": "2018-06-02T10:06:21.918Z",
+        "updatedAt": "2018-06-02T11:57:25.216Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Very Great center",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "Multipurpose Hall",
+          "type": "string"
+        },
+        "address": {
+          "description": "",
+          "example": "1, Aminu, Mende",
+          "type": "string"
+        },
+        "capacity": {
+          "description": "",
+          "example": "23000",
+          "type": "string"
+        },
+        "rentalCost": {
+          "description": "",
+          "example": "23000000000",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "facilities": {
+          "description": "",
+          "example": [
+            "swimming-pool",
+            "lounge"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mobileNumber": {
+          "description": "",
+          "example": "08035272406",
+          "type": "string"
+        },
+        "imageUrl": {
+          "description": "",
+          "type": "string"
+        },
+        "isAvailable": {
+          "description": "",
+          "example": true,
+          "type": "boolean"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:06:21 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 11:57:25 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "address",
+        "capacity",
+        "rentalCost",
+        "user",
+        "facilities",
+        "mobileNumber",
+        "imageUrl",
+        "isAvailable",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "GetCenter": {
+      "title": "Get center",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Success",
+          "type": "string"
+        },
+        "aCenter": {
+          "$ref": "#/definitions/ACenter"
+        }
+      },
+      "required": [
+        "message",
+        "aCenter"
+      ]
+    },
+    "ACenter": {
+      "title": "ACenter",
+      "example": {
+        "id": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "name": "Amity",
+        "type": "Multipurpose Hall",
+        "address": "1, Aminu, Mende",
+        "capacity": "23000",
+        "rentalCost": "23000000000",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "facilities": [
+          "swimming-pool",
+          "lounge"
+        ],
+        "mobileNumber": "08035272406",
+        "imageUrl": null,
+        "isAvailable": true,
+        "createdAt": "2018-06-02T10:06:21.918Z",
+        "updatedAt": "2018-06-02T10:06:21.918Z",
+        "venueOfEvent": [
+          {
+            "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+            "name": "Eventful Party",
+            "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+            "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+            "type": "birthday",
+            "date": "2018-06-20T00:00:00Z",
+            "createdAt": "2018-06-02T10:09:44.635Z",
+            "updatedAt": "2018-06-02T10:09:44.635Z"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Amity",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "Multipurpose Hall",
+          "type": "string"
+        },
+        "address": {
+          "description": "",
+          "example": "1, Aminu, Mende",
+          "type": "string"
+        },
+        "capacity": {
+          "description": "",
+          "example": "23000",
+          "type": "string"
+        },
+        "rentalCost": {
+          "description": "",
+          "example": "23000000000",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "facilities": {
+          "description": "",
+          "example": [
+            "swimming-pool",
+            "lounge"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mobileNumber": {
+          "description": "",
+          "example": "08035272406",
+          "type": "string"
+        },
+        "imageUrl": {
+          "description": "",
+          "type": "string"
+        },
+        "isAvailable": {
+          "description": "",
+          "example": true,
+          "type": "boolean"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:06:21 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:06:21 AM",
+          "type": "string"
+        },
+        "venueOfEvent": {
+          "description": "",
+          "example": [
+            {
+              "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+              "name": "Eventful Party",
+              "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+              "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+              "type": "birthday",
+              "date": "2018-06-20T00:00:00Z",
+              "createdAt": "2018-06-02T10:09:44.635Z",
+              "updatedAt": "2018-06-02T10:09:44.635Z"
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VenueOfEvent"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "address",
+        "capacity",
+        "rentalCost",
+        "user",
+        "facilities",
+        "mobileNumber",
+        "imageUrl",
+        "isAvailable",
+        "createdAt",
+        "updatedAt",
+        "venueOfEvent"
+      ]
+    },
+    "VenueOfEvent": {
+      "title": "VenueOfEvent",
+      "example": {
+        "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+        "name": "Eventful Party",
+        "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "type": "birthday",
+        "date": "2018-06-20T00:00:00Z",
+        "createdAt": "2018-06-02T10:09:44.635Z",
+        "updatedAt": "2018-06-02T10:09:44.635Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Eventful Party",
+          "type": "string"
+        },
+        "center": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "birthday",
+          "type": "string"
+        },
+        "date": {
+          "description": "",
+          "example": "6/20/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:09:44 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:09:44 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "center",
+        "user",
+        "type",
+        "date",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CreateCenter": {
+      "title": "Create Center",
+      "example": {
+        "error": [
+          "name is required",
+          "type is required",
+          "capacity is required",
+          "mobileNumber is required",
+          "address is required",
+          "rentalCost is required",
+          "Please specify facilities"
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": [
+            "name is required",
+            "type is required",
+            "capacity is required",
+            "mobileNumber is required",
+            "address is required",
+            "rentalCost is required",
+            "Please specify facilities"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "CreateCenter13": {
+      "title": "Create Center13",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "You have successfully added a center",
+          "type": "string"
+        },
+        "center": {
+          "$ref": "#/definitions/Center"
+        }
+      },
+      "required": [
+        "message",
+        "center"
+      ]
+    },
+    "CreateCenter15": {
+      "title": "Create Center15",
+      "example": {
+        "error": "this name has been taken, Please choose another name"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "this name has been taken, Please choose another name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "GetCenters": {
+      "title": "Get centers",
+      "example": {
+        "message": "Success",
+        "centers": [
+          {
+            "id": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+            "name": "Rogaros",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-06-11T12:12:28.542Z"
+          },
+          {
+            "id": "271b2312-5dca-40a9-b11d-cd6aae69f8e5",
+            "name": "Old Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          },
+          {
+            "id": "dbaf958d-2d3e-4e2d-b28d-2cd898f535ed",
+            "name": "Miscell Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fweddin1.jpg?alt=media&token=f7adba4a-b386-46fd-b19e-30c092bf38d3",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          },
+          {
+            "id": "9f22c6ac-e68c-47d0-89b3-14f049e4aee5",
+            "name": "Greatest Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          },
+          {
+            "id": "ea278f44-a90f-44a4-921b-55709d73bfa3",
+            "name": "Nicest Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          },
+          {
+            "id": "7ddd6bae-bedc-4ce5-b53e-e71cef0c19b7",
+            "name": "Lovely Center",
+            "type": "Multipurpose Hall",
+            "address": "23, Andela street",
+            "capacity": "30000000",
+            "rentalCost": "230000",
+            "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+            "facilities": [
+              "swimming-pool",
+              "lounge"
+            ],
+            "mobileNumber": "08035271406",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+            "isAvailable": true,
+            "createdAt": "2018-08-20T00:00:00Z",
+            "updatedAt": "2018-08-20T00:00:00Z"
+          }
+        ],
+        "pages": 2,
+        "currentPage": 1
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Success",
+          "type": "string"
+        },
+        "centers": {
+          "description": "",
+          "example": [
+            {
+              "id": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+              "name": "Rogaros",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-06-11T12:12:28.542Z"
+            },
+            {
+              "id": "271b2312-5dca-40a9-b11d-cd6aae69f8e5",
+              "name": "Old Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            },
+            {
+              "id": "dbaf958d-2d3e-4e2d-b28d-2cd898f535ed",
+              "name": "Miscell Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fweddin1.jpg?alt=media&token=f7adba4a-b386-46fd-b19e-30c092bf38d3",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            },
+            {
+              "id": "9f22c6ac-e68c-47d0-89b3-14f049e4aee5",
+              "name": "Greatest Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            },
+            {
+              "id": "ea278f44-a90f-44a4-921b-55709d73bfa3",
+              "name": "Nicest Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            },
+            {
+              "id": "7ddd6bae-bedc-4ce5-b53e-e71cef0c19b7",
+              "name": "Lovely Center",
+              "type": "Multipurpose Hall",
+              "address": "23, Andela street",
+              "capacity": "30000000",
+              "rentalCost": "230000",
+              "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+              "facilities": [
+                "swimming-pool",
+                "lounge"
+              ],
+              "mobileNumber": "08035271406",
+              "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fwedding3.jpg?alt=media&token=068589c2-114f-42c6-97b0-bc386b8928dd",
+              "isAvailable": true,
+              "createdAt": "2018-08-20T00:00:00Z",
+              "updatedAt": "2018-08-20T00:00:00Z"
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Center17"
+          }
+        },
+        "pages": {
+          "description": "",
+          "example": 2,
+          "type": "integer",
+          "format": "int32"
+        },
+        "currentPage": {
+          "description": "",
+          "example": 1,
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "message",
+        "centers",
+        "pages",
+        "currentPage"
+      ]
+    },
+    "Center17": {
+      "title": "Center17",
+      "example": {
+        "id": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+        "name": "Rogaros",
+        "type": "Multipurpose Hall",
+        "address": "23, Andela street",
+        "capacity": "30000000",
+        "rentalCost": "230000",
+        "user": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+        "facilities": [
+          "swimming-pool",
+          "lounge"
+        ],
+        "mobileNumber": "08035271406",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+        "isAvailable": true,
+        "createdAt": "2018-08-20T00:00:00Z",
+        "updatedAt": "2018-06-11T12:12:28.542Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "99fbe51e-0ef4-4ff6-bc1b-e76ad0bd27ee",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Rogaros",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "Multipurpose Hall",
+          "type": "string"
+        },
+        "address": {
+          "description": "",
+          "example": "23, Andela street",
+          "type": "string"
+        },
+        "capacity": {
+          "description": "",
+          "example": "30000000",
+          "type": "string"
+        },
+        "rentalCost": {
+          "description": "",
+          "example": "230000",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "df7204e8-3402-437d-a6ff-88ce0bf4e3c8",
+          "type": "string"
+        },
+        "facilities": {
+          "description": "",
+          "example": [
+            "swimming-pool",
+            "lounge"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mobileNumber": {
+          "description": "",
+          "example": "08035271406",
+          "type": "string"
+        },
+        "imageUrl": {
+          "description": "",
+          "example": "https://firebasestorage.googleapis.com/v0/b/myapp-3df42.appspot.com/o/images%2Fdemoimage.jpg?alt=media&token=c5a8489f-ed1f-41b2-8d2f-1a71cb442804",
+          "type": "string"
+        },
+        "isAvailable": {
+          "description": "",
+          "example": true,
+          "type": "boolean"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "8/20/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/11/2018 12:12:28 PM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "address",
+        "capacity",
+        "rentalCost",
+        "user",
+        "facilities",
+        "mobileNumber",
+        "imageUrl",
+        "isAvailable",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CreateEvent": {
+      "title": "Create Event",
+      "example": {
+        "error": "You have to login First"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "The date chosen is past, please choose another date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "CreateEvent21": {
+      "title": "Create Event21",
+      "example": {
+        "message": "Event successfully added",
+        "newEvent": {
+          "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+          "name": "Eventful Party",
+          "type": "birthday",
+          "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "date": "2018-08-22T00:00:00Z",
+          "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "updatedAt": "2018-06-02T10:12:05.131Z",
+          "createdAt": "2018-06-02T10:12:05.131Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Event successfully added",
+          "type": "string"
+        },
+        "newEvent": {
+          "$ref": "#/definitions/NewEvent"
+        }
+      },
+      "required": [
+        "message",
+        "newEvent"
+      ]
+    },
+    "NewEvent": {
+      "title": "NewEvent",
+      "example": {
+        "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+        "name": "Eventful Party",
+        "type": "birthday",
+        "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "date": "2018-08-22T00:00:00Z",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "updatedAt": "2018-06-02T10:12:05.131Z",
+        "createdAt": "2018-06-02T10:12:05.131Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Eventful Party",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "birthday",
+          "type": "string"
+        },
+        "center": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "date": {
+          "description": "",
+          "example": "8/22/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:12:05 AM",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:12:05 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "center",
+        "date",
+        "user",
+        "updatedAt",
+        "createdAt"
+      ]
+    },
+    "EditEvent": {
+      "title": "Edit Event",
+      "example": {
+        "error": "Invalid id supplied"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "Invalid id supplied",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "EditEvent24": {
+      "title": "Edit Event24",
+      "example": {
+        "message": "successfully modified",
+        "modifiedEvent": {
+          "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+          "name": "Dope Event",
+          "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "birthday",
+          "date": "2018-07-03T00:00:00Z",
+          "createdAt": "2018-06-02T10:12:05.131Z",
+          "updatedAt": "2018-06-02T10:14:20.969Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "successfully modified",
+          "type": "string"
+        },
+        "modifiedEvent": {
+          "$ref": "#/definitions/ModifiedEvent"
+        }
+      },
+      "required": [
+        "message",
+        "modifiedEvent"
+      ]
+    },
+    "ModifiedEvent": {
+      "title": "ModifiedEvent",
+      "example": {
+        "id": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+        "name": "Dope Event",
+        "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "type": "birthday",
+        "date": "2018-07-03T00:00:00Z",
+        "createdAt": "2018-06-02T10:12:05.131Z",
+        "updatedAt": "2018-06-02T10:14:20.969Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "b3541ea9-d908-4096-bf5d-445cdbcc5bbb",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Dope Event",
+          "type": "string"
+        },
+        "center": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "birthday",
+          "type": "string"
+        },
+        "date": {
+          "description": "",
+          "example": "7/3/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:12:05 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:14:20 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "center",
+        "user",
+        "type",
+        "date",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DeleteEvent": {
+      "title": "Delete Event",
+      "example": {
+        "message": "Event successfully deleted"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Event successfully deleted",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message"
+      ]
+    },
+    "DeleteEvent27": {
+      "title": "Delete Event27",
+      "example": {
+        "error": "event not found"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "event not found",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "GetAUserEvents": {
+      "title": "Get a User Events",
+      "example": {
+        "message": "Success",
+        "userEvents": [
+          {
+            "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+            "name": "Eventful Party",
+            "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+            "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+            "type": "birthday",
+            "date": "2018-06-20T00:00:00Z",
+            "createdAt": "2018-06-02T10:09:44.635Z",
+            "updatedAt": "2018-06-02T10:09:44.635Z"
+          }
+        ],
+        "pages": 1,
+        "currentPage": 1
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Success",
+          "type": "string"
+        },
+        "userEvents": {
+          "description": "",
+          "example": [
+            {
+              "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+              "name": "Eventful Party",
+              "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+              "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+              "type": "birthday",
+              "date": "2018-06-20T00:00:00Z",
+              "createdAt": "2018-06-02T10:09:44.635Z",
+              "updatedAt": "2018-06-02T10:09:44.635Z"
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserEvent"
+          }
+        },
+        "pages": {
+          "description": "",
+          "example": 1,
+          "type": "integer",
+          "format": "int32"
+        },
+        "currentPage": {
+          "description": "",
+          "example": 1,
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "message",
+        "userEvents",
+        "pages",
+        "currentPage"
+      ]
+    },
+    "UserEvent": {
+      "title": "UserEvent",
+      "example": {
+        "id": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+        "name": "Eventful Party",
+        "center": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+        "user": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+        "type": "birthday",
+        "date": "2018-06-20T00:00:00Z",
+        "createdAt": "2018-06-02T10:09:44.635Z",
+        "updatedAt": "2018-06-02T10:09:44.635Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "example": "c0f97cd9-ac49-4d3f-a79b-cc338a9daca1",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "example": "Eventful Party",
+          "type": "string"
+        },
+        "center": {
+          "description": "",
+          "example": "25565a23-3c01-48e7-bbc8-17c41dfa003f",
+          "type": "string"
+        },
+        "user": {
+          "description": "",
+          "example": "c2f84e24-999d-45c9-ac7f-d3b5b5e0ddf0",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "example": "birthday",
+          "type": "string"
+        },
+        "date": {
+          "description": "",
+          "example": "6/20/2018 12:00:00 AM",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "",
+          "example": "6/2/2018 10:09:44 AM",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "",
+          "example": "6/2/2018 10:09:44 AM",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "center",
+        "user",
+        "type",
+        "date",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "GetAUserEvents30": {
+      "title": "Get a User Events30",
+      "example": {
+        "error": "No events found for this User"
+      },
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "",
+          "example": "No events found for this User",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "CancelUserEvent": {
+      "title": "Cancel user Event",
+      "example": {
+        "message": "Event canceled and notification sent"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "",
+          "example": "Event canceled and notification sent",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message"
+      ]
+    }
+  }
+}

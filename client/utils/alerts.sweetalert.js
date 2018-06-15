@@ -1,75 +1,50 @@
 import swal from 'sweetalert';
 
-const addEventPrompter = () =>
+export const actionRejectedPrompter = (errorMessage) => {
+  let errors = errorMessage;
+  if (Array.isArray(errorMessage)) {
+    errors = '';
+    errorMessage.forEach((error) => {
+      errors += `${error} \n`;
+    });
+  }
   swal({
-    text: 'Event has been added successfully',
-    icon: 'success',
-  });
-
-const deleteEventPrompter = () => {
-  swal({
-    text: 'Event has been deleted successfully',
-    icon: 'success',
-  });
-};
-
-const modifyEventPrompter = () => {
-  swal({
-    text: 'Event has been modified successfully',
-    icon: 'success',
-  });
-};
-
-const centerModifiedPrompter = () => {
-  swal({
-    text: 'Center has been modified successfully',
-    icon: 'success',
-  });
-};
-
-const modifyCenterRejectedPrompter = (errorMessage) => {
-  swal({
-    text: errorMessage,
-    icon: 'success',
-  });
-};
-
-const signinPrompter = () => {
-  swal({
-    text: 'Welcome, You have signed in successfully',
-    icon: 'success',
-  });
-};
-
-const signupPrompter = () => {
-  swal({
-    text: 'Welcome to Events-Manager',
-    icon: 'success',
-  });
-};
-
-const actionRejectedPrompter = (errorMessage) => {
-  swal({
-    text: errorMessage,
+    text: errors,
     icon: 'warning',
+    className: 'toast-prompt'
   });
+  return { type: 'ERROR_OCCURRED' };
 };
 
-const selectAnEventPrompter = () => {
+export const actionRejectedPrompterTimer = (errorMessage) => {
+  let errors = errorMessage;
+  if (Array.isArray(errorMessage)) {
+    errors = '';
+    errorMessage.forEach((error) => {
+      errors += `${error} \n`;
+    });
+  }
   swal({
-    text: 'select an event to modify',
+    text: errors,
+    buttons: false,
     icon: 'warning',
+    className: 'toast-prompt',
+    timer: 2000
+  });
+  return { type: 'SUCCESS_OCCURRED' };
+};
+
+export const toastPrompter = (text) => {
+  swal(text, {
+    buttons: false,
+    icon: 'success',
+    timer: 2000,
+    className: 'toast-prompt'
   });
 };
 
-export {
-  addEventPrompter,
-  deleteEventPrompter,
-  modifyEventPrompter,
-  centerModifiedPrompter,
+export default {
   actionRejectedPrompter,
-  signinPrompter,
-  signupPrompter,
-  selectAnEventPrompter,
-  modifyCenterRejectedPrompter,
+  toastPrompter,
+  actionRejectedPrompterTimer
 };

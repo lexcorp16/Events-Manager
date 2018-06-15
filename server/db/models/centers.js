@@ -18,7 +18,6 @@ export default (sequelize, DataTypes) => {
     address: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     capacity: {
       type: DataTypes.STRING,
@@ -45,7 +44,6 @@ export default (sequelize, DataTypes) => {
     mobileNumber: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     imageUrl: {
       type: DataTypes.STRING,
