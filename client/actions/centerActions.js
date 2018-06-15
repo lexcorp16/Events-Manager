@@ -118,6 +118,7 @@ const getRentalCostAndFacilities = costAndFacilities => (dispatch) => {
  * @returns {object} contains type and payload of data to work on
  */
 const getPrimaryCenterDetails = centerDetails => (dispatch) => {
+  console.log(centerDetails);
   dispatch({ type: 'ADD_PRIMARY_CENTER_DETAILS', payload: centerDetails });
 };
 

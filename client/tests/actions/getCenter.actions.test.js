@@ -9,11 +9,11 @@ import { getACenter, promptSeeCenter, clearErrors } from '../../actions/centerAc
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async user based actions', () => {
+describe('async center related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
-  describe('tests for async modify center action', () => {
+  describe('tests for get center action', () => {
     it('creates FETCHING_A_CENTER and FETCH_A_CENTER_RESOLVED upon succesful center fetch from api', async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();

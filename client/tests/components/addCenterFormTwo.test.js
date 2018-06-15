@@ -19,7 +19,7 @@ const props = {
 
 const wrapper = shallow(<AddCenterFormTwo{...props} />);
 
-describe('Create Component', () => {
+describe('Add center form two test suite', () => {
   it('should render self and sub components', () => {
     expect(wrapper.exists()).toBe(true);
   });

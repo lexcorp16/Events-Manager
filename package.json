@@ -11,7 +11,7 @@
     "test:dev": "export NODE_ENV=test&&sequelize db:migrate:undo:all&&sequelize db:migrate&&sequelize db:seed:all&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/index.js --compilers js:babel-core/register --timeout 25000 --exit",
     "seed:dev": "sequelize db:seed:all",
     "unseed:dev": "sequelize db:seed:undo:all",
-    "test": "sequelize db:migrate:undo:all&&sequelize db:migrate&&sequelize db:seed:all&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/index.js --compilers js:babel-core/register --timeout 25000 --exit",
+    "test": "npm run client:test && sequelize db:migrate:undo:all&&sequelize db:migrate&&sequelize db:seed:all&&nyc --reporter=html --reporter=text --reporter=lcov mocha ./server/test/index.js --compilers js:babel-core/register --timeout 25000 --exit",
     "start:dev": "export NODE_ENV=development&&nodemon ./server/app --exec babel-node ./server/app",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./server/ -d ./dist ./client/ -d ./dist",
@@ -20,7 +20,7 @@
     "start:local:prod": "export NODE_ENV=production&&npm run build && node ./dist/app.js",
     "start:react": "nodemon ./client/server.js --exec babel-node ./client/server.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.prod.js",
-    "jest": "jest client/tests --coverage --collectCoverageFrom=client/**/*.{js,jsx} && codecov --token=:8398bf5e-446e-4ebb-8b96-17e13bf5dc46 --runInBand -i",
+    "client:test": "jest client/tests && codecov --token=8398bf5e-446e-4ebb-8b96-17e13bf5dc46",
     "e2e": "export NODE_ENV=test&&sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && nightwatch"
   },
   "repository": {
@@ -152,7 +152,7 @@
       "\\.(css|less|scss)$": "<rootDir>/assetsTransformer.js"
     },
     "setupFiles": [
-      "<rootDir>/setup.js",
+      "<rootDir>/client/tests/__mocks__/setup.js",
       "jest-localstorage-mock"
     ],
     "testMatch": [
@@ -165,6 +165,12 @@
     "testPathIgnorePatterns": [
       "<rootDir>/client/tests/__mocks__/",
       "<rootDir>/client/dist/"
+    ],
+    "collectCoverageFrom": [
+      "client/**/*.{js,jsx}",
+      "!<rootDir>/client/index.js",
+      "!<rootDir>/client/route.js",
+      "!<rootDir>/client/store.js"
     ],
     "globals": {
       "Materialize": true

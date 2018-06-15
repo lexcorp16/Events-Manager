@@ -48,7 +48,7 @@ const PaginationLinks = props => (
         {props.currentPage !== props.totalPages && (
           <li className="page-item">
             <button
-              className="page-link"
+              className="page-link next"
               style={{ cursor: 'pointer' }}
               id={props.currentPage + 1}
               onClick={props.fetchPage}

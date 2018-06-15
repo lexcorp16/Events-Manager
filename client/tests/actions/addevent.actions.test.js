@@ -9,11 +9,11 @@ import { addEvent } from '../../actions/eventActions';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async event based actions', () => {
+describe('async event related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
-  describe('tests for async add center action', () => {
+  describe('tests for async add event action', () => {
     it('creates ADD_EVENT and ADD_EVENT_RESOLVED upon succesful event creation', async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();

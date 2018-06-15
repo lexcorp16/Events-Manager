@@ -11,7 +11,7 @@ const mockStore = configureMockStore(middlewares);
 
 global.window = {};
 
-describe('async center based actions', () => {
+describe('async center related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 

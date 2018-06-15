@@ -24,7 +24,7 @@ const props = {
 
 const wrapper = shallow(<EventDetails {...props} />);
 
-describe('unauthenticated HOC', () => {
+describe('EventDetails testsuite', () => {
   it('mounts eventdetails component', () => {
     expect(wrapper.exists()).toBe(true);
   });

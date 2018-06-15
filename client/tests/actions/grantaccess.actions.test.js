@@ -13,7 +13,7 @@ describe('async user based actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
-  describe('tests for async fetching alol users', () => {
+  describe('tests for fetching users', () => {
     it('creates FETCHING_ALL_USERS and FETCH_ALL_USERS_RESOLVED upon fetchig users', async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();

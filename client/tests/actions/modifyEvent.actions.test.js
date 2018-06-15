@@ -13,7 +13,7 @@ describe('async event based actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
-  describe('tests for async modify event action', () => {
+  describe('tests for modify event action', () => {
     it('creates MODIFYING_EVENT and MODIFY_EVENT_RESOLVED upon succesful event creation', async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();

@@ -9,7 +9,7 @@ import { modificationPrompt, modifyCenter } from '../../actions/centerActions';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async user based actions', () => {
+describe('async center related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 

@@ -6,7 +6,7 @@ import { EmptyEventList, EmptyCenterList } from '../../components/utils/emptyCom
 const wrapper = shallow(<EmptyEventList />);
 const secondWrapper = shallow(<EmptyCenterList />);
 
-describe('Create Component', () => {
+describe('Empty Components test-suite', () => {
   it('should render self and sub components', () => {
     expect(wrapper.exists()).toBe(true);
   });

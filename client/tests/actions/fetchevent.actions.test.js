@@ -9,11 +9,11 @@ import { fetchEvents } from '../../actions/eventActions';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async event based actions', () => {
+describe('async event related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
-  describe('tests for async fetch events action', () => {
+  describe('tests for fetch events action', () => {
     it('creates FETCH_EVENTS and FETCH_EVENTS_RESOLVED upon succesful event data fetch', async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();

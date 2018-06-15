@@ -1,6 +1,6 @@
 import swal from 'sweetalert';
 
-const actionRejectedPrompter = (errorMessage) => {
+export const actionRejectedPrompter = (errorMessage) => {
   let errors = errorMessage;
   if (Array.isArray(errorMessage)) {
     errors = '';
@@ -11,11 +11,12 @@ const actionRejectedPrompter = (errorMessage) => {
   swal({
     text: errors,
     icon: 'warning',
-    className: 'toast-prompt',
+    className: 'toast-prompt'
   });
+  return { type: 'ERROR_OCCURRED' };
 };
 
-const actionRejectedPrompterTimer = (errorMessage) => {
+export const actionRejectedPrompterTimer = (errorMessage) => {
   let errors = errorMessage;
   if (Array.isArray(errorMessage)) {
     errors = '';
@@ -28,11 +29,12 @@ const actionRejectedPrompterTimer = (errorMessage) => {
     buttons: false,
     icon: 'warning',
     className: 'toast-prompt',
-    timer: 2000,
+    timer: 2000
   });
+  return { type: 'SUCCESS_OCCURRED' };
 };
 
-const toastPrompter = (text) => {
+export const toastPrompter = (text) => {
   swal(text, {
     buttons: false,
     icon: 'success',
@@ -41,7 +43,7 @@ const toastPrompter = (text) => {
   });
 };
 
-export {
+export default {
   actionRejectedPrompter,
   toastPrompter,
   actionRejectedPrompterTimer

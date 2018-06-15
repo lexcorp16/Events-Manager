@@ -9,11 +9,11 @@ import { deleteEvent, promptDelete } from '../../actions/eventActions';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async event based actions', () => {
+describe('async event related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
-  describe('tests for async add center action', () => {
+  describe('tests for delete event action', () => {
     it('creates DELETING_EVENT and DELETING_EVENT_RESOLVED upon succesful event deletion', async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();

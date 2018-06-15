@@ -13,7 +13,7 @@ const ModifyEventWrapper = WrappedComponent =>
     }
   );
 
-export default ModifyEventPage;
+export default ModifyEventWrapper;
 
 const propTypes = {
   event: PropTypes.shape({

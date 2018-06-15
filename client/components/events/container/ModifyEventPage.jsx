@@ -45,9 +45,9 @@ export class ModifyEventPage extends Component {
    */
   componentDidMount() {
     if (localStorage.getItem('eventObject')) {
-      this.props.dispatch(promptModify(this.props.event.eventObject[0].id));
+      this.props.promptModify(this.props.event.eventObject[0].id);
     }
-    this.props.dispatch(getAllCenters({ limit: 100 }));
+    this.props.getAllCenters({ limit: 100 });
   }
   /**
    *
@@ -93,14 +93,14 @@ export class ModifyEventPage extends Component {
     event.preventDefault();
     const validationErrors = isValidModificationDetails(this.state);
     if (Array.isArray(validationErrors)) {
-      return actionRejectedPrompter(validationErrors);
+      return this.props.actionRejectedPrompter(validationErrors);
     }
-    this.props.dispatch(modifyEvent(
+    this.props.modifyEvent(
       {
         ...this.state
       },
       this.props.event.eventObject[0].id
-    ));
+    );
   }
   /**
    *
@@ -219,10 +219,6 @@ export class ModifyEventPage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch: actionObject => dispatch(actionObject)
-});
-
 const mapStateToProps = state => ({
   event: state.eventReducer,
   center: state.centerReducer,
@@ -231,7 +227,12 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    getAllCenters,
+    modifyEvent,
+    actionRejectedPrompter,
+    promptModify,
+  }
 )(ModifyEventWrapper(ModifyEventPage));
 
 const propTypes = {
@@ -252,7 +253,10 @@ const propTypes = {
     status: PropTypes.objectOf(PropTypes.bool),
     eventObject: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
   }).isRequired,
-  dispatch: PropTypes.func.isRequired
+  getAllCenters: PropTypes.func.isRequired,
+  modifyEvent: PropTypes.func.isRequired,
+  actionRejectedPrompter: PropTypes.func.isRequired,
+  promptModify: PropTypes.func.isRequired,
 };
 
 ModifyEventPage.propTypes = propTypes;

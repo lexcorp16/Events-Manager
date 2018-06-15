@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import isAdmin from '../../../helpers/isAdmin';
 import { userSignup, clearError } from '../../../actions/userActions';
@@ -67,9 +67,7 @@ export class SignupPage extends Component {
    * @returns {object} state after action dispatched
    */
   componentWillUnmount() {
-    if (this.props.user.status.error) {
-      this.props.dispatch(clearError());
-    }
+    this.props.clearError();
   }
   /**
    *
@@ -92,11 +90,11 @@ export class SignupPage extends Component {
     event.preventDefault();
     const validationErrors = isValidDetails(this.state);
     if (Array.isArray(validationErrors)) {
-      return actionRejectedPrompter(validationErrors);
+      return this.props.actionRejectedPrompter(validationErrors);
     }
-    this.props.dispatch(userSignup({
+    this.props.userSignup({
       ...this.state
-    }));
+    });
   }
   /**
    *
@@ -182,7 +180,7 @@ export class SignupPage extends Component {
                         marginBottom: '10px'
                       }}
                     >
-                      <Link to="/signin">here</Link>
+                      <a to="/signin">here</a>
                     </span>
                   </p>
                 </div>
@@ -195,17 +193,17 @@ export class SignupPage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch: actionObject => dispatch(actionObject)
-});
-
 const mapStateToProps = state => ({
   user: state.userReducer
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    actionRejectedPrompter,
+    userSignup,
+    clearError,
+  }
 )(SignupPage);
 
 const propTypes = {
@@ -214,7 +212,9 @@ const propTypes = {
     unauthenticatedErrorMessage: PropTypes.string,
     errorMessage: PropTypes.string
   }).isRequired,
-  dispatch: PropTypes.func.isRequired
+  clearError: PropTypes.func.isRequired,
+  actionRejectedPrompter: PropTypes.func.isRequired,
+  userSignup: PropTypes.func.isRequired,
 };
 
 SignupPage.propTypes = propTypes;

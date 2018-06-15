@@ -9,7 +9,7 @@ import { userLogin, userSignup, logOut } from '../../actions/userActions';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async center based actions', () => {
+describe('async authentication related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 

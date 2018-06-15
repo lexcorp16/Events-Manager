@@ -41,7 +41,7 @@ export class AddEventPage extends Component {
    * @returns {object} state of the app
    */
   componentDidMount() {
-    this.props.dispatch(getAllCenters({ limit: 100 }));
+    this.props.getAllCenters({ limit: 100 });
   }
   /**
    *
@@ -76,11 +76,11 @@ export class AddEventPage extends Component {
     event.preventDefault();
     const validationErrors = isValidAddEventdetails(this.state);
     if (Array.isArray(validationErrors)) {
-      return actionRejectedPrompter(validationErrors);
+      return this.props.actionRejectedPrompter(validationErrors);
     }
-    this.props.dispatch(addEvent({
+    this.props.addEvent({
       ...this.state
-    }));
+    });
   }
 
   /**
@@ -120,7 +120,7 @@ export class AddEventPage extends Component {
                 />
                 <label htmlFor="type-of-event">Type of event</label>
                 <select
-                  className="form-control"
+                  className="form-control type"
                   name="type"
                   onChange={this.getEventDetails}
                 >
@@ -139,7 +139,7 @@ export class AddEventPage extends Component {
                     type="date"
                     id="date"
                     name="startDate"
-                    className="form-control"
+                    className="form-control startDate"
                     onChange={this.getEventDetails}
                   />
                 </div>
@@ -149,13 +149,13 @@ export class AddEventPage extends Component {
                     type="date"
                     id="date"
                     name="endDate"
-                    className="form-control"
+                    className="form-control endDate"
                     onChange={this.getEventDetails}
                   />
                 </div>
                 <label htmlFor="preferred-center">Preferred center</label>
                 <select
-                  className="form-control"
+                  className="form-control center"
                   onChange={this.getEventDetails}
                   name="center"
                 >
@@ -190,9 +190,6 @@ export class AddEventPage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch: actionObject => dispatch(actionObject)
-});
 
 const mapStateToProps = state => ({
   event: state.eventReducer,
@@ -202,7 +199,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    getAllCenters,
+    addEvent,
+    actionRejectedPrompter,
+  }
 )(AuthPages(AddEventPage));
 
 const propTypes = {
@@ -222,7 +223,9 @@ const propTypes = {
   event: PropTypes.shape({
     status: PropTypes.objectOf(PropTypes.bool)
   }).isRequired,
-  dispatch: PropTypes.func.isRequired
+  addEvent: PropTypes.func.isRequired,
+  getAllCenters: PropTypes.func.isRequired,
+  actionRejectedPrompter: PropTypes.func.isRequired,
 };
 
 AddEventPage.propTypes = propTypes;

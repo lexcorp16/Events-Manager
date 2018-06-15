@@ -25,7 +25,7 @@ const props = {
 };
 const firstWrapper = shallow(<OneCenterPage {...props} />);
 
-describe('unauthenticated HOC', () => {
+describe('oneCenter page component test-suite', () => {
   it('mounts centercard component', () => {
     expect(firstWrapper.exists()).toBe(true);
   });
