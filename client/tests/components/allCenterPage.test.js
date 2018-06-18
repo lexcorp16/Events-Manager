@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import { AllCenterPage } from '../../components/centers/container/AllCenterPage';
+import { AllCenterPage }
+  from '../../components/centers/container/AllCenterPage';
 
 const props = {
   center: {
@@ -27,7 +28,7 @@ const props = {
 
 const wrapper = shallow(<AllCenterPage {...props} />);
 
-describe('Create Component', () => {
+describe('all Center Page test suite', () => {
   it('should render self and sub components', () => {
     expect(wrapper.exists()).toBe(true);
   });

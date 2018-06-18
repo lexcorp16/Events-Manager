@@ -4,10 +4,10 @@ import firebase from 'firebase-mock';
 
 import 'hammerjs';
 
-const $ = require('jquery');
 global.placeholderImage = 'lkjhgvjbnkmlknjbh';
 global.firebase = firebase;
-global.$ = $;
-$.prototype.modal = () => {};
+global.isAuthenticated = () => {
+  return true;
+};
 
 configure({ adapter: new Adapter() });

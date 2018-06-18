@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const PaginationLinks = props => (
-  <div className="pagination-links d-flex justify-content-center pagination-navs">
+  <div className="pagination-links d-flex
+    justify-content-center pagination-navs"
+  >
     <nav aria-label="...">
       <ul className="pagination">
         {props.currentPage === 1 && (
@@ -48,7 +50,7 @@ const PaginationLinks = props => (
         {props.currentPage !== props.totalPages && (
           <li className="page-item">
             <button
-              className="page-link"
+              className="page-link next"
               style={{ cursor: 'pointer' }}
               id={props.currentPage + 1}
               onClick={props.fetchPage}

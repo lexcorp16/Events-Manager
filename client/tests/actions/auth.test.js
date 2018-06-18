@@ -9,7 +9,7 @@ import { userLogin, userSignup, logOut } from '../../actions/userActions';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async center based actions', () => {
+describe('async authentication related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
@@ -70,7 +70,8 @@ describe('async center based actions', () => {
   });
 
   describe('tests for async user sign up', () => {
-    it('creates CREATE_USER and CREATE_USER_RESOLVED upon creating a User', async (done) => {
+    it(`creates CREATE_USER and CREATE_USER_RESOLVED
+    upon creating a User`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({

@@ -9,33 +9,37 @@ import { addEvent } from '../../actions/eventActions';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async event based actions', () => {
+describe('async event related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
-  describe('tests for async add center action', () => {
-    it('creates ADD_EVENT and ADD_EVENT_RESOLVED upon succesful event creation', async (done) => {
+  describe('tests for async add event action', () => {
+    it(`creates ADD_EVENT and ADD_EVENT_RESOLVED
+    upon succesful event creation`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
           status: 201,
-          response: { ...eventMockData.oneEvent, message: 'you have successfully added an event' }
+          response: {
+            ...eventMockData.oneEvent,
+            message: 'you have successfully added an event'
+          }
         });
       });
       const returnedActions = [
         {
-          type: 'ADD_EVENT',
+          type: 'ADD_EVENT'
         },
         {
           type: 'ADD_EVENT_RESOLVED',
           payload: {
             message: 'you have successfully added an event',
-            ...eventMockData.oneEvent,
+            ...eventMockData.oneEvent
           }
-        },
+        }
       ];
       const eventDetails = {
-        ...eventMockData.oneEvent,
+        ...eventMockData.oneEvent
       };
       const store = mockStore({});
       await store.dispatch(addEvent(eventDetails));
@@ -43,7 +47,8 @@ describe('async event based actions', () => {
       done();
     });
 
-    it('creates ADD_EVENT and ADD_EVENT_REJECTED upon unsuccesful event creation', async (done) => {
+    it(`creates ADD_EVENT and ADD_EVENT_REJECTED
+    upon unsuccesful event creation`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -53,17 +58,17 @@ describe('async event based actions', () => {
       });
       const returnedActions = [
         {
-          type: 'ADD_EVENT',
+          type: 'ADD_EVENT'
         },
         {
           type: 'ADD_EVENT_REJECTED',
           payload: {
-            ...eventMockData.genericErrorResponse,
+            ...eventMockData.genericErrorResponse
           }
-        },
+        }
       ];
       const eventDetails = {
-        ...eventMockData.oneEvent,
+        ...eventMockData.oneEvent
       };
       const store = mockStore({});
       await store.dispatch(addEvent(eventDetails));

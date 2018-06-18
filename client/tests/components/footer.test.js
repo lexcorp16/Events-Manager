@@ -10,8 +10,8 @@ const props = {
 };
 const wrapper = shallow(<Footer {...props} />);
 
-describe('unauthenticated HOC', () => {
-  it('mounts centercard component', () => {
+describe('Footer test-suite', () => {
+  it('mounts Footer component', () => {
     expect(wrapper.exists()).toBe(true);
   });
 });

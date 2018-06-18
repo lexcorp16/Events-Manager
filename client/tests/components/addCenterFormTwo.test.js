@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import { AddCenterFormTwo } from '../../components/centers/container/AddCenterFormTwo';
+import { AddCenterFormTwo }
+  from '../../components/centers/container/AddCenterFormTwo';
 
 const props = {
   center: {
@@ -19,7 +20,7 @@ const props = {
 
 const wrapper = shallow(<AddCenterFormTwo{...props} />);
 
-describe('Create Component', () => {
+describe('Add center form two test suite', () => {
   it('should render self and sub components', () => {
     expect(wrapper.exists()).toBe(true);
   });

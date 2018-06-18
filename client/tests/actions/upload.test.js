@@ -7,8 +7,8 @@ import { imageChangePrompt } from '../../actions/centerActions';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('upload image based actions', () => {
-  describe('tests for async center image upload actions', () => {
+describe('upload image related actions', () => {
+  describe('tests for center image upload actions', () => {
     it('creates IMAGE_CHANGE_PROMPT on image upload prompt ', async (done) => {
       const returnedActions = [
         {

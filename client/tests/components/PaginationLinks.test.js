@@ -10,7 +10,7 @@ const props = {
 };
 const firstWrapper = shallow(<PaginationLinks {...props} />);
 
-describe('unauthenticated HOC', () => {
+describe('Pagination links test-suites', () => {
   it('mounts centercard component', () => {
     expect(firstWrapper.exists()).toBe(true);
   });

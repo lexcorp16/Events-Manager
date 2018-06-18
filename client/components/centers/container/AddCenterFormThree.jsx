@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import {
   uploadImageAndGetUrl,
-  addCenter, pauseUpload,
+  addCenter,
+  pauseUpload,
   resumeUpload,
   cancelUpload,
   clearErrors
@@ -69,7 +70,7 @@ export class AddCenterFormThree extends Component {
  * @returns {object} state after component is dispatched
  */
   componentWillUnmount() {
-    this.props.dispatch(clearErrors);
+    this.props.clearErrors();
   }
   /**
    *
@@ -94,9 +95,9 @@ export class AddCenterFormThree extends Component {
     if (!this.state.imageFile) {
       return actionRejectedPrompterTimer(prompterMessage);
     }
-    this.props.dispatch(uploadImageAndGetUrl({
+    this.props.uploadImageAndGetUrl({
       ...this.state,
-    }));
+    });
   }
   /**
    *
@@ -106,9 +107,9 @@ export class AddCenterFormThree extends Component {
    * @returns {object} state after pausing image upload
    */
   pauseImageUpload() {
-    this.props.dispatch(pauseUpload({
+    this.props.pauseUpload({
       ...this.props.center.imageUpload,
-    }));
+    });
   }
   /**
  *
@@ -117,9 +118,9 @@ export class AddCenterFormThree extends Component {
  * @returns {object} state after resuming image upload
  */
   resumeImageUpload() {
-    this.props.dispatch(resumeUpload({
+    this.props.resumeUpload({
       ...this.props.center.imageUpload,
-    }));
+    });
   }
   /**
  *
@@ -130,9 +131,9 @@ export class AddCenterFormThree extends Component {
  */
   cancelImageUpload(event) {
     event.preventDefault();
-    this.props.dispatch(cancelUpload({
+    this.props.cancelUpload({
       ...this.props.center.imageUpload,
-    }));
+    });
   }
   /**
  *
@@ -144,11 +145,11 @@ export class AddCenterFormThree extends Component {
   addCenter(event) {
     event.preventDefault();
     const { imageUrl } = this.props.center.imageUpload;
-    this.props.dispatch(addCenter({
+    this.props.addCenter({
       ...this.props.center.primaryCenterDetails,
       ...this.props.center.rentalCostAndFacilities,
       imageUrl,
-    }));
+    });
   }
   /**
  *
@@ -230,6 +231,7 @@ export class AddCenterFormThree extends Component {
                      type="file"
                      name="imageFile"
                      id="imageFile"
+                     className="imageFile"
                      onChange={this.getImageFile}
                      style={{ color: 'white', border: 'white', width: '100%' }}
                    />
@@ -263,14 +265,14 @@ export class AddCenterFormThree extends Component {
                   </div>}
                 </div>}
               <div className="btn-back-section">
-                <Link to="/addcentertwo">
+                <a href="/addcentertwo">
                   <button className="btn">
                     <i
                       className="fa fa-chevron-left"
                       style={{ fontSize: `${1.7}em`, color: '#F50057' }}
                     />
                   </button>
-                </Link>
+                </a>
               </div>
             </form>
           </div>
@@ -279,12 +281,6 @@ export class AddCenterFormThree extends Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch =>
-  ({
-    dispatch: (actionObject => dispatch(actionObject))
-  })
-);
 
 const mapStateToProps = (state =>
   ({
@@ -295,10 +291,23 @@ const mapStateToProps = (state =>
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    uploadImageAndGetUrl,
+    addCenter,
+    pauseUpload,
+    resumeUpload,
+    cancelUpload,
+    clearErrors
+  }
 )(AuthPages(AddCenterFormThree));
 
 const propTypes = {
+  cancelUpload: PropTypes.func.isRequired,
+  resumeUpload: PropTypes.func.isRequired,
+  uploadImageAndGetUrl: PropTypes.func.isRequired,
+  addCenter: PropTypes.func.isRequired,
+  pauseUpload: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   center: PropTypes.shape({
     status: PropTypes.objectOf(PropTypes.bool),
     imageUpload: PropTypes.shape({
@@ -311,7 +320,6 @@ const propTypes = {
       rentalCost: PropTypes.string,
     })
   }).isRequired,
-  dispatch: PropTypes.func.isRequired,
 };
 
 AddCenterFormThree.propTypes = propTypes;

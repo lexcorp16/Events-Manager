@@ -22,6 +22,7 @@ const eventInitialState = () => {
       fetchingEvents: false,
     }
   };
+
   if (localStorage.getItem('eventObject')) {
     return {
       ...state,

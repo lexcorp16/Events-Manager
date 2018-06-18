@@ -9,12 +9,13 @@ import { cancelUserEvent, clearError } from '../../actions/eventActions';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async event based actions', () => {
+describe('async event related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
-  describe('tests for async cancel event action', () => {
-    it('creates CANCELLING_USER_EVENT and CANCEL_USER_EVENT_RESOLVED upon succesful event cancellation', async (done) => {
+  describe('tests for cancel event action', () => {
+    it(`creates CANCELLING_USER_EVENT and CANCEL_USER_EVENT_RESOLVED
+    upon succesful event cancellation`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -40,7 +41,8 @@ describe('async event based actions', () => {
       done();
     });
 
-    it('creates CANCELLING_USER_EVENT and CANCEL_USER_EVENT_REJECTED upon unsuccesful event cancellation', async (done) => {
+    it(`creates CANCELLING_USER_EVENT and CANCEL_USER_EVENT_REJECTED
+    upon unsuccesful event cancellation`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
