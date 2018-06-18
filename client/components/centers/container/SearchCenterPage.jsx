@@ -57,7 +57,7 @@ export class SearchCenterPage extends Component {
   promptModifyCenter(event) {
     event.preventDefault();
     const { id } = event.target;
-    this.props.dispatch(modificationPrompt(id));
+    this.props.modificationPrompt(id);
     browserHistory.push('/modifycenter');
   }
   /**
@@ -70,10 +70,10 @@ export class SearchCenterPage extends Component {
   fetchMoreCenters(event) {
     const { id } = event.target;
     const { searchQueryValue, searchQueryType } = this.state;
-    this.props.dispatch(getAllCenters({
+    this.props.getAllCenters({
       [searchQueryType]: searchQueryValue,
       page: id
-    }));
+    });
   }
   /**
  *
@@ -84,15 +84,14 @@ export class SearchCenterPage extends Component {
  */
   search(event) {
     event.preventDefault();
-    const { dispatch } = this.props;
     const { searchQueryValue, searchQueryType } = this.state;
     if (searchQueryValue === '') {
-      return actionRejectedPrompter('search field cannot be empty');
+      return this.props.actionRejectedPrompter('search field cannot be empty');
     }
     if (searchQueryType === '') {
-      return actionRejectedPrompter('Please select the type of search');
+      return this.props.actionRejectedPrompter('Please select type of search');
     }
-    dispatch(getAllCenters({ [searchQueryType]: searchQueryValue }));
+    this.props.getAllCenters({ [searchQueryType]: searchQueryValue });
   }
   /**
 *
@@ -104,7 +103,7 @@ export class SearchCenterPage extends Component {
   promptSeeCenter(event) {
     event.preventDefault();
     const { id } = event.target;
-    this.props.dispatch(promptSeeCenter(id));
+    this.props.promptSeeCenter(id);
     browserHistory.push('/center');
   }
   /**
@@ -228,15 +227,18 @@ const mapStateToProps = state =>
     center: state.centerReducer,
   });
 
-const mapDispatchToProps = dispatch =>
-  ({
-    dispatch: (actionObject => dispatch(actionObject)),
-  });
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchCenterPage);
+export default connect(mapStateToProps, {
+  getAllCenters,
+  modificationPrompt,
+  promptSeeCenter,
+  actionRejectedPrompter,
+})(SearchCenterPage);
 
 SearchCenterPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  getAllCenters: PropTypes.func.isRequired,
+  modificationPrompt: PropTypes.func.isRequired,
+  promptSeeCenter: PropTypes.func.isRequired,
+  actionRejectedPrompter: PropTypes.func.isRequired,
   center: PropTypes.shape({
     allCenters: PropTypes.shape({
       message: PropTypes.string,

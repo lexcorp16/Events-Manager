@@ -16,7 +16,7 @@ const props = {
 };
 const firstWrapper = shallow(<CenterCard {...props} />);
 
-describe('unauthenticated HOC', () => {
+describe('centerCard test-suite', () => {
   it('mounts centercard component', () => {
     expect(firstWrapper.exists()).toBe(true);
   });

@@ -40,7 +40,7 @@ const props = {
 
 const wrapper = shallow(<UserEvents {...props} />);
 
-describe('Create Component', () => {
+describe('User Events components', () => {
   it('should render self and sub components', () => {
     expect(wrapper.exists()).toBe(true);
   });

@@ -16,8 +16,8 @@ const props = {
 };
 const firstWrapper = shallow(<EventCard {...props} />);
 
-describe('unauthenticated HOC', () => {
-  it('returns SigninPage if user is not authenticated', () => {
+describe('Event Cars', () => {
+  it('renders component', () => {
     expect(firstWrapper.exists()).toBe(true);
   });
 });

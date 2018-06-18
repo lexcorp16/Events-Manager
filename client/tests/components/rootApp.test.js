@@ -9,7 +9,7 @@ const props = {
 
 const wrapper = shallow(<App {...props} />);
 
-describe('Create Component', () => {
+describe('App component', () => {
   it('should render self and sub components', () => {
     expect(wrapper.exists()).toBe(true);
   });

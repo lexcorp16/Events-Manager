@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { userLogin, clearError } from '../../../actions/userActions';
 import { LoadingIcon } from '../../utils/LoaderComponents';
@@ -61,9 +61,7 @@ export class SigninPage extends Component {
    * @returns {object} state after action dispatched
    */
   componentWillUnmount() {
-    if (this.props.user.status.error) {
-      this.props.dispatch(clearError());
-    }
+    this.props.clearError();
   }
 
   /**
@@ -87,11 +85,11 @@ export class SigninPage extends Component {
     event.preventDefault();
     const validationErrors = isValidDetails(this.state);
     if (Array.isArray(validationErrors)) {
-      return actionRejectedPrompter(validationErrors);
+      return this.props.actionRejectedPrompter(validationErrors);
     }
-    this.props.dispatch(userLogin({
+    this.props.userLogin({
       ...this.state
-    }));
+    });
   }
   /**
    *
@@ -162,9 +160,9 @@ export class SigninPage extends Component {
                     marginBottom: '10px'
                   }}
                 >
-                  Do not have an account? sign up{' '}
+                  Do not have an account? sign up
                   <span className="switchform" style={{ color: 'skyblue' }}>
-                    <Link to="/signup"> here</Link>
+                    <a href="/signup"> here</a>
                   </span>
                 </p>
               </div>
@@ -176,17 +174,17 @@ export class SigninPage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch: actionObject => dispatch(actionObject)
-});
-
 const mapStateToProps = state => ({
   user: state.userReducer
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    actionRejectedPrompter,
+    clearError,
+    userLogin,
+  }
 )(SigninPage);
 const propTypes = {
   user: PropTypes.shape({
@@ -194,7 +192,9 @@ const propTypes = {
     unauthenticatedErrorMessage: PropTypes.string,
     errorMessage: PropTypes.string
   }).isRequired,
-  dispatch: PropTypes.func.isRequired
+  actionRejectedPrompter: PropTypes.func.isRequired,
+  clearError: PropTypes.func.isRequired,
+  userLogin: PropTypes.func.isRequired,
 };
 
 SigninPage.propTypes = propTypes;

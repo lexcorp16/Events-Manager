@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import OneCenterPage from '../../components/centers/presentational/OneCenterPage';
+import OneCenterPage
+  from '../../components/centers/presentational/OneCenterPage';
 
 const props = {
   center: {
@@ -25,7 +26,7 @@ const props = {
 };
 const firstWrapper = shallow(<OneCenterPage {...props} />);
 
-describe('unauthenticated HOC', () => {
+describe('oneCenter page component test-suite', () => {
   it('mounts centercard component', () => {
     expect(firstWrapper.exists()).toBe(true);
   });

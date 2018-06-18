@@ -4,47 +4,51 @@ import thunk from 'redux-thunk';
 import expect from 'expect';
 import eventMockData from '../__mocks__/eventMockData';
 import instance from '../../utils/axios';
-import { modifyEvent, promptModify } from '../../actions/eventActions';
+import { fetchEvents } from '../../actions/eventActions';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('async event based actions', () => {
+describe('async event related actions', () => {
   beforeEach(() => moxios.install(instance));
   afterEach(() => moxios.uninstall());
 
-  describe('tests for async modify event action', () => {
-    it('creates MODIFYING_EVENT and MODIFY_EVENT_RESOLVED upon succesful event creation', async (done) => {
+  describe('tests for fetch events action', () => {
+    it(`creates FETCH_EVENTS and FETCH_EVENTS_RESOLVED
+    upon succesful event data fetch`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
           status: 201,
-          response: { ...eventMockData.oneEvent, message: 'you have successfully modified this event' }
+          response: {
+            userEvents: [eventMockData.oneEvent],
+            message: 'you have successfully fetched events'
+          }
         });
       });
       const returnedActions = [
         {
-          type: 'MODIFYING_EVENT',
+          type: 'FETCH_EVENTS',
         },
         {
-          type: 'MODIFY_EVENT_RESOLVED',
+          type: 'FETCH_EVENTS_RESOLVED',
           payload: {
-            message: 'you have successfully modified this event',
-            ...eventMockData.oneEvent,
-          },
-          eventId: '12345',
+            message: 'you have successfully fetched events',
+            userEvents: [eventMockData.oneEvent],
+          }
         },
       ];
       const eventDetails = {
-        name: 'My conference'
+        ...eventMockData.oneEvent,
       };
       const store = mockStore({});
-      await store.dispatch(modifyEvent(eventDetails, '12345'));
+      await store.dispatch(fetchEvents(eventDetails));
       expect(store.getActions()).toEqual(returnedActions);
       done();
     });
 
-    it('creates MODIFYING_EVENT and MODIFY_EVENT_REJECTED upon unsuccesful event modification', async (done) => {
+    it(`creates FETCH_EVENTS and FETCH_EVENTS_REJECTED
+    upon succesful events data fetch`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -54,33 +58,20 @@ describe('async event based actions', () => {
       });
       const returnedActions = [
         {
-          type: 'MODIFYING_EVENT',
+          type: 'FETCH_EVENTS',
         },
         {
-          type: 'MODIFY_EVENT_REJECTED',
+          type: 'FETCH_EVENTS_REJECTED',
           payload: {
             ...eventMockData.genericErrorResponse,
           }
         },
       ];
       const eventDetails = {
-        name: 'JHGFGHJGYFTVB'
+        ...eventMockData.oneEvent,
       };
       const store = mockStore({});
-      await store.dispatch(modifyEvent(eventDetails, '123'));
-      expect(store.getActions()).toEqual(returnedActions);
-      done();
-    });
-
-    it('creates MODIFY_EVENT_PROMPT upon modification prompt', async (done) => {
-      const returnedActions = [
-        {
-          type: 'MODIFY_EVENT_PROMPT',
-          eventId: '1234',
-        },
-      ];
-      const store = mockStore({});
-      await store.dispatch(promptModify('1234'));
+      await store.dispatch(fetchEvents(eventDetails));
       expect(store.getActions()).toEqual(returnedActions);
       done();
     });

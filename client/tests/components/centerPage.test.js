@@ -23,7 +23,7 @@ const props = {
 
 const wrapper = shallow(<CenterPage {...props} />);
 
-describe('Create Component', () => {
+describe('Center Page test-suite', () => {
   it('should render self and sub components', () => {
     expect(wrapper.exists()).toBe(true);
   });

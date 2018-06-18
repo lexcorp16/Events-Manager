@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import prefillCheckbox from '../../../utils/checkboxprefill';
 import { UploadProgressBar, LoadingIcon } from '../../utils/LoaderComponents';
-import isValidModifyCenterDetails from '../../../validations/modifycenter.validate';
+import isValidModifyCenterDetails
+  from '../../../validations/modifycenter.validate';
 import {
   actionRejectedPrompter,
   actionRejectedPrompterTimer
@@ -64,7 +65,7 @@ export class ModifyCenterPage extends Component {
    *
    * @param {any} nextProps recent props received from redux store
    * @memberof ModifyCenterPage
-   * @returns {function} browserHistory function that redirects to allcenters page
+   * @returns {function} browserHistory push method
    */
   componentWillReceiveProps(nextProps) {
     if (nextProps.center.status.modified) {
@@ -129,7 +130,7 @@ export class ModifyCenterPage extends Component {
    * @returns {object} statw change after action dispatched
    */
   promptImageChange() {
-    this.props.dispatch(imageChangePrompt());
+    this.props.imageChangePrompt();
   }
   /**
    *
@@ -141,12 +142,13 @@ export class ModifyCenterPage extends Component {
    */
   uploadImage(event) {
     event.preventDefault();
+    const errorMessage = 'Please choose a file before attempting to upload';
     if (!this.state.imageFile) {
-      return actionRejectedPrompterTimer('Please choose a file before attempting to upload');
+      return actionRejectedPrompterTimer(errorMessage);
     }
-    this.props.dispatch(uploadImageAndGetUrl({
+    this.props.uploadImageAndGetUrl({
       ...this.state
-    }));
+    });
   }
   /**
    *
@@ -155,9 +157,9 @@ export class ModifyCenterPage extends Component {
    * @returns {object} snapshot of upload task after paused
    */
   pauseImageUpload() {
-    this.props.dispatch(pauseUpload({
+    this.props.pauseUpload({
       ...this.props.center.imageUpload
-    }));
+    });
   }
   /**
    *
@@ -166,9 +168,9 @@ export class ModifyCenterPage extends Component {
    * @returns {object} snapshot of upload task after imageupload resumed
    */
   resumeImageUpload() {
-    this.props.dispatch(resumeUpload({
+    this.props.resumeUpload({
       ...this.props.center.imageUpload
-    }));
+    });
   }
   /**
    *
@@ -179,9 +181,9 @@ export class ModifyCenterPage extends Component {
    */
   cancelImageUpload(event) {
     event.preventDefault();
-    this.props.dispatch(cancelUpload({
+    this.props.cancelUpload({
       ...this.props.center.imageUpload
-    }));
+    });
   }
   /**
    *
@@ -202,10 +204,10 @@ export class ModifyCenterPage extends Component {
     if (Array.isArray(validationErrors)) {
       return actionRejectedPrompter(validationErrors);
     }
-    this.props.dispatch(modifyCenter(
+    this.props.modifyCenter(
       { ...this.state, imageUrl: imageLink },
       this.props.center.centerToBeModified[0].id
-    ));
+    );
   }
   /**
    *
@@ -313,6 +315,7 @@ export class ModifyCenterPage extends Component {
                           style={{ width: '150px' }}
                           onChange={this.getImageFile}
                           name="imageFile"
+                          className="imageFile"
                         />
                         {this.state.imageFile !== '' && (
                           <button
@@ -370,7 +373,7 @@ export class ModifyCenterPage extends Component {
                     type="text"
                     name="address"
                     placeholder="Address"
-                    className="form-control first-name"
+                    className="form-control first-name address"
                     defaultValue={
                       this.props.center.centerToBeModified[0].address
                     }
@@ -381,7 +384,7 @@ export class ModifyCenterPage extends Component {
                     type="number"
                     name="mobileNumber"
                     placeholder="mobileNumber"
-                    className="form-control first-name"
+                    className="form-control first-name mobileNumber"
                     maxLength="11"
                     defaultValue={
                       this.props.center.centerToBeModified[0].mobileNumber
@@ -423,6 +426,7 @@ export class ModifyCenterPage extends Component {
                     </div>
                     <div className="col">
                       <input
+                        className="projector"
                         type="checkbox"
                         value="projector"
                         id="projector"
@@ -548,10 +552,6 @@ export class ModifyCenterPage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch: actionObject => dispatch(actionObject)
-});
-
 const mapStateToProps = state => ({
   event: state.eventReducer,
   user: state.centerReducer,
@@ -560,11 +560,23 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    imageChangePrompt,
+    pauseUpload,
+    uploadImageAndGetUrl,
+    cancelUpload,
+    resumeUpload,
+    modifyCenter
+  }
 )(ModifyCenterWrapper(ModifyCenterPage));
 
 const propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  imageChangePrompt: PropTypes.func.isRequired,
+  cancelUpload: PropTypes.func.isRequired,
+  resumeUpload: PropTypes.func.isRequired,
+  uploadImageAndGetUrl: PropTypes.func.isRequired,
+  modifyCenter: PropTypes.func.isRequired,
+  pauseUpload: PropTypes.func.isRequired,
   center: PropTypes.shape({
     status: PropTypes.objectOf(PropTypes.bool),
     centerToBeModified: PropTypes.arrayOf(PropTypes.shape({

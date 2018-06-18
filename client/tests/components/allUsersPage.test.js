@@ -30,7 +30,7 @@ const props = {
 
 const wrapper = shallow(<AllUsersPage {...props} />);
 
-describe('Create Component', () => {
+describe('all Users page test-suite', () => {
   it('should render self and sub components', () => {
     expect(wrapper.exists()).toBe(true);
   });
