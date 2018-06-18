@@ -14,7 +14,8 @@ describe('async event related actions', () => {
   afterEach(() => moxios.uninstall());
 
   describe('tests for cancel event action', () => {
-    it('creates CANCELLING_USER_EVENT and CANCEL_USER_EVENT_RESOLVED upon succesful event cancellation', async (done) => {
+    it(`creates CANCELLING_USER_EVENT and CANCEL_USER_EVENT_RESOLVED
+    upon succesful event cancellation`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -40,7 +41,8 @@ describe('async event related actions', () => {
       done();
     });
 
-    it('creates CANCELLING_USER_EVENT and CANCEL_USER_EVENT_REJECTED upon unsuccesful event cancellation', async (done) => {
+    it(`creates CANCELLING_USER_EVENT and CANCEL_USER_EVENT_REJECTED
+    upon unsuccesful event cancellation`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
