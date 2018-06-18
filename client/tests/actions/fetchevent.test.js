@@ -14,12 +14,16 @@ describe('async event related actions', () => {
   afterEach(() => moxios.uninstall());
 
   describe('tests for fetch events action', () => {
-    it('creates FETCH_EVENTS and FETCH_EVENTS_RESOLVED upon succesful event data fetch', async (done) => {
+    it(`creates FETCH_EVENTS and FETCH_EVENTS_RESOLVED
+    upon succesful event data fetch`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
           status: 201,
-          response: { userEvents: [eventMockData.oneEvent], message: 'you have successfully fetched events' }
+          response: {
+            userEvents: [eventMockData.oneEvent],
+            message: 'you have successfully fetched events'
+          }
         });
       });
       const returnedActions = [
@@ -43,7 +47,8 @@ describe('async event related actions', () => {
       done();
     });
 
-    it('creates FETCH_EVENTS and FETCH_EVENTS_REJECTED upon succesful events data fetch', async (done) => {
+    it(`creates FETCH_EVENTS and FETCH_EVENTS_REJECTED
+    upon succesful events data fetch`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({

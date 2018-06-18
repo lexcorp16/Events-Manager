@@ -14,7 +14,8 @@ describe('async event related actions', () => {
   afterEach(() => moxios.uninstall());
 
   describe('tests for delete event action', () => {
-    it('creates DELETING_EVENT and DELETING_EVENT_RESOLVED upon succesful event deletion', async (done) => {
+    it(`creates DELETING_EVENT and DELETING_EVENT_RESOLVED
+    upon succesful event deletion`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -40,7 +41,8 @@ describe('async event related actions', () => {
       done();
     });
 
-    it('creates DELETING_EVENT and DELETE_EVENT_REJECTED upon unsuccesful event creation', async (done) => {
+    it(`creates DELETING_EVENT and DELETE_EVENT_REJECTED
+    upon unsuccesful event creation`, async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
