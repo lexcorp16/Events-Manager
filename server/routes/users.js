@@ -1,6 +1,6 @@
 import userController from '../controllers/users';
 import errorChecker from '../middlewares/users';
-import auth from '../middlewares/auth';
+import verifyToken from '../middlewares/verifyToken';
 import userIsSuperAdmin from '../helpers/userIsSuperAdmin';
 
 export default (app) => {
@@ -16,10 +16,10 @@ export default (app) => {
   );
   app.put(
     '/api/v1/users/:userId',
-    auth,
+    verifyToken,
     errorChecker.checkInvalidParams,
     userIsSuperAdmin,
     userController.upgradeUserToAdmin
   );
-  app.get('/api/v1/users', auth, userIsSuperAdmin, userController.getAllUsers);
+  app.get('/api/v1/users', verifyToken, userIsSuperAdmin, userController.getAllUsers);
 };

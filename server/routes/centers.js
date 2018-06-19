@@ -1,5 +1,5 @@
 import centerControllers from '../controllers/center';
-import auth from '../middlewares/auth';
+import verifyToken from '../middlewares/verifyToken';
 import validateQuery from '../middlewares/validateQuery';
 import {
   checkInvalidCenterParams,
@@ -14,14 +14,14 @@ export default (app) => {
   });
   app.post(
     '/api/v1/centers',
-    auth,
+    verifyToken,
     checkInvalidAddCenterDetails,
     userIsAdmin,
     centerControllers.addCenter
   );
   app.put(
     '/api/v1/centers/:centerId',
-    auth,
+    verifyToken,
     checkInvalidCenterParams,
     checkInvalidModifyCenterDetails,
     userIsAdmin,
